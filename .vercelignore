@@ -1,0 +1,2 @@
+# Prevent accidental deployment of local env files
+.env*

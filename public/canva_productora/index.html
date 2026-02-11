@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>PARADISE IG POST TOOL v3.6</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;600;800&amp;family=Montserrat:wght@300;400;600;800&amp;family=Inter:wght@300;400;600;800&amp;family=Josefin+Sans:wght@300;400;600;700&amp;family=Open+Sans:wght@300;400;600;800&amp;family=Poppins:wght@300;400;600;800&amp;family=Ubuntu:wght@300;400;500;700&amp;family=DM+Sans:wght@300;400;600;800&amp;family=Lato:wght@300;400;700;900&amp;family=Nunito:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#050505;--fg:#f5f7f6;--muted:#9aa3a0;--line:#1a1a1a;--card:#0b0b0b;
+  --btn-h:38px;--btn-br:18px;--inp-h:32px;--inp-pad:6px 10px;--radius:16px;--shadow:0 10px 30px rgba(0,0,0,.28);--shadow2:0 10px 22px rgba(0,0,0,.34);}
+html.light{--bg:#ffffff;--fg:#0a0a0a;--muted:#5b5b5b;--line:#e7e7e7;--card:#f6f6f6;--shadow:0 12px 34px rgba(0,0,0,.10);--shadow2:0 10px 22px rgba(16,24,40,.10);}
+*{box-sizing:border-box}
+/* UI polish */
+.card{border-radius:18px}
+.card h3{letter-spacing:.06em}
+.btn{transition:transform .06s ease, filter .18s ease, background .18s ease}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(1px)}
+select, input[type="text"], input[type="url"], input[type="number"]{border-radius:12px}
+.iconbtn{border-radius:10px}
+
+html,body{height:100%;margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+body{background:var(--bg);color:var(--fg)}
+header.hdr{position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;align-items:center;gap:10px}
+header.hdr .toprow{width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+header.hdr .topright{justify-self:end;display:flex;align-items:center}
+
+header.hdr h1{font-size:19px;margin:0;letter-spacing:.22em;font-weight:900;text-transform:uppercase;justify-self:center}
+.hdrRight{display:none}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;width:100%}
+.zoomBtn{display:inline-flex;align-items:center;gap:8px}
+.btn,button,label.btn{height:var(--btn-h);min-height:var(--btn-h);padding:8px 14px;border:1px solid var(--fg);background:transparent;color:var(--fg);border-radius:var(--btn-br);cursor:pointer;display:inline-flex;align-items:center;gap:8px;user-select:none;white-space:nowrap;letter-spacing:.02em;font-weight:500;;font-size:12px}
+.btn:active,button:active{transform:translateY(1px)}
+.btn:hover,button:hover{background:var(--fg);color:var(--bg)}
+label.btn input[type="file"]{display:none}
+
+main{display:grid;grid-template-columns:minmax(300px,420px) minmax(0,1080px) minmax(280px,380px);gap:16px;padding:16px;max-width:1860px;margin:0 auto}
+.col{padding:0 4px;min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px;margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow)}
+.card h3{margin:0 0 10px 0;font-size:12px;text-transform:uppercase;color:var(--muted)}
+.one-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;white-space:normal;justify-content:flex-start}
+
+.badgeRow{display:flex;flex-direction:column;align-items:stretch;gap:6px;margin:12px 0;}
+.badgeRow .lbl{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em;}
+.badgeRow .txt, .badgeRow .sel{width:100%;}
+.badgeRow .ctl{display:grid;grid-template-columns:60px 1fr 52px;gap:10px;align-items:center;}
+.badgeRow .ctl .mini{color:var(--muted);font-size:12px;text-transform:lowercase;letter-spacing:.02em;}
+.badgeRow .ctl .val{min-width:52px;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);}
+.badgeRow .lbl{
+  width:92px;
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+.badgeRow .txt{
+  flex:1;
+  min-width:0;
+}
+.badgeRow textarea.txt{min-height:56px;resize:vertical}
+.badgeRow .ctl{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex:0 0 auto;
+}
+.badgeRow .mini{color:var(--muted);font-size:12px}
+.badgeRow .rng{width:140px}
+.badgeRow .val{min-width:44px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.badgeRow .sel{height:34px}
+
+
+.one-line>*{flex:0 1 auto;min-width:0}
+.one-line input[type="range"]{width:160px}
+.one-line input[type="number"]{width:90px}
+.one-line select{max-width:160px}
+
+.fontLine{flex-wrap:nowrap;gap:8px}
+.fontLine span{min-width:44px}
+.fontLine select{max-width:none;flex:1 1 auto;min-width:140px}
+.fontLine .fontActions{display:flex;gap:6px;flex:0 0 auto;align-items:center;white-space:nowrap}
+.fontLine .btn.sm{padding:6px 10px}
+.colorStyleRow{gap:6px}
+.colorStyleRow .left{gap:8px}
+.iconbtn{height:24px;width:28px}
+input[type="text"],input[type="number"],textarea,select{background:transparent;color:var(--fg);border:1px solid var(--fg);border-radius:10px;min-height:var(--inp-h);padding:var(--inp-pad);line-height:1.1}
+input[type="color"]{background:transparent;border:1px solid var(--fg);border-radius:8px;width:40px;height:32px;padding:0}
+.iconbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.iconbar.inline{flex-wrap:nowrap}
+.colorStyleRow{align-items:center;justify-content:space-between;gap:10px}
+.colorStyleRow .left{display:flex;align-items:center;gap:10px}
+.colorStyleRow .left span{min-width:44px}
+.iconbtn{width:30px;height:30px;border:1px solid var(--fg);border-radius:8px;background:transparent;color:var(--fg);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.iconbtn.active{background:var(--fg);color:#000}
+
+/* === UNYELLOWER-style toggle === */
+.modeToggle{display:flex;align-items:center;gap:12px;user-select:none}
+.modeLabel{font-weight:700;font-size:14px;letter-spacing:.02em;opacity:.40;transition:opacity .18s ease;color:var(--muted);text-transform:none}
+html.light .modeLabel.light{opacity:1;color:var(--fg)}
+html:not(.light) .modeLabel.dark{opacity:1;color:var(--fg)}
+.switch{width:78px;height:34px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.10);box-shadow:var(--shadow2);cursor:pointer;display:flex;align-items:center;padding:3px}
+html.light .switch{background:linear-gradient(180deg,rgba(16,24,40,.08),rgba(16,24,40,.04));border:1px solid rgba(16,24,40,.10)}
+.knob2{width:28px;height:28px;border-radius:999px;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.28),rgba(255,255,255,.08) 45%,rgba(0,0,0,.14));
+  display:flex;align-items:center;justify-content:center;transition:transform .22s ease;position:relative;overflow:hidden}
+html:not(.light) .knob2{transform:translateX(44px)}
+.stars{position:absolute;inset:0;opacity:.95;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+.moon{width:14px;height:14px;border-radius:50%;background:#fff;position:relative;box-shadow:0 6px 18px rgba(255,255,255,.18)}
+.moon:after{content:"";position:absolute;width:10px;height:10px;border-radius:50%;right:-2px;top:2px;background:rgba(0,0,0,.18)}
+html.light .moon:after{background:rgba(255,255,255,.75)}
+html.light .stars{opacity:0}
+html.light .knob2{background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.85),rgba(255,255,255,.45) 45%,rgba(16,24,40,.08))}
+
+/* Stage centrado + escala UI */
+.centerCol{display:flex;flex-direction:column;align-items:center}
+.stageHeader{color:var(--muted);font-size:12px;margin-bottom:8px}
+.stageWrap{--scale:.50;width:calc(1080px*var(--scale));}
+.stageScale{transform-origin:top left;transform:scale(var(--scale));
+  position: relative;
+  display:inline-block;
+}
+
+#stage{width:1080px;height:1350px;border:1px solid var(--fg);border-radius:14px;background:#f0f0f0;display:block;touch-action:none}
+
+#layers{display:flex;flex-direction:column;gap:8px}
+.layer{display:flex;align-items:center;gap:8px;border:1px solid var(--fg);border-radius:10px;padding:8px}
+.layer .name{flex:1}
+.pill{font-size:12px;border:1px solid var(--fg);border-radius:8px;padding:4px 8px;cursor:pointer}
+.pill.locked{background:#fff;color:#000;border-color:#fff}
+
+@media(max-width:1500px){main{grid-template-columns:minmax(300px,400px) minmax(0,1fr)} main>.col:last-child{order:3}}
+@media(max-width:1200px){main{grid-template-columns:1fr;max-width:760px}}
+
+/* Extras restored from v5 */
+.divider{border:none;border-top:1px solid var(--line);margin:10px 0}
+.btn.sm{height:30px;min-height:30px;padding:6px 10px;border-radius:12px;font-size:11px}
+.fontUrl{flex:1;min-width:160px}
+select{color:var(--fg);background:var(--card);}
+option{color:var(--fg);background:var(--bg);}
+.layer.selected{outline:2px solid var(--fg);outline-offset:1px}
+.lname{flex:1}
+
+  .gridOverlay{
+    position:absolute; inset:0;
+    pointer-events:none;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,.18) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.18) 1px, transparent 1px),
+      linear-gradient(to right, rgba(0,0,0,.18) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,.18) 1px, transparent 1px);
+    background-size: 50px 50px, 50px 50px, 50px 50px, 50px 50px;
+    background-position: 0 0, 0 0, 0 0, 0 0;
+    mix-blend-mode: overlay;
+    opacity: .85;
+  }
+
+  .gridOverlayCanvas{
+    position:absolute; inset:0;
+    pointer-events:none;
+    z-index: 5;
+    border-radius: 14px;
+  }
+
+  .hidden{ display:none !important; }
+
+
+/* Titles panel layout refinements */
+.fontActions{display:flex;align-items:center;gap:8px;margin-left:10px}
+.one-line{align-items:center}
+.card h3{margin:0 0 12px 0;letter-spacing:0.2px}
+.card .one-line{margin:8px 0}
+.card label.one-line{gap:10px}
+.iconbar.inline{display:flex;align-items:center;gap:6px}
+.iconbtn{width:28px;height:26px;border-radius:8px}
+.iconbtn b,.iconbtn i,.iconbtn u,.iconbtn s{font-size:12px;line-height:1}
+.colorStyleRow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.colorStyleRow .left{display:flex;align-items:center;gap:10px}
+.colorStyleRow input[type="color"]{height:26px}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:18px}
+.modal.open{display:flex}
+.modalCard{width:min(560px,92vw);background:var(--panel);border:1px solid rgba(255,255,255,.12);border-radius:16px;box-shadow:0 18px 60px rgba(0,0,0,.35);overflow:hidden}
+.modalHead{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px 14px;border-bottom:1px solid rgba(255,255,255,.10)}
+.modalTitle{font-weight:700}
+.modalBody{padding:14px}
+.modalHint{color:var(--muted);font-size:12px;margin-bottom:10px;line-height:1.4}
+.modalBody input{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--fg)}
+.modalActions{display:flex;justify-content:flex-end;margin-top:12px}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.16)}
+
+
+
+.tipText{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card h3,.stageHeader,.stageHeader2,.stageHeader3,.secLbl{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+.one-line>span:first-child{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+
+
+.footerCredit{margin-top:10px;text-align:center;font-size:10px;letter-spacing:.12em;color:var(--muted);opacity:.9}
+</style>
+</head>
+<body>
+<header class="hdr">
+<div class="toprow">
+<div></div>
+<h1>CANVA PRODUCTORA</h1>
+<div class="topright">
+<div aria-checked="true" class="modeToggle" id="modeToggle" role="switch" tabindex="0" title="Switch theme">
+<div class="modeLabel light">Light</div>
+<div aria-hidden="true" class="switch">
+<div class="knob2">
+<svg class="stars" fill="none" viewbox="0 0 36 36">
+<circle cx="10" cy="10" fill="white" r="1.3"></circle>
+<circle cx="16" cy="7" fill="white" r="1.0"></circle>
+<circle cx="22" cy="12" fill="white" r="1.1"></circle>
+<circle cx="13" cy="18" fill="white" r="0.9"></circle>
+<circle cx="24" cy="20" fill="white" r="1.2"></circle>
+</svg>
+<div aria-hidden="true" class="moon"></div>
+</div>
+</div>
+<div class="modeLabel dark">Dark</div>
+</div>
+</div>
+</div>
+<div class="toolbar">
+<label class="btn"><input accept="image/*" id="filePhoto" type="file"/>UPLOAD</label>
+<button id="btnReset">RESET</button>
+<button id="btnDownload">DOWNLOAD</button>
+<button id="btnGrid">SHOW GRID</button>
+<label class="btn zoomBtn"><span>ZOOM UI</span><input id="uiScale" max="1" min="0.35" step="0.05" style="width:120px" type="range" value="0.50"/></label>
+</div>
+</header>
+<main>
+<!-- Izquierda -->
+<aside class="col">
+<div class="card">
+<h3>Lienzo</h3>
+<div class="one-line"><span>Color fondo</span><input id="bgColor" type="color" value="#f0f0f0"/></div>
+<div class="one-line"><span>Zoom foto</span><input id="photoZoom" max="3" min="0.5" step="0.01" type="range" value="1"/></div>
+<div class="one-line"><span>Tip</span><span class="tipText" style="color:var(--muted)">Claro/oscuro: solo UI · Arrastrá la foto · Ruedita=zoom</span></div>
+</div>
+<div class="card">
+<h3>Títulos</h3>
+<label class="one-line">Título 1 <input id="titleA" type="text" value="BEHIND"/></label>
+<div class="one-line">
+<span>Size</span>
+<input id="sizeA" max="600" min="0" step="1" type="range" value="148"/><span id="sizeAVal" style="min-width:34px;text-align:right;color:var(--muted)">148</span>
+</div>
+<div class="one-line">
+<span>Kerning</span>
+<input id="trackA" max="400" min="-200" step="1" type="range" value="0"/><span id="trackAVal" style="min-width:34px;text-align:right;color:var(--muted)">0</span>
+</div>
+<div class="one-line fontLine">
+<span>Font</span>
+<select class="fontSel" id="fontA">
+<option selected="">Helvetica</option>
+<option>Helvetica Neue</option>
+<option>Futura</option>
+<option>Arial</option>
+<option>Inter</option>
+<option>Roboto</option>
+<option>Montserrat</option>
+<option>Open Sans</option>
+<option>Poppins</option>
+<option>Ubuntu</option>
+<option>DM Sans</option>
+<option>Lato</option>
+<option>Nunito</option>
+<option>Josefin Sans</option>
+<option>system-ui</option>
+</select>
+<div class="fontActions">
+<label class="btn sm">subir font<input accept=".woff,.woff2,.ttf,.otf" class="fontFile" data-k="A" hidden="" type="file"/></label>
+<button class="btn sm" data-act="openFontUrl" data-k="A" type="button">cargar url</button>
+</div>
+</div>
+<div class="one-line colorStyleRow"><div class="left"><span>Color</span><input id="colorA" style="width:44px;height:28px;padding:0;border:none;background:transparent" type="color" value="#ffffff"/></div><div class="iconbar inline" data-k="A">
+<div class="iconbtn" data-act="bold"><b>B</b></div>
+<div class="iconbtn" data-act="italic"><i>I</i></div>
+<div class="iconbtn" data-act="underline"><u>U</u></div>
+<div class="iconbtn" data-act="strike"><s>S</s></div>
+</div></div>
+
+<hr class="divider"/>
+<label class="one-line">Título 2 <input id="titleB" type="text" value="the"/></label>
+<div class="one-line">
+<span>Size</span>
+<input id="sizeB" max="600" min="0" step="1" type="range" value="148"/><span id="sizeBVal" style="min-width:34px;text-align:right;color:var(--muted)">148</span>
+</div>
+<div class="one-line">
+<span>Kerning</span>
+<input id="trackB" max="400" min="-200" step="1" type="range" value="0"/><span id="trackBVal" style="min-width:34px;text-align:right;color:var(--muted)">0</span>
+</div>
+<div class="one-line fontLine">
+<span>Font</span>
+<select class="fontSel" id="fontB">
+<option selected="">Helvetica</option>
+<option>Helvetica Neue</option>
+<option>Futura</option>
+<option>Arial</option>
+<option>Inter</option>
+<option>Roboto</option>
+<option>Montserrat</option>
+<option>Open Sans</option>
+<option>Poppins</option>
+<option>Ubuntu</option>
+<option>DM Sans</option>
+<option>Lato</option>
+<option>Nunito</option>
+<option>Josefin Sans</option>
+<option>system-ui</option>
+</select>
+<div class="fontActions">
+<label class="btn sm">subir font<input accept=".woff,.woff2,.ttf,.otf" class="fontFile" data-k="B" hidden="" type="file"/></label>
+<button class="btn sm" data-act="openFontUrl" data-k="B" type="button">cargar url</button>
+</div>
+</div>
+<div class="one-line colorStyleRow"><div class="left"><span>Color</span><input id="colorB" style="width:44px;height:28px;padding:0;border:none;background:transparent" type="color" value="#ffffff"/></div><div class="iconbar inline" data-k="B">
+<div class="iconbtn" data-act="bold"><b>B</b></div>
+<div class="iconbtn" data-act="italic"><i>I</i></div>
+<div class="iconbtn" data-act="underline"><u>U</u></div>
+<div class="iconbtn" data-act="strike"><s>S</s></div>
+</div></div>
+
+<hr class="divider"/>
+<label class="one-line">Título 3 <input id="titleC" type="text" value="SCENES"/></label>
+<div class="one-line">
+<span>Size</span>
+<input id="sizeC" max="600" min="0" step="1" type="range" value="148"/><span id="sizeCVal" style="min-width:34px;text-align:right;color:var(--muted)">148</span>
+</div>
+<div class="one-line">
+<span>Kerning</span>
+<input id="trackC" max="400" min="-200" step="1" type="range" value="0"/><span id="trackCVal" style="min-width:34px;text-align:right;color:var(--muted)">0</span>
+</div>
+<div class="one-line fontLine">
+<span>Font</span>
+<select class="fontSel" id="fontC">
+<option selected="">Helvetica</option>
+<option>Helvetica Neue</option>
+<option>Futura</option>
+<option>Arial</option>
+<option>Inter</option>
+<option>Roboto</option>
+<option>Montserrat</option>
+<option>Open Sans</option>
+<option>Poppins</option>
+<option>Ubuntu</option>
+<option>DM Sans</option>
+<option>Lato</option>
+<option>Nunito</option>
+<option>Josefin Sans</option>
+<option>system-ui</option>
+</select>
+<div class="fontActions">
+<label class="btn sm">subir font<input accept=".woff,.woff2,.ttf,.otf" class="fontFile" data-k="C" hidden="" type="file"/></label>
+<button class="btn sm" data-act="openFontUrl" data-k="C" type="button">cargar url</button>
+</div>
+</div>
+<div class="one-line colorStyleRow"><div class="left"><span>Color</span><input id="colorC" style="width:44px;height:28px;padding:0;border:none;background:transparent" type="color" value="#ffffff"/></div><div class="iconbar inline" data-k="C">
+<div class="iconbtn" data-act="bold"><b>B</b></div>
+<div class="iconbtn" data-act="italic"><i>I</i></div>
+<div class="iconbtn" data-act="underline"><u>U</u></div>
+<div class="iconbtn" data-act="strike"><s>S</s></div>
+</div></div>
+
+<hr class="divider"/>
+<div class="one-line" style="justify-content:space-between;gap:10px">
+<button class="btn sm" id="btnAddTitle" type="button">ADD TITLE</button>
+<span style="color:var(--muted);font-size:12px">Agregar/eliminar títulos extra</span>
+</div>
+<div id="extraTitles" style="display:flex;flex-direction:column;gap:8px;margin-top:10px"></div>
+</div>
+<div class="card">
+<h3>Barcode (Gradient)</h3>
+<div class="one-line"><span>Paleta: 7 colores</span><input checked="" name="palette" type="radio" value="top7"/></div>
+<div class="one-line"><span>Paleta: N colores</span><input name="palette" type="radio" value="topN"/><input disabled="" id="krange" max="256" min="3" step="1" type="range" value="7"/><span id="kval">7</span></div>
+<div class="one-line"><span>Paleta: Todos</span><input name="palette" type="radio" value="all"/></div>
+<div class="one-line"><span>Orden: Hue</span><input checked="" name="sort" type="radio" value="hue"/></div>
+<div class="one-line"><span>Orden: Frecuencia</span><input name="sort" type="radio" value="frequency"/></div>
+<div class="one-line"><span>Calidad (downscale)</span><input id="downscale" max="1024" min="64" step="32" type="number" value="360"/></div>
+<p style="font-size:12px;color:var(--muted)">El gradiente se calcula sobre la foto en la máscara 400×500.</p>
+</div>
+</aside>
+<!-- Centro -->
+<section class="col centerCol">
+<div class="stageHeader">Lienzo 1080×1350</div>
+<div class="stageWrap"><div class="stageScale"><canvas id="stage" width="1080" height="1350"></canvas><canvas aria-hidden="true" class="gridOverlayCanvas hidden" id="gridOverlay"></canvas></div>
+<footer class="footerCredit">🄯 2025 HECHO POR TOMÁS P.</footer>
+</section>
+<!-- Derecha -->
+<aside class="col">
+<div class="card">
+<h3>Badges</h3>
+
+<div class="badgeRow">
+  <span class="lbl">up badge</span>
+  <input id="badge" class="txt" type="text" value="(2025)"/>
+  <div class="ctl">
+    <span class="mini">size</span>
+    <input id="badgeSize" class="rng" type="range" min="10" max="80" step="1" value="28"/>
+    <span class="val" id="badgeSizeVal">28</span>
+  </div>
+</div>
+
+<div class="badgeRow">
+  <span class="lbl">circle</span>
+  <div class="ctl">
+    <span class="mini">size</span>
+    <input id="badgeRing" class="rng" type="range" min="0.60" max="1.30" step="0.01" value="1.00"/>
+    <span class="val" id="badgeRingVal">1.00</span>
+  </div>
+</div>
+
+<div class="badgeRow">
+  <span class="lbl">left badge</span>
+  <textarea id="leftText" class="txt" rows="2">(BRAND
+ACTIVATION)</textarea>
+  <div class="ctl">
+    <span class="mini">size</span>
+    <input id="leftSize" class="rng" type="range" min="10" max="80" step="1" value="22"/>
+    <span class="val" id="leftSizeVal">22</span>
+  </div>
+</div>
+
+<div class="badgeRow">
+  <span class="lbl">right badge</span>
+  <input id="rightText" class="txt" type="text" value="(CONVERSE)"/>
+  <div class="ctl">
+    <span class="mini">size</span>
+    <input id="rightSize" class="rng" type="range" min="10" max="80" step="1" value="22"/>
+    <span class="val" id="rightSizeVal">22</span>
+  </div>
+</div>
+
+<div class="badgeRow">
+  <span class="lbl">arrow</span>
+  <select id="arrowChar" class="sel">
+    <option>→</option><option selected>⟶</option><option>➜</option><option>➤</option>
+  </select>
+  <div class="ctl">
+    <span class="mini">size</span>
+    <input id="arrowSize" class="rng" type="range" min="10" max="220" step="1" value="48"/>
+    <span class="val" id="arrowSizeVal">48</span>
+  </div>
+  <div class="ctl">
+    <span class="mini">stretch</span>
+    <input id="arrowStretch" class="rng" type="range" min="0.5" max="10" step="0.1" value="2"/>
+    <span class="val" id="arrowStretchVal">2</span>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<h3>Layers</h3>
+<div id="layers"></div>
+</div>
+</aside>
+</main>
+<script>
+(() => {
+  const DPR = Math.max(1, window.devicePixelRatio||1);
+  const stage = document.getElementById('stage');
+  stage.width = 1080 * DPR; stage.height = 1350 * DPR;
+  const ctx = stage.getContext('2d', { willReadFrequently:true });
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+
+  const $=s=>document.querySelector(s);
+  const ui = {
+    file:$('#filePhoto'), reset:$('#btnReset'), download:$('#btnDownload'), grid:$('#btnGrid'),
+    uiScale:$('#uiScale'),
+    bg:$('#bgColor'), pz:$('#photoZoom'),
+    // Titles
+    tA:$('#titleA'), tB:$('#titleB'), tC:$('#titleC'),
+    cA:$('#colorA'), cB:$('#colorB'), cC:$('#colorC'),
+    sA:$('#sizeA'), sB:$('#sizeB'), sC:$('#sizeC'),
+    trA:$('#trackA'), trB:$('#trackB'), trC:$('#trackC'),
+    fA:$('#fontA'), fB:$('#fontB'), fC:$('#fontC'),
+    addTitle:$('#btnAddTitle'), extraTitles:$('#extraTitles'),
+    // Badges
+    badge:$('#badge'),
+    left:$('#leftText'), right:$('#rightText'),
+    badgeSize:$('#badgeSize'), badgeRing:$('#badgeRing'), leftSize:$('#leftSize'), rightSize:$('#rightSize'),
+    arrowChar:$('#arrowChar'), arrowSize:$('#arrowSize'), arrowStretch:$('#arrowStretch'),
+    // Barcode
+    kr:$('#krange'), kv:$('#kval'), q:$('#downscale')
+  };
+  // Modal: cargar fuente por URL
+  const fontUrlModal = document.getElementById('fontUrlModal');
+  const fontUrlInput = document.getElementById('fontUrlInput');
+  const fontUrlCancel = document.getElementById('fontUrlCancel');
+  const fontUrlLoad = document.getElementById('fontUrlLoad');
+
+  // Seguridad: si falta el modal (por edición), no romper toda la app
+  const hasFontUrlModal = !!(fontUrlModal && fontUrlInput && fontUrlCancel && fontUrlLoad);
+
+
+  // Readouts
+  const readouts = () => {
+    const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent = val; };
+    set('sizeAVal', ui.sA.value); set('sizeBVal', ui.sB.value); set('sizeCVal', ui.sC.value);
+    set('trackAVal', ui.trA.value); set('trackBVal', ui.trB.value); set('trackCVal', ui.trC.value);
+    set('badgeSizeVal', ui.badgeSize?.value ?? ''); set('badgeRingVal', ui.badgeRing?.value ?? ''); set('leftSizeVal', ui.leftSize?.value ?? ''); set('rightSizeVal', ui.rightSize?.value ?? '');
+    set('arrowSizeVal', ui.arrowSize?.value ?? ''); set('arrowStretchVal', ui.arrowStretch?.value ?? '');
+  };
+  ['sA','sB','sC','trA','trB','trC','cA','cB','cC','badgeSize','badgeRing','leftSize','rightSize','arrowSize','arrowStretch'].forEach(k=>{
+    if(ui[k]) ui[k].addEventListener('input', readouts);
+  });
+  readouts();
+
+
+
+  const S = { BEHIND:{x:70,y:70,w:520,h:120}, BADGE:{x:620,y:80,w:360,h:90},
+              THE:{x:110,y:190,w:240,h:120}, SCENES:{x:430,y:190,w:560,h:120},
+              LEFT:{x:70,y:600,w:210,h:120}, RIGHT:{x:820,y:590,w:190,h:90}, ARROW:{x:820,y:700,w:190,h:40},
+              PHOTO:{x:340,y:480,w:400,h:500}, BARCODE:{x:650,y:870,w:200,h:40} };
+
+  const st = {
+    bg: ui.bg.value, photo:null, photoPos:{x:S.PHOTO.x+S.PHOTO.w/2,y:S.PHOTO.y+S.PHOTO.h/2,zoom:1,ox:0,oy:0},
+    barcode:{...S.BARCODE}, layers:[], sel:null,
+    styles:{A:{b:false,i:false,u:false,s:false,w:300},B:{b:false,i:false,u:false,s:false,w:400},C:{b:false,i:false,u:false,s:false,w:300}},
+    titleColors:{A:null,B:null,C:null},
+    autoColor:{A:true,B:true,C:true},
+    extraCounter:0,
+    grid:false,
+  };
+// Title colors (per title). Default is auto (black on light bg, white on dark bg).
+function autoTextColor(){ return isLight(st.bg)?'#000000':'#ffffff'; }
+function syncTitleColorUI(){
+  const auto = autoTextColor();
+  (['A','B','C']).forEach(k=>{
+    if(st.autoColor[k]){ st.titleColors[k]=auto; }
+    const el = ui['c'+k];
+    if(el) el.value = st.titleColors[k] || auto;
+  });
+}
+syncTitleColorUI();
+
+['A','B','C'].forEach(k=>{
+  const el = ui['c'+k];
+  if(!el) return;
+  el.addEventListener('input', ()=>{
+    st.autoColor[k]=false;
+    st.titleColors[k]=el.value;
+    draw();
+  });
+});
+
+
+  function buildFont(fam, w, it, px){ return `${it?'italic ':''}${w} ${px}px "${fam}","Helvetica Neue",Helvetica,Arial,"Futura",sans-serif`; }
+  function fKey(key){
+    if(key==='A') return buildFont(ui.fA.value, st.styles.A.w, st.styles.A.i, +ui.sA.value||148);
+    if(key==='B') return buildFont(ui.fB.value, st.styles.B.w, st.styles.B.i, +ui.sB.value||148);
+    if(key==='C') return buildFont(ui.fC.value, st.styles.C.w, st.styles.C.i, +ui.sC.value||148);
+    return buildFont("Helvetica",400,false,+ui.rightSize.value||22);
+  }
+  const measure = (font,txt)=>{
+    ctx.save(); ctx.font=font;
+    const m=ctx.measureText(txt);
+    const asc=m.actualBoundingBoxAscent||0, des=m.actualBoundingBoxDescent||0;
+    ctx.restore();
+    return { w:m.width, asc, des };
+  };
+
+  // Tracking: slider in "units" -> pixels (units/10). Supports negative tracking.
+  const trackPx = (v)=> (parseFloat(v||'0')||0) / 10;
+
+  const measureTracked = (font,txt,trackVal)=>{
+    ctx.save(); ctx.font=font;
+    const t = String(txt||'');
+    const tp = trackPx(trackVal);
+    if(!tp || t.length<=1){
+      const m=ctx.measureText(t);
+      const asc=m.actualBoundingBoxAscent||0, des=m.actualBoundingBoxDescent||0;
+      ctx.restore();
+      return { w:m.width, asc, des };
+    }
+    let w=0;
+    for(let i=0;i<t.length;i++){
+      w += ctx.measureText(t[i]).width;
+      if(i<t.length-1) w += tp;
+    }
+    const m=ctx.measureText('Hg');
+    const asc=m.actualBoundingBoxAscent||0, des=m.actualBoundingBoxDescent||0;
+    ctx.restore();
+    return { w, asc, des };
+  };
+
+  const drawTracked = (font,txt,x,y,trackVal)=>{
+    ctx.save(); ctx.font=font; ctx.textBaseline='alphabetic';
+    const t=String(txt||'');
+    const tp=trackPx(trackVal);
+    if(!tp || t.length<=1){
+      ctx.fillText(t,x,y);
+      ctx.restore();
+      return;
+    }
+    let cx=x;
+    for(let i=0;i<t.length;i++){
+      ctx.fillText(t[i], cx, y);
+      cx += ctx.measureText(t[i]).width + (i<t.length-1?tp:0);
+    }
+    ctx.restore();
+  };
+
+  const center = (slot,font,txt)=>{
+    const m=measure(font,txt);
+    return { x:Math.round(slot.x+slot.w/2 - m.w/2), y:Math.round(slot.y+slot.h/2 + (m.asc-m.des)/2) };
+  };
+
+  const centerTracked = (slot,font,txt,trackVal)=>{
+    const m=measureTracked(font,txt,trackVal);
+    return { x:Math.round(slot.x+slot.w/2 - m.w/2), y:Math.round(slot.y+slot.h/2 + (m.asc-m.des)/2) };
+  };
+
+  const centerML = (slot,font,txt,g=6)=>{
+    const lines=String(txt||'').split('\n');
+    ctx.save(); ctx.font=font;
+    const m=ctx.measureText('Hg');
+    const lh=(m.actualBoundingBoxAscent||16)+(m.actualBoundingBoxDescent||4);
+    let w=0;
+    for(const ln of lines) w=Math.max(w, ctx.measureText(ln).width);
+    ctx.restore();
+    const h=lines.length*lh+(lines.length-1)*g;
+    return { x:Math.round(slot.x+slot.w/2 - w/2), y:Math.round(slot.y+slot.h/2 - h/2 + lh), lh };
+  };
+
+  const applyTrack = (t)=> String(t||'');
+
+  function initLayers(){
+    st.layers = [
+      {k:'A',name:'Título 1',type:'text',x:0,y:0,v:true,lock:false},
+      {k:'badge',name:'badge (2025)',type:'badge',x:S.BADGE.x,y:S.BADGE.y,v:true,lock:false},
+      {k:'B',name:'Título 2',type:'text',x:0,y:0,v:true,lock:false},
+      {k:'C',name:'Título 3',type:'text',x:0,y:0,v:true,lock:false},
+      {k:'left',name:'left badge',type:'ml',x:0,y:0,v:true,lock:false},
+      {k:'photo',name:'photo',type:'photo',x:S.PHOTO.x,y:S.PHOTO.y,v:true,lock:false},
+      {k:'right',name:'right badge',type:'text',x:0,y:0,v:true,lock:false},
+      {k:'arrow',name:'arrow',type:'arrow',x:0,y:0,v:true,lock:false},
+      {k:'barcode',name:'barcode',type:'barcode',x:S.BARCODE.x,y:S.BARCODE.y,v:true,lock:false},
+    ];
+    renderLayers();
+    renderExtraTitles();
+  }
+
+  // Initialize layers so default texts render immediately
+  initLayers();
+  function renderLayers(){
+    const c = $('#layers');
+    c.innerHTML = '';
+    st.layers.forEach((ly,i)=>{
+      const row = document.createElement('div');
+      row.className = 'layer' + (st.sel===i ? ' selected' : '');
+
+      const eye = document.createElement('span');
+      eye.className = 'pill';
+      eye.textContent = ly.v ? '👁' : '🚫';
+      eye.title = ly.v ? 'Hide layer' : 'Show layer';
+      eye.onclick = (e)=>{ e.stopPropagation(); ly.v = !ly.v; draw(); renderLayers(); };
+
+      const lock = document.createElement('span');
+      lock.className = 'pill' + (ly.lock ? ' locked' : '');
+      lock.textContent = ly.lock ? '🔒' : '🔓';
+      lock.title = ly.lock ? 'Locked' : 'Unlocked';
+      lock.onclick = (e)=>{ e.stopPropagation(); ly.lock = !ly.lock; renderLayers(); };
+
+      const name = document.createElement('div');
+      name.className = 'lname';
+      name.textContent = ly.name;
+      name.onclick = ()=>{ st.sel = i; renderLayers(); };
+
+      row.onclick = ()=>{ st.sel = i; renderLayers(); };
+
+      row.append(eye, lock, name);
+      c.append(row);
+    });
+    renderExtraTitles();
+  }
+
+  
+
+  // Extra titles (dynamic)
+  function renderExtraTitles(){
+    if(!ui.extraTitles) return;
+    ui.extraTitles.innerHTML = '';
+    const extras = st.layers.filter(l=>String(l.k||'').startsWith('X'));
+    extras.forEach((ly)=>{
+      const row = document.createElement('div');
+      row.className = 'one-line';
+      row.style.gap = '8px';
+      row.style.justifyContent = 'space-between';
+
+      const inp = document.createElement('input');
+      inp.type='text';
+      inp.value = ly.text || '';
+      inp.style.flex='1';
+      inp.addEventListener('input', ()=>{ ly.text = inp.value; draw(); });
+
+      const del = document.createElement('button');
+      del.type='button';
+      del.className='btn sm';
+      del.textContent='DEL';
+      del.addEventListener('click', ()=>{
+        const idx = st.layers.indexOf(ly);
+        if(idx>=0){ st.layers.splice(idx,1); if(st.sel===idx) st.sel=null; }
+        renderLayers(); renderExtraTitles(); draw();
+      });
+
+      row.append(inp, del);
+      ui.extraTitles.append(row);
+    });
+  }
+
+  ui.addTitle?.addEventListener('click', ()=>{
+    st.extraCounter += 1;
+    const k = 'X' + st.extraCounter;
+    const n = st.layers.filter(l=>String(l.k||'').startsWith('X')).length;
+    const baseY = S.SCENES.y + 140 + (n*120);
+    st.layers.push({k, name:'Título extra '+st.extraCounter, type:'text', x:S.SCENES.x, y:baseY, v:true, lock:false, text:'NEW TITLE'});
+    renderLayers(); renderExtraTitles(); draw();
+  });
+function resetPreset(){
+    st.bg = ui.bg.value;
+    const posC = centerTracked(S.SCENES, fKey('C'), applyTrack(ui.tC.value), ui.trC.value);
+    const posA = centerTracked(S.BEHIND, fKey('A'), applyTrack(ui.tA.value), ui.trA.value);
+    const mThe = measureTracked(fKey('B'), applyTrack(ui.tB.value), ui.trB.value);
+    const xThe = Math.max(0, posC.x - mThe.w - 12);
+
+    Object.assign(st.layers.find(l=>l.k==='C'), posC);
+    Object.assign(st.layers.find(l=>l.k==='A'), posA);
+    Object.assign(st.layers.find(l=>l.k==='B'), { x:xThe, y:posC.y });
+
+    const leftFont = fKey(); const leftPos = centerML(S.LEFT, leftFont, ui.left.value, 6);
+    Object.assign(st.layers.find(l=>l.k==='left'), leftPos);
+
+    const rightFont = buildFont('Helvetica',400,false, +ui.rightSize.value||22);
+    const rightPos = center(S.RIGHT, rightFont, ui.right.value);
+    Object.assign(st.layers.find(l=>l.k==='right'), { x:rightPos.x, y:leftPos.y });
+
+    const arrow = st.layers.find(l=>l.k==='arrow');
+    const mR = measure(rightFont, ui.right.value);
+    const arrowFont = buildFont('Helvetica',400,false, +ui.arrowSize.value||48);
+    const mA = measure(arrowFont, ui.arrowChar.value||'⟶');
+    const stretch = parseFloat(ui.arrowStretch.value||'2');
+    const arrowW = mA.w*stretch;
+    arrow.x = Math.round(rightPos.x + mR.w/2 - arrowW/2);
+    arrow.y = Math.round(leftPos.y + leftPos.lh + 8);
+
+    st.photoPos = { x:S.PHOTO.x+S.PHOTO.w/2, y:S.PHOTO.y+S.PHOTO.h/2, zoom:+ui.pz.value||1, ox:0, oy:0 };
+    st.barcode = {...S.BARCODE};
+    const bcLy = st.layers.find(l=>l.k==='barcode'); if(bcLy){ bcLy.x = S.BARCODE.x; bcLy.y = S.BARCODE.y; }
+    const bdLy = st.layers.find(l=>l.k==='badge'); if(bdLy){ bdLy.x = S.BADGE.x; bdLy.y = S.BADGE.y; }
+    const phLy = st.layers.find(l=>l.k==='photo'); if(phLy){ phLy.x = S.PHOTO.x; phLy.y = S.PHOTO.y; }
+    draw();
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,1080,1350);
+    ctx.fillStyle = st.bg;
+    ctx.fillRect(0,0,1080,1350);
+
+    for(const ly of st.layers){
+      if(!ly.v) continue;
+      switch(ly.type){
+        case 'photo':   drawPhoto(); break;
+        case 'barcode': st.barcode.x=ly.x; st.barcode.y=ly.y; drawBarcode(); break;
+        case 'badge':   drawBadge(); break;
+        case 'text':    drawText(ly); break;
+        case 'ml':      drawML(ly); break;
+        case 'arrow':   drawArrow(ly); break;
+      }
+    }
+  
+    // keep grid overlay in sync
+    if(typeof drawGridOverlay === 'function') drawGridOverlay();
+}
+
+  function drawText(ly){
+    let txt='', key=null, tr=null;
+
+    if(ly.k==='A'){ txt=applyTrack(ui.tA.value); key='A'; tr=ui.trA.value; }
+    else if(ly.k==='B'){ txt=applyTrack(ui.tB.value); key='B'; tr=ui.trB.value; }
+    else if(ly.k==='C'){ txt=applyTrack(ui.tC.value); key='C'; tr=ui.trC.value; }
+    else if(String(ly.k||'').startsWith('X')){ txt=applyTrack(ly.text||''); key='C'; tr=ui.trC.value; }
+    else if(ly.k==='right'){ txt=ui.right.value; }
+
+    const auto = isLight(st.bg)?'#000000':'#ffffff';
+    if(key && st.titleColors[key]) ctx.fillStyle = st.titleColors[key];
+    else ctx.fillStyle = auto;
+    ctx.textBaseline='alphabetic';
+
+    if(ly.k==='right'){
+      ctx.font = buildFont('Helvetica',400,false, +ui.rightSize.value||22);
+      ctx.fillText(txt, ly.x, ly.y);
+      return;
+    }
+
+    ctx.font = fKey(key||'A');
+    drawTracked(ctx.font, txt, ly.x, ly.y, tr);
+  }
+  function drawML(ly){
+    const lines=String(ui.left.value||'').split('\n');
+    ctx.fillStyle = isLight(st.bg)?'#000':'#fff';
+    ctx.font = buildFont('Helvetica',400,false, +ui.leftSize.value||22);
+    ctx.textBaseline='alphabetic';
+    const m=ctx.measureText('Hg');
+    const lh=(m.actualBoundingBoxAscent||16)+(m.actualBoundingBoxDescent||4);
+    for(let i=0;i<lines.length;i++){
+      ctx.fillText(lines[i], ly.x, ly.y + i*(lh+6));
+    }
+  }
+  function drawArrow(ly){
+    ctx.save();
+    ctx.fillStyle = isLight(st.bg)?'#000':'#fff';
+    const size = Math.max(1, +ui.arrowSize.value||48);
+    const sx = parseFloat(ui.arrowStretch.value||'2') || 2;
+    ctx.font = buildFont('Helvetica',400,false,size);
+    ctx.textBaseline='alphabetic';
+    ctx.transform(sx,0,0,1,0,0);
+    ctx.fillText(ui.arrowChar.value||'⟶', ly.x/sx, ly.y);
+    ctx.restore();
+  }
+  function drawBadge(){
+    const cx=S.BADGE.x+S.BADGE.w/2, cy=S.BADGE.y+S.BADGE.h/2;
+    const ring = (+ui.badgeRing?.value || 1);
+    const rx=S.BADGE.w*0.80/2 * ring, ry=S.BADGE.h*0.80/2 * ring;
+    ctx.save();
+    ctx.strokeStyle = isLight(st.bg)?'#000':'#fff';
+    ctx.lineWidth=2;
+    ctx.beginPath(); ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2); ctx.stroke();
+    ctx.fillStyle = isLight(st.bg)?'#000':'#fff';
+    ctx.font = buildFont('Aeonik',400,false, +ui.badgeSize.value||28);
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(ui.badge.value, cx, cy);
+    ctx.restore();
+    ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+  }
+
+
+  // Custom font loaders (file + URL) per title
+  async function loadFontFromUrl(url, nameHint){
+    const name = (nameHint||'CustomFont').replace(/[^a-z0-9_\- ]/ig,'').trim() || ('CustomFont_'+Date.now());
+    const ff = new FontFace(name, `url(${url})`);
+    await ff.load();
+    document.fonts.add(ff);
+    return name;
+  }
+
+  async function handleFontFileInput(input){
+    const f = input.files && input.files[0];
+    if(!f) return;
+    const url = URL.createObjectURL(f);
+    const name = f.name.replace(/\.[^/.]+$/,'');
+    try{
+      const loaded = await loadFontFromUrl(url, name);
+      const k = input.dataset.k;
+      const sel = k==='A'?ui.fA:k==='B'?ui.fB:ui.fC;
+      sel.insertAdjacentHTML('beforeend', `<option>${loaded}</option>`);
+      sel.value = loaded;
+      draw();
+    }catch(e){
+      console.error('Font load failed', e);
+      alert('No se pudo cargar la fuente. Probá .woff2/.woff o una URL directa.');
+    }finally{
+      try{ URL.revokeObjectURL(url); }catch(_){}
+      input.value='';
+    }
+  }
+
+  async function loadFontUrlFromModal(){
+    if(!hasFontUrlModal) return;
+    const k = fontUrlModal.dataset.k || 'A';
+    const url = (fontUrlInput.value || '').trim();
+    if(!url) return alert('Pegá una URL directa a .woff2/.woff/.ttf');
+    try{
+      const loaded = await loadFontFromUrl(url, 'URLFont');
+      const sel = k==='A'?ui.fA:k==='B'?ui.fB:ui.fC;
+      sel.insertAdjacentHTML('beforeend', `<option>${loaded}</option>`);
+      sel.value = loaded;
+      closeFontUrlModal();
+      draw();
+    }catch(e){
+      console.error('Font URL load failed', e);
+      alert('No se pudo cargar la fuente desde URL.');
+    }
+  }
+
+  function openFontUrl(btn){
+    if(!hasFontUrlModal) return alert('Modal no disponible.');
+    const k = btn.dataset.k;
+    fontUrlModal.dataset.k = k;
+    fontUrlInput.value = '';
+    if(!hasFontUrlModal) return alert('Modal no disponible.');
+    fontUrlModal.classList.add('open');
+    setTimeout(()=>fontUrlInput.focus(), 0);
+  }
+
+  function closeFontUrlModal(){
+    fontUrlModal.classList.remove('open');
+  }
+
+  if(hasFontUrlModal){
+    fontUrlCancel.addEventListener('click', closeFontUrlModal);
+    fontUrlLoad.addEventListener('click', loadFontUrlFromModal);
+    fontUrlModal.addEventListener('click', (e)=>{ if(e.target===fontUrlModal) closeFontUrlModal(); });
+    fontUrlInput.addEventListener('keydown', (e)=>{
+      if(e.key==='Enter') loadFontUrlFromModal();
+      if(e.key==='Escape') closeFontUrlModal();
+    });
+  }
+
+
+  document.querySelectorAll('.fontFile').forEach(inp=>{
+    inp.addEventListener('change', ()=>handleFontFileInput(inp));
+  });
+
+  document.querySelectorAll('button[data-act="openFontUrl"]').forEach(btn=>{
+    btn.addEventListener('click', ()=>openFontUrl(btn));
+  });
+
+  // Foto + máscara 400×500
+  function drawPhoto(){
+    if(!st.photo) return;
+    const P=st.photoPos, mx=S.PHOTO.x,my=S.PHOTO.y,mw=S.PHOTO.w,mh=S.PHOTO.h;
+    const iw=st.photo.w*P.zoom, ih=st.photo.h*P.zoom;
+    const dx=P.x - iw/2 + P.ox, dy=P.y - ih/2 + P.oy;
+    ctx.save(); ctx.beginPath(); ctx.rect(mx,my,mw,mh); ctx.clip();
+    ctx.drawImage(st.photo.img, dx,dy,iw,ih); ctx.restore();
+  }
+
+  /* ===== Barcode ===== */
+  function drawBarcode(){
+    const R=st.barcode; ctx.save(); ctx.beginPath(); ctx.rect(R.x,R.y,R.w,R.h); ctx.clip();
+    if(!st.photo){ ctx.globalAlpha=.2; ctx.fillStyle=isLight(st.bg)?'#000':'#fff'; ctx.fillRect(R.x,R.y,R.w,R.h); ctx.globalAlpha=1; ctx.restore(); return; }
+    const {colors, total} = extractColorsMasked(Math.max(64, Math.min(1024, +ui.q.value||360)));
+    const sort = (document.querySelector('input[name="sort"]:checked')||{}).value || 'hue';
+    if(sort==='frequency') colors.sort((a,b)=> b.count - a.count);
+    else colors.sort((a,b)=> rgbToHsl(a.rgb).h - rgbToHsl(b.rgb).h);
+    let x0=R.x;
+    for(let i=0;i<colors.length;i++){
+      const cur=colors[i], next=colors[i+1]||colors[i];
+      const w=Math.max(1, Math.round(R.w * (cur.count/total)));
+      const g=ctx.createLinearGradient(x0,R.y,x0+w,R.y); g.addColorStop(0, rgbCss(cur.rgb)); g.addColorStop(1, rgbCss(next.rgb));
+      ctx.fillStyle=g; ctx.fillRect(x0,R.y,w,R.h); x0+=w;
+    }
+    if(x0<R.x+R.w){ const last=colors.at(-1); ctx.fillStyle=rgbCss(last.rgb); ctx.fillRect(x0,R.y,(R.x+R.w)-x0,R.h); }
+    ctx.restore();
+  }
+  function extractColorsMasked(maxEdge){
+    const mx=S.PHOTO.x,my=S.PHOTO.y,mw=S.PHOTO.w,mh=S.PHOTO.h;
+    const scale = maxEdge/Math.max(mw,mh);
+    const dw=Math.round(mw*scale), dh=Math.round(mh*scale);
+    const c=document.createElement('canvas'); c.width=dw; c.height=dh; const cx=c.getContext('2d',{willReadFrequently:true});
+    const P=st.photoPos, iw=st.photo.w*P.zoom, ih=st.photo.h*P.zoom;
+    const dx=(P.x - iw/2 + P.ox) - mx, dy=(P.y - ih/2 + P.oy) - my;
+    cx.drawImage(st.photo.img, dx*scale, dy*scale, iw*scale, ih*scale);
+    const { data } = cx.getImageData(0,0,dw,dh);
+    const map=new Map();
+    for(let i=0;i<data.length;i+=4){
+      if(data[i+3]<16) continue;
+      const r=(data[i]>>3)<<3, g=(data[i+1]>>3)<<3, b=(data[i+2]>>3)<<3;
+      const hex = '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+      map.set(hex,(map.get(hex)||0)+1);
+    }
+    const entries=[...map.entries()];
+    const mode=(document.querySelector('input[name="palette"]:checked')||{}).value||'top7';
+    let colors;
+    if(mode==='all') colors = mergeNearby(entries,10);
+    else{
+      const k=(mode==='top7')?7:Math.max(3,Math.min(256,parseInt(ui.kr.value||'7',10)));
+      colors = kmeans(entries,k);
+    }
+    const total = colors.reduce((a,c)=>a+c.count,0);
+    return { colors, total };
+  }
+  function mergeNearby(entries,thr){
+    const arr=entries.map(([hex,count])=>({hex,rgb:hexToRgb(hex),h:rgbToHsl(hexToRgb(hex)).h,count}))
+                     .sort((a,b)=>a.h-b.h);
+    const out=[];
+    for(const p of arr){
+      const last=out.at(-1);
+      if(last && delta(last.rgb,p.rgb)<thr){
+        const w=last.count+p.count;
+        last.rgb={ r:Math.round((last.rgb.r*last.count+p.rgb.r*p.count)/w),
+                   g:Math.round((last.rgb.g*last.count+p.rgb.g*p.count)/w),
+                   b:Math.round((last.rgb.b*last.count+p.rgb.b*p.count)/w)};
+        last.count=w;
+      }else out.push({...p});
+    }
+    return out;
+  }
+  function kmeans(entries,k){
+    if(!entries.length) return [];
+    entries.sort((a,b)=>b[1]-a[1]);
+    let cents=entries.slice(0,Math.min(k,entries.length)).map(e=>hexToRgb(e[0]));
+    const pts=entries.map(([hex,count])=>({rgb:hexToRgb(hex),count}));
+    for(let it=0;it<8;it++){
+      const buck=Array.from({length:cents.length},()=>[]);
+      for(const p of pts){
+        let bi=0,bd=1e18; for(let i=0;i<cents.length;i++){ const d=dist(p.rgb,cents[i]); if(d<bd){bd=d;bi=i;} }
+        buck[bi].push(p);
+      }
+      for(let i=0;i<cents.length;i++){
+        if(!buck[i].length) continue;
+        let r=0,g=0,b=0,w=0; for(const p of buck[i]){ r+=p.rgb.r*p.count; g+=p.rgb.g*p.count; b+=p.rgb.b*p.count; w+=p.count; }
+        cents[i]={ r:Math.round(r/w), g:Math.round(g/w), b:Math.round(b/w) };
+      }
+    }
+    const out=new Map();
+    for(const p of pts){
+      let bi=0,bd=1e18; for(let i=0;i<cents.length;i++){ const d=dist(p.rgb,cents[i]); if(d<bd){bd=d;bi=i;} }
+      const c=cents[bi]; const hex=rgb(c.r,c.g,c.b);
+      out.set(hex,(out.get(hex)||0)+p.count);
+    }
+    return [...out.entries()].map(([hex,count])=>({hex,rgb:hexToRgb(hex),count})).sort((a,b)=>b.count-a.count).slice(0,k);
+  }
+  const rgb=(r,g,b)=>'#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+  const hexToRgb=hex=>{const v=hex.replace('#','');return{r:parseInt(v.slice(0,2),16),g:parseInt(v.slice(2,4),16),b:parseInt(v.slice(4,6),16)}}
+  const rgbToHsl=({r,g,b})=>{r/=255;g/=255;b/=255;const M=Math.max(r,g,b),m=Math.min(r,g,b);let h,s,l=(M+m)/2;if(M===m){h=s=0}else{const d=M-m;s=l>0.5?d/(2-M-m):d/(M+m);switch(M){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;case b:h=(r-g)/d+4;break}h/=6}return{h:h*360,s,l}}
+  const dist=(a,b)=>{const dr=a.r-b.r,dg=a.g-b.g,db=a.b-b.b;return dr*dr+dg*dg+db*db}
+  const delta=(a,b)=>Math.sqrt(dist(a,b))
+  const rgbCss=({r,g,b})=>`rgb(${r},${g},${b})`;
+  function isLight(hex){ const c=hex.replace('#',''); const r=parseInt(c.slice(0,2),16), g=parseInt(c.slice(2,4),16), b=parseInt(c.slice(4,6),16); return (0.2126*r+0.7152*g+0.0722*b)>160; }
+
+  /* ===== Inputs ===== */
+  ui.uiScale.addEventListener('input',()=>{ document.querySelector('.stageWrap').style.setProperty('--scale', ui.uiScale.value); });
+  const modeToggle = document.getElementById('modeToggle');
+  const THEME_KEY='canva_productora_theme';
+  function setTheme(mode){
+    const h=document.documentElement;
+    const isLight=(mode==='light');
+    h.classList.toggle('light', isLight);
+    modeToggle.setAttribute('aria-checked', isLight ? 'false' : 'true');
+    localStorage.setItem(THEME_KEY, mode);
+  }
+  function toggleTheme(){
+    const isLight=document.documentElement.classList.contains('light');
+    setTheme(isLight?'dark':'light');
+  }
+  modeToggle.addEventListener('click', toggleTheme);
+  modeToggle.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleTheme(); }});
+  setTheme(localStorage.getItem(THEME_KEY)||'dark');
+  ui.bg.addEventListener('input',()=>{ st.bg=ui.bg.value; syncTitleColorUI(); draw(); });
+  ui.pz.addEventListener('input',()=>{ st.photoPos.zoom=+ui.pz.value; draw(); });
+
+  ['tA','tB','tC','sA','sB','sC','trA','trB','trC',
+    'fA','fB','fC',
+    'badge','badgeSize','badgeRing','left','leftSize','right','rightSize',
+    'arrowChar','arrowSize','arrowStretch'
+  ].forEach(k=>{
+    if(!ui[k]) return;
+    const ev = (k==='fA'||k==='fB'||k==='fC') ? 'change' : 'input';
+    ui[k].addEventListener(ev, ()=>{ draw(); });
+  });
+
+  document.querySelectorAll('input[name="palette"]').forEach(r=>{
+    r.addEventListener('change',()=>{
+      ui.kr.disabled = (r.value!=='topN');
+      draw();
+    });
+  });
+  ui.kr.addEventListener('input',()=>{ ui.kv.textContent = ui.kr.value; const mode = (document.querySelector('input[name="palette"]:checked')||{}).value; if(mode==='topN') draw(); });
+  document.querySelectorAll('input[name="sort"]').forEach(r=> r.addEventListener('change', draw));
+
+  // B/I/U/S
+  document.querySelectorAll('.iconbar').forEach(bar=>{
+    const k = bar.dataset.k;
+    bar.querySelectorAll('.iconbtn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const act=btn.dataset.act;
+        const S=st.styles[k];
+        if(act==='bold'){ S.w = S.w===700?300:700; }
+        else S[act[0]]=!S[act[0]];
+        btn.classList.toggle('active');
+        resetPreset();
+      });
+    });
+  });
+
+  // Foto
+  ui.file.addEventListener('change',(e)=>{
+    const f=e.target.files&&e.target.files[0]; if(!f) return;
+    const url=URL.createObjectURL(f); const img=new Image();
+    img.onload=()=>{ st.photo={img,w:img.naturalWidth,h:img.naturalHeight}; st.photoPos.ox=0; st.photoPos.oy=0; st.photoPos.zoom=1; ui.pz.value='1'; resetPreset(); URL.revokeObjectURL(url); };
+    img.onerror=()=>URL.revokeObjectURL(url); img.src=url;
+  });
+
+  // Descargar
+  ui.download.addEventListener('click',()=>{ const a=document.createElement('a'); a.download='paradise_post.png'; a.href=stage.toDataURL('image/png',1); a.click(); });
+
+
+  
+  // Grid overlay toggle (canvas overlay)
+  const gridEl = $('#gridOverlay');
+  const gridCtx = gridEl ? gridEl.getContext('2d') : null;
+
+  const hexToRgbSafe = (hex)=>{
+    // Reuse existing hexToRgb if present in this scope; otherwise fallback.
+    try { return (typeof hexToRgb === 'function' ? hexToRgb(hex) : (typeof hexToRgb === 'object' ? null : null)); } catch(e){}
+    const h = String(hex||'').replace('#','').trim();
+    const v = h.length===3 ? h.split('').map(c=>c+c).join('') : h.padEnd(6,'0').slice(0,6);
+    return { r: parseInt(v.slice(0,2),16)||0, g: parseInt(v.slice(2,4),16)||0, b: parseInt(v.slice(4,6),16)||0 };
+  };
+
+  const luminance = (rgb)=>{
+    const srgb=[rgb.r,rgb.g,rgb.b].map(v=>{
+      v/=255;
+      return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4);
+    });
+    return 0.2126*srgb[0]+0.7152*srgb[1]+0.0722*srgb[2];
+  };
+
+  const setGridCanvasSize = ()=>{
+    if(!gridEl || !gridCtx) return;
+    // Match the stage internal pixel ratio (already DPR-scaled via CSS sizing)
+    gridEl.width = stage.width;
+    gridEl.height = stage.height;
+    gridCtx.setTransform(1,0,0,1,0,0);
+  };
+
+  const drawGridOverlay = ()=>{
+    if(!gridEl || !gridCtx) return;
+    setGridCanvasSize();
+    // Clear
+    gridCtx.clearRect(0,0,gridEl.width,gridEl.height);
+
+    if(!st.grid) return;
+
+    // Use opposite color to current background for contrast
+    const bgHex = ui.bg?.value || '#f0f0f0';
+    const bg = hexToRgbSafe(bgHex);
+    const isBgLight = luminance(bg) > 0.5;
+    const stroke = isBgLight ? 'rgba(0,0,0,0.22)' : 'rgba(255,255,255,0.22)';
+    const strokeBold = isBgLight ? 'rgba(0,0,0,0.32)' : 'rgba(255,255,255,0.32)';
+
+    const step = 50;      // base grid
+    const boldEvery = 5;  // 250px bold
+    const w = gridEl.width;
+    const h = gridEl.height;
+
+    gridCtx.lineWidth = 1;
+
+    // Vertical lines
+    for(let x=0, i=0; x<=w; x+=step, i++){
+      gridCtx.beginPath();
+      gridCtx.strokeStyle = (i%boldEvery===0) ? strokeBold : stroke;
+      gridCtx.moveTo(x+0.5, 0);
+      gridCtx.lineTo(x+0.5, h);
+      gridCtx.stroke();
+    }
+    // Horizontal lines
+    for(let y=0, i=0; y<=h; y+=step, i++){
+      gridCtx.beginPath();
+      gridCtx.strokeStyle = (i%boldEvery===0) ? strokeBold : stroke;
+      gridCtx.moveTo(0, y+0.5);
+      gridCtx.lineTo(w, y+0.5);
+      gridCtx.stroke();
+    }
+  };
+
+  // Button + reactive redraws
+  ui.grid.addEventListener('click', ()=>{
+    st.grid = !st.grid;
+    if(gridEl) gridEl.classList.toggle('hidden', !st.grid);
+    ui.grid.textContent = st.grid ? 'HIDE GRID' : 'SHOW GRID';
+    drawGridOverlay();
+  });
+
+  // If background changes or we redraw, keep grid in sync
+  ui.bg.addEventListener('input', ()=>{
+    drawGridOverlay();
+  });
+
+// Reset
+  ui.reset.addEventListener('click', resetPreset);
+
+  // Drag layers + photo (selected or hit-tested)
+  const getMouse = (ev)=>{
+    const r = stage.getBoundingClientRect();
+    const s = parseFloat(getComputedStyle(document.querySelector('.stageWrap')).getPropertyValue('--scale')) || 1;
+    return { x:(ev.clientX - r.left)/s, y:(ev.clientY - r.top)/s };
+  };
+
+  function hitTestLayer(p){
+    // topmost visible first
+    for(let i=st.layers.length-1;i>=0;i--){
+      const ly = st.layers[i];
+      if(!ly.v) continue;
+
+      // Photo hit = mask area
+      if(ly.type==='photo'){
+        const mx=S.PHOTO.x, my=S.PHOTO.y, mw=S.PHOTO.w, mh=S.PHOTO.h;
+        if(p.x>=mx && p.x<=mx+mw && p.y>=my && p.y<=my+mh) return i;
+        continue;
+      }
+
+      if(ly.type==='badge'){
+        // ellipse bounds approx
+        const bx=S.BADGE.x, by=S.BADGE.y, bw=S.BADGE.w, bh=S.BADGE.h;
+        if(p.x>=bx && p.x<=bx+bw && p.y>=by && p.y<=by+bh) return i;
+        continue;
+      }
+
+      if(ly.type==='barcode'){
+        const bx=ly.x, by=ly.y, bw=S.BARCODE.w, bh=S.BARCODE.h;
+        if(p.x>=bx && p.x<=bx+bw && p.y>=by && p.y<=by+bh) return i;
+        continue;
+      }
+
+      if(ly.type==='ml'){
+        ctx.save();
+        ctx.font = buildFont('Helvetica',400,false, +ui.leftSize.value||22);
+        const lines=String(ui.left.value||'').split('\n');
+        const m=ctx.measureText('Hg');
+        const lh=(m.actualBoundingBoxAscent||16)+(m.actualBoundingBoxDescent||4);
+        const h = lines.length*lh + (lines.length-1)*6;
+        let w=0; for(const ln of lines) w=Math.max(w, ctx.measureText(ln).width);
+        ctx.restore();
+        if(p.x>=ly.x && p.x<=ly.x+w && p.y>=ly.y-lh && p.y<=ly.y-lh+h) return i;
+        continue;
+      }
+
+      if(ly.type==='arrow'){
+        ctx.save();
+        ctx.font = buildFont('Helvetica',400,false, +ui.arrowSize.value||48);
+        const w = ctx.measureText(ui.arrowChar.value||'⟶').width * (parseFloat(ui.arrowStretch.value||'2')||2);
+        const h = (+ui.arrowSize.value||48) * 1.2;
+        ctx.restore();
+        if(p.x>=ly.x && p.x<=ly.x+w && p.y>=ly.y-h && p.y<=ly.y) return i;
+        continue;
+      }
+
+      if(ly.type==='text'){
+        ctx.save();
+        const key = (ly.k==='A'||ly.k==='B'||ly.k==='C') ? ly.k : null;
+        const font = (ly.k==='right')
+          ? buildFont('Helvetica',400,false, +ui.rightSize.value||22)
+          : fKey(key||'A');
+        const txt = (ly.k==='A')?applyTrack(ui.tA.value):(ly.k==='B')?applyTrack(ui.tB.value):(ly.k==='C')?applyTrack(ui.tC.value):(ly.k==='right')?ui.right.value:'';
+        const tr = (ly.k==='A')?ui.trA.value:(ly.k==='B')?ui.trB.value:(ly.k==='C')?ui.trC.value:0;
+        const mm = key ? measureTracked(font, txt, tr) : measure(font, txt);
+        const h = (key ? (+ui['s'+key].value||148) : (+ui.rightSize.value||22)) * 1.2;
+        ctx.restore();
+        if(p.x>=ly.x && p.x<=ly.x+mm.w && p.y>=ly.y-h && p.y<=ly.y) return i;
+      }
+    }
+    return null;
+  }
+
+  let dragging=false;
+  let dragKind=null; // 'layer' | 'photo'
+  let dragIndex=null;
+  let dragDX=0, dragDY=0;
+
+  stage.addEventListener('mousedown',(ev)=>{
+    const p = getMouse(ev);
+    const hit = hitTestLayer(p);
+    if(hit===null) return;
+
+    st.sel = hit;
+    renderLayers();
+
+    const ly = st.layers[hit];
+    if(ly.lock) return;
+
+    dragging = true;
+    if(ly.type==='photo'){
+      dragKind='photo';
+      dragDX = p.x - st.photoPos.ox;
+      dragDY = p.y - st.photoPos.oy;
+    } else {
+      dragKind='layer';
+      dragIndex = hit;
+      dragDX = p.x - ly.x;
+      dragDY = p.y - ly.y;
+    }
+  });
+
+  window.addEventListener('mousemove',(ev)=>{
+    if(!dragging) return;
+    const p = getMouse(ev);
+
+    if(dragKind==='photo'){
+      st.photoPos.ox = p.x - dragDX;
+      st.photoPos.oy = p.y - dragDY;
+      draw();
+      return;
+    }
+
+    const ly = st.layers[dragIndex];
+    if(!ly || ly.lock) return;
+    ly.x = p.x - dragDX;
+    ly.y = p.y - dragDY;
+    draw();
+  });
+
+  window.addEventListener('mouseup',()=>{
+    dragging=false; dragKind=null; dragIndex=null;
+  });
+
+  // Wheel zoom on photo mask only
+  stage.addEventListener('wheel',(ev)=>{
+    const r=stage.getBoundingClientRect();
+    if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom) return;
+    const p=getMouse(ev);
+    const mx=S.PHOTO.x,my=S.PHOTO.y,mw=S.PHOTO.w,mh=S.PHOTO.h;
+    if(p.x<mx||p.x>mx+mw||p.y<my||p.y>my+mh) return;
+    ev.preventDefault();
+    const k=(ev.deltaY<0)?1.05:0.95;
+    st.photoPos.zoom = Math.min(6, Math.max(0.1, st.photoPos.zoom * k));
+    ui.pz.value = st.photoPos.zoom.toFixed(2);
+    draw();
+  }, { passive:false });
+
+  /* Esperar fuentes para que “the” no salte */
+  (async()=>{ try{ await document.fonts.ready; }catch(e){} initLayers(); resetPreset(); draw(); setTimeout(()=>{ resetPreset(); draw(); },120); })();
+})();
+</script>
+
+<!-- Font URL Modal -->
+<div id="fontUrlModal" class="modal">
+  <div class="modalCard">
+    <div class="modalHead">
+      <div class="modalTitle">Cargar fuente por URL</div>
+      <button id="fontUrlCancel" class="btn sm ghost" type="button">Cerrar</button>
+    </div>
+    <div class="modalBody">
+      <div class="modalHint">Pegá una URL directa a un archivo .woff2 / .woff / .ttf / .otf</div>
+      <input id="fontUrlInput" type="url" placeholder="https://.../font.woff2" />
+      <div class="modalActions">
+        <button id="fontUrlLoad" class="btn sm" type="button">Cargar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

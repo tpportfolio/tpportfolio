@@ -1,0 +1,590 @@
+ <!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VIDEO COMPARATOR</title>
+<style>
+  :root{
+    /* Match portfolio default dark (home) */
+    --bg:#050505; --fg:#E9EEF6; --muted:#A5B3C2;
+    --card:#0B0B0B; --border:#1A1A1A; --soft:#070707;
+
+    --btn:#0B1E19; --btnHover:#0F2A22; --btnText:#E9EEF6;
+    --shadow: 0 18px 44px rgba(0,0,0,.42);
+    --shadow2: 0 10px 22px rgba(0,0,0,.34);
+    --radius: 16px;
+    --pad: 14px;
+
+    --paneHBase: 42vh;
+    --zoom: 1;
+
+    --track: rgba(233,238,246,.20);
+    --thumb: rgba(233,238,246,.92);
+    --thumbBorder: rgba(6,17,14,.65);
+  }
+
+  [data-theme="light"]{
+    --bg:#F6F8FB; --fg:#0D1117; --muted:#5A6573;
+    --card:#FFFFFF; --border:#DBE2EA; --soft:#F1F4F8;
+
+    --btn:#FFFFFF; --btnHover:#F7F9FB; --btnText:#0D1117;
+    --shadow: 0 18px 40px rgba(16,24,40,.12);
+    --shadow2: 0 10px 22px rgba(16,24,40,.10);
+
+    --track: rgba(13,17,23,.14);
+    --thumb: rgba(13,17,23,.92);
+    --thumbBorder: rgba(246,248,251,.9);
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg)}
+  body{
+    font-family:"Helvetica Neue", Helvetica, Arial, "Futura", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    letter-spacing:.2px;
+  }
+
+  .wrap{min-height:100svh;display:grid;grid-template-rows:auto 1fr}
+  header{
+    position:sticky;top:0;z-index:5;
+    background: var(--bg);
+    padding: 12px 12px 0;
+  }
+
+  .barCard{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow:hidden;
+  }
+
+  .toolbar{padding:10px var(--pad); display:flex; flex-direction:column; gap:8px}
+  .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .row + .row{
+    padding-top:10px;
+    border-top: 1px solid color-mix(in srgb, var(--fg) 10%, transparent);
+  }
+
+  .brand{
+    font-weight:800;
+    letter-spacing:.22em;
+    font-size:12px;
+    text-transform:uppercase;
+    opacity:.92;
+    padding-top: 2px;
+  }
+  .spacer{flex:1}
+
+  button,select,input[type=number]{
+    appearance:none;outline:none;
+    background: var(--btn);
+    color: var(--btnText);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: 650;
+    letter-spacing: .01em;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 1px 0 rgba(255,255,255,.02);
+  }
+  button:hover,select:hover,input[type=number]:hover{ background: var(--btnHover); }
+  button.primary{
+    border: 0;
+    background: linear-gradient(135deg, rgba(110,231,255,.95), rgba(155,123,255,.92));
+    color: #071019;
+    box-shadow: 0 14px 28px rgba(110,231,255,.12);
+  }
+  [data-theme="light"] button.primary{
+    color:#0b1320;
+    box-shadow: 0 14px 28px rgba(16,24,40,.12);
+  }
+  input[type=file]{display:none}
+
+  .muted{ color: var(--muted); font-size: 12px; font-weight: 650; letter-spacing:.08em; text-transform:uppercase; opacity:.85; }
+  label{ display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:12px; font-weight:650; letter-spacing:.06em; text-transform:uppercase; }
+  label select, label input[type=number]{ text-transform:none; letter-spacing:.01em; color:var(--btnText); }
+
+  /* === UNYELLOWER-style toggle === */
+  .modeToggle{ display:flex; align-items:center; gap: 12px; user-select:none; }
+  .modeLabel{ font-weight: 700; font-size: 14px; letter-spacing: .02em; opacity: .40; transition: opacity .18s ease; color: var(--muted); text-transform: none; }
+  [data-theme="light"] .modeLabel.light{ opacity: 1; color: var(--fg); }
+  [data-theme="dark"] .modeLabel.dark{ opacity: 1; color: var(--fg); }
+
+  .switch{
+    width: 78px; height: 34px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+    border: 1px solid color-mix(in srgb, var(--fg) 12%, transparent);
+    box-shadow: var(--shadow2);
+    cursor:pointer;
+    display:flex; align-items:center;
+    padding: 3px;
+  }
+  [data-theme="light"] .switch{
+    background: linear-gradient(180deg, rgba(16,24,40,.08), rgba(16,24,40,.04));
+    border: 1px solid rgba(16,24,40,.10);
+  }
+  .knob{
+    width: 28px; height: 28px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.28), rgba(255,255,255,.08) 45%, rgba(0,0,0,.14));
+    display:flex; align-items:center; justify-content:center;
+    transition: transform .22s ease;
+    position: relative; overflow:hidden;
+  }
+  [data-theme="dark"] .knob{ transform: translateX(44px); }
+  .stars{ position:absolute; inset:0; opacity:.95; filter: drop-shadow(0 2px 2px rgba(0,0,0,.25)); }
+  .moon{ width: 14px; height: 14px; border-radius: 50%; background: #fff; position: relative; box-shadow: 0 6px 18px rgba(255,255,255,.18); }
+  .moon:after{ content:""; position:absolute; width: 10px; height: 10px; border-radius: 50%; right:-2px; top:2px; background: rgba(0,0,0,.18); }
+  [data-theme="light"] .moon:after{ background: rgba(255,255,255,.75); }
+  [data-theme="light"] .stars{ opacity: 0; }
+  [data-theme="light"] .knob{ background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.85), rgba(255,255,255,.45) 45%, rgba(16,24,40,.08)); }
+
+  /* Sliders */
+  .range{display:flex;align-items:center;gap:10px}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:min(64vw,680px);background:transparent}
+  input[type=range]::-webkit-slider-runnable-track{height:6px;background:var(--track);border-radius:999px}
+  input[type=range]::-moz-range-track{height:6px;background:var(--track);border-radius:999px}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;margin-top:-7px;width:18px;height:18px;border-radius:50%;
+    background:var(--thumb); border: 2px solid var(--thumbBorder);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px;height:18px;border-radius:50%;
+    background:var(--thumb); border: 2px solid var(--thumbBorder);
+  }
+
+  main{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+  body.wipe main{grid-template-columns:1fr}
+  #rightPane{display:block}
+  body.wipe #rightPane{display:none}
+
+  .pane{
+    position:relative;
+    background:#000;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow:hidden;
+    min-height:160px;
+    height:calc(var(--paneHBase) * var(--zoom));
+    box-shadow: var(--shadow2);
+  }
+  .pane-inner{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+  video{width:100%;height:100%;object-fit:contain;background:#000}
+  .overlay{position:absolute;inset:0;pointer-events:none}
+  .title{
+    position:absolute;left:12px;top:10px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.22);
+    color:#fff;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 800;
+    letter-spacing: .22em;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+  .drop-hint{
+    position:absolute;inset:auto 12px 12px 12px;
+    color: rgba(255,255,255,.72);
+    font-size:12px;
+    border:1px dashed rgba(255,255,255,.35);
+    border-radius:12px;
+    padding:8px 10px;
+    display:none;
+    background: rgba(0,0,0,.20);
+    backdrop-filter: blur(6px);
+  }
+  .pane.drag .drop-hint{display:block}
+  #wipeDivider{position:absolute;top:0;bottom:0;width:2px;background:#fff;opacity:.9;display:none}
+  body.wipe #wipeDivider{display:block}
+
+  @media (max-width:980px){main{grid-template-columns:1fr}}
+
+  /* Optional tiny footer credit */
+  .footerCredit{
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: .45;
+    pointer-events: none;
+    user-select: none;
+    z-index: 999;
+  }
+</style>
+</head>
+
+<body>
+<div class="wrap" id="root">
+  <header>
+    <div class="barCard">
+      <div class="toolbar">
+        <!-- Row 1 -->
+        <div class="row">
+          <div class="brand">VIDEO COMPARATOR</div>
+
+          <button id="leftBtn" class="ghost">LOAD LEFT</button>
+          <input id="leftFile" type="file" accept="video/*">
+
+          <button id="rightBtn" class="ghost">LOAD RIGHT</button>
+          <input id="rightFile" type="file" accept="video/*">
+
+          <button id="playBtn" class="primary">PLAY</button>
+          <button id="stopBtn">STOP</button>
+
+          <button id="viewModeBtn" class="ghost" title="Toggle wipe">VIEW: SIDE-BY-SIDE</button>
+
+          <div class="spacer"></div>
+
+          <button id="fullBtn" class="ghost" title="Fullscreen">FULLSCREEN</button>
+
+          <div class="modeToggle" id="modeToggle" role="switch" aria-checked="true" tabindex="0" title="Theme">
+            <div class="modeLabel light">Light</div>
+            <div class="switch" aria-hidden="true">
+              <div class="knob">
+                <svg class="stars" viewBox="0 0 36 36" fill="none">
+                  <circle cx="10" cy="10" r="1.3" fill="white"/>
+                  <circle cx="16" cy="7" r="1.0" fill="white"/>
+                  <circle cx="22" cy="12" r="1.1" fill="white"/>
+                  <circle cx="13" cy="18" r="0.9" fill="white"/>
+                  <circle cx="24" cy="20" r="1.2" fill="white"/>
+                </svg>
+                <div class="moon" aria-hidden="true"></div>
+              </div>
+            </div>
+            <div class="modeLabel dark">Dark</div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="row">
+          <div class="range">
+            <span class="muted">SEEK</span>
+            <input id="seekRange" type="range" min="0" max="1000" value="0">
+            <span id="timeLbl" class="muted" style="letter-spacing:.08em">00:00 / 00:00</span>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="row">
+          <div class="range">
+            <span class="muted">ZOOM</span>
+            <input id="zoomRange" type="range" min="25" max="200" value="100" step="5">
+            <span id="zoomPct" class="muted">100%</span>
+          </div>
+
+          <button id="fitBtn" class="ghost" title="Fit videos (contain)">FIT</button>
+          <button id="fillBtn" class="ghost" title="Fill videos (cover)">FILL</button>
+
+          <div class="range">
+            <span class="muted">WIPE</span>
+            <input id="wipeRange" type="range" min="0" max="100" value="50" style="width:220px">
+          </div>
+
+          <div class="range">
+            <span class="muted">LEFT VOL</span>
+            <input id="leftVol" class="vol" type="range" min="0" max="1" step="0.01" value="0.8" style="width:180px">
+          </div>
+
+          <div class="range">
+            <span class="muted">RIGHT VOL</span>
+            <input id="rightVol" class="vol" type="range" min="0" max="1" step="0.01" value="0.8" style="width:180px">
+          </div>
+
+          <label> SPEED
+            <select id="speedSelect">
+              <option>0.25</option><option>0.5</option><option>0.75</option>
+              <option selected>1.0</option><option>1.25</option><option>1.5</option><option>2.0</option>
+            </select>
+          </label>
+
+          <label> OFFSET (ms)
+            <input id="offsetMs" type="number" value="0" step="10" style="width:110px">
+          </label>
+
+          <button id="abModeBtn" class="ghost" title="Cycle audio mode (A)">AUDIO: MIX</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="pane" id="leftPane"><div class="pane-inner">
+      <video id="leftVideo" controlslist="nodownload noplaybackrate" preload="metadata"></video>
+      <div class="title">LEFT</div>
+      <div id="wipeOverlay" class="overlay" style="display:none;"></div>
+      <div id="wipeDivider"></div>
+      <div class="drop-hint">Drop a video file here</div>
+    </div></section>
+
+    <section class="pane" id="rightPane"><div class="pane-inner">
+      <video id="rightVideo" controlslist="nodownload noplaybackrate" preload="metadata"></video>
+      <div class="title">RIGHT</div>
+      <div class="drop-hint">Drop a video file here</div>
+    </div></section>
+  </main>
+</div>
+
+<footer class="footerCredit">HECHO POR TOMÁS P.</footer>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const root = $('root');
+
+  // === Theme (UNYELLOWER-style) ===
+  const modeToggle = $('modeToggle');
+  function setTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('vc_theme', theme);
+    modeToggle.setAttribute('aria-checked', theme === 'dark' ? 'true' : 'false');
+  }
+  function toggleTheme(){
+    const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+    setTheme(cur === 'dark' ? 'light' : 'dark');
+  }
+  (function initTheme(){
+    const saved = localStorage.getItem('vc_theme');
+    if (saved === 'light' || saved === 'dark') return setTheme(saved);
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(prefersDark ? 'dark' : 'light');
+  })();
+
+  modeToggle.addEventListener('click', toggleTheme);
+  modeToggle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme(); }
+  });
+
+  // === File inputs & videos ===
+  const leftBtn = $('leftBtn');
+  const rightBtn = $('rightBtn');
+  const leftFile = $('leftFile');
+  const rightFile = $('rightFile');
+  const left = $('leftVideo');
+  const right = $('rightVideo');
+
+  // Core controls
+  const playBtn = $('playBtn');
+  const stopBtn = $('stopBtn');
+  const speedSel = $('speedSelect');
+  const offsetMs = $('offsetMs');
+  const abBtn = $('abModeBtn');
+  const viewBtn = $('viewModeBtn');
+  const seek = $('seekRange');
+  const timeLbl = $('timeLbl');
+  const fullBtn = $('fullBtn');
+
+  // Audio & wipe
+  const leftVol = $('leftVol');
+  const rightVol = $('rightVol');
+  const wipeRange = $('wipeRange');
+  const wipeOverlay = $('wipeOverlay');
+  const wipeDivider = $('wipeDivider');
+
+  // Zoom & sizing
+  const zoomRange = $('zoomRange');
+  const zoomPct = $('zoomPct');
+  const fitBtn = $('fitBtn');
+  const fillBtn = $('fillBtn');
+
+  let abMode = 'mix';
+  let viewMode = 'side-by-side';
+  let fitMode = 'contain';
+
+  leftBtn.addEventListener('click', () => leftFile.click());
+  rightBtn.addEventListener('click', () => rightFile.click());
+
+  function attachFile(input, video){
+    input.addEventListener('change', () => {
+      const f = input.files && input.files[0];
+      if (!f) return;
+      const url = URL.createObjectURL(f);
+      video.src = url; video.load();
+    });
+  }
+  attachFile(leftFile, left);
+  attachFile(rightFile, right);
+
+  function enableDnD(paneId, video){
+    const pane = $(paneId);
+    function over(e){ e.preventDefault(); pane.classList.add('drag'); }
+    function leave(e){ e.preventDefault(); pane.classList.remove('drag'); }
+    function drop(e){
+      e.preventDefault(); pane.classList.remove('drag');
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (!f) return;
+      if (!f.type.startsWith('video/')){ alert('Please drop a video file.'); return; }
+      const url = URL.createObjectURL(f);
+      video.src = url; video.load();
+    }
+    pane.addEventListener('dragover', over);
+    pane.addEventListener('dragenter', over);
+    pane.addEventListener('dragleave', leave);
+    pane.addEventListener('drop', drop);
+  }
+  enableDnD('leftPane', left);
+  enableDnD('rightPane', right);
+
+  function updatePlayUi(){ playBtn.textContent = (!left.paused || !right.paused) ? 'PAUSE' : 'PLAY'; }
+  playBtn.addEventListener('click', async () => {
+    const anyPlaying = (!left.paused && !left.ended) || (!right.paused && !right.ended);
+    if (anyPlaying){ try{ left.pause(); }catch(e){} try{ right.pause(); }catch(e){} }
+    else { try{ if (left.src) await left.play(); }catch(e){} try{ if (right.src) await right.play(); }catch(e){} }
+    updatePlayUi();
+  });
+  stopBtn.addEventListener('click', () => {
+    [left,right].forEach(v=>{ try{ v.pause(); v.currentTime = 0; }catch(_){} });
+    updatePlayUi();
+  });
+
+  function setSpeed(rate){ [left,right].forEach(v=> v.playbackRate = rate); }
+  speedSel.addEventListener('change', ()=> setSpeed(parseFloat(speedSel.value)));
+  setSpeed(parseFloat(speedSel.value));
+
+  function setVolumes(){ left.volume = parseFloat(leftVol.value); right.volume = parseFloat(rightVol.value); }
+  leftVol.addEventListener('input', setVolumes);
+  rightVol.addEventListener('input', setVolumes);
+  setVolumes();
+
+  function applyAudioMode(){
+    if (abMode==='mix'){ left.muted = false; right.muted = false; }
+    else if (abMode==='left'){ left.muted = false; right.muted = true; }
+    else { left.muted = true; right.muted = false; }
+    abBtn.textContent = 'AUDIO: ' + (abMode==='mix' ? 'MIX' : (abMode==='left' ? 'LEFT' : 'RIGHT'));
+  }
+  abBtn.addEventListener('click', ()=>{ abMode = (abMode==='mix') ? 'left' : (abMode==='left' ? 'right' : 'mix'); applyAudioMode(); });
+  applyAudioMode();
+
+  function ensureWipeOverlay(){
+    if (!wipeOverlay.firstChild){
+      const overVid = document.createElement('video');
+      overVid.playsInline = true; overVid.muted = true;
+      overVid.autoplay = false; overVid.controls = false; overVid.preload = 'metadata';
+      overVid.style.width = '100%'; overVid.style.height = '100%'; overVid.style.objectFit = fitMode;
+      overVid.id = 'overlayRightVideo';
+      wipeOverlay.appendChild(overVid);
+    }
+    const overVid = $('overlayRightVideo');
+    if (overVid.src !== right.src){ overVid.src = right.src; overVid.load(); }
+    overVid.style.objectFit = fitMode;
+  }
+
+  function setViewMode(mode){
+    viewMode = mode;
+    if (mode==='wipe'){
+      document.body.classList.add('wipe');
+      viewBtn.textContent = 'VIEW: WIPE';
+      $('leftPane').appendChild(wipeOverlay);
+      wipeOverlay.style.display = 'block';
+      ensureWipeOverlay();
+      applyWipe();
+    } else {
+      document.body.classList.remove('wipe');
+      viewBtn.textContent = 'VIEW: SIDE-BY-SIDE';
+      wipeOverlay.style.display = 'none';
+    }
+  }
+  viewBtn.addEventListener('click', ()=> setViewMode(viewMode==='wipe' ? 'side-by-side' : 'wipe'));
+
+  function applyWipe(){
+    if (viewMode!=='wipe') return;
+    const pct = parseInt(wipeRange.value, 10);
+    const overVid = $('overlayRightVideo'); if (!overVid) return;
+    overVid.style.clipPath = 'inset(0 0 0 calc(100% - ' + pct + '%))';
+    wipeDivider.style.left = `calc(${pct}% - 1px)`;
+  }
+  wipeRange.addEventListener('input', applyWipe);
+
+  function setZoom(val){
+    root.style.setProperty('--zoom', String(val));
+    zoomPct.textContent = Math.round(val*100) + '%';
+  }
+  function getZoom(){ return parseInt(zoomRange.value,10) / 100; }
+  zoomRange.addEventListener('input', ()=> setZoom(getZoom()));
+  setZoom(getZoom());
+
+  function applyFit(mode){
+    fitMode = mode;
+    [left,right,$('overlayRightVideo')].forEach(v=>{ if(v){ v.style.objectFit = fitMode; }});
+  }
+  fitBtn.addEventListener('click', ()=> applyFit('contain'));
+  fillBtn.addEventListener('click', ()=> applyFit('cover'));
+  applyFit('contain');
+
+  function fmtTime(t){
+    t=Math.max(0,t||0);
+    const s=Math.floor(t);
+    const hh=(s/3600)|0;
+    const mm=((s%3600)/60)|0;
+    const ss=s%60;
+    return hh?(`${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`)
+             :(`${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`);
+  }
+  seek.addEventListener('change', ()=> {
+    const dur=Math.max(left.duration||0,right.duration||0);
+    if(dur>0){
+      const target=(parseInt(seek.value,10)/1000)*dur;
+      [left,right,$('overlayRightVideo')].forEach(v=>{ if(v){ try{ v.currentTime=target; }catch(e){} } });
+    }
+  });
+
+  function syncLoop(){
+    const off = parseInt(offsetMs.value||'0',10) / 1000;
+    const isPlaying = !left.paused && !left.ended;
+
+    if (isPlaying && right.readyState >= 2 && left.readyState >= 2){
+      const desired = left.currentTime + off;
+      if (Math.abs(desired - right.currentTime) > 0.06){ try{ right.currentTime = Math.max(0, desired); }catch(e){} }
+
+      const over = $('overlayRightVideo');
+      if (over && viewMode==='wipe' && over.readyState >= 2){
+        const d2 = desired - over.currentTime;
+        if (Math.abs(d2) > 0.06){ try{ over.currentTime = Math.max(0, desired); }catch(e){} }
+      }
+    }
+
+    try{
+      const dur = isFinite(left.duration) ? Math.max(left.duration||0, right.duration||0) : (right.duration||0);
+      const cur = Math.max(left.currentTime||0, right.currentTime||0);
+      if (dur>0){ seek.value = Math.floor(cur/dur*1000); }
+      timeLbl.textContent = fmtTime(cur)+' / '+fmtTime(dur);
+    }catch(e){}
+
+    requestAnimationFrame(syncLoop);
+  }
+
+  function syncOverlayState(){
+    const over=$('overlayRightVideo'); if(!over) return;
+    if(left.paused){ try{ over.pause(); }catch(e){} } else { try{ over.play(); }catch(e){} }
+  }
+  left.addEventListener('play', ()=>{ try{ right.play(); }catch(e){} syncOverlayState(); updatePlayUi(); });
+  left.addEventListener('pause', ()=>{ try{ right.pause(); }catch(e){} syncOverlayState(); updatePlayUi(); });
+  right.addEventListener('play', updatePlayUi);
+  right.addEventListener('pause', updatePlayUi);
+
+  window.addEventListener('keydown', (ev)=>{
+    if (ev.code==='Space'){ ev.preventDefault(); if (left.paused) left.play(); else left.pause(); }
+    else if (ev.key==='a' || ev.key==='A'){ abBtn.click(); }
+    else if (ev.key==='ArrowLeft'){ left.currentTime = Math.max(0, left.currentTime - 2); }
+    else if (ev.key==='ArrowRight'){ left.currentTime = left.currentTime + 2; }
+  });
+
+  function toggleFullscreen(){
+    const el = document.fullscreenElement;
+    if (el){ document.exitFullscreen(); }
+    else { root.requestFullscreen().catch(()=>{}); }
+  }
+  fullBtn.addEventListener('click', toggleFullscreen);
+
+  requestAnimationFrame(syncLoop);
+})();
+</script>
+</body>
+</html>

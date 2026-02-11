@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portfolio Boot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            height: 100vh;
+            width: 100vw;
+            position: fixed; /* Prevenir scroll en mobile */
+            touch-action: none; /* Prevenir gestos táctiles durante la intro */
+        }
+
+        /* Efecto CRT - Más sutil en mobile para rendimiento */
+        .crt::before {
+            content: " ";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+            background-size: 100% 3px, 2px 100%;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        /* Terminal */
+        #terminal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px 20px;
+            color: #0f0;
+            font-size: 20px; /* Base más pequeño para mobile */
+            font-weight: bold;
+            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+            z-index: 50;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .line-wrapper {
+            height: auto;
+            min-height: 32px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            position: relative;
+            word-break: break-word;
+        }
+
+        .line {
+            display: inline;
+            white-space: normal; /* Permitir wrap en mobile si es necesario */
+        }
+
+        /* CURSOR CUADRADO */
+        .cursor-block {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: #0f0;
+            box-shadow: 0 0 10px #0f0;
+            vertical-align: middle;
+            animation: blink 0.8s infinite;
+        }
+
+        /* CURSOR DE TYPING */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 20px;
+            background: #0f0;
+            margin-left: 3px;
+            vertical-align: middle;
+            box-shadow: 0 0 8px #0f0;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* TIMELINE 12s */
+
+        /* 0-1.5s: Cursor bloque */
+        #line1 { 
+            opacity: 1;
+        }
+        #line1 .cursor-block {
+            animation: blink 0.8s infinite, stopBlink 0.1s 1.5s forwards;
+        }
+
+        @keyframes stopBlink {
+            to { opacity: 0; }
+        }
+
+        /* 1.5-3.0s: Typing */
+        #line2 {
+            opacity: 1;
+        }
+        
+        #line2 .text-reveal {
+            display: inline;
+            clip-path: inset(0 100% 0 0);
+            animation: revealText 1.5s 1.5s steps(45, end) forwards;
+        }
+        
+        #line2 .typing-cursor {
+            opacity: 0;
+            animation: showCursor 0.1s 1.5s forwards, blink 0.8s 1.5s infinite, hideCursor 0.1s 3.0s forwards;
+        }
+
+        @keyframes revealText {
+            to { clip-path: inset(0 0% 0 0); }
+        }
+        @keyframes showCursor { to { opacity: 1; } }
+        @keyframes hideCursor { to { opacity: 0; } }
+
+        /* 3.0-4.5s: Warning */
+        #line3 {
+            opacity: 0;
+            animation: glitchIn 1.5s 3.0s forwards;
+        }
+
+        /* 4.5-6.0s: Trace */
+        #line4 {
+            opacity: 0;
+            animation: fadeIn 1.5s 4.5s forwards;
+        }
+
+        /* 6.0-8.4s: Terminal fade out */
+        #terminal {
+            animation: fadeOutSlow 2.4s 6.0s forwards;
+        }
+
+        @keyframes glitchIn {
+            0% { opacity: 0; transform: translateX(-10px); filter: hue-rotate(90deg); }
+            20% { opacity: 1; transform: translateX(5px); text-shadow: -2px 0 #f00, 2px 0 #00f; }
+            40% { transform: translateX(-3px); text-shadow: 2px 0 #f00, -2px 0 #00f; }
+            60% { transform: translateX(2px); }
+            80% { transform: translateX(0); }
+            100% { opacity: 1; text-shadow: 0 0 10px #0f0, 0 0 20px #0f0; filter: hue-rotate(0); }
+        }
+
+        @keyframes fadeIn { 
+            to { opacity: 1; } 
+        }
+        
+        @keyframes fadeOutSlow { 
+            0% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        /* Matrix */
+        #matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+            opacity: 0;
+            animation: fadeInMatrix 2.4s 6.0s forwards;
+            filter: brightness(1.2) contrast(1.1);
+        }
+
+        @keyframes fadeInMatrix {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* System Failure */
+        #sf-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 40;
+            opacity: 0;
+            animation: fadeIn 0.6s 8.4s forwards;
+            background: rgba(0, 20, 0, 0.3);
+            padding: 20px;
+        }
+
+        /* Audio controls */
+        #audioControls{
+            position: absolute;
+            bottom: 14px;
+            left: 14px;
+            z-index: 120;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 8px 10px;
+            border: 1px solid rgba(0,255,0,.35);
+            background: rgba(0,0,0,.55);
+            backdrop-filter: blur(4px);
+            font-size: 12px;
+            color: #0f0;
+        }
+        #audioControls button{
+            background: transparent;
+            color: #0f0;
+            border: 1px solid rgba(0,255,0,.35);
+            padding: 4px 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+        }
+        #audioControls button:hover{ background: rgba(0,255,0,.10); }
+        #audioControls input[type="range"]{ width: 88px; }
+        #audioHint{ opacity: .75; }
+
+        #system-failure {
+            border: 3px solid #0f0;
+            background: #000;
+            padding: 20px 30px;
+            color: #0f0;
+            font-size: 28px; /* Más pequeño para mobile */
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6), inset 0 0 30px rgba(0, 255, 0, 0.1);
+            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+            letter-spacing: 3px;
+            transform: scale(1);
+            max-width: 90vw;
+            animation: zoomTunnel 3.6s 9.0s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+
+        @keyframes zoomTunnel {
+            0% { transform: scale(1); opacity: 1; }
+            30% { transform: scale(1.5); opacity: 0.9; }
+            100% { transform: scale(40); opacity: 0; } /* Menos zoom agresivo en mobile */
+        }
+
+        /* Flash */
+        #flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            z-index: 60;
+            pointer-events: none;
+            animation: flash 0.2s 12s forwards;
+        }
+
+        @keyframes flash {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Contenido final */
+        #content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #0f0;
+            opacity: 0;
+            transform: scale(0.95);
+            animation: fadeInContent 0.8s 12.2s forwards;
+            z-index: 20;
+            background: #000;
+            text-shadow: 0 0 20px #0f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #content h1 {
+            font-size: 32px; /* Responsive base */
+            letter-spacing: 6px;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        #content p {
+            font-size: 16px;
+            letter-spacing: 3px;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInContent {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* MEDIA QUERIES PARA TABLETS Y DESKTOP */
+        @media (min-width: 768px) {
+            #terminal {
+                padding: 60px 40px;
+                font-size: 24px;
+            }
+            
+            .line-wrapper {
+                min-height: 36px;
+                margin-bottom: 4px;
+            }
+            
+            #system-failure {
+                font-size: 38px;
+                padding: 35px 50px;
+                letter-spacing: 5px;
+                border-width: 4px;
+            }
+            
+            @keyframes zoomTunnel {
+                0% { transform: scale(1); opacity: 1; }
+                30% { transform: scale(2); opacity: 0.9; }
+                100% { transform: scale(80); opacity: 0; }
+            }
+            
+            #content h1 {
+                font-size: 52px;
+                letter-spacing: 10px;
+            }
+            
+            #content p {
+                font-size: 18px;
+                letter-spacing: 4px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #terminal {
+                padding: 80px;
+                font-size: 26px;
+            }
+            
+            #system-failure {
+                font-size: 42px;
+                padding: 40px 60px;
+            }
+            
+            #content h1 {
+                font-size: 64px;
+                letter-spacing: 12px;
+            }
+            
+            #content p {
+                font-size: 20px;
+            }
+        }
+
+        /* Orientación landscape en mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #terminal {
+                padding: 20px 40px;
+                font-size: 18px;
+            }
+            
+            .line-wrapper {
+                min-height: 28px;
+                margin-bottom: 4px;
+            }
+            
+            #system-failure {
+                font-size: 24px;
+                padding: 15px 25px;
+            }
+            
+            #content h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body class="crt">
+    <div id="audioControls" aria-label="Audio controls">
+        <button id="audioPlay" type="button">PLAY</button>
+        <button id="audioMute" type="button">MUTE</button>
+        <input id="audioVol" type="range" min="0" max="1" step="0.05" value="0.2" />
+        <span id="audioHint">AUDIO: LOADING</span>
+    </div>
+
+    <div id="terminal">
+        <div class="line-wrapper" id="line1">
+            <span class="cursor-block"></span>
+        </div>
+        
+        <div class="line-wrapper" id="line2">
+            <span class="line"><span class="text-reveal">Portfolio TP required: approving request...</span><span class="typing-cursor"></span></span>
+        </div>
+        
+        <div class="line-wrapper" id="line3">
+            <span class="line">WARNING: human creativity inside</span>
+        </div>
+        
+        <div class="line-wrapper" id="line4">
+            <span class="line">Trace program: running</span>
+        </div>
+    </div>
+
+    <canvas id="matrix"></canvas>
+
+    <div id="sf-container">
+        <div id="system-failure">SYSTEM FAILURE</div>
+    </div>
+
+    <div id="flash"></div>
+
+    <div id="content">
+        <h1>PORTFOLIO TP</h1>
+        <p>[ ACCESS GRANTED ]</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+
+        const chars = '0123456789';
+        const fontSize = window.innerWidth < 768 ? 12 : 16; /* Fuente más pequeña en mobile */
+        let columns = Math.floor(canvas.width / fontSize);
+        let drops = [];
+
+        // En mobile reducimos la densidad para mejor rendimiento
+        if (window.innerWidth < 768) {
+            columns = Math.floor(columns * 0.7); /* 30% menos columnas en mobile */
+        }
+
+        function initDrops() {
+            drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.random() * -100;
+            }
+        }
+        initDrops();
+
+        let speed = 0.6;
+        setTimeout(() => { speed = 1.2; }, 6000);
+        setTimeout(() => { speed = 2.0; }, 9000);
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                
+                if (Math.random() > 0.97) {
+                    ctx.fillStyle = '#AFA';
+                    ctx.shadowColor = '#0F0';
+                    ctx.shadowBlur = 6;
+                } else {
+                    ctx.fillStyle = '#0F0';
+                    ctx.shadowBlur = 0;
+                }
+                
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                ctx.shadowBlur = 0;
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.985) {
+                    drops[i] = 0;
+                }
+                
+                // En mobile cae un poco más lento
+                const mobileMultiplier = window.innerWidth < 768 ? 0.8 : 1;
+                drops[i] += 0.4 * speed * mobileMultiplier;
+            }
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+
+        // Glitch warning
+        const line3 = document.querySelector('#line3 .line');
+        let glitchInterval = setInterval(() => {
+            if (Math.random() > 0.6) {
+                line3.style.textShadow = `${(Math.random()-0.5)*8}px 0 #f00, ${(Math.random()-0.5)*8}px 0 #00f`;
+                line3.style.transform = `translateX(${(Math.random()-0.5)*4}px)`;
+                setTimeout(() => {
+                    line3.style.textShadow = '0 0 10px #0f0, 0 0 20px #0f0';
+                    line3.style.transform = 'translateX(0)';
+                }, 80);
+            }
+        }, 150);
+
+        setTimeout(() => clearInterval(glitchInterval), 4500);
+
+        // Responsive resize handler
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                resizeCanvas();
+                // Recalcular columnas en resize
+                const newColumns = Math.floor(canvas.width / fontSize) * (window.innerWidth < 768 ? 0.7 : 1);
+                if (Math.abs(newColumns - columns) > 5) {
+                    columns = newColumns;
+                    initDrops();
+                }
+            }, 250);
+        });
+
+        // Cleanup
+        setTimeout(() => {
+            document.getElementById('terminal').style.display = 'none';
+            document.getElementById('matrix').style.display = 'none';
+            document.getElementById('sf-container').style.display = 'none';
+        }, 13000);
+
+        /* MIDI playback (WebAudio synth) */
+        (function initMidiPlayer() {
+            const playBtn = document.getElementById('audioPlay');
+            const muteBtn = document.getElementById('audioMute');
+            const volSlider = document.getElementById('audioVol');
+            const hint = document.getElementById('audioHint');
+
+            let audioCtx = null;
+            let masterGain = null;
+            let events = [];
+            let isReady = false;
+            let isPlaying = false;
+            let startAt = 0; // seconds offset
+            let playStartCtxTime = 0;
+            let scheduled = [];
+            let autoplayRequested = true;
+            const PLAYBACK_RATE = 1.1; // 1.1x speed
+
+            function stopAll() {
+                scheduled.forEach(o => {
+                    try { o.stop(0); } catch(e) {}
+                });
+                scheduled = [];
+            }
+
+            function midiNoteToFreq(note) {
+                return 440 * Math.pow(2, (note - 69) / 12);
+            }
+
+            function scheduleFrom(offsetSec) {
+                if (!audioCtx || !masterGain) return;
+                stopAll();
+                const now = audioCtx.currentTime;
+                playStartCtxTime = now;
+                const attack = 0.005;
+                const release = 0.10;
+
+                for (const ev of events) {
+                    if (ev.t < offsetSec) continue;
+                    const t = now + (ev.t - offsetSec) / PLAYBACK_RATE;
+                    const dur = Math.max(0.02, ev.d / PLAYBACK_RATE);
+
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = ev.wave || 'sine';
+                    osc.frequency.setValueAtTime(midiNoteToFreq(ev.n), t);
+
+                    const v = Math.min(1, Math.max(0, ev.v));
+                    g.gain.setValueAtTime(0.0001, t);
+                    g.gain.linearRampToValueAtTime(v, t + attack);
+                    g.gain.setValueAtTime(v, t + Math.max(attack, dur - release));
+                    g.gain.linearRampToValueAtTime(0.0001, t + dur);
+
+                    osc.connect(g);
+                    g.connect(masterGain);
+
+                    osc.start(t);
+                    osc.stop(t + dur + 0.02);
+                    scheduled.push(osc);
+                }
+            }
+
+            function play() {
+                if (!isReady) return;
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    masterGain = audioCtx.createGain();
+                    masterGain.gain.value = parseFloat(volSlider.value || '0.6');
+                    masterGain.connect(audioCtx.destination);
+                }
+                const resumePromise = (audioCtx.state === 'suspended') ? audioCtx.resume() : Promise.resolve();
+                resumePromise
+                    .then(() => {
+                        scheduleFrom(startAt);
+                        isPlaying = true;
+                        playBtn.textContent = 'PAUSE';
+                        hint.textContent = 'AUDIO: ON';
+                    })
+                    .catch(() => {
+                        // Browser autoplay policies may block audio until a user gesture.
+                        hint.textContent = 'AUDIO: CLICK PLAY';
+                    });
+            }
+
+            function pause() {
+                if (!audioCtx) return;
+                // compute current offset
+                const elapsed = audioCtx.currentTime - playStartCtxTime;
+                startAt = startAt + Math.max(0, elapsed) * PLAYBACK_RATE;
+                stopAll();
+                isPlaying = false;
+                playBtn.textContent = 'PLAY';
+                hint.textContent = 'AUDIO: PAUSED';
+            }
+
+            function togglePlay() {
+                if (!isReady) return;
+                if (!isPlaying) play(); else pause();
+            }
+
+            function setVolume(v) {
+                if (masterGain) masterGain.gain.value = v;
+            }
+
+            function toggleMute() {
+                const v = parseFloat(volSlider.value || '0.6');
+                if (volSlider.dataset.muted === '1') {
+                    volSlider.dataset.muted = '0';
+                    setVolume(v);
+                    muteBtn.textContent = 'MUTE';
+                } else {
+                    volSlider.dataset.muted = '1';
+                    setVolume(0);
+                    muteBtn.textContent = 'UNMUTE';
+                }
+            }
+
+            function readU32(dv, i) { return dv.getUint32(i); }
+            function readU16(dv, i) { return dv.getUint16(i); }
+            function readStr(u8, i, n) { return String.fromCharCode.apply(null, Array.from(u8.slice(i, i+n))); }
+            function readVLQ(u8, idx) {
+                let v = 0;
+                while (idx.i < u8.length) {
+                    const b = u8[idx.i++];
+                    v = (v << 7) | (b & 0x7f);
+                    if ((b & 0x80) === 0) break;
+                }
+                return v;
+            }
+
+            function parseMidi(u8) {
+                const dv = new DataView(u8.buffer);
+                if (readStr(u8, 0, 4) !== 'MThd') throw new Error('Bad MIDI');
+                const headerLen = readU32(dv, 4);
+                const format = readU16(dv, 8);
+                const ntrks = readU16(dv, 10);
+                const tpq = readU16(dv, 12);
+                let pos = 8 + headerLen;
+
+                // First pass: collect tempo changes (ticks)
+                const tempoChanges = [{ tick: 0, tempo: 500000 }];
+                const tracks = [];
+                for (let t = 0; t < ntrks; t++) {
+                    if (readStr(u8, pos, 4) !== 'MTrk') break;
+                    const len = readU32(dv, pos + 4);
+                    const start = pos + 8;
+                    const end = start + len;
+                    tracks.push(u8.slice(start, end));
+                    pos = end;
+                }
+
+                for (const trk of tracks) {
+                    let tick = 0;
+                    let running = 0;
+                    const idx = { i: 0 };
+                    while (idx.i < trk.length) {
+                        tick += readVLQ(trk, idx);
+                        let status = trk[idx.i++];
+                        if (status < 0x80) {
+                            idx.i--; // data byte, use running status
+                            status = running;
+                        } else {
+                            running = status;
+                        }
+
+                        if (status === 0xFF) {
+                            const type = trk[idx.i++];
+                            const mlen = readVLQ(trk, idx);
+                            if (type === 0x51 && mlen === 3) {
+                                const tempo = (trk[idx.i] << 16) | (trk[idx.i + 1] << 8) | trk[idx.i + 2];
+                                tempoChanges.push({ tick, tempo });
+                            }
+                            idx.i += mlen;
+                        } else if ((status & 0xF0) === 0xF0) {
+                            // SysEx: skip
+                            const syxLen = readVLQ(trk, idx);
+                            idx.i += syxLen;
+                        } else {
+                            const cmd = status & 0xF0;
+                            const needs2 = !(cmd === 0xC0 || cmd === 0xD0);
+                            idx.i += needs2 ? 2 : 1;
+                        }
+                    }
+                }
+
+                tempoChanges.sort((a,b) => a.tick - b.tick);
+                // Build helper to convert tick -> seconds
+                const segs = [];
+                for (let i = 0; i < tempoChanges.length; i++) {
+                    const cur = tempoChanges[i];
+                    const next = tempoChanges[i+1];
+                    segs.push({
+                        tickStart: cur.tick,
+                        tickEnd: next ? next.tick : Infinity,
+                        tempo: cur.tempo,
+                    });
+                }
+                function tickToSec(tick) {
+                    let sec = 0;
+                    for (const s of segs) {
+                        if (tick <= s.tickStart) break;
+                        const a = s.tickStart;
+                        const b = Math.min(tick, s.tickEnd);
+                        if (b > a) {
+                            sec += (b - a) * (s.tempo / 1000000) / tpq;
+                        }
+                        if (tick < s.tickEnd) break;
+                    }
+                    return sec;
+                }
+
+                // Second pass: collect note events
+                const notes = [];
+                for (const trk of tracks) {
+                    let tick = 0;
+                    let running = 0;
+                    const idx = { i: 0 };
+                    const active = new Map(); // key: ch-note -> {tick, vel}
+                    while (idx.i < trk.length) {
+                        tick += readVLQ(trk, idx);
+                        let status = trk[idx.i++];
+                        if (status < 0x80) { idx.i--; status = running; } else { running = status; }
+                        if (status === 0xFF) {
+                            const type = trk[idx.i++];
+                            const mlen = readVLQ(trk, idx);
+                            idx.i += mlen;
+                            continue;
+                        }
+                        if ((status & 0xF0) === 0xF0) {
+                            const syxLen = readVLQ(trk, idx);
+                            idx.i += syxLen;
+                            continue;
+                        }
+                        const cmd = status & 0xF0;
+                        const ch = status & 0x0F;
+                        const p1 = trk[idx.i++];
+                        const p2 = (cmd === 0xC0 || cmd === 0xD0) ? 0 : trk[idx.i++];
+
+                        if (cmd === 0x90) {
+                            const note = p1;
+                            const vel = p2;
+                            const key = (ch << 8) | note;
+                            if (vel === 0) {
+                                // treat as note off
+                                const on = active.get(key);
+                                if (on) {
+                                    const t0 = tickToSec(on.tick);
+                                    const t1 = tickToSec(tick);
+                                    notes.push({ t: t0, d: Math.max(0.03, t1 - t0), n: note, v: Math.min(1, on.vel / 110) });
+                                    active.delete(key);
+                                }
+                            } else {
+                                active.set(key, { tick, vel });
+                            }
+                        } else if (cmd === 0x80) {
+                            const note = p1;
+                            const key = (ch << 8) | note;
+                            const on = active.get(key);
+                            if (on) {
+                                const t0 = tickToSec(on.tick);
+                                const t1 = tickToSec(tick);
+                                notes.push({ t: t0, d: Math.max(0.03, t1 - t0), n: note, v: Math.min(1, on.vel / 110) });
+                                active.delete(key);
+                            }
+                        }
+                    }
+                }
+
+                notes.sort((a,b) => a.t - b.t);
+                return notes;
+            }
+
+            // Fallback: if autoplay is blocked, a user gesture will allow playback.
+            window.addEventListener('pointerdown', () => {
+                if (isReady && !isPlaying) play();
+            });
+
+            fetch('/audio/clubbed-to-death.mid')
+                .then(r => r.arrayBuffer())
+                .then(buf => {
+                    events = parseMidi(new Uint8Array(buf));
+                    isReady = true;
+                    hint.textContent = 'AUDIO: READY';
+                    if (autoplayRequested && !isPlaying) play();
+                })
+                .catch(() => {
+                    hint.textContent = 'AUDIO: OFF';
+                });
+
+            playBtn.addEventListener('click', togglePlay);
+            muteBtn.addEventListener('click', toggleMute);
+            volSlider.addEventListener('input', (e) => {
+                volSlider.dataset.muted = '0';
+                muteBtn.textContent = 'MUTE';
+                setVolume(parseFloat(e.target.value));
+            });
+        })();
+
+        // Auto-redirect to the site (first-load intro).
+        // The destination path is provided via URL hash: /intro.html#%2Fwork%2Fai-experiments
+        (function () {
+            let next = '/';
+            try {
+                const raw = window.location.hash ? window.location.hash.slice(1) : '';
+                next = raw ? decodeURIComponent(raw) : '/';
+            } catch (e) {
+                next = '/';
+            }
+
+            // Redirect right after the animation completes (no extra wait).
+            // Timeline ends ~12.2s; we redirect slightly after for safety.
+            const REDIRECT_AT_MS = 12850;
+            window.setTimeout(() => {
+                try { localStorage.setItem('tp_intro_seen', '1'); } catch (e) {}
+                window.location.replace(next);
+            }, REDIRECT_AT_MS);
+        })();
+    </script>
+</body>
+</html>
