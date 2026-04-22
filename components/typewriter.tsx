@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useLanguage } from "@/components/language-context"
@@ -18,10 +18,18 @@ type Props = {
   speedMs?: number
   startDelayMs?: number
   fontSizePx?: number
+  mobileFontSizePx?: number
   cursorSizePx?: number
   className?: string
+  align?: "left" | "center"
   forceReveal?: boolean
   onDone?: () => void
+  color?: string
+  cursorColor?: string
+}
+
+function decodeUnicodeEscapes(value: string) {
+  return value.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
 }
 
 export default function Typewriter({
@@ -32,23 +40,27 @@ export default function Typewriter({
   speedMs = 10.8,
   startDelayMs = 250,
   fontSizePx = 30.5,
+  mobileFontSizePx,
   cursorSizePx = 14,
   className,
+  align = "left",
   forceReveal = false,
   onDone,
+  color = "#00ff00",
+  cursorColor = "#00ff00",
 }: Props) {
   const { language } = useLanguage()
 
   const activeSegments = useMemo(() => {
-    if (language === "en" && segmentsEn && segmentsEn.length) return segmentsEn
-    if (language !== "en" && segmentsEs && segmentsEs.length) return segmentsEs
-    return undefined
+    const source = language === "en" && segmentsEn?.length ? segmentsEn : language !== "en" && segmentsEs?.length ? segmentsEs : undefined
+    if (!source) return undefined
+    return source.map((segment) => ({ ...segment, text: decodeUnicodeEscapes(segment.text) }))
   }, [language, segmentsEn, segmentsEs])
 
   const fullText = useMemo(() => {
     if (activeSegments) return activeSegments.map((s) => s.text).join("")
-    if (language === "en" && textEn) return textEn
-    return textEs
+    if (language === "en" && textEn) return decodeUnicodeEscapes(textEn)
+    return decodeUnicodeEscapes(textEs)
   }, [activeSegments, language, textEn, textEs])
 
   const [out, setOut] = useState("")
@@ -126,15 +138,18 @@ export default function Typewriter({
       .filter(Boolean)
   }, [activeSegments, out])
 
+  const alignmentClass = align === "center" ? "text-center" : "text-left"
+  const resolvedFontSize = mobileFontSizePx ? `clamp(${mobileFontSizePx}px, 3vw, ${fontSizePx}px)` : fontSizePx
+
   return (
-    <div className={`mt-0 w-full text-left ${className ?? ""}`.trim()}>
+    <div className={`mt-0 w-full ${alignmentClass} ${className ?? ""}`.trim()}>
       <div
-        className="font-mono leading-relaxed whitespace-pre-line"
+        className={`font-mono leading-relaxed whitespace-pre-line ${alignmentClass}`.trim()}
         style={{
-          fontSize: fontSizePx,
+          fontSize: resolvedFontSize,
           lineHeight: 1.19,
           fontWeight: 400,
-          color: "#00ff00",
+          color,
           textShadow: "none",
         }}
       >
@@ -142,7 +157,7 @@ export default function Typewriter({
         <span
           aria-hidden
           className={`inline-block align-middle ml-1 ${done ? "cursor-blink" : ""}`.trim()}
-          style={{ width: cursorSizePx, height: cursorSizePx, background: "#00ff00", boxShadow: "none", opacity: 0.9 }}
+          style={{ width: cursorSizePx, height: cursorSizePx, background: cursorColor, boxShadow: "none", opacity: 0.9 }}
         />
       </div>
     </div>

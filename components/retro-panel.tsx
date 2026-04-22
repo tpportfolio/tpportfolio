@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import type { ReactNode } from "react"
 
@@ -17,7 +17,7 @@ export function RetroPanel({
 }) {
   return (
     <div
-      className={`relative rounded-sm overflow-hidden border bg-black shadow-lg transition-all duration-300
+      className={`retro-panel relative rounded-sm overflow-hidden border bg-black shadow-lg transition-all duration-300
         ${highlight ? "border-cyan-400 shadow-cyan-400/40 hover:shadow-cyan-400/70" : "border-neon-green shadow-neon-green/20 hover:shadow-neon-green/40"}
         ${className || ""}`}
     >

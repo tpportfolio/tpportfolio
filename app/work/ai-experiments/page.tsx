@@ -1,13 +1,16 @@
-"use client"
+﻿"use client"
 
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { VideoCarousel, type VideoItem } from "@/components/video-carousel"
 import { useLanguage } from "@/components/language-context"
+import { useVisualMode } from "@/components/visual-mode-context"
 import { RetroPanel } from "@/components/retro-panel"
 
 export default function AIExperimentsPage() {
   const { t, language } = useLanguage()
+  const { mode } = useVisualMode()
+  const isLight = mode === "light"
 
   // 2022–2024 archive (existing)
   const aiArchiveVideos: VideoItem[] = [
@@ -17,8 +20,8 @@ export default function AIExperimentsPage() {
       videoId: "PLTai-gQI1os2Pz82VXGrAZ9Jov1dujRCl", // This is a playlist ID
       isPlaylist: true,
       title: {
-        es: "JUN'24 - LUMA TESTING. El mato a un policía motorizado animated artworks.",
-        en: "JUN'24 - LUMA TESTING. El mato a un policía motorizado animated artworks.",
+        es: "JUN'24 - LUMA TESTING. Él mató a un policía motorizado animated artworks.",
+        en: "JUN'24 - LUMA TESTING. Él mató a un policía motorizado animated artworks.",
       },
       description: {
         es: 'Probé Luma Labs en los artworks de "El mató a un policía motorizado".',
@@ -90,8 +93,8 @@ export default function AIExperimentsPage() {
   }
 
   return (
-    <main className="min-h-screen py-8 px-4 md:px-12">
-      <div className="max-w-5xl mx-auto">
+    <main className={`ai-page min-h-screen py-8 px-4 md:px-12 ${isLight ? "ai-page--light" : ""}`}>
+      <div className="w-full">
       <div className="marquee-container mb-6">
         <div className="marquee">
           <span>PROJECT_ID: AI EXPERIMENTS // TIMESTAMP: 2020-PRESENT // SECURITY_CLEARANCE: GRANTED</span>
@@ -115,15 +118,15 @@ export default function AIExperimentsPage() {
 
         {/* WIP Win95 Banner */}
         <div className="flex justify-center mb-8">
-          <div className="max-w-[420px] border-2 border-black bg-[#c0c0c0] shadow-[3px_3px_0_#000] font-[\'MS_Sans_Serif\'],system-ui,sans-serif text-[13px]">
-            <div className="flex justify-between items-center px-2 py-1 bg-gradient-to-r from-[#000080] to-[#1e4aa8] text-white">
+          <div className={`max-w-[420px] border-2 shadow-[3px_3px_0_#000] font-[\'MS_Sans_Serif\'],system-ui,sans-serif text-[13px] ${isLight ? "border-[#8b4315] bg-[#f6e6d2] shadow-[3px_3px_0_#8b4315]" : "border-black bg-[#c0c0c0]"}`}>
+            <div className={`flex justify-between items-center px-2 py-1 ${isLight ? "bg-gradient-to-r from-[#6f3210] to-[#b85a17] text-[#f7d7a0]" : "bg-gradient-to-r from-[#000080] to-[#1e4aa8] text-white"}`}>
               <span className="uppercase tracking-wider font-bold animate-blink">UPDATES PENDING</span>
-              <span className="ml-2 space-x-1">
+              <span className={`ml-2 space-x-1 ${isLight ? "text-[#3d1b09]" : ""}`}>
                 <span className="inline-block px-1 bg-[#c0c0c0] text-black border border-black text-[10px]">▢</span>
                 <span className="inline-block px-1 bg-[#c0c0c0] text-black border border-black text-[10px]">✖</span>
               </span>
             </div>
-            <div className="flex items-center gap-2 px-3 py-2 bg-[#e5e5e5] border-t border-black">
+            <div className={`flex items-center gap-2 px-3 py-2 border-t ${isLight ? "bg-[#fff4e8] border-[#8b4315]" : "bg-[#e5e5e5] border-black"}`}>
               <span className="text-lg">⚠️</span>
               <span className="text-[12px] text-black leading-tight">
                 NEW AI EXPERIMENTS COMING…<br />WORK IN PROGRESS
@@ -140,29 +143,29 @@ export default function AIExperimentsPage() {
               : "Since 2020 I’ve been learning about AI both self‑taught and through courses (e.g., Morfeo Academy), focused on tools that add direct value to real content production workflows. My approach is practical: speed up, iterate, reduce friction, and improve quality in real production pipelines.\n\nI explored dozens of platforms; here are the key ones I work with today:"}
           </p>
 
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30">
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30 h-full">
               <div className="text-neon-cyan font-cyber mb-2">{language === "es" ? "IMAGEN" : "IMAGE"}</div>
               <ul className="list-disc pl-5 space-y-2 text-base text-neon-green/90">
                 <li>Nanobanana, Seedream, Leonardo, Flux, Ideogram, GoogleFX, Midjourney.</li>
               </ul>
             </div>
 
-            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30">
+            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30 h-full">
               <div className="text-neon-cyan font-cyber mb-2">VIDEO</div>
               <ul className="list-disc pl-5 space-y-2 text-base text-neon-green/90">
                 <li>Sora2, Veo3, Higgsfield, Kling, Hailuo, Runway</li>
               </ul>
             </div>
 
-            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30">
+            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30 h-full">
               <div className="text-neon-cyan font-cyber mb-2">AUDIO</div>
               <ul className="list-disc pl-5 space-y-2 text-base text-neon-green/90">
                 <li>ElevenLabs, fish.audio, Suno, Udio</li>
               </ul>
             </div>
 
-            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30">
+            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30 h-full">
               <div className="text-neon-cyan font-cyber mb-2">LLM&apos;s</div>
               <ul className="list-disc pl-5 space-y-2 text-base text-neon-green/90">
                 <li>ChatGPT, Kimi, Gemini, Perplexity, y algo de Claude (todavía no instalé ClawdBot / OpenClaw)</li>
@@ -202,7 +205,7 @@ export default function AIExperimentsPage() {
             highlight
           >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30">
+            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30 h-full">
               <div className="text-neon-cyan font-cyber text-lg mb-2">Pitch Jumex Mexico – Animatic</div>
               <div className="text-base text-neon-green/90 leading-relaxed whitespace-pre-line">
                 {language === "es"
@@ -235,7 +238,7 @@ export default function AIExperimentsPage() {
               </a>
             </div>
 
-            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30">
+            <div className="border border-neon-green/30 rounded-sm p-4 bg-black/30 h-full">
               <div className="text-neon-cyan font-cyber text-lg mb-2">Pitch Subway Mexico – Animatic</div>
               <div className="text-base text-neon-green/90 leading-relaxed whitespace-pre-line">
                 {language === "es"
@@ -267,7 +270,7 @@ export default function AIExperimentsPage() {
           </RetroPanel>
         </div>
 
-        <RetroPanel
+                <RetroPanel
           title={language === "es" ? "VIBE-CODING: WEBAPPS" : "VIBE-CODING: WEBAPPS"}
           statusRight="TOOLS"
         >
@@ -285,17 +288,17 @@ export default function AIExperimentsPage() {
               >
                 CANVA_PRODUCTORA
               </a>
-              <div className="mt-3 border border-neon-green/40 rounded bg-black/20 overflow-hidden">
+              <a href="/canva_productora" className="block mt-3 border border-neon-green/40 rounded bg-black/20 overflow-hidden hover:border-neon-cyan/60 transition-colors">
                 <div className="px-3 py-2 border-b border-neon-green/30 text-xs text-neon-green/80">preview</div>
                 <div className="relative w-full aspect-video bg-black overflow-hidden">
                   <iframe
                     src="/canva_productora/index.html"
                     title="CANVA_PRODUCTORA preview"
-                    className="absolute left-0 top-0 w-[1280px] h-[720px] origin-top-left scale-[0.25] pointer-events-none"
+                    className="absolute left-0 top-0 w-[400%] h-[400%] origin-top-left scale-[0.25] pointer-events-none border-0"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-downloads"
                   />
                 </div>
-              </div>
+              </a>
               <p className="text-base text-neon-green/90 leading-relaxed mt-3">
                 {language === "es"
                   ? "Canva ad-hoc para Paradise. Propuesta de grilla 3: (1) placa intro -CANVA- (2) foto/screen del video (3) placa negra con marca/año."
@@ -310,17 +313,17 @@ export default function AIExperimentsPage() {
               >
                 UNYELLOWER
               </a>
-              <div className="mt-3 border border-neon-green/40 rounded bg-black/20 overflow-hidden">
+              <a href="/unyellower" className="block mt-3 border border-neon-green/40 rounded bg-black/20 overflow-hidden hover:border-neon-cyan/60 transition-colors">
                 <div className="px-3 py-2 border-b border-neon-green/30 text-xs text-neon-green/80">preview</div>
                 <div className="relative w-full aspect-video bg-black overflow-hidden">
                   <iframe
                     src="/unyellower/index.html"
                     title="UNYELLOWER preview"
-                    className="absolute left-0 top-0 w-[1280px] h-[720px] origin-top-left scale-[0.25] pointer-events-none"
+                    className="absolute left-0 top-0 w-[400%] h-[400%] origin-top-left scale-[0.25] pointer-events-none border-0"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-downloads"
                   />
                 </div>
-              </div>
+              </a>
               <p className="text-base text-neon-green/90 leading-relaxed mt-3">
                 {language === "es"
                   ? "Corrección de color para imágenes (por ejemplo, imágenes de ChatGPT con tinte amarillo). Incluye preset de auto-corrección más azulado."
@@ -335,17 +338,17 @@ export default function AIExperimentsPage() {
               >
                 COMPARADOR_VIDEOS
               </a>
-              <div className="mt-3 border border-neon-green/40 rounded bg-black/20 overflow-hidden">
+              <a href="/comparador_videos" className="block mt-3 border border-neon-green/40 rounded bg-black/20 overflow-hidden hover:border-neon-cyan/60 transition-colors">
                 <div className="px-3 py-2 border-b border-neon-green/30 text-xs text-neon-green/80">preview</div>
                 <div className="relative w-full aspect-video bg-black overflow-hidden">
                   <iframe
                     src="/comparador_videos/index.html"
                     title="COMPARADOR_VIDEOS preview"
-                    className="absolute left-0 top-0 w-[1280px] h-[720px] origin-top-left scale-[0.25] pointer-events-none"
+                    className="absolute left-0 top-0 w-[400%] h-[400%] origin-top-left scale-[0.25] pointer-events-none border-0"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-downloads"
                   />
                 </div>
-              </div>
+              </a>
               <p className="text-base text-neon-green/90 leading-relaxed mt-3">
                 {language === "es"
                   ? "Comparador lado a lado de 2 versiones de un video. Feature no disponible en Dropbox Replay o Frame.io, herramientas pagas de productora."
@@ -372,3 +375,11 @@ export default function AIExperimentsPage() {
     </main>
   )
 }
+
+
+
+
+
+
+
+

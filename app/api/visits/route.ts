@@ -1,38 +1,51 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server"
+
+type VisitSource = "kv" | "disabled"
+
+function degraded(source: VisitSource) {
+  return NextResponse.json({
+    count: null,
+    available: false,
+    source,
+  })
+}
 
 export async function POST() {
-  try {
-    const baseUrl = process.env.KV_REST_API_URL!;
-    const token = process.env.KV_REST_API_TOKEN!;
+  const baseUrl = process.env.KV_REST_API_URL
+  const token = process.env.KV_REST_API_TOKEN
 
-    // Upstash KV style increment:
-    // POST <baseUrl>/incr/<key>
+  if (!baseUrl || !token) {
+    return degraded("disabled")
+  }
+
+  try {
     const response = await fetch(`${baseUrl}/incr/portfolio_visits`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-    });
+      cache: "no-store",
+    })
 
     if (!response.ok) {
-      console.error("Upstash KV error:", response.status);
-      return NextResponse.json(
-        { count: null, error: "KV increment failed" },
-        { status: 500 }
-      );
+      return degraded("kv")
     }
 
-    const result = await response.json();
+    const result = await response.json()
+    const rawCount = result?.result
+    const count = typeof rawCount === "number" ? rawCount : Number(rawCount)
+
+    if (!Number.isFinite(count)) {
+      return degraded("kv")
+    }
 
     return NextResponse.json({
-      count: result.result,
-    });
-  } catch (err) {
-    console.error("KV counter exception:", err);
-    return NextResponse.json(
-      { count: null, error: "KV exception" },
-      { status: 500 }
-    );
+      count,
+      available: true,
+      source: "kv",
+    })
+  } catch {
+    return degraded("kv")
   }
 }

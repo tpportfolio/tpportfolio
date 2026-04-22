@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useLanguage } from "@/components/language-context"
 
@@ -20,7 +20,7 @@ export default function Magaiba() {
         <h2 className="text-xl text-neon-cyan mb-4 font-cyber">WEB3_AI_INNOVATION.exe</h2>
       </section>
 
-      <section className="max-w-6xl mx-auto mb-12">
+      <section className="w-full mb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Video on the left */}
           <div className="terminal">
@@ -52,7 +52,7 @@ export default function Magaiba() {
               <div className="text-center flex flex-col items-center">
   <img src="/magaibacoin.gif" alt="Magaiba Coin" className="mx-auto mb-4 w-24 h-24" />
   <h2 className="text-3xl md:text-4xl text-neon-green mb-6 font-cyber">
-    {language === "es" ? "¿QUÉ ES MAGAIBA?" : "WHAT IS MAGAIBA?"}
+    {language === "es" ? "Â¿QUÃ‰ ES MAGAIBA?" : "WHAT IS MAGAIBA?"}
   </h2>
   <p className="text-xl text-neon-cyan">
     {language === "es"
@@ -65,7 +65,7 @@ export default function Magaiba() {
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto mt-12">
+      <section className="w-full mt-12">
         <div className="terminal">
           <div className="terminal-header">
             <span className="text-xl">MAGAIBA_DETAILS</span>
@@ -74,25 +74,25 @@ export default function Magaiba() {
             {language === "es" ? (
               <>
                 <p className="mb-6 text-lg font-bold">
-                  $MAGAIBA fue la primera memecoin argentina que alcanzó niveles de viralidad globales. Fue creada por Juan Ruocco y Pablo Wasserman, hosts del podcast Círculo Vicioso, y dos devs anónimos. Esta "memecoin" alcanzó un market cap de U$S 16.000.000, una liquidez de U$S 350.000, y un ATH (precio) de U$S 0.02132; por ese entonces, el doble de valor que un yen japonés.
+                  $MAGAIBA fue la primera memecoin argentina que alcanzÃ³ niveles de viralidad globales. Fue creada por Juan Ruocco y Pablo Wasserman, hosts del podcast CÃ­rculo Vicioso, y dos devs anÃ³nimos. Esta "memecoin" alcanzÃ³ un market cap de U$S 16.000.000, una liquidez de U$S 350.000, y un ATH (precio) de U$S 0.02132; por ese entonces, el doble de valor que un yen japonÃ©s.
                 </p>
 
                 <p className="mb-6 text-lg">
-                  Era oyente del podcast y, cuando contaron sobre el proyecto y la decisión de crearlo a nivel comunitario, me pareció un side project divertido que mezclaba web3 con comunicación y tecnología.
+                  Era oyente del podcast y, cuando contaron sobre el proyecto y la decisiÃ³n de crearlo a nivel comunitario, me pareciÃ³ un side project divertido que mezclaba web3 con comunicaciÃ³n y tecnologÃ­a.
                 </p>
 
                 <p className="mb-6 text-lg">
-                  Participé en el proceso de comunicación de $MAGAIBA y creé el canal de YouTube "RADIO MAGAIBA", que funcionaba 24x7 con canciones generadas con IA (Suno), curando también contenido creado por la comunidad. Desde su creación, el canal cuenta con más de 1.9 millones de horas de visualización y más de 500 suscriptores.
+                  ParticipÃ© en el proceso de comunicaciÃ³n de $MAGAIBA y creÃ© el canal de YouTube "RADIO MAGAIBA", que funcionaba 24x7 con canciones generadas con IA (Suno), curando tambiÃ©n contenido creado por la comunidad. Desde su creaciÃ³n, el canal cuenta con mÃ¡s de 1.9 millones de horas de visualizaciÃ³n y mÃ¡s de 500 suscriptores.
                 </p>
 
                 <p className="mb-6 text-lg">
-                  Por cuestiones de copyright (algunas canciones creadas por la comunidad usaban samples de canciones populares) quedaron pocos videos accesibles; comparto acá:
+                  Por cuestiones de copyright (algunas canciones creadas por la comunidad usaban samples de canciones populares) quedaron pocos videos accesibles; comparto acÃ¡:
                 </p>
               </>
             ) : (
               <>
                 <p className="mb-6 text-lg font-bold">
-                  $MAGAIBA was the first Argentine memecoin to reach truly global virality. It was created by Juan Ruocco and Pablo Wasserman, hosts of the podcast Círculo Vicioso, along with two anonymous devs. This memecoin reached a $16,000,000 market cap, around $350,000 in liquidity, and an ATH price of $0.02132—at the time, roughly twice the value of a Japanese yen.
+                  $MAGAIBA was the first Argentine memecoin to reach truly global virality. It was created by Juan Ruocco and Pablo Wasserman, hosts of the podcast CÃ­rculo Vicioso, along with two anonymous devs. This memecoin reached a $16,000,000 market cap, around $350,000 in liquidity, and an ATH price of $0.02132â€”at the time, roughly twice the value of a Japanese yen.
                 </p>
 
                 <p className="mb-6 text-lg">
@@ -100,11 +100,11 @@ export default function Magaiba() {
                 </p>
 
                 <p className="mb-6 text-lg">
-                  I contributed to $MAGAIBA’s communication efforts and created the YouTube channel “RADIO MAGAIBA”, which ran 24/7 with AI-generated songs (Suno), also curating content created by the community. Since launch, the channel has accumulated over 1.9 million watch hours and more than 500 subscribers.
+                  I contributed to $MAGAIBAâ€™s communication efforts and created the YouTube channel â€œRADIO MAGAIBAâ€, which ran 24/7 with AI-generated songs (Suno), also curating content created by the community. Since launch, the channel has accumulated over 1.9 million watch hours and more than 500 subscribers.
                 </p>
 
                 <p className="mb-6 text-lg">
-                  Due to copyright issues (some community songs used samples from popular tracks), only a few videos remain accessible—sharing them here:
+                  Due to copyright issues (some community songs used samples from popular tracks), only a few videos remain accessibleâ€”sharing them here:
                 </p>
               </>
             )}
@@ -125,7 +125,7 @@ export default function Magaiba() {
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto mt-12">
+      <section className="w-full mt-12">
         <div className="terminal">
           <div className="terminal-header">
             <span className="text-xl">MAGAIBA_NEWS</span>
@@ -152,17 +152,17 @@ export default function Magaiba() {
                   rel="noopener noreferrer"
                   className="text-neon-green hover:text-neon-cyan"
                 >
-                  Ámbito: Criptomonedas - Aprobaron la reforma a la ley de prevención de lavado de activos
+                  Ãmbito: Criptomonedas - Aprobaron la reforma a la ley de prevenciÃ³n de lavado de activos
                 </a>
               </li>
               <li>
                 <a
-                  href="https://es-us.finanzas.yahoo.com/noticias/magaiba-memecoin-argentina-surgió-podcast-183000944.html"
+                  href="https://es-us.finanzas.yahoo.com/noticias/magaiba-memecoin-argentina-surgiÃ³-podcast-183000944.html"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-neon-green hover:text-neon-cyan"
                 >
-                  Yahoo Finanzas: Magaiba, la memecoin argentina que surgió de un podcast
+                  Yahoo Finanzas: Magaiba, la memecoin argentina que surgiÃ³ de un podcast
                 </a>
               </li>
               <li>
@@ -172,7 +172,7 @@ export default function Magaiba() {
                   rel="noopener noreferrer"
                   className="text-neon-green hover:text-neon-cyan"
                 >
-                  Corta: ¿Qué es Magaiba? La memecoin argentina
+                  Corta: Â¿QuÃ© es Magaiba? La memecoin argentina
                 </a>
               </li>
               <li>
@@ -212,7 +212,7 @@ export default function Magaiba() {
                   rel="noopener noreferrer"
                   className="text-neon-green hover:text-neon-cyan"
                 >
-                  JP+: Magaiba, la memecoin que creció 350% en un día
+                  JP+: Magaiba, la memecoin que creciÃ³ 350% en un dÃ­a
                 </a>
               </li>
               <li>
@@ -232,17 +232,17 @@ export default function Magaiba() {
                   rel="noopener noreferrer"
                   className="text-neon-green hover:text-neon-cyan"
                 >
-                  La Jornada: Criptomoneda argentina surgida como meme sube más de 350% en un día
+                  La Jornada: Criptomoneda argentina surgida como meme sube mÃ¡s de 350% en un dÃ­a
                 </a>
               </li>
               <li>
                 <a
-                  href="https://www.cripto247.com/noticias-bitcoin/así-es-magaiba-la-meme-coin-argentina-que-subió-más-del-330-"
+                  href="https://www.cripto247.com/noticias-bitcoin/asÃ­-es-magaiba-la-meme-coin-argentina-que-subiÃ³-mÃ¡s-del-330-"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-neon-green hover:text-neon-cyan"
                 >
-                  Cripto247: Así es Magaiba, la meme coin argentina que subió más del 330%
+                  Cripto247: AsÃ­ es Magaiba, la meme coin argentina que subiÃ³ mÃ¡s del 330%
                 </a>
               </li>
               <li>
@@ -262,7 +262,7 @@ export default function Magaiba() {
                   rel="noopener noreferrer"
                   className="text-neon-green hover:text-neon-cyan"
                 >
-                  Criptotendencias: Magaiba, la nueva sensación de las memecoins ya disponible en Ripio
+                  Criptotendencias: Magaiba, la nueva sensaciÃ³n de las memecoins ya disponible en Ripio
                 </a>
               </li>
               <li>
@@ -272,7 +272,7 @@ export default function Magaiba() {
                   rel="noopener noreferrer"
                   className="text-neon-green hover:text-neon-cyan"
                 >
-                  ADN Positivo: Magaiba, la broma que se volvió viral y revoluciona el mundo de las criptomonedas
+                  ADN Positivo: Magaiba, la broma que se volviÃ³ viral y revoluciona el mundo de las criptomonedas
                 </a>
               </li>
               <li>
@@ -292,8 +292,8 @@ export default function Magaiba() {
                   rel="noopener noreferrer"
                   className="text-neon-green hover:text-neon-cyan"
                 >
-                  A24: Magaiba, la historia de la memecoin argentina que sacudió el mercado de criptomonedas en pocos
-                  días
+                  A24: Magaiba, la historia de la memecoin argentina que sacudiÃ³ el mercado de criptomonedas en pocos
+                  dÃ­as
                 </a>
               </li>
               <li>
@@ -313,3 +313,4 @@ export default function Magaiba() {
     </main>
   )
 }
+

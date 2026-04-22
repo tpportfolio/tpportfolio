@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useLanguage } from "./language-context"
 
@@ -6,10 +6,10 @@ export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage()
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="language-switcher flex items-center space-x-2">
       <button
         onClick={() => setLanguage("es")}
-        className={`px-2 py-1 text-xs border ${
+        className={`language-switcher__button px-2 py-1 text-xs border ${
           language === "es" ? "border-neon-green text-neon-green" : "border-gray-600 text-gray-400"
         }`}
       >
@@ -17,7 +17,7 @@ export function LanguageSwitcher() {
       </button>
       <button
         onClick={() => setLanguage("en")}
-        className={`px-2 py-1 text-xs border ${
+        className={`language-switcher__button px-2 py-1 text-xs border ${
           language === "en" ? "border-neon-green text-neon-green" : "border-gray-600 text-gray-400"
         }`}
       >

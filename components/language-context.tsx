@@ -5,6 +5,8 @@ import translations from "@/translations"
 
 type Language = "es" | "en"
 
+type TranslationMap = Record<string, string>
+
 interface LanguageContextType {
   language: Language
   setLanguage: (lang: Language) => void
@@ -17,7 +19,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>("es")
 
   const t = (key: string): string => {
-    return translations[language][key] || key
+    const dictionary = translations[language] as TranslationMap
+    return dictionary[key] ?? key
   }
 
   return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>

@@ -1,4 +1,4 @@
-const translations = {
+﻿const translations = {
   es: {
     home: "INICIO",
     work: "TRABAJOS",
@@ -42,3 +42,4 @@ const translations = {
 }
 
 export default translations
+
