@@ -174,8 +174,8 @@ export async function POST(request: Request) {
     })
   }
 
-  const apiKey = process.env.GROQ_API_KEY
-  const model = process.env.GROQ_MODEL || DEFAULT_MODEL
+  const apiKey = process.env.GROQ_API_KEY?.trim()
+  const model = process.env.GROQ_MODEL?.trim() || DEFAULT_MODEL
   const context = chunks
     .map(
       (chunk) =>
