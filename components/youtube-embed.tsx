@@ -5,15 +5,16 @@ import React from "react"
 interface YouTubeEmbedProps {
   videoId: string
   isPlaylist?: boolean
+  aspectClassName?: string
 }
 
-export function YouTubeEmbed({ videoId, isPlaylist = false }: YouTubeEmbedProps) {
+export function YouTubeEmbed({ videoId, isPlaylist = false, aspectClassName = "aspect-video" }: YouTubeEmbedProps) {
   const embedUrl = isPlaylist
     ? `https://www.youtube-nocookie.com/embed/videoseries?list=${videoId}`
     : `https://www.youtube.com/embed/${videoId}`
 
   return (
-    <div className="aspect-video w-full">
+    <div className={`${aspectClassName} w-full`}>
       <iframe
         src={embedUrl}
         title="YouTube video player"

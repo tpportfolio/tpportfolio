@@ -244,8 +244,8 @@ export const timelineEntries: TimelineEntry[] = [
 export const aiExperimentsAgentSummary = {
   route: '/work/ai-experiments',
   overview: {
-    es: 'Desde 2020 aprende IA de forma autodidacta y con cursos como Morfeo Academy, con foco en herramientas que agregan valor a workflows reales de producci\u00f3n de contenido.',
-    en: 'Since 2020 he has studied AI through self-directed learning and courses such as Morfeo Academy, focused on tools that add value to real content production workflows.',
+    es: 'En 2022 empezó como autodidacta en IA y en 2024 profesionalizó ese camino con cursos como Morfeo Academy. Explora herramientas, sistemas y workflows que agregan valor directo a marcas y empresas, con foco en acelerar, iterar, reducir fricción y mejorar calidad en pipelines reales.',
+    en: 'In 2022 he started in AI as a self-taught practitioner and in 2024 professionalized that path with courses such as Morfeo Academy. He explores tools, systems and workflows that add direct value to brands and companies, focused on accelerating, iterating, reducing friction and improving quality in real pipelines.',
   },
   stack: [
     { label: 'Image', items: ['Nanobanana', 'Seedream', 'Leonardo', 'Flux', 'Ideogram', 'GoogleFX', 'Midjourney'] },
@@ -366,6 +366,8 @@ export const crawlHints = [
   'The AI Experiments route contains tool stack, 2025 examples, lightweight webapps and a 2022-2024 archive.',
   'agents.* routes bypass the intro middleware and can be fetched directly.',
 ]
+
+
 
 
 

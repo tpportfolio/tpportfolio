@@ -1,5 +1,6 @@
 ﻿"use client"
 
+import { useEffect, useMemo, useState } from "react"
 import { useVisualMode } from "@/components/visual-mode-context"
 import { useLanguage } from "@/components/language-context"
 import { RetroBrowser } from "@/components/retro-browser"
@@ -14,11 +15,32 @@ interface HomePageViewProps {
   variantMode?: VariantMode
 }
 
+function getExperienceYears() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Argentina/Buenos_Aires",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }).formatToParts(new Date())
+
+  const year = Number(parts.find((part) => part.type === "year")?.value ?? "2007")
+  const month = Number(parts.find((part) => part.type === "month")?.value ?? "1")
+  const day = Number(parts.find((part) => part.type === "day")?.value ?? "1")
+
+  let years = year - 2007
+  if (month < 6 || (month === 6 && day < 2)) {
+    years -= 1
+  }
+
+  return years
+}
+
 export function HomePageView({ className, variantMode = "default" }: HomePageViewProps) {
   const { t, language } = useLanguage()
   const { mode } = useVisualMode()
   const effectiveMode = variantMode === "default" ? mode : variantMode
   const isLight = effectiveMode === "light"
+  const [skipTypewriter, setSkipTypewriter] = useState(false)
 
   const accentStyle = isLight
     ? { color: "#2f1607", textShadow: "0 0 18px rgba(205, 108, 27, 0.18)" }
@@ -30,6 +52,25 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
 
   const typewriterColor = isLight ? "#b85a17" : "#00ff00"
   const statusStyle = isLight ? { color: "#7a3913" } : undefined
+
+  const experienceYears = useMemo(() => getExperienceYears(), [])
+  const heroCopyEs = `Hola, soy Tomás, marketer trabajando en la intersección entre marca, estrategia, e inteligencia artificial, con foco en storytelling, workflows e impacto en negocio, con ${experienceYears} años de trayectoria.`
+  const heroCopyEn = `Hi, I'm Tomás, a marketer working at the intersection of brand, strategy, and artificial intelligence, focused on storytelling, workflows and business impact, with ${experienceYears} years of experience.`
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+
+    const shouldSkip = window.location.hash === "#trabajos"
+    setSkipTypewriter(shouldSkip)
+
+    if (!shouldSkip) return
+
+    const raf = window.requestAnimationFrame(() => {
+      document.getElementById("trabajos")?.scrollIntoView({ behavior: "auto", block: "start" })
+    })
+
+    return () => window.cancelAnimationFrame(raf)
+  }, [])
 
   return (
     <main className={["py-8 px-4 md:px-12", className].filter(Boolean).join(" ")}>
@@ -53,8 +94,8 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
         <div className="mt-5 w-full">
           <div className="mx-auto flex w-full max-w-5xl justify-center text-center">
             <Typewriter
-              textEs={siteIdentity.heroCopy.es}
-              textEn={siteIdentity.heroCopy.en}
+              textEs={heroCopyEs}
+              textEn={heroCopyEn}
               speedMs={10.3}
               startDelayMs={180}
               fontSizePx={24}
@@ -63,13 +104,14 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
               color={typewriterColor}
               cursorColor={typewriterColor}
               align="center"
+              forceReveal={skipTypewriter}
               className="mx-auto max-w-5xl text-center"
             />
           </div>
         </div>
       </section>
 
-      <section className="mt-2">
+      <section id="trabajos" className="mt-2 scroll-mt-4">
         <div className="section-header">
           <h2 className="text-2xl font-bold mb-4 text-center font-cyber text-neon-green" style={accentStyle}>
             {t("project_database")}

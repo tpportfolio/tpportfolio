@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 import Sidebar from "@/components/sidebar";
+import { FloatingAssistant } from "@/components/floating-assistant";
 import { Providers } from "./providers";
 import { MobileMenuButton } from "@/components/mobile-menu-button";
 import { ScrollToTop } from "@/components/scroll-to-top";
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               {children}
             </div>
           </div>
+          <FloatingAssistant />
         </Providers>
 
         <Analytics />

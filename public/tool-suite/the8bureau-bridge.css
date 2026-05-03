@@ -1,0 +1,669 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap");
+
+:root {
+  --t8b-bridge-width: 1720px;
+  --t8b-bridge-border: rgba(95, 255, 148, 0.18);
+  --t8b-bridge-border-strong: rgba(95, 255, 148, 0.32);
+  --t8b-bridge-accent: #73ff8f;
+  --t8b-bridge-accent-2: #4de9ff;
+  --t8b-bridge-text: var(--fg, #f3fff5);
+  --t8b-bridge-text-strong: var(--fg, #ffffff);
+  --t8b-bridge-muted: var(--muted, rgba(214, 238, 220, 0.72));
+  --t8b-bridge-bg: color-mix(in srgb, var(--bg, #07110d) 86%, black 14%);
+  --t8b-bridge-panel: color-mix(in srgb, var(--card, #0a1714) 90%, transparent);
+  --t8b-bridge-shadow: 0 22px 54px rgba(0, 0, 0, 0.26);
+}
+
+.t8b-bridge-wrap {
+  width: min(var(--t8b-bridge-width), calc(100% - 28px));
+  margin: 0 auto;
+  padding: 10px 0 8px;
+}
+
+.t8b-bridge-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+
+.t8b-bridge-brand {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.t8b-bridge-logo {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Sora", "Segoe UI", sans-serif;
+  font-weight: 800;
+  font-size: 1.28rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-top: 4px;
+}
+
+.t8b-bridge-lockup {
+  min-width: 0;
+}
+
+.t8b-bridge-lockup h1 {
+  margin: 0;
+  font-family: "Sora", "Segoe UI", sans-serif;
+  font-size: clamp(2.2rem, 3.1vw, 3.25rem);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+  color: var(--t8b-bridge-text-strong);
+}
+
+.t8b-bridge-title {
+  margin: 6px 0 0;
+  font-family: "Sora", "Segoe UI", sans-serif;
+  font-size: clamp(1.12rem, 1.34vw, 1.42rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--t8b-bridge-accent);
+}
+
+.t8b-bridge-title em {
+  font-style: italic;
+  font-weight: 800;
+}
+
+.t8b-bridge-tagline {
+  margin: 4px 0 0;
+  color: var(--t8b-bridge-accent);
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+
+.t8b-bridge-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.t8b-bridge-links,
+.t8b-bridge-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.t8b-bridge-chip,
+.t8b-bridge-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--t8b-bridge-border);
+  color: var(--t8b-bridge-muted);
+  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.02);
+  text-decoration: none;
+}
+
+.t8b-bridge-links a:hover {
+  border-color: var(--t8b-bridge-border-strong);
+  color: var(--t8b-bridge-text-strong);
+}
+
+.t8b-bridge-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--t8b-bridge-border);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.t8b-bridge-mode-btn {
+  border: 0;
+  background: transparent;
+  color: var(--t8b-bridge-muted);
+  border-radius: 999px;
+  min-width: 86px;
+  min-height: 36px;
+  padding: 0 14px;
+  cursor: pointer;
+  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.t8b-bridge-mode-btn.is-active {
+  color: var(--t8b-bridge-text-strong);
+  background: linear-gradient(145deg, rgba(77, 233, 255, 0.18), rgba(115, 255, 143, 0.14));
+  border: 1px solid var(--t8b-bridge-border-strong);
+}
+
+.t8b-reference-card {
+  display: grid;
+  gap: 12px;
+}
+
+.t8b-reference-card h3,
+.t8b-reference-card p,
+.t8b-reference-card figcaption {
+  margin: 0;
+}
+
+.t8b-reference-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--fg, #fff) 12%, transparent);
+}
+
+.t8b-reference-card figcaption,
+.t8b-reference-card p {
+  color: var(--muted, #a5b3c2);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+body[data-t8b-tool='canva'] header.hdr .toprow {
+  display: none !important;
+}
+
+body[data-t8b-tool='canva'] header.hdr {
+  padding: 0 0 10px;
+  border-bottom: 0;
+  background: transparent;
+}
+
+body[data-t8b-tool='canva'] header.hdr .toolbar {
+  width: min(1860px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 12px 14px;
+  justify-content: flex-start;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+body[data-t8b-tool='canva'] main {
+  margin-top: 8px;
+}
+
+body[data-t8b-tool='canva'] .footerCredit {
+  display: none !important;
+}
+
+body[data-t8b-tool='video-comparator'] header {
+  padding: 0 0 12px !important;
+}
+
+body[data-t8b-tool='video-comparator'] .brand,
+body[data-t8b-tool='video-comparator'] #modeToggle {
+  display: none !important;
+}
+
+body[data-t8b-tool='video-comparator'] .toolbar {
+  padding-top: 12px;
+}
+
+body[data-t8b-tool='video-comparator'] .footerCredit {
+  display: none !important;
+}
+
+body[data-t8b-tool='unyellower'] {
+  margin: 0 !important;
+}
+
+body[data-t8b-tool='unyellower'] .header {
+  display: none !important;
+}
+
+body[data-t8b-tool='unyellower'] .app {
+  width: min(1720px, calc(100% - 28px)) !important;
+  margin: 0 auto !important;
+  padding-bottom: 24px;
+}
+
+body[data-t8b-tool='unyellower'] .footerCredit {
+  display: none !important;
+}
+
+@media (max-width: 860px) {
+  .t8b-bridge-wrap {
+    width: min(var(--t8b-bridge-width), calc(100% - 14px));
+    padding-top: 8px;
+  }
+
+  .t8b-bridge-header {
+    grid-template-columns: 1fr;
+  }
+
+  .t8b-bridge-side {
+    align-items: flex-start;
+  }
+
+  .t8b-bridge-links,
+  .t8b-bridge-chips {
+    justify-content: flex-start;
+  }
+
+  .t8b-bridge-brand {
+    gap: 12px;
+  }
+
+  .t8b-bridge-lockup h1 {
+    font-size: clamp(1.9rem, 12vw, 2.5rem);
+  }
+
+  .t8b-bridge-title {
+    font-size: clamp(1rem, 5vw, 1.2rem);
+  }
+
+  .t8b-bridge-mode-btn {
+    min-width: 78px;
+  }
+}
+
+
+/* codex-home-alignment:start */
+body[data-t8b-tool] {
+  font-family: "Manrope", "Aptos", "Segoe UI", sans-serif !important;
+  --bg: #08110d;
+  --fg: #f3fff5;
+  --muted: rgba(214, 238, 220, 0.72);
+  --card: rgba(7, 17, 12, 0.84);
+  --soft: rgba(12, 28, 19, 0.72);
+  --panel: rgba(7, 17, 12, 0.88);
+  --border: rgba(95, 255, 148, 0.18);
+  --line: rgba(95, 255, 148, 0.18);
+  --btn: rgba(255, 255, 255, 0.03);
+  --btnHover: rgba(77, 233, 255, 0.14);
+  --btnText: #f3fff5;
+  --primary: #4de9ff;
+  --primary2: #73ff8f;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+  --shadow2: 0 16px 40px rgba(0, 0, 0, 0.28);
+  background: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+html[data-theme='light'] body[data-t8b-tool],
+html.light body[data-t8b-tool] {
+  --bg: #f7fcf8;
+  --fg: #09130d;
+  --muted: rgba(27, 53, 38, 0.72);
+  --card: rgba(255, 255, 255, 0.88);
+  --soft: rgba(247, 252, 248, 0.82);
+  --panel: rgba(255, 255, 255, 0.92);
+  --border: rgba(20, 92, 55, 0.18);
+  --line: rgba(20, 92, 55, 0.18);
+  --btn: rgba(15, 148, 174, 0.05);
+  --btnHover: rgba(15, 148, 174, 0.12);
+  --btnText: #09130d;
+  --shadow: 0 18px 42px rgba(18, 43, 29, 0.12);
+  --shadow2: 0 14px 32px rgba(18, 43, 29, 0.12);
+}
+
+body[data-t8b-tool] h1,
+body[data-t8b-tool] h2,
+body[data-t8b-tool] h3,
+body[data-t8b-tool] h4,
+body[data-t8b-tool] .title,
+body[data-t8b-tool] .brand,
+body[data-t8b-tool] .modalTitle {
+  font-family: "Sora", "Aptos", "Segoe UI", sans-serif !important;
+}
+
+body[data-t8b-tool] .muted,
+body[data-t8b-tool] label,
+body[data-t8b-tool] .pill,
+body[data-t8b-tool] .tag,
+body[data-t8b-tool] .gridBar strong,
+body[data-t8b-tool] .card h3,
+body[data-t8b-tool] .stageHeader,
+body[data-t8b-tool] .stageHeader2,
+body[data-t8b-tool] .stageHeader3,
+body[data-t8b-tool] .secLbl,
+body[data-t8b-tool] .labelTop > span:first-child,
+body[data-t8b-tool='canva'] .one-line > span:first-child,
+body[data-t8b-tool='canva'] .badgeRow .lbl,
+body[data-t8b-tool='canva'] .badgeRow .mini,
+body[data-t8b-tool='video-comparator'] .title {
+  font-family: "IBM Plex Mono", Consolas, monospace !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+body[data-t8b-tool] button,
+body[data-t8b-tool] .btn,
+body[data-t8b-tool] .smallBtn,
+body[data-t8b-tool] .btnPrimary,
+body[data-t8b-tool] .iconbtn {
+  font-family: "IBM Plex Mono", Consolas, monospace !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px !important;
+}
+
+body[data-t8b-tool] select,
+body[data-t8b-tool] input,
+body[data-t8b-tool] textarea {
+  font-family: "Manrope", "Aptos", "Segoe UI", sans-serif !important;
+}
+
+body[data-t8b-tool] input[type='text'],
+body[data-t8b-tool] input[type='url'],
+body[data-t8b-tool] input[type='number'],
+body[data-t8b-tool] textarea,
+body[data-t8b-tool] select {
+  border-color: var(--border) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--fg) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme='light'] body[data-t8b-tool] input[type='text'],
+html[data-theme='light'] body[data-t8b-tool] input[type='url'],
+html[data-theme='light'] body[data-t8b-tool] input[type='number'],
+html[data-theme='light'] body[data-t8b-tool] textarea,
+html[data-theme='light'] body[data-t8b-tool] select,
+html.light body[data-t8b-tool] input[type='text'],
+html.light body[data-t8b-tool] input[type='url'],
+html.light body[data-t8b-tool] input[type='number'],
+html.light body[data-t8b-tool] textarea,
+html.light body[data-t8b-tool] select {
+  background: rgba(15, 148, 174, 0.04) !important;
+}
+
+body[data-t8b-tool='canva'] header.hdr .toolbar,
+body[data-t8b-tool='video-comparator'] .barCard,
+body[data-t8b-tool='canva'] .card,
+body[data-t8b-tool='video-comparator'] .pane,
+body[data-t8b-tool='unyellower'] .controls,
+body[data-t8b-tool='unyellower'] .preview,
+body[data-t8b-tool='unyellower'] .card,
+body[data-t8b-tool='unyellower'] .tile,
+body[data-t8b-tool='unyellower'] .viewport {
+  border-color: var(--border) !important;
+  background: linear-gradient(155deg, var(--panel), var(--soft)) !important;
+  box-shadow: var(--shadow) !important;
+  backdrop-filter: blur(10px);
+}
+
+body[data-t8b-tool='video-comparator'] header,
+body[data-t8b-tool='canva'] header.hdr {
+  background: transparent !important;
+}
+
+body[data-t8b-tool='video-comparator'] .toolbar,
+body[data-t8b-tool='canva'] header.hdr .toolbar,
+body[data-t8b-tool='unyellower'] .controls,
+body[data-t8b-tool='unyellower'] .preview {
+  border-radius: 24px !important;
+}
+
+body[data-t8b-tool='video-comparator'] .toolbar {
+  padding: 16px 18px !important;
+  gap: 12px !important;
+}
+
+body[data-t8b-tool='video-comparator'] .row {
+  gap: 12px !important;
+}
+
+body[data-t8b-tool='video-comparator'] .brand {
+  display: block !important;
+  font-size: 1.04rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  text-transform: none !important;
+  color: var(--fg) !important;
+}
+
+body[data-t8b-tool='video-comparator'] .muted,
+body[data-t8b-tool='video-comparator'] label,
+body[data-t8b-tool='unyellower'] .hint,
+body[data-t8b-tool='unyellower'] .drop,
+body[data-t8b-tool='canva'] .tipText,
+body[data-t8b-tool='canva'] .t8b-toolbar-reference-note,
+body[data-t8b-tool='canva'] .t8b-reference-modal__caption {
+  font-family: "Manrope", "Aptos", "Segoe UI", sans-serif !important;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--muted) !important;
+}
+
+body[data-t8b-tool='video-comparator'] .title {
+  background: rgba(7, 17, 12, 0.74) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--fg) !important;
+  font-size: 10px !important;
+}
+
+body[data-t8b-tool='video-comparator'] .drop-hint {
+  background: rgba(7, 17, 12, 0.5) !important;
+  border-color: var(--border) !important;
+  color: var(--muted) !important;
+}
+
+body[data-t8b-tool='video-comparator'] button,
+body[data-t8b-tool='video-comparator'] select,
+body[data-t8b-tool='video-comparator'] input[type='number'],
+body[data-t8b-tool='canva'] button,
+body[data-t8b-tool='canva'] .btn,
+body[data-t8b-tool='unyellower'] button,
+body[data-t8b-tool='unyellower'] .smallBtn {
+  border-color: rgba(77, 233, 255, 0.28) !important;
+  background: linear-gradient(145deg, rgba(77, 233, 255, 0.08), rgba(115, 255, 143, 0.05)) !important;
+  color: var(--fg) !important;
+  box-shadow: none !important;
+}
+
+body[data-t8b-tool='video-comparator'] button:hover,
+body[data-t8b-tool='canva'] button:hover,
+body[data-t8b-tool='canva'] .btn:hover,
+body[data-t8b-tool='unyellower'] button:hover,
+body[data-t8b-tool='unyellower'] .smallBtn:hover {
+  border-color: rgba(77, 233, 255, 0.48) !important;
+  background: linear-gradient(145deg, rgba(77, 233, 255, 0.18), rgba(115, 255, 143, 0.12)) !important;
+  color: var(--fg) !important;
+}
+
+body[data-t8b-tool='video-comparator'] button.primary,
+body[data-t8b-tool='unyellower'] .btnPrimary {
+  border: 1px solid rgba(77, 233, 255, 0.48) !important;
+  background: linear-gradient(145deg, rgba(77, 233, 255, 0.24), rgba(115, 255, 143, 0.18)) !important;
+  color: var(--fg) !important;
+}
+
+body[data-t8b-tool='unyellower'] .content {
+  gap: 20px !important;
+}
+
+body[data-t8b-tool='unyellower'] .title {
+  font-size: clamp(1.24rem, 1.8vw, 1.65rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  text-transform: none !important;
+  color: var(--fg) !important;
+}
+
+body[data-t8b-tool='unyellower'] .pill,
+body[data-t8b-tool='unyellower'] .editPill {
+  border-color: var(--border) !important;
+  background: rgba(77, 233, 255, 0.08) !important;
+  color: var(--muted) !important;
+}
+
+body[data-t8b-tool='unyellower'] .drop {
+  border-color: var(--border) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-card {
+  display: none !important;
+}
+
+body[data-t8b-tool='canva'] .t8b-toolbar-reference-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 1 auto;
+  min-height: var(--btn-h, 38px);
+  max-width: min(560px, 100%);
+}
+
+body[data-t8b-tool='canva'] .t8b-toolbar-reference {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--btn-h, 38px);
+  height: var(--btn-h, 38px);
+  padding: 0 14px;
+  border: 1px solid rgba(77, 233, 255, 0.32);
+  border-radius: var(--btn-br, 18px);
+  background: linear-gradient(145deg, rgba(77, 233, 255, 0.12), rgba(115, 255, 143, 0.08));
+  color: var(--fg);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+body[data-t8b-tool='canva'] .t8b-toolbar-reference-note {
+  margin: 0;
+  max-width: 360px;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(2, 6, 4, 0.8);
+  backdrop-filter: blur(12px);
+  z-index: 10020;
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal.is-open {
+  display: flex;
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal__panel {
+  width: min(1200px, calc(100vw - 56px));
+  max-height: calc(100vh - 56px);
+  overflow: auto;
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(77, 233, 255, 0.22);
+  background: linear-gradient(155deg, rgba(7, 17, 12, 0.96), rgba(12, 28, 19, 0.92));
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.38);
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal__eyebrow {
+  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal__head h3 {
+  margin: 4px 0 0;
+  font-family: "Sora", "Aptos", sans-serif;
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+  line-height: 1.05;
+  color: var(--fg);
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal__close {
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 999px;
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal__figure {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal__figure img {
+  width: 100%;
+  max-height: calc(100vh - 210px);
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+body[data-t8b-tool='canva'] .t8b-reference-modal__caption {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 980px) {
+  body[data-t8b-tool='canva'] .t8b-toolbar-reference-wrap {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  body[data-t8b-tool='canva'] .t8b-toolbar-reference-note {
+    max-width: none;
+  }
+}
+
+@media (max-width: 860px) {
+  body[data-t8b-tool='canva'] .t8b-reference-modal {
+    padding: 14px;
+  }
+
+  body[data-t8b-tool='canva'] .t8b-reference-modal__panel {
+    width: min(1200px, calc(100vw - 28px));
+    max-height: calc(100vh - 28px);
+  }
+}
+/* codex-home-alignment:end */
+
+body[data-t8b-tool='canva'] .t8b-reference-modal__close {
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  font-size: 22px !important;
+  font-family: 'Sora', 'Manrope', sans-serif !important;
+}

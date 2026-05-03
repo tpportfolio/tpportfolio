@@ -138,13 +138,25 @@ export default function Typewriter({
       .filter(Boolean)
   }, [activeSegments, out])
 
+  const reserveRendered = useMemo(() => {
+    if (!activeSegments) return fullText
+    return activeSegments.map((seg, idx) => {
+      const cls = `${seg.bold ? "font-bold" : ""} ${seg.className ?? ""}`.trim()
+      return (
+        <span key={idx} className={cls || undefined}>
+          {seg.text}
+        </span>
+      )
+    })
+  }, [activeSegments, fullText])
+
   const alignmentClass = align === "center" ? "text-center" : "text-left"
   const resolvedFontSize = mobileFontSizePx ? `clamp(${mobileFontSizePx}px, 3vw, ${fontSizePx}px)` : fontSizePx
 
   return (
     <div className={`mt-0 w-full ${alignmentClass} ${className ?? ""}`.trim()}>
       <div
-        className={`font-mono leading-relaxed whitespace-pre-line ${alignmentClass}`.trim()}
+        className={`relative font-mono leading-relaxed whitespace-pre-line ${alignmentClass}`.trim()}
         style={{
           fontSize: resolvedFontSize,
           lineHeight: 1.19,
@@ -153,12 +165,17 @@ export default function Typewriter({
           textShadow: "none",
         }}
       >
-        {rendered}
-        <span
-          aria-hidden
-          className={`inline-block align-middle ml-1 ${done ? "cursor-blink" : ""}`.trim()}
-          style={{ width: cursorSizePx, height: cursorSizePx, background: cursorColor, boxShadow: "none", opacity: 0.9 }}
-        />
+        <div aria-hidden className={`invisible pointer-events-none select-none ${alignmentClass}`.trim()}>
+          {reserveRendered}
+        </div>
+        <div className={`absolute inset-0 ${alignmentClass}`.trim()}>
+          {rendered}
+          <span
+            aria-hidden
+            className={`inline-block align-middle ml-1 ${done ? "cursor-blink" : ""}`.trim()}
+            style={{ width: cursorSizePx, height: cursorSizePx, background: cursorColor, boxShadow: "none", opacity: 0.9 }}
+          />
+        </div>
       </div>
     </div>
   )

@@ -1,180 +1,416 @@
-﻿"use client"
+"use client"
 
 import { useLanguage } from "@/components/language-context"
 import Image from "next/image"
-import { Linkedin } from "lucide-react"
-import Typewriter from "@/components/typewriter"
+import type { ReactNode } from "react"
+import { ArrowUpRight, Linkedin, Mail, MapPin } from "lucide-react"
+
+type AboutCopy = {
+  title: string
+  subtitle: string
+  overviewHeader: string
+  skillsHeader: string
+  contextHeader: string
+  linksHeader: string
+  name: string
+  positioning: string
+  subline: string
+  signals: string[]
+  overview: {
+    intro: string
+    academyLead: string
+    academyTail: string
+    consulting: string
+    plugin: string
+    introLead: string
+    introLinkLabel: string
+  }
+  skills: {
+    positioningLabel: string
+    positioningValue: string
+    strengthsLabel: string
+    strengths: string[]
+    workingStyleLabel: string
+    workingStyle: string[]
+    bestFitLabel: string
+    bestFit: string[]
+    focusLabel: string
+    focus: string
+  }
+  contextItems: Array<{ label: string; value: string }>
+  links: {
+    linkedinLabel: string
+    linkedinValue: string
+    locationLabel: string
+    location: string
+    emailLabel: string
+    email: string
+    credentialLabel: string
+    credential: string
+    locationNodes: string[]
+  }
+}
+
+const copyEs: AboutCopy = {
+  title: "ACERCA DE MI",
+  subtitle: "PERSONAL_PROFILE.exe",
+  overviewHeader: "PROFILE_OVERVIEW",
+  skillsHeader: "SKILLS",
+  contextHeader: "SELECTED_CONTEXT",
+  linksHeader: "LINKS / CONTACT",
+  name: "TOM\u00c1S PER\u00d3",
+  positioning: "Brand, content & AI systems",
+  subline: "Storytelling, digital culture and systems thinking for modern teams.",
+  signals: ["Brand", "Content", "AI", "Storytelling", "Systems", "Strategy"],
+  overview: {
+    intro:
+      "Trabajo hace 18 a\u00f1os en marketing, publicidad y contenido. Empec\u00e9 en agencias, despu\u00e9s marcas, startups y actualmente trabajo de manera freelance.",
+    academyLead: "En 2022/23 entr\u00e9 al mundo IA, primero como autodidacta y luego mediante cursos como",
+    academyTail: "(2024).",
+    consulting: "Actualmente ofrezco consultor\u00edas, capacitaciones y generaci\u00f3n de contenido AI profesional.",
+    plugin:
+      "Hago plug-in a equipos de marketing, marcas o agencias para acelerar producci\u00f3n, iterar, reducir fricci\u00f3n y elevar la calidad en pipelines reales (imagen, video, audio y texto).",
+    introLead: "Todo lo que ves ac\u00e1 est\u00e1 vibecodeado con IA, hasta la",
+    introLinkLabel: "introducci\u00f3n",
+  },
+  skills: {
+    positioningLabel: "POSITIONING",
+    positioningValue: "Brand \u00d7 Content \u00d7 AI",
+    strengthsLabel: "STRENGTHS",
+    strengths: ["Narrative systems", "Strategic framing", "AI-assisted content workflows", "Cultural positioning"],
+    workingStyleLabel: "WORKING STYLE",
+    workingStyle: ["Sharp framing", "System-first", "Fast iteration", "Low-friction collaboration"],
+    bestFitLabel: "BEST FIT",
+    bestFit: ["Brands in transition", "Lean marketing teams", "Agencies needing senior plug-in support"],
+    focusLabel: "FOCUS",
+    focus: "Positioning, storytelling, digital culture, AI workflows.",
+  },
+  contextItems: [
+    {
+      label: "TRAJECTORY",
+      value: "Ex Disney, Air New Zealand, Airtm, JWT, m\u00e1s de 18 a\u00f1os trabajando en agencias, marcas, startups y como consultor.",
+    },
+    {
+      label: "CONTEXT",
+      value: "Experiencia en corporate, growth y content systems. Multi-industria: entretenimiento, fintech, healthtech, publicidad, turismo y viajes.",
+    },
+    { label: "TODAY", value: "Hoy: estrategia, brand, IA aplicada y producci\u00f3n con criterio de marca." },
+  ],
+  links: {
+    linkedinLabel: "LINKEDIN",
+    linkedinValue: "linkedin.com/in/tomaspero",
+    locationLabel: "LOCATION",
+    location: "Buenos Aires, Argentina",
+    emailLabel: "EMAIL",
+    email: "tomaspero@gmail.com",
+    credentialLabel: "PROFILE_NOTE",
+    credential: "Senior plug-in support para marcas, agencies y equipos lean.",
+    locationNodes: ["ARG", "BA", "CABA"],
+  },
+}
+
+const copyEn: AboutCopy = {
+  title: "ABOUT ME",
+  subtitle: "PERSONAL_PROFILE.exe",
+  overviewHeader: "PROFILE_OVERVIEW",
+  skillsHeader: "SKILLS",
+  contextHeader: "SELECTED_CONTEXT",
+  linksHeader: "LINKS / CONTACT",
+  name: "TOM\u00c1S PER\u00d3",
+  positioning: "Brand, content & AI systems",
+  subline: "Storytelling, digital culture and systems thinking for modern teams.",
+  signals: ["Brand", "Content", "AI", "Storytelling", "Systems", "Strategy"],
+  overview: {
+    intro:
+      "I have worked for 18 years in marketing, advertising and content. I started in agencies, then moved into brands, startups and today work independently.",
+    academyLead: "In 2022/23 I entered the AI space, first self-taught and later through courses such as",
+    academyTail: "(2024).",
+    consulting: "Today I offer consulting, training and professional AI content creation.",
+    plugin:
+      "I plug into marketing teams, brands or agencies to accelerate production, iterate, reduce friction and improve quality across real pipelines (image, video, audio and text).",
+    introLead: "Everything you see here is vibe-coded with AI, including the",
+    introLinkLabel: "introduction",
+  },
+  skills: {
+    positioningLabel: "POSITIONING",
+    positioningValue: "Brand \u00d7 Content \u00d7 AI",
+    strengthsLabel: "STRENGTHS",
+    strengths: ["Narrative systems", "Strategic framing", "AI-assisted content workflows", "Cultural positioning"],
+    workingStyleLabel: "WORKING STYLE",
+    workingStyle: ["Sharp framing", "System-first", "Fast iteration", "Low-friction collaboration"],
+    bestFitLabel: "BEST FIT",
+    bestFit: ["Brands in transition", "Lean marketing teams", "Agencies needing senior plug-in support"],
+    focusLabel: "FOCUS",
+    focus: "Positioning, storytelling, digital culture, AI workflows.",
+  },
+  contextItems: [
+    {
+      label: "TRAJECTORY",
+      value: "Ex Disney, Air New Zealand, Airtm, JWT, 18+ years across agencies, brands, startups and consulting.",
+    },
+    {
+      label: "CONTEXT",
+      value: "Experience across corporate, growth and content systems. Multi-industry: entertainment, fintech, healthtech, advertising, tourism and travel.",
+    },
+    { label: "TODAY", value: "Today: strategy, brand, applied AI and production with brand judgment." },
+  ],
+  links: {
+    linkedinLabel: "LINKEDIN",
+    linkedinValue: "linkedin.com/in/tomaspero",
+    locationLabel: "LOCATION",
+    location: "Buenos Aires, Argentina",
+    emailLabel: "EMAIL",
+    email: "tomaspero@gmail.com",
+    credentialLabel: "PROFILE_NOTE",
+    credential: "Senior plug-in support for brands, agencies and lean teams.",
+    locationNodes: ["ARG", "BA", "CABA"],
+  },
+}
+
+function SignalChip({ label }: { label: string }) {
+  return (
+    <span className="rounded-sm border border-neon-green/25 px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-neon-cyan">
+      {label}
+    </span>
+  )
+}
+
+function SkillPill({ label }: { label: string }) {
+  return (
+    <span className="rounded-sm border border-neon-green/20 px-2.5 py-1 text-[12px] leading-none text-neon-green/90">
+      {label}
+    </span>
+  )
+}
+
+function BlockLabel({ children }: { children: ReactNode }) {
+  return <div className="mb-3 font-cyber text-[11px] uppercase tracking-[0.18em] text-neon-cyan">{children}</div>
+}
+
+function SkillsSection({
+  label,
+  children,
+}: {
+  label: string
+  children: ReactNode
+}) {
+  return (
+    <div className="rounded-sm border border-neon-green/20 bg-black/20 p-4">
+      <BlockLabel>{label}</BlockLabel>
+      {children}
+    </div>
+  )
+}
 
 export default function About() {
   const { language } = useLanguage()
-
-  const cardClass = "md:min-h-[400px]"
+  const copy = language === "es" ? copyEs : copyEn
 
   return (
-    <main className="py-8 px-4 md:px-12">
+    <main className="px-4 py-8 md:px-12">
       <div className="marquee-container mb-6">
         <div className="marquee">
-          <span>{"ABOUT // TOM\u00c1S PER\u00d3 // GEN_MARKETER // CREATIVE DIRECTOR // PROFILE"}</span>
+          <span>{"ABOUT // TOM\u00c1S PER\u00d3 // GEN_MARKETER // STRATEGIC PROFILE // BRAND + AI"}</span>
         </div>
       </div>
 
-      <section className="mb-12 text-center">
+      <section className="mb-10 text-center">
         <h1
-          className="text-4xl md:text-5xl font-bold mb-4 text-neon-green font-cyber glitch"
-          data-text={language === "es" ? "ACERCA DE MI" : "ABOUT ME"}
+          className="mb-4 text-4xl font-bold font-cyber text-neon-green glitch md:text-5xl"
+          data-text={copy.title}
         >
-          {language === "es" ? "ACERCA DE MI" : "ABOUT ME"}
+          {copy.title}
         </h1>
-        <h2 className="text-xl text-neon-cyan mb-4 font-cyber">PERSONAL_PROFILE.exe</h2>
+        <h2 className="mb-4 text-xl font-cyber text-neon-cyan">{copy.subtitle}</h2>
       </section>
 
       <section className="w-full">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-8 items-stretch">
-          <div className={`terminal md:col-span-4 justify-self-start w-full ${cardClass} flex flex-col`}>
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-12">
+          <div className="terminal flex min-h-[420px] flex-col xl:col-span-8">
             <div className="terminal-header">
-              <span>PROFILE_IMAGE</span>
+              <span>{copy.overviewHeader}</span>
             </div>
-            <div className="terminal-content flex-1 flex items-center justify-center p-5 bg-black/20">
-              <div className="w-full max-w-[240px] aspect-square overflow-hidden border border-neon-green/40">
-                <Image
-                  src="/images/cuadrada.jpg"
-                  alt={"Tom\u00e1s Per\u00f3"}
-                  width={768}
-                  height={768}
-                  className="w-full h-full object-cover"
-                  priority
-                />
+            <div className="terminal-content flex-1 p-5 md:p-6">
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-stretch">
+                <div className="mx-auto w-full max-w-[220px] lg:mx-0 lg:max-w-[280px] lg:h-full">
+                  <div className="relative aspect-square overflow-hidden border border-neon-green/35 bg-black/25 lg:h-full lg:aspect-auto">
+                    <Image
+                      src="/images/cuadrada.jpg"
+                      alt="Tom\u00e1s Per\u00f3"
+                      fill
+                      sizes="(max-width: 1024px) 220px, 280px"
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                </div>
+
+                <div className="text-center lg:text-left">
+                  <div className="mb-4">
+                    <h2 className="font-cyber text-3xl text-neon-green md:text-4xl">{copy.name}</h2>
+                    <p className="mt-2 font-cyber text-lg text-neon-cyan md:text-xl">{copy.positioning}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-neon-green/80 md:text-base">
+                      {copy.subline}
+                    </p>
+                  </div>
+
+                  <div className="mb-5 flex flex-wrap justify-center gap-2 lg:justify-start">
+                    {copy.signals.map((signal) => (
+                      <SignalChip key={signal} label={signal} />
+                    ))}
+                  </div>
+
+                  <div className="space-y-4 text-sm leading-relaxed text-neon-green/90 md:text-base">
+                    <p>{copy.overview.intro}</p>
+                    <p>
+                      {copy.overview.academyLead}{" "}
+                      <a
+                        href="https://www.morfeoacademy.com/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-neon-cyan underline hover:text-neon-magenta"
+                      >
+                        Morfeo Academy
+                      </a>
+                      {" "}
+                      {copy.overview.academyTail}
+                    </p>
+                    <p>{copy.overview.consulting}</p>
+                    <p>{copy.overview.plugin}</p>
+                    <p>
+                      {copy.overview.introLead}{" "}
+                      <a href="/intro.html" className="text-neon-cyan underline hover:text-neon-magenta">
+                        {copy.overview.introLinkLabel}
+                      </a>
+                      .
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className={`terminal md:col-span-8 justify-self-start w-full ${cardClass} flex flex-col`}>
-            <div className="terminal-header flex justify-between items-center">
-              <span>PROFILE_BRIEF</span>
+          <div className="terminal flex flex-col xl:col-span-4">
+            <div className="terminal-header">
+              <span>{copy.contextHeader}</span>
             </div>
-            <div className="terminal-content flex flex-1 items-center justify-center text-center">
-              <Typewriter
-                fontSizePx={16}
-                cursorSizePx={12}
-                align="center"
-                className="mx-auto max-w-3xl text-center"
-                textEs={
-                  "Trabajo hace 18 a\u00f1os en marketing, publicidad y contenido. Empec\u00e9 en agencias, despu\u00e9s marcas, startups y actualmente trabajo de manera freelance.\n\nEn 2020/21 entr\u00e9 al mundo IA, primero como autodidacta y luego con cursos como Morfeo Academy.\nActualmente ofrezco consultor\u00edas, capacitaciones y generaci\u00f3n de contenido AI profesional.\nHago plug-in a equipos de marketing, marcas o agencias para acelerar producci\u00f3n, iterar, reducir fricci\u00f3n y elevar la calidad en pipelines reales (imagen, video, audio y texto).\n\nTodo lo que ves ac\u00e1 est\u00e1 codeado con IA, hasta la introducci\u00f3n."
-                }
-                segmentsEs={[
-                  {
-                    text: "Trabajo hace 18 a\u00f1os en marketing, publicidad y contenido. Empec\u00e9 en agencias, despu\u00e9s marcas, startups y actualmente trabajo de manera freelance.\n\nEn 2020/21 entr\u00e9 al mundo IA, primero como autodidacta y luego con cursos como ",
-                  },
-                  { text: "Morfeo Academy", href: "https://www.morfeoacademy.com/" },
-                  {
-                    text: ".\nActualmente ofrezco consultor\u00edas, capacitaciones y generaci\u00f3n de contenido AI profesional.\nHago plug-in a equipos de marketing, marcas o agencias para acelerar producci\u00f3n, iterar, reducir fricci\u00f3n y elevar la calidad en pipelines reales (imagen, video, audio y texto).\n\nTodo lo que ves ac\u00e1 est\u00e1 codeado con IA, hasta la ",
-                  },
-                  { text: "introducci\u00f3n", bold: true, href: "/intro.html" },
-                  { text: "." },
-                ]}
-                textEn={
-                  "I've worked for 18 years in marketing, advertising and content. I started in agencies, then moved into brands and startups, and today I work independently.\n\nIn 2020/21 I entered the AI space, first self-taught and then through courses like Morfeo Academy.\nToday I offer consulting, training and professional AI-driven content creation.\nI plug into marketing teams, brands or agencies to accelerate production, iterate, reduce friction and elevate quality across real-world pipelines (image, video, audio and text).\n\nEverything you see here is coded with AI, even the introduction."
-                }
-                segmentsEn={[
-                  {
-                    text: "I've worked for 18 years in marketing, advertising and content. I started in agencies, then moved into brands and startups, and today I work independently.\n\nIn 2020/21 I entered the AI space, first self-taught and then through courses like ",
-                  },
-                  { text: "Morfeo Academy", href: "https://www.morfeoacademy.com/" },
-                  {
-                    text: ".\nToday I offer consulting, training and professional AI-driven content creation.\nI plug into marketing teams, brands or agencies to accelerate production, iterate, reduce friction and elevate quality across real-world pipelines (image, video, audio and text).\n\nEverything you see here is coded with AI, even the ",
-                  },
-                  { text: "introduction", bold: true, href: "/intro.html" },
-                  { text: "." },
-                ]}
-              />
+            <div className="terminal-content p-5 md:p-6">
+              <div className="grid grid-cols-1 gap-4">
+                {copy.contextItems.map((item) => (
+                  <div key={item.label} className="rounded-sm border border-neon-green/20 bg-black/20 p-4">
+                    <BlockLabel>{item.label}</BlockLabel>
+                    <p className="text-sm leading-relaxed text-neon-green/90 md:text-[15px]">{item.value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="terminal mb-12 mt-12">
-          <div className="terminal-header">
-            <span>PERSONAL_INFO</span>
-          </div>
-          <div className="terminal-content">
-            <h2 className="text-3xl text-neon-green mb-4">{"TOM\u00c1S PER\u00d3"}</h2>
-            <h3 className="text-xl text-neon-cyan mb-6">
-              {language === "es"
-                ? "Marketer trabajando en la intersecci\u00f3n entre marca, estrategia e inteligencia artificial"
-                : "Marketer working at the intersection of brand, strategy and artificial intelligence"}
-            </h3>
+          <div className="terminal flex flex-col xl:col-span-4">
+            <div className="terminal-header">
+              <span>{copy.linksHeader}</span>
+            </div>
+            <div className="terminal-content p-5 md:p-6">
+              <div className="grid grid-cols-1 gap-4">
+                <a
+                  href="https://www.linkedin.com/in/tomaspero"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between rounded-sm border border-neon-green/30 bg-black/20 px-4 py-4 text-neon-green transition-colors hover:border-neon-cyan hover:text-neon-cyan"
+                >
+                  <div className="flex items-center gap-3">
+                    <Linkedin className="h-5 w-5" />
+                    <div>
+                      <div className="font-cyber text-[11px] uppercase tracking-[0.18em] text-neon-cyan">
+                        {copy.links.linkedinLabel}
+                      </div>
+                      <div className="text-sm">{copy.links.linkedinValue}</div>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
 
-            {language === "es" ? (
-              <>
-                <p className="mb-4">Marketer. Construyo sistemas narrativos que impulsan crecimiento.</p>
-                <p className="mb-4">
-                  {"Trabajo en la intersecci\u00f3n entre marca, estrategia y workflows de inteligencia artificial. No solo desarrollo campa\u00f1as; dise\u00f1o estructuras que conectan posicionamiento, partnerships y ejecuci\u00f3n con impacto medible."}
-                </p>
-                <p className="mb-6">
-                  {"18+ a\u00f1os operando en entornos corporativos y startups me permiten traducir visi\u00f3n en acci\u00f3n y creatividad en infraestructura."}
-                </p>
-                <div className="mt-6">
-                  <h4 className="text-neon-green mb-2">ESPECIALIDADES</h4>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>Brand & Narrative Systems</li>
-                    <li>Go-To-Market LATAM</li>
-                    <li>AI-assisted Creative & Content Pipelines</li>
-                    <li>PR, Influencer & Cultural Activation</li>
-                    <li>Strategic Growth Initiatives</li>
-                  </ul>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="rounded-sm border border-neon-green/20 bg-black/20 p-4">
+                    <div className="mb-3 flex items-center gap-2 font-cyber text-[11px] uppercase tracking-[0.18em] text-neon-cyan">
+                      <MapPin className="h-3.5 w-3.5" />
+                      {copy.links.locationLabel}
+                    </div>
+                    <p className="text-sm leading-relaxed text-neon-green/90">{copy.links.location}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {copy.links.locationNodes.map((node) => (
+                        <span
+                          key={node}
+                          className="rounded-sm border border-neon-green/20 px-2.5 py-1 font-cyber text-[10px] uppercase tracking-[0.18em] text-neon-cyan"
+                        >
+                          {node}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-sm border border-neon-green/20 bg-black/20 p-4">
+                    <div className="mb-3 flex items-center gap-2 font-cyber text-[11px] uppercase tracking-[0.18em] text-neon-cyan">
+                      <Mail className="h-3.5 w-3.5" />
+                      {copy.links.emailLabel}
+                    </div>
+                    <a href={`mailto:${copy.links.email}`} className="text-sm text-neon-green/90 hover:text-neon-cyan">
+                      {copy.links.email}
+                    </a>
+                  </div>
                 </div>
-              </>
-            ) : (
-              <>
-                <p className="mb-4">Marketer. I build narrative systems that drive growth.</p>
-                <p className="mb-4">
-                  I work at the intersection of brand, strategy and AI workflows. I do not just ship campaigns; I design structures that connect positioning, partnerships and execution with measurable impact.
-                </p>
-                <p className="mb-6">
-                  18+ years operating across corporate environments and startups help me translate vision into action and creativity into infrastructure.
-                </p>
-                <div className="mt-6">
-                  <h4 className="text-neon-green mb-2">SPECIALTIES</h4>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>Brand & Narrative Systems</li>
-                    <li>Go-To-Market LATAM</li>
-                    <li>AI-assisted Creative & Content Pipelines</li>
-                    <li>PR, Influencer & Cultural Activation</li>
-                    <li>Strategic Growth Initiatives</li>
-                  </ul>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
 
-        <div className="terminal md:col-span-3">
-          <div className="terminal-header">
-            <span>LINKEDIN_PROFILE</span>
+                <div className="rounded-sm border border-neon-green/20 bg-black/20 p-4">
+                  <BlockLabel>{copy.links.credentialLabel}</BlockLabel>
+                  <p className="text-sm leading-relaxed text-neon-green/90">{copy.links.credential}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="terminal-content p-4">
-            <div className="text-center">
-              <a
-                href="https://www.linkedin.com/in/tomaspero"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center text-neon-green text-xl hover:text-neon-cyan transition-colors"
-              >
-                <Linkedin size={32} className="mr-2" />
-                <span className="text-2xl">linkedin.com/in/tomaspero</span>
-              </a>
-              <div className="border border-neon-green p-4 mt-4">
-                <h3 className="text-xl text-neon-cyan mb-2">{"TOM\u00c1S PER\u00d3"}</h3>
-                <p className="text-neon-green mb-2">
-                  {language === "es"
-                    ? "Marketer trabajando en la intersecci\u00f3n entre marca, estrategia e inteligencia artificial"
-                    : "Marketer working at the intersection of brand, strategy and artificial intelligence"}
-                </p>
-                <p className="mb-4">Buenos Aires, Argentina</p>
-                <p>
-                  {language === "es"
-                    ? "Tengo experiencia en marketing estrat\u00e9gico con marcas globales como Air New Zealand y Disney, y con agencias de publicidad l\u00edderes."
-                    : "I have experience in strategic marketing across global brands like Air New Zealand and Disney, and leading advertising agencies."}
-                </p>
+
+          <div className="terminal flex flex-col xl:col-span-8">
+            <div className="terminal-header">
+              <span>{copy.skillsHeader}</span>
+            </div>
+            <div className="terminal-content p-5 md:p-6">
+              <div className="grid grid-cols-1 gap-4 xl:grid-cols-[0.9fr_1.2fr_1fr]">
+                <SkillsSection label={copy.skills.positioningLabel}>
+                  <div className="font-cyber text-lg text-neon-green">{copy.skills.positioningValue}</div>
+                </SkillsSection>
+
+                <div className="grid grid-cols-1 gap-4">
+                  <SkillsSection label={copy.skills.strengthsLabel}>
+                    <div className="flex flex-wrap gap-2">
+                      {copy.skills.strengths.map((item) => (
+                        <SkillPill key={item} label={item} />
+                      ))}
+                    </div>
+                  </SkillsSection>
+
+                  <SkillsSection label={copy.skills.workingStyleLabel}>
+                    <div className="flex flex-wrap gap-2">
+                      {copy.skills.workingStyle.map((item) => (
+                        <SkillPill key={item} label={item} />
+                      ))}
+                    </div>
+                  </SkillsSection>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                  <SkillsSection label={copy.skills.bestFitLabel}>
+                    <div className="space-y-2">
+                      {copy.skills.bestFit.map((item) => (
+                        <div key={item} className="rounded-sm border border-neon-green/20 px-3 py-2 text-sm text-neon-green/85">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </SkillsSection>
+
+                  <SkillsSection label={copy.skills.focusLabel}>
+                    <p className="text-sm leading-relaxed text-neon-green/90">{copy.skills.focus}</p>
+                  </SkillsSection>
+                </div>
               </div>
             </div>
           </div>
@@ -183,4 +419,3 @@ export default function About() {
     </main>
   )
 }
-

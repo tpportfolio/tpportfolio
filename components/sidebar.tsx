@@ -1,6 +1,7 @@
 ﻿"use client"
 
 import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
 import { useLanguage } from "./language-context"
 import { LanguageSwitcher } from "./language-switcher"
 import { useVisualMode } from "./visual-mode-context"
@@ -8,6 +9,21 @@ import { useVisualMode } from "./visual-mode-context"
 export default function Sidebar() {
   const { t } = useLanguage()
   const { mode, toggleMode } = useVisualMode()
+  const pathname = usePathname()
+  const router = useRouter()
+
+  function goToWorkSection(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault()
+
+    if (pathname === "/") {
+      window.history.replaceState(null, "", "/#trabajos")
+      const target = document.getElementById("trabajos")
+      target?.scrollIntoView({ behavior: "smooth", block: "start" })
+      return
+    }
+
+    router.push("/#trabajos")
+  }
 
   return (
     <aside
@@ -46,7 +62,7 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li>
-                <Link href="/" className="sidebar-link">
+                <Link href="/#trabajos" className="sidebar-link" onClick={goToWorkSection}>
                   {t("work")}
                 </Link>
               </li>
