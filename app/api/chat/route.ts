@@ -59,7 +59,7 @@ function isCareerQuestion(message: string) {
     .replace(/\p{Diacritic}/gu, "")
     .toLowerCase()
 
-  return /\b(experiencia|trayectoria|carrera|background|career)\b/.test(normalized)
+  return /\b(experiencia|experience|trayectoria|carrera|background|career)\b/.test(normalized)
 }
 
 function isAiCareerQuestion(message: string) {
