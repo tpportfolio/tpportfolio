@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 
-import { detectAssistantLanguage, retrieveAssistantContext, type AssistantLang } from "@/lib/assistant-corpus"
+import { detectAssistantLanguage, getAssistantCorpus, retrieveAssistantContext, type AssistantLang } from "@/lib/assistant-corpus"
 
 export const runtime = "nodejs"
 
@@ -50,6 +50,15 @@ function isRelayRequest(message: string) {
     .toLowerCase()
 
   return MESSAGE_RELAY_PATTERNS.some((pattern) => normalized.includes(pattern))
+}
+
+function isCareerQuestion(message: string) {
+  const normalized = message
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+
+  return /\b(experiencia|trayectoria|carrera|background|career)\b/.test(normalized)
 }
 
 function buildSystemPrompt(language: AssistantLang) {
@@ -230,6 +239,25 @@ export async function POST(request: Request) {
     currentRoute,
     uiLanguage,
   })
+
+  if (isCareerQuestion(message)) {
+    const timeline = (await getAssistantCorpus())
+      .filter((chunk) => chunk.section === "timeline" && chunk.lang === language)
+      .map((chunk) => chunk.text)
+    if (timeline.length > 0) {
+      return NextResponse.json({
+        answer: timeline.join("\n"),
+        language,
+        sources: [{
+          route: "/timeline",
+          section: "timeline",
+          title: language === "es" ? "Trayectoria" : "Career timeline",
+        }],
+        hadContext: true,
+        available: true,
+      })
+    }
+  }
 
   if (chunks.length === 0) {
     return NextResponse.json({
