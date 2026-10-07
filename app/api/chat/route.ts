@@ -10,6 +10,20 @@ type ChatHistoryItem = {
 }
 
 const DEFAULT_MODEL = "openai/gpt-oss-120b"
+const MESSAGE_RELAY_PATTERNS = [
+  "dejar un mensaje",
+  "dejale un mensaje",
+  "pasale un mensaje",
+  "pasarle un mensaje",
+  "mandale un mensaje",
+  "deja un mensaje",
+  "tell tomas",
+  "leave a message",
+  "pass a message",
+  "forward this message",
+  "send tomas a message",
+  "tell him this",
+]
 
 function fallbackMessage(language: AssistantLang, kind: "offline" | "no-context") {
   if (kind === "offline") {
@@ -23,11 +37,28 @@ function fallbackMessage(language: AssistantLang, kind: "offline" | "no-context"
     : "I do not have enough context to answer that accurately from the current portfolio."
 }
 
+function relayLimitationMessage(language: AssistantLang) {
+  return language === "es"
+    ? "No puedo guardar, reenviar ni entregarle mensajes a Tomás. Hoy CLIPPY.EXE solo responde preguntas con la base de conocimiento del portfolio. Si querés contactarlo, usá la sección o página de contacto del sitio."
+    : "I cannot store, forward, or deliver messages to Tomás. Right now CLIPPY.EXE only answers questions using the portfolio knowledge base. If you want to contact him, please use the contact section or contact page on the site."
+}
+
+function isRelayRequest(message: string) {
+  const normalized = message
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+
+  return MESSAGE_RELAY_PATTERNS.some((pattern) => normalized.includes(pattern))
+}
+
 function buildSystemPrompt(language: AssistantLang) {
   return [
-    "You are the8bureau assistant, the portfolio assistant of Tomás Peró.",
+    "You are CLIPPY.EXE, the portfolio assistant of Tomás Peró.",
     "You answer only from the supplied context.",
     "Never invent projects, dates, clients, roles, tools or personal facts.",
+    "Never claim that you can store, forward, deliver, remember, or pass messages to Tomás unless the supplied context explicitly says that feature exists.",
+    "If a user asks you to leave a message for Tomás, clearly state that you cannot do that and direct them to the contact section instead.",
     "If context is insufficient, say so briefly and clearly.",
     "Keep the tone direct, precise and useful.",
     "Use the language of the user's message. If detection is ambiguous, use the provided UI language fallback.",
@@ -159,6 +190,22 @@ export async function POST(request: Request) {
   }
 
   const language = detectAssistantLanguage(message, uiLanguage)
+  if (isRelayRequest(message)) {
+    return NextResponse.json({
+      answer: relayLimitationMessage(language),
+      language,
+      sources: [
+        {
+          route: "/contact",
+          section: "contact",
+          title: "Contact",
+        },
+      ],
+      hadContext: true,
+      available: true,
+    })
+  }
+
   const { chunks, sources } = await retrieveAssistantContext(message, {
     currentRoute,
     uiLanguage,

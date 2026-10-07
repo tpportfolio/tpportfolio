@@ -10,4 +10,4 @@ Today he offers consulting, training and support for AI-powered content creation
 
 He plugs into marketing teams, brands and agencies to accelerate production, iterate faster, reduce friction and improve quality across real image, video, audio and text pipelines.
 
-The portfolio itself also works as a practical proof of that approach: a large portion of the site and several visible pieces were vibe-coded or produced with AI support.
+The portfolio itself also works as practical proof of that approach: a large portion of the site and several visible pieces were vibe-coded or produced with AI support.

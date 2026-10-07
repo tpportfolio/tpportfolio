@@ -1,4 +1,4 @@
-# Independent consultant
+# Consultor independiente
 
 Tomás trabaja como consultor estratégico en marketing, branding y crecimiento digital.
 
@@ -9,9 +9,9 @@ Su oferta actual combina tres capas:
 - capacitaciones
 - apoyo en creación de contenido potenciado por IA
 
-Clientes y etapas relevantes del portfolio independiente:
+Etapas y clientes relevantes visibles en el portfolio:
 - Paradise.la: transición operativa hacia una productora audiovisual potenciada por IA
-- DrGea: marco narrativo, comunicación regional y go to market
+- DrGea: marco narrativo, comunicación regional y go-to-market
 - Sinerlogic: identidad de marca, mensajería y propuesta de valor
 - Airtm: growth marketing, innovación, KOLs e iniciativas regionales
 - Stone Movistar: lanzamiento, posicionamiento en esports y partnerships con creadores

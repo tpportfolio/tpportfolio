@@ -1,40 +1,46 @@
 "use client"
 
 import { Menu } from "lucide-react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { useVisualMode } from "./visual-mode-context"
 
 export function MobileMenuButton() {
-  const toggleSidebar = () => {
-    const sidebar = document.getElementById("sidebar")
-    if (sidebar) {
-      sidebar.classList.toggle("-translate-x-full")
-    }
-  }
+  const [open, setOpen] = useState(false)
+  const { mode } = useVisualMode()
 
-  // Close sidebar when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const sidebar = document.getElementById("sidebar")
-      const target = event.target as HTMLElement
-
-      if (sidebar && !sidebar.contains(target) && !target.closest(".mobile-menu-button")) {
-        sidebar.classList.add("-translate-x-full")
-      }
+    const handleState = (event: Event) => {
+      const detail = (event as CustomEvent<{ open?: boolean }>).detail
+      setOpen(Boolean(detail?.open))
     }
 
-    document.addEventListener("mousedown", handleClickOutside)
+    window.addEventListener("tp-mobile-menu-state", handleState as EventListener)
+
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
+      window.removeEventListener("tp-mobile-menu-state", handleState as EventListener)
     }
   }, [])
 
+  const toggleSidebar = () => {
+    window.dispatchEvent(new CustomEvent("tp-mobile-menu-toggle"))
+  }
+
+  const buttonToneClass =
+    mode === "light"
+      ? "border-[#c57b45] bg-[#fff2e3] text-[#8b4315] shadow-[0_0_16px_rgba(180,83,9,0.14)]"
+      : "border-neon-green bg-black text-neon-green"
+
   return (
     <button
-      className="mobile-menu-button fixed top-4 left-4 z-50 lg:hidden bg-black p-2 rounded-md border border-neon-green text-neon-green"
+      className={`mobile-menu-button fixed left-4 top-8 z-[60] h-11 w-11 items-center justify-center rounded-md border lg:hidden ${buttonToneClass} ${
+        open ? "hidden" : "flex"
+      }`}
       onClick={toggleSidebar}
-      aria-label="Toggle menu"
+      aria-label={open ? "Close menu" : "Open menu"}
+      aria-expanded={open}
+      aria-controls="sidebar"
     >
-      <Menu size={24} />
+      <Menu className="h-5 w-5" />
     </button>
   )
 }

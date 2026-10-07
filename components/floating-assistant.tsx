@@ -32,10 +32,10 @@ type ChatResponse = {
 
 const UI_COPY = {
   es: {
-    welcome: "Hola. Soy the8bureau assistant. Puedo responder sobre Tomás, su trayectoria, proyectos, servicios, AI experiments y tools.",
+    welcome: "Hola. Soy CLIPPY.EXE. Puedo responder sobre Tomás, su trayectoria, proyectos, servicios, AI experiments y tools.",
     statusReady: "READY",
     statusThinking: "THINKING",
-    title: "the8bureau assistant",
+    title: "CLIPPY.EXE",
     subtitle: "portfolio knowledge base",
     placeholder: "Preguntame sobre el portfolio...",
     send: "Enviar",
@@ -47,10 +47,10 @@ const UI_COPY = {
     offline: "El assistant está momentáneamente offline. Falta configuración del proveedor o hubo un error aguas arriba.",
   },
   en: {
-    welcome: "Hi. I'm the8bureau assistant. I can answer about Tomás, his background, projects, services, AI experiments and tools.",
+    welcome: "Hi. I'm CLIPPY.EXE. I can answer about Tomás, his background, projects, services, AI experiments and tools.",
     statusReady: "READY",
     statusThinking: "THINKING",
-    title: "the8bureau assistant",
+    title: "CLIPPY.EXE",
     subtitle: "portfolio knowledge base",
     placeholder: "Ask about the portfolio...",
     send: "Send",
@@ -125,7 +125,7 @@ export function FloatingAssistant() {
     () =>
       mode === "light"
         ? "border border-[#b45309] bg-[#fff7ee] text-[#4a220b] shadow-[0_0_24px_rgba(180,83,9,0.18)]"
-        : "border border-neon-green/40 bg-black/95 text-neon-green shadow-[0_0_30px_rgba(57,255,20,0.14)]",
+        : "border border-neon-green/40 bg-black/95 text-white shadow-[0_0_30px_rgba(57,255,20,0.14)]",
     [mode],
   )
 
@@ -133,9 +133,12 @@ export function FloatingAssistant() {
   const inputClass =
     mode === "light"
       ? "border-[#c57b45] bg-[#fffaf4] text-[#4a220b] placeholder:text-[#a36638]"
-      : "border-neon-green/25 bg-black text-neon-green placeholder:text-neon-green/35"
-  const bubbleUserClass = mode === "light" ? "border-[#c57b45] bg-[#fff1e2] text-[#53250c]" : "border-neon-cyan/30 bg-[#041b12] text-neon-cyan"
-  const bubbleBotClass = mode === "light" ? "border-[#d7b084] bg-[#fff8f0] text-[#4a220b]" : "border-neon-green/20 bg-black/40 text-neon-green"
+      : "border-neon-green/25 bg-black text-white placeholder:text-white/35"
+  const bubbleUserClass = mode === "light" ? "border-[#c57b45] bg-[#fff1e2] text-[#53250c]" : "border-neon-cyan/30 bg-[#041b12] text-white"
+  const bubbleBotClass = mode === "light" ? "border-[#d7b084] bg-[#fff8f0] text-[#4a220b]" : "border-neon-green/20 bg-black/40 text-white"
+  const clippyImageStyle = mode === "light"
+    ? { filter: "sepia(0.95) saturate(1.45) hue-rotate(-18deg) brightness(1.03) contrast(0.94)" }
+    : undefined
 
   async function send() {
     const message = input.trim()
@@ -202,13 +205,13 @@ export function FloatingAssistant() {
 
       <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 md:bottom-5 md:right-5">
         {open ? (
-          <div className={`pointer-events-auto flex h-[min(72vh,34rem)] w-[min(92vw,25rem)] flex-col overflow-hidden rounded-sm ${shellClass}`}>
+          <div className={`pointer-events-auto flex h-[min(76vh,38rem)] w-[min(94vw,29rem)] flex-col overflow-hidden rounded-sm ${shellClass}`}>
             <div className={`flex items-center gap-3 px-4 py-3 ${headerClass}`}>
               <div className="relative h-11 w-11 shrink-0">
-                <Image src="/clippy-character.png" alt="the8bureau assistant" fill sizes="44px" className="object-contain" priority={false} />
+                <Image src="/clippy-character.png" alt="CLIPPY.EXE" fill sizes="44px" className="object-contain" style={clippyImageStyle} priority={false} />
               </div>
               <div className="min-w-0 flex-1">
-                <div className="font-cyber text-xs uppercase tracking-[0.18em] text-neon-cyan">{copy.title}</div>
+                <div className={`font-cyber text-xs uppercase tracking-[0.18em] ${mode === "light" ? "text-neon-cyan" : "text-white"}`}>{copy.title}</div>
                 <div className={`mt-1 text-[11px] uppercase tracking-[0.14em] ${mode === "light" ? "text-[#8b4315]" : "text-neon-green/60"}`}>
                   {loading ? copy.statusThinking : copy.subtitle}
                 </div>
@@ -232,15 +235,15 @@ export function FloatingAssistant() {
                 {messages.map((message) => (
                   <div key={message.id} className={`rounded-sm border px-3 py-3 text-sm leading-relaxed ${message.role === "user" ? bubbleUserClass : bubbleBotClass}`}>
                     <div className="mb-2 flex items-center justify-between text-[11px] uppercase tracking-[0.12em]">
-                      <span className={`font-cyber ${message.role === "user" ? "text-neon-magenta" : "text-neon-cyan"}`}>
+                      <span className={`font-cyber ${mode === "light" ? (message.role === "user" ? "text-neon-magenta" : "text-neon-cyan") : "text-white"}`}>
                         {message.role === "user" ? "YOU" : copy.title}
                       </span>
-                      <span className={mode === "light" ? "text-[#9b6b42]" : "text-neon-green/40"}>{message.ts}</span>
+                      <span className={mode === "light" ? "text-[#9b6b42]" : "text-white/45"}>{message.ts}</span>
                     </div>
                     <p className="whitespace-pre-wrap">{message.text}</p>
                     {message.role === "assistant" && message.sources?.length ? (
                       <div className="mt-3">
-                        <div className={`mb-2 text-[10px] uppercase tracking-[0.16em] ${mode === "light" ? "text-[#8b4315]" : "text-neon-green/55"}`}>
+                        <div className={`mb-2 text-[10px] uppercase tracking-[0.16em] ${mode === "light" ? "text-[#8b4315]" : "text-white/65"}`}>
                           {copy.sourceLabel}
                         </div>
                         <div className="flex flex-wrap gap-2">
@@ -251,7 +254,7 @@ export function FloatingAssistant() {
                               className={`rounded-sm border px-2 py-1 text-[11px] ${
                                 mode === "light"
                                   ? "border-[#c57b45] text-[#7a3511] hover:bg-[#f5e4d2]"
-                                  : "border-neon-green/25 text-neon-cyan hover:bg-neon-cyan/10"
+                                  : "border-neon-green/25 text-white hover:bg-neon-cyan/10"
                               }`}
                             >
                               {source.title}
@@ -265,7 +268,7 @@ export function FloatingAssistant() {
 
                 {loading ? (
                   <div className={`rounded-sm border px-3 py-3 text-sm ${bubbleBotClass}`}>
-                    <div className="flex items-center gap-2 font-cyber text-xs uppercase tracking-[0.14em] text-neon-cyan">
+                    <div className={`flex items-center gap-2 font-cyber text-xs uppercase tracking-[0.14em] ${mode === "light" ? "text-neon-cyan" : "text-white"}`}>
                       <Loader2 className="h-4 w-4 animate-spin" />
                       {copy.statusThinking}
                     </div>
@@ -299,14 +302,14 @@ export function FloatingAssistant() {
                   className={`inline-flex h-11 w-11 items-center justify-center rounded-sm border ${
                     mode === "light"
                       ? "border-[#b45309] bg-[#f7ead8] text-[#8b4315] disabled:opacity-50"
-                      : "border-neon-green/30 bg-[#04150d] text-neon-green disabled:opacity-50"
+                      : "border-neon-green/30 bg-[#04150d] text-white disabled:opacity-50"
                   }`}
                   aria-label={copy.send}
                 >
                   <SendHorizontal className="h-4 w-4" />
                 </button>
               </div>
-              <div className={`mt-2 text-[10px] uppercase tracking-[0.14em] ${mode === "light" ? "text-[#9b6b42]" : "text-neon-green/45"}`}>
+              <div className={`mt-2 text-[10px] uppercase tracking-[0.14em] ${mode === "light" ? "text-[#9b6b42]" : "text-white/45"}`}>
                 {copy.enterToSend}
               </div>
             </div>
@@ -317,15 +320,23 @@ export function FloatingAssistant() {
           type="button"
           onClick={() => setOpen((current) => !current)}
           aria-label={copy.open}
-          className="pointer-events-auto relative inline-flex h-20 w-20 items-center justify-center md:h-24 md:w-24"
+          className="pointer-events-auto relative inline-flex h-[84px] w-[84px] items-center justify-center md:h-[106px] md:w-[106px]"
         >
           <span
             className={`absolute inset-0 rounded-full blur-xl ${
               mode === "light" ? "bg-[#e8c19a]/60" : pulse ? "bg-neon-green/20" : "bg-neon-green/10"
             }`}
           />
-          <div className="relative h-20 w-20 transition-transform hover:scale-[1.04] md:h-24 md:w-24">
-            <Image src="/clippy-character.png" alt="Open the8bureau assistant" fill sizes="96px" className="object-contain" priority={false} />
+          <div className="relative h-[84px] w-[84px] transition-transform hover:scale-[1.04] md:h-[106px] md:w-[106px]">
+            <Image
+              src="/clippy-character.png"
+              alt="Open CLIPPY.EXE"
+              fill
+              sizes="(min-width: 768px) 106px, 84px"
+              className="object-contain"
+              style={clippyImageStyle}
+              priority={false}
+            />
           </div>
           {!open ? (
             <span

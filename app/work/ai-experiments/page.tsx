@@ -272,7 +272,7 @@ function The8BureauImageModal({ isLight, onClose }: { isLight: boolean; onClose:
     >
       <button type="button" className="absolute inset-0 bg-black/80" onClick={onClose} aria-label="Close image preview" />
       <div
-        className={`relative mx-auto flex h-full max-h-[90vh] w-[96%] md:w-[88%] max-w-none flex-col overflow-hidden rounded-sm border-2 ${
+        className={`relative mx-auto flex h-full max-h-[90vh] w-full md:w-[88%] max-w-none flex-col overflow-hidden rounded-sm border-2 ${
           isLight ? "border-[#8b4315] bg-[#fff8f1]" : "border-neon-green bg-black"
         }`}
       >
@@ -481,10 +481,10 @@ function Work2026Modal({
   const [selectedGalleryImage, setSelectedGalleryImage] = useState<GalleryImage | null>(null)
   const shellClass =
     item.kind === "gallery"
-      ? `relative mx-auto flex max-h-[90vh] w-[96%] md:w-[82%] max-w-none flex-col overflow-hidden rounded-sm border-2 ${
+      ? `relative mx-auto flex max-h-[90vh] w-full md:w-[82%] max-w-none flex-col overflow-hidden rounded-sm border-2 ${
           isLight ? "border-[#8b4315] bg-[#fff8f1]" : "border-neon-green bg-black"
         }`
-      : `relative mx-auto flex max-h-[90vh] w-[96%] md:w-[88%] max-w-none flex-col overflow-hidden rounded-sm border-2 ${
+      : `relative mx-auto flex max-h-[90vh] w-full md:w-[88%] max-w-none flex-col overflow-hidden rounded-sm border-2 ${
           isLight ? "border-[#8b4315] bg-[#fff8f1]" : "border-neon-green bg-black"
         }`
 
@@ -585,10 +585,10 @@ function Work2026Modal({
         </div>
 
         {selectedGalleryImage?.imageSrc ? (
-          <div className="absolute inset-0 z-[20] flex items-center justify-center bg-black/88 p-4">
+          <div className="absolute inset-0 z-[20] flex items-center justify-center bg-black/88 p-2 sm:p-4">
             <button className="absolute inset-0" onClick={() => setSelectedGalleryImage(null)} aria-label="Close image preview" />
             <div
-              className={`relative z-[1] overflow-hidden rounded-sm border p-3 ${
+              className={`relative z-[1] w-full max-w-[min(92vw,1120px)] overflow-hidden rounded-sm border p-2 sm:p-3 ${
                 isLight ? "border-[#c57b45] bg-[#fff8f1]" : "border-neon-green/40 bg-black"
               }`}
             >
@@ -604,7 +604,7 @@ function Work2026Modal({
               >
                 <X className="h-4 w-4" />
               </button>
-              <div className="relative h-[min(78vh,960px)] w-[min(78vw,1100px)]">
+              <div className="relative h-[min(64vh,960px)] w-full sm:h-[min(78vh,960px)]">
                 <Image
                   src={selectedGalleryImage.imageSrc}
                   alt={selectedGalleryImage.label}

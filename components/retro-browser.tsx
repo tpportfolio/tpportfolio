@@ -44,7 +44,7 @@ export function RetroBrowser({
 
   return (
     <div
-      className={`retro-browser relative isolate rounded-sm ${highlight ? "overflow-visible" : "overflow-hidden"} flex flex-col transition-all duration-300 w-full h-72 md:h-80
+      className={`retro-browser relative isolate rounded-sm ${highlight ? "overflow-visible" : "overflow-hidden"} flex flex-col transition-all duration-300 w-full h-[15.5rem] sm:h-[16.5rem] md:h-80
         ${highlight
           ? "border-2 border-cyan-400 bg-black shadow-xl shadow-cyan-400/40 hover:shadow-cyan-400/70"
           : "border border-neon-green bg-black shadow-lg shadow-neon-green/20 hover:shadow-neon-green/40"}
@@ -68,17 +68,17 @@ export function RetroBrowser({
           <div className={`w-3 h-3 rounded-full mr-2 ${highlight ? "bg-cyan-400" : "bg-red-500"}`}></div>
           <div className={`w-3 h-3 rounded-full mr-2 ${highlight ? "bg-cyan-200" : "bg-yellow-500"}`}></div>
           <div className={`w-3 h-3 rounded-full mr-2 ${highlight ? "bg-cyan-600" : "bg-green-500"}`}></div>
-          <span className={`text-lg font-bold ${highlight ? "text-neon-cyan" : "text-neon-green"}`}>{resolvedTitle.toUpperCase()}</span>
+          <span className={`text-base font-bold sm:text-lg ${highlight ? "text-neon-cyan" : "text-neon-green"}`}>{resolvedTitle.toUpperCase()}</span>
         </div>
       </div>
 
-      <div className={`browser-content p-4 flex-1 ${highlight ? "bg-black" : ""}`} style={{ position: "relative", zIndex: 10 }}>
+      <div className={`browser-content flex-1 p-3 sm:p-4 ${highlight ? "bg-black" : ""}`} style={{ position: "relative", zIndex: 10 }}>
         {children ? (
           children
         ) : (
           <Link href={`/work/${slug}`}>
             <div className="cursor-pointer h-full flex flex-col justify-between">
-              <div className="year-client pl-4">
+              <div className="year-client pl-2 sm:pl-4">
                 <div className={`year text-2xl font-bold ${highlight ? "text-cyan-400" : ""}`}>// {resolvedYear}</div>
                 <div className={`client text-2xl font-bold ${highlight ? "text-cyan-400" : ""}`}>// {resolvedBodyTitle}</div>
                 {resolvedTitleLine2 && <div className={`client-line2 text-lg ${highlight ? "text-cyan-400" : ""}`}>{resolvedTitleLine2}</div>}
@@ -90,7 +90,7 @@ export function RetroBrowser({
                   </div>
                 )}
               </div>
-              <div className={`access-data text-center mt-4 font-bold text-lg ${highlight ? "text-cyan-400" : ""}`}>{t("access_data")}</div>
+              <div className={`access-data mt-3 text-center text-base font-bold sm:mt-4 sm:text-lg ${highlight ? "text-cyan-400" : ""}`}>{t("access_data")}</div>
             </div>
           </Link>
         )}

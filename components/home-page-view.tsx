@@ -73,25 +73,25 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
   }, [])
 
   return (
-    <main className={["py-8 px-4 md:px-12", className].filter(Boolean).join(" ")}>
-      <div className="marquee-container mb-6">
+    <main className={["px-4 pb-8 pt-8 md:px-12", className].filter(Boolean).join(" ")}>
+      <div className="marquee-container mb-6 pl-16 pr-3 lg:px-2">
         <div className="marquee">
           <span>{siteIdentity.marquee}</span>
         </div>
       </div>
 
-      <section className="relative text-center mb-6">
+      <section className="relative mb-8 px-2 text-center sm:px-0">
         <h1
-          className="text-4xl md:text-7xl font-bold mb-4 text-neon-green font-cyber glitch"
+          className="mb-3 text-[2.2rem] font-bold leading-none text-neon-green font-cyber glitch sm:text-4xl md:mb-4 md:text-7xl"
           data-text={siteIdentity.name.toUpperCase()}
           style={accentStyle}
         >
           {siteIdentity.name.toUpperCase()}
         </h1>
-        <h2 className="text-xl md:text-2xl text-neon-cyan mb-0 font-cyber" style={secondaryStyle}>
+        <h2 className="mb-0 text-base text-neon-cyan font-cyber sm:text-xl md:text-2xl" style={secondaryStyle}>
           {siteIdentity.role}
         </h2>
-        <div className="mt-5 w-full">
+        <div className="mt-4 w-full md:mt-5">
           <div className="mx-auto flex w-full max-w-5xl justify-center text-center">
             <Typewriter
               textEs={heroCopyEs}
@@ -99,13 +99,13 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
               speedMs={10.3}
               startDelayMs={180}
               fontSizePx={24}
-              mobileFontSizePx={16}
+              mobileFontSizePx={15}
               cursorSizePx={12}
               color={typewriterColor}
               cursorColor={typewriterColor}
               align="center"
               forceReveal={skipTypewriter}
-              className="mx-auto max-w-5xl text-center"
+              className="mx-auto max-w-[23rem] text-center sm:max-w-3xl md:max-w-5xl"
             />
           </div>
         </div>
@@ -118,7 +118,7 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 md:gap-8">
           {homeProjects.slice(0, -1).map((item) => (
             <RetroBrowser
               key={item.id}
@@ -132,7 +132,7 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
             />
           ))}
         </div>
-        <div className="flex justify-center mt-8">
+        <div className="mt-6 flex justify-center sm:mt-8">
           <div className="w-full md:w-1/2">
             <RetroBrowser
               year={homeProjects[homeProjects.length - 1].year}

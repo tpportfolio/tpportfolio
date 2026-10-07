@@ -159,7 +159,7 @@ export default function Typewriter({
         className={`relative font-mono leading-relaxed whitespace-pre-line ${alignmentClass}`.trim()}
         style={{
           fontSize: resolvedFontSize,
-          lineHeight: 1.19,
+          lineHeight: 1.26,
           fontWeight: 400,
           color,
           textShadow: "none",

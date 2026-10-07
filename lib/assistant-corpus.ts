@@ -108,6 +108,38 @@ const EXTRA_DOCS: ExtraDoc[] = [
     title: "Curiosities",
     keywords: ["curiosities", "music", "football", "series", "taste", "river", "beatles"],
   },
+  {
+    file: "recipes.es.md",
+    lang: "es",
+    route: "/about",
+    section: "recipes",
+    title: "Recetas favoritas",
+    keywords: ["recetas", "cocina", "cocinar", "chocotorta", "chipa", "pizza", "rogel", "bolognesa", "pomodoro"],
+  },
+  {
+    file: "recipes.en.md",
+    lang: "en",
+    route: "/about",
+    section: "recipes",
+    title: "Favorite recipes",
+    keywords: ["recipes", "cooking", "chocotorta", "chipa", "pizza", "rogel", "bolognese", "pomodoro"],
+  },
+  {
+    file: "assistant-qa.es-en.md",
+    lang: "es",
+    route: "/about",
+    section: "qa",
+    title: "Base de conocimiento Q&A",
+    keywords: ["qa", "preguntas", "respuestas", "perfil", "trayectoria", "consultoria", "ia", "intereses", "recetas"],
+  },
+  {
+    file: "assistant-qa.es-en.md",
+    lang: "en",
+    route: "/about",
+    section: "qa",
+    title: "Q&A knowledge base",
+    keywords: ["qa", "questions", "answers", "profile", "background", "consulting", "ai", "interests", "recipes"],
+  },
 ]
 
 const SPANISH_HINTS = [

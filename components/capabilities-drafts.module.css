@@ -1,0 +1,394 @@
+.frame {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.aura::before {
+  content: "";
+  position: absolute;
+  inset: -18% 42% 30% -10%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--neon-green) 16%, transparent),
+    transparent 64%
+  );
+  opacity: 0.9;
+  pointer-events: none;
+  animation: drift 14s ease-in-out infinite;
+}
+
+.scan::after {
+  content: "";
+  position: absolute;
+  left: -12%;
+  right: -12%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--neon-green) 55%, transparent),
+    transparent
+  );
+  pointer-events: none;
+  animation: scan 7.5s linear infinite;
+}
+
+.ghostWord {
+  position: absolute;
+  right: 1rem;
+  top: 0.9rem;
+  font-family: monospace;
+  font-size: clamp(2.8rem, 10vw, 6.8rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 0.9;
+  color: color-mix(in srgb, var(--neon-green) 8%, transparent);
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ghostWordLeft {
+  left: 1rem;
+  right: auto;
+}
+
+.revealUp {
+  animation: revealUp 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.revealLeft {
+  animation: revealLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.revealRight {
+  animation: revealRight 0.82s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.delay1 {
+  animation-delay: 0.08s;
+}
+
+.delay2 {
+  animation-delay: 0.16s;
+}
+
+.delay3 {
+  animation-delay: 0.24s;
+}
+
+.delay4 {
+  animation-delay: 0.34s;
+}
+
+.signalRail {
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.signalRail::before {
+  content: "";
+  position: absolute;
+  left: 0.35rem;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--neon-green) 14%, transparent),
+    color-mix(in srgb, var(--neon-green) 42%, transparent),
+    color-mix(in srgb, var(--neon-green) 14%, transparent)
+  );
+}
+
+.signalDot {
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1px solid var(--neon-green);
+  border-radius: 999px;
+  background: rgb(var(--background-rgb) / 0.96);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--neon-green) 24%, transparent);
+}
+
+.commandRow {
+  position: relative;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.commandRow:hover {
+  transform: translateX(6px);
+}
+
+.meter {
+  position: relative;
+  height: 4px;
+  width: 100%;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--neon-green) 8%, transparent);
+}
+
+.meterFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--neon-green) 68%, transparent),
+    color-mix(in srgb, var(--neon-cyan) 68%, transparent)
+  );
+}
+
+.labelStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.splitWord {
+  display: block;
+  font-family: monospace;
+  font-size: clamp(1.45rem, 3vw, 2.4rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.jumboLead {
+  font-size: clamp(1.4rem, 2vw + 1rem, 2.35rem);
+  line-height: 1.3;
+}
+
+.posterTitle {
+  font-family: monospace;
+  font-size: clamp(1.9rem, 5vw, 4.5rem);
+  line-height: 0.94;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.posterSub {
+  font-size: clamp(1rem, 1vw + 0.8rem, 1.18rem);
+  line-height: 1.65;
+}
+
+.bigButtonGrid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.bigButton {
+  position: relative;
+  display: block;
+  border: 1px solid color-mix(in srgb, var(--neon-green) 22%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--neon-green) 5%, transparent), transparent 58%),
+    rgb(var(--background-rgb) / 0.5);
+  padding: 1rem 1rem 1.05rem;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bigButton:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--neon-cyan) 54%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--neon-green) 12%, transparent);
+}
+
+.bigButtonTitle {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: clamp(1.2rem, 2vw + 0.7rem, 2rem);
+  line-height: 1.05;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bigButtonBody {
+  display: block;
+  max-width: 58ch;
+  font-size: clamp(0.95rem, 0.6vw + 0.85rem, 1.08rem);
+  line-height: 1.6;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 3.25rem;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid var(--neon-green);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--neon-green) 8%, transparent), transparent 70%),
+    rgb(var(--background-rgb) / 0.78);
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--neon-green);
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--neon-green) 16%, transparent);
+}
+
+.ctaButtonGhost {
+  border-color: color-mix(in srgb, var(--neon-green) 24%, transparent);
+  color: var(--neon-cyan);
+}
+
+.softPulse {
+  animation: softPulse 2.4s ease-in-out infinite;
+}
+
+.posterPanel {
+  position: relative;
+  overflow: hidden;
+}
+
+.posterPanel::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--neon-green) 50%, transparent), transparent);
+}
+
+.chapterNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chapterLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.8rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--neon-green) 24%, transparent);
+  background: rgb(var(--background-rgb) / 0.5);
+  font-family: monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+  transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.chapterLink:hover {
+  transform: translateX(4px);
+  border-color: var(--neon-cyan);
+  color: var(--neon-green);
+}
+
+.sectionAnchor {
+  scroll-margin-top: 1.5rem;
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes revealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes revealRight {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(14px, -12px, 0) scale(1.08);
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(440px);
+    opacity: 0;
+  }
+}
+
+@keyframes softPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 color-mix(in srgb, var(--neon-green) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 22px color-mix(in srgb, var(--neon-green) 14%, transparent);
+  }
+}
+
+@media (min-width: 768px) {
+  .bigButtonGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aura::before,
+  .scan::after,
+  .revealUp,
+  .revealLeft,
+  .revealRight,
+  .softPulse {
+    animation: none !important;
+  }
+}

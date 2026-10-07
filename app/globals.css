@@ -321,6 +321,10 @@ body {
   overflow-x: hidden;
 }
 
+body.mobile-menu-open {
+  overflow: hidden;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -782,6 +786,20 @@ body::after {
 }
 
 /* Sidebar link styles */
+.sidebar-brand-title {
+  font-size: 1rem;
+  line-height: 1.02;
+  letter-spacing: 0.12em;
+}
+
+.sidebar-brand-subtitle {
+  margin-top: 0.3rem;
+  font-family: monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  line-height: 1.1;
+}
+
 .sidebar-link {
   display: block;
   color: var(--neon-green);
@@ -1547,7 +1565,83 @@ html[data-visual-mode="light"] .ai-page .shadow-\[3px_3px_0_\#000\] {
 .sidebar-footer-stack .sidebar-agent-link {
   margin: 0;
 }
-.sidebar-footer-stack .text-xs {
+.sidebar-footer-stack .text-xs {
   margin: 0;
+}
+
+@media (max-width: 1023px) {
+  #sidebar {
+    box-shadow: 18px 0 40px rgba(0, 0, 0, 0.34);
+  }
+
+  .sidebar-brand-title {
+    font-size: 1.08rem;
+    letter-spacing: 0.14em;
+  }
+
+  .sidebar-brand-subtitle {
+    font-size: 0.76rem;
+    letter-spacing: 0.18em;
+  }
+
+  .sidebar-link {
+    font-size: 0.98rem;
+    letter-spacing: 0.14em;
+    padding: 0.7rem 0;
+  }
+
+  .sidebar-link--controlled-wrap {
+    line-height: 1.24;
+    white-space: nowrap;
+    font-size: 0.9rem;
+  }
+
+  .sidebar-link:hover {
+    transform: none;
+  }
+
+  .sidebar-mode-inline {
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-mode-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+  }
+
+  .sidebar-mode-switch {
+    min-height: 2.5rem;
+  }
+
+  .sidebar-mode-switch__track {
+    width: 3.55rem;
+    height: 1.58rem;
+  }
+
+  .sidebar-mode-switch__thumb {
+    top: 0.13rem;
+    left: 0.13rem;
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .sidebar-mode-switch--dark .sidebar-mode-switch__thumb {
+    transform: translateX(1.98rem);
+  }
+
+  .sidebar-footer-stack {
+    gap: 1rem;
+  }
+
+  .sidebar-footer-stack .language-switcher {
+    gap: 0.55rem;
+  }
+
+  .sidebar-footer-stack .language-switcher__button {
+    min-height: 2.5rem;
+    min-width: 2.75rem;
+    padding: 0 0.75rem;
+  }
 }
 
