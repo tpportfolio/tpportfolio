@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 
 import { detectAssistantLanguage, getAssistantCorpus, retrieveAssistantContext, type AssistantLang } from "@/lib/assistant-corpus"
+import { aiExperienceAnswer } from "@/lib/site-content"
 
 export const runtime = "nodejs"
 
@@ -59,6 +60,18 @@ function isCareerQuestion(message: string) {
     .toLowerCase()
 
   return /\b(experiencia|trayectoria|carrera|background|career)\b/.test(normalized)
+}
+
+function isAiCareerQuestion(message: string) {
+  const normalized = message
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+
+  const asksAboutCareer = isCareerQuestion(normalized)
+  const mentionsAi = /\b(?:ia|ai|lora|morfeo)\b|inteligencia artificial|artificial intelligence/.test(normalized)
+
+  return asksAboutCareer && mentionsAi
 }
 
 function buildSystemPrompt(language: AssistantLang) {
@@ -228,6 +241,27 @@ export async function POST(request: Request) {
           route: "/contact",
           section: "contact",
           title: "Contact",
+        },
+      ],
+      hadContext: true,
+      available: true,
+    })
+  }
+
+  if (isAiCareerQuestion(message)) {
+    return NextResponse.json({
+      answer: aiExperienceAnswer[language],
+      language,
+      sources: [
+        {
+          route: "/work/ai-experiments",
+          section: "ai-lab",
+          title: language === "es" ? "Experimentos de IA" : "AI Experiments",
+        },
+        {
+          route: "/timeline",
+          section: "timeline",
+          title: "PARADISE.LA",
         },
       ],
       hadContext: true,

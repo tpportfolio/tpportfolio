@@ -54,8 +54,8 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
   const statusStyle = isLight ? { color: "#7a3913" } : undefined
 
   const experienceYears = useMemo(() => getExperienceYears(), [])
-  const heroCopyEs = `Hola, soy Tomás, marketer trabajando en la intersección entre marca, estrategia, e inteligencia artificial, con foco en storytelling, workflows e impacto en negocio, con ${experienceYears} años de trayectoria.`
-  const heroCopyEn = `Hi, I'm Tomás, a marketer working at the intersection of brand, strategy, and artificial intelligence, focused on storytelling, workflows and business impact, with ${experienceYears} years of experience.`
+  const heroCopyEs = `Soy Tomás, líder estratégico de marca y marketing. Conecto cultura y entretenimiento con tecnología para construir marcas y mejorar operaciones creativas, con ${experienceYears} años de trayectoria.`
+  const heroCopyEn = `I'm Tomás, a strategic brand and marketing leader. I connect culture and entertainment with technology to build brands and improve creative operations, with ${experienceYears} years of experience.`
 
   useEffect(() => {
     if (typeof window === "undefined") return

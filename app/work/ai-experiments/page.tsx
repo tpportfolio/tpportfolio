@@ -889,7 +889,7 @@ export default function AIExperimentsPage() {
                 {currentLanguage === "es" ? "/INTELIGENCIA_ARTIFICIAL" : "/ARTIFICIAL_INTELLIGENCE"}
               </h1>
               <div className="relative mb-2 min-h-[2rem] font-cyber text-xl text-neon-cyan">
-                <span>2020-PRESENT</span>
+                <span>2022-PRESENT</span>
               </div>
               <div
                 className={`mb-6 h-px bg-gradient-to-r from-transparent ${isLight ? "via-[#b45309]" : "via-neon-green"} to-transparent`}
@@ -900,10 +900,12 @@ export default function AIExperimentsPage() {
             <p>
               {currentLanguage === "es" ? (
                 <>
-                  En 2022 empece como autodidacta en el mundo IA, en 2024 me profesionalice (por ej: Morfeo
-                  Academy). Exploro herramientas, sistemas y workflows que agreguen valor directo a marcas y
-                  empresas. Enfoque de eficiencia: IA para acelerar, iterar, reducir friccion y mejorar calidad en
-                  pipelines reales. Trabajo/e con IA&apos;s de:{" "}
+                  Empecé a explorar IA de forma autodidacta a fines de 2022. En 2023 generé un LoRA de mi persona.
+                  Desde junio de 2024 participo del curso y la comunidad de Morfeo Academy. Mi experiencia profesional
+                  directamente vinculada a IA es mi trabajo como AI & Content Consultant & Producer en Paradise.la
+                  (julio de 2024 a enero de 2026), donde trabajé en la
+                  transición hacia una productora audiovisual impulsada por IA. Exploro herramientas y workflows para
+                  marcas y equipos, con foco en acelerar, iterar, reducir fricción y mejorar la calidad. Trabajo con IA en:{" "}
                   <span className="font-cyber text-neon-cyan">IMAGEN</span>: Nanobanana, GPT-2, Flux, Midjourney.{" "}
                   <span className="font-cyber text-neon-cyan">VIDEO</span>: Flow / Veo, Kling, Runway,
                   Higgsfield/Freepik. <span className="font-cyber text-neon-cyan">AUDIO</span>: ElevenLabs,
@@ -912,10 +914,12 @@ export default function AIExperimentsPage() {
                 </>
               ) : (
                 <>
-                  In 2022 I started in AI as a self-taught practitioner, and in 2024 I professionalized that path
-                  through programs such as Morfeo Academy. I explore tools, systems and workflows that add direct
-                  value to brands and companies. Efficiency focus: AI to accelerate, iterate, reduce friction and
-                  improve quality in real pipelines. I work / worked with AI across{" "}
+                  I began exploring AI as a self-taught practitioner in late 2022. In 2023, I generated a LoRA of
+                  myself. Since June 2024, I have been part of Morfeo Academy's course and community. My professional
+                  AI experience is my work as AI & Content Consultant & Producer at Paradise.la (July 2024 to January
+                  2026), where I worked on its transition toward
+                  an AI-driven audiovisual production company. I explore tools and workflows for brands and teams,
+                  focused on accelerating, iterating, reducing friction and improving quality. I work with AI across{" "}
                   <span className="font-cyber text-neon-cyan">IMAGE</span>: Nanobanana, GPT-2, Flux, Midjourney.{" "}
                   <span className="font-cyber text-neon-cyan">VIDEO</span>: Flow / Veo, Kling, Runway,
                   Higgsfield/Freepik. <span className="font-cyber text-neon-cyan">AUDIO</span>: ElevenLabs,

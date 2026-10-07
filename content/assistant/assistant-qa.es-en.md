@@ -10,7 +10,7 @@ Este documento constituye un repositorio exhaustivo de preguntas y respuestas qu
 
 ##### Respuesta
 
-Tomás Peró es un estratega de marca y líder de marketing con más de 18 años de experiencia en el desarrollo de mercados en Latinoamérica. Se especializa en la intersección de branding, creación de contenido y sistemas de inteligencia artificial (IA), operando bajo un enfoque de "systems thinking" para optimizar flujos de trabajo en equipos modernos.
+Tomás Peró es un líder estratégico de marca y marketing con más de 18 años de experiencia en marketing, publicidad y contenido. Se especializa en estrategia de marca y cultura, operaciones de contenido potenciadas por IA y liderazgo fractional o interino.
 
 ##### Tags
 
@@ -346,7 +346,7 @@ Source: Education & Credentials Section
 
 ##### Respuesta
 
-Realizó su formación profesional en Morfeo Academy durante el año 2024, tras un período de exploración autodidacta iniciado entre 2022 y 2023\.
+Explora IA de forma autodidacta desde fines de 2022. En 2023 generó un LoRA de su persona y desde junio de 2024 participa del curso y la comunidad de Morfeo Academy\.
 
 ##### Tags
 
@@ -522,7 +522,7 @@ Source: ai-lab.es.md \- Bloque the8bureau
 
 ##### Respuesta
 
-Asesoró a la compañía en su transición operativa para convertirse en una productora audiovisual potenciada por inteligencia artificial, integrando flujos de trabajo generativos en su producción.
+Entre julio de 2024 y enero de 2026 trabajó como AI & Content Consultant & Producer, asesorando a la compañía en su transición operativa hacia una productora audiovisual potenciada por IA e integrando flujos de trabajo generativos en su producción.
 
 ##### Tags
 
@@ -988,7 +988,7 @@ Who is Tomás Peró, and what is his professional specialty?
 
 ##### Answer
 
-Tomás Peró is a brand strategist and marketing leader with over 18 years of experience in Latin American market development. He specializes in the intersection of branding, content creation, and Artificial Intelligence (AI) systems, operating with a "systems thinking" approach to optimize workflows for modern teams.
+Tomás Peró is a strategic brand and marketing leader with over 18 years of experience across marketing, advertising and content. He specializes in brand and culture strategy, AI-enabled content operations, and fractional or interim brand leadership.
 
 ##### Tags
 
@@ -1324,7 +1324,7 @@ Where did he complete his specialization in Generative Artificial Intelligence?
 
 ##### Answer
 
-He completed his professional training at Morfeo Academy in 2024, following a period of self-taught exploration initiated between 2022 and 2023\.
+He has explored AI as a self-taught practitioner since late 2022. In 2023, he generated a LoRA of himself, and since June 2024 he has been part of Morfeo Academy's course and community\.
 
 ##### Tags
 
@@ -1500,7 +1500,7 @@ What did Tomás’s collaboration with Paradise.la consist of?
 
 ##### Answer
 
-He advised the company on its operational transition to becoming an AI-powered audiovisual production company, integrating generative workflows into its production.
+From July 2024 to January 2026, he worked as AI & Content Consultant & Producer, advising the company on its operational transition toward an AI-powered audiovisual production company and integrating generative workflows into its production.
 
 ##### Tags
 

@@ -76,14 +76,14 @@ const specialtiesLocalized = {
 
 const aboutSnapshot = {
   en: [
-    "Positioning: Brand, content & AI systems.",
+    "Positioning: strategic brand and marketing leader across brand and culture strategy, AI-enabled content operations, and fractional or interim brand leadership.",
     "Focus: storytelling, digital culture and systems thinking for modern teams.",
-    "Background: 18+ years across agencies, brands, startups and consulting.",
+    "Background: over 18 years across agencies, brands, startups and consulting.",
     "Current offer: consulting, training and professional AI content creation.",
     "Working model: plugs into marketing teams, brands and agencies to accelerate image, video, audio and text pipelines.",
   ],
   es: [
-    "Posicionamiento: Brand, content & AI systems.",
+    "Posicionamiento: líder estratégico de marca y marketing, entre estrategia de marca y cultura, operaciones de contenido con IA y liderazgo fractional o interino.",
     "Foco: storytelling, cultura digital y systems thinking para equipos modernos.",
     "Trayectoria: más de 18 años entre agencias, marcas, startups y consultoría.",
     "Oferta actual: consultorías, capacitaciones y creación de contenido AI profesional.",
@@ -93,7 +93,7 @@ const aboutSnapshot = {
 
 const independentConsultantSnapshot = {
   en: [
-    "Strategic consulting in marketing, branding and digital growth with 18+ years of experience.",
+    "Strategic consulting in marketing, branding and digital growth with over 18 years of experience.",
     "Industry exposure across entertainment, fintech, esports and gaming, healthtech and creative production.",
     "Current focus: consulting, training and AI-powered content creation support.",
     "Representative engagements: Paradise.la, DrGea, Sinerlogic, Airtm, Stone Movistar and Go Broadway!.",
@@ -170,8 +170,8 @@ function buildMarkdownSection(lang: Lang) {
 
   const summary =
     lang === "en"
-      ? `${siteIdentity.name} is a marketer and consultant working at the intersection of brand, content, strategy, storytelling and AI systems. The website functions as a portfolio, strategic profile and project archive.`
-      : `${siteIdentity.name} es un marketer y consultor que trabaja en la intersección entre brand, content, strategy, storytelling y AI systems. El sitio funciona como portfolio, perfil estratégico y archivo de proyectos.`
+      ? `${siteIdentity.name} is a strategic brand and marketing leader working across brand and culture strategy, AI-enabled content operations, and fractional or interim brand leadership. The website functions as a portfolio, strategic profile and project archive.`
+      : `${siteIdentity.name} es líder estratégico de marca y marketing, con foco en estrategia de marca y cultura, operaciones de contenido con IA y liderazgo fractional o interino. El sitio funciona como portfolio, perfil estratégico y archivo de proyectos.`
 
   const homeLines =
     lang === "en"
@@ -249,8 +249,8 @@ function buildTextSection(lang: Lang) {
   const isEn = lang === "en"
   const summary =
     lang === "en"
-      ? `${siteIdentity.name} is a marketer and consultant working at the intersection of brand, content, strategy, storytelling and AI systems. The website functions as a portfolio, strategic profile and project archive.`
-      : `${siteIdentity.name} es un marketer y consultor que trabaja en la intersección entre brand, content, strategy, storytelling y AI systems. El sitio funciona como portfolio, perfil estratégico y archivo de proyectos.`
+      ? `${siteIdentity.name} is a strategic brand and marketing leader working across brand and culture strategy, AI-enabled content operations, and fractional or interim brand leadership. The website functions as a portfolio, strategic profile and project archive.`
+      : `${siteIdentity.name} es líder estratégico de marca y marketing, con foco en estrategia de marca y cultura, operaciones de contenido con IA y liderazgo fractional o interino. El sitio funciona como portfolio, perfil estratégico y archivo de proyectos.`
 
   const homeLines =
     lang === "en"

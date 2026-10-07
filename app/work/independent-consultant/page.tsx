@@ -71,7 +71,7 @@ export default function IndependentConsultantPage() {
                         href="/work/ai-experiments#ejemplos-trabajos-ia-2025"
                         className="underline hover:text-neon-magenta"
                       >
-                        Paradise.la (2025)
+                        Paradise.la (Jul 2024–Jan 2026)
                       </Link>
                       :
                     </b>{" "}
@@ -91,7 +91,7 @@ export default function IndependentConsultantPage() {
                         href="/work/ai-experiments#ejemplos-trabajos-ia-2025"
                         className="underline hover:text-neon-magenta"
                       >
-                        Paradise.la (2025)
+                        Paradise.la (Jul 2024–Jan 2026)
                       </Link>
                       :
                     </b>{" "}
@@ -135,7 +135,7 @@ export default function IndependentConsultantPage() {
             {language === "es" ? (
               <>
                 <div className="space-y-2">
-                  <p className="font-bold">PARADISE.LA | AI & CONTENT CONSULTANT & PRODUCER | 2024 A 2025</p>
+                  <p className="font-bold">PARADISE.LA | AI & CONTENT CONSULTANT & PRODUCER | JUL 2024 A ENE 2026</p>
                   <p>LATAM | Producción Creativa e IA</p>
                   <p>Consultoría de transición operativa hacia una productora audiovisual potenciada por IA.</p>
                   <p>Desarrollo del refresh de marca, roadmap, talentos.</p>
@@ -189,7 +189,7 @@ export default function IndependentConsultantPage() {
             ) : (
               <>
                 <div className="space-y-2">
-                  <p className="font-bold">PARADISE.LA | AI & CONTENT CONSULTANT & PRODUCER | 2024 TO 2025</p>
+                  <p className="font-bold">PARADISE.LA | AI & CONTENT CONSULTANT & PRODUCER | JUL 2024 TO JAN 2026</p>
                   <p>LATAM | Creative Production & AI</p>
                   <p>Operational transition consulting for an audiovisual production company evolving into an AI-powered structure.</p>
                   <p>Development of the brand refresh, roadmap, and talent structure.</p>

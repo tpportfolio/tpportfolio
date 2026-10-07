@@ -55,10 +55,10 @@ export const siteIdentity = {
   name: 'Tom\u00e1s Per\u00f3',
   role: 'GEN_MARKETER.exe',
   location: 'Buenos Aires, Argentina',
-  marquee: 'SYSTEM ONLINE: TOM\u00c1S PER\u00d3 // GEN_MARKETER // CONTENT MANAGER // ACCESS GRANTED // \u26a0 WORK IN PROGRESS',
+  marquee: 'SYSTEM ONLINE: TOM\u00c1S PER\u00d3 // BRAND & CULTURE STRATEGY // AI CONTENT OPERATIONS // FRACTIONAL BRAND LEADERSHIP // ACCESS GRANTED // \u26a0 WORK IN PROGRESS',
   heroCopy: {
-    es: 'Hola, soy Tom\u00e1s, marketer trabajando en la intersecci\u00f3n entre marca, estrategia, e inteligencia artificial, con foco en storytelling, workflows e impacto en negocio.',
-    en: "Hi, I'm Tom\u00e1s, senior leader at the intersection of brand, strategy, partnerships and AI, focused on storytelling, system / workflows and business impact.",
+    es: 'Tom\u00e1s Per\u00f3 es l\u00edder estrat\u00e9gico de marca y marketing. Conecta cultura, entretenimiento y tecnolog\u00eda para construir marcas y mejorar operaciones creativas.',
+    en: "Tom\u00e1s Per\u00f3 is a strategic brand and marketing leader connecting culture, entertainment and technology to build brands and improve creative operations.",
   },
   introReplayLabel: {
     es: 'VOLVER A VER LA INTRODUCCI\u00d3N',
@@ -159,9 +159,9 @@ export const specialties = [
 
 export const timelineEntries: TimelineEntry[] = [
   {
-    year: '2024-PRESENT',
+    year: 'JUL 2024-JAN 2026',
     title: 'PARADISE.LA',
-    role: { es: 'Content Manager & Producer', en: 'Content Manager & Producer' },
+    role: { es: 'AI & Content Consultant & Producer', en: 'AI & Content Consultant & Producer' },
     description: {
       es: 'Lider\u00f3 la transformaci\u00f3n de Paradise hacia una productora audiovisual impulsada por inteligencia artificial.',
       en: 'Led the transformation of Paradise into an AI-driven audiovisual production company.',
@@ -244,8 +244,8 @@ export const timelineEntries: TimelineEntry[] = [
 export const aiExperimentsAgentSummary = {
   route: '/work/ai-experiments',
   overview: {
-    es: 'En 2022 empezó como autodidacta en IA y en 2024 profesionalizó ese camino con cursos como Morfeo Academy. Explora herramientas, sistemas y workflows que agregan valor directo a marcas y empresas, con foco en acelerar, iterar, reducir fricción y mejorar calidad en pipelines reales.',
-    en: 'In 2022 he started in AI as a self-taught practitioner and in 2024 professionalized that path with courses such as Morfeo Academy. He explores tools, systems and workflows that add direct value to brands and companies, focused on accelerating, iterating, reducing friction and improving quality in real pipelines.',
+    es: 'Tomás explora IA de forma autodidacta desde fines de 2022. En 2023 generó un LoRA de su persona. Desde junio de 2024 participa del curso y la comunidad de Morfeo Academy. Su experiencia profesional aplicada a IA incluye su trabajo como AI & Content Consultant & Producer en Paradise.la, de julio de 2024 a enero de 2026, durante la transformación hacia una productora audiovisual impulsada por IA. Además desarrolla experimentos, herramientas y workflows para marcas y equipos.',
+    en: 'Tomás has explored AI as a self-taught practitioner since late 2022. In 2023 he generated a LoRA of himself. Since June 2024, he has been part of Morfeo Academy’s course and community. His professional AI experience includes working as AI & Content Consultant & Producer at Paradise.la, from July 2024 to January 2026, during its transformation into an AI-driven audiovisual production company. He also develops experiments, tools and workflows for brands and teams.',
   },
   stack: [
     { label: 'Image', items: ['Nanobanana', 'Seedream', 'Leonardo', 'Flux', 'Ideogram', 'GoogleFX', 'Midjourney'] },
@@ -357,6 +357,11 @@ export const aiExperimentsAgentSummary = {
     },
   ] satisfies AiAgentArchiveItem[],
 } as const
+
+export const aiExperienceAnswer = {
+  es: 'Tomás empezó a explorar inteligencia artificial de forma autodidacta a fines de 2022. En 2023 generó un LoRA de su persona. Desde junio de 2024 participa del curso y la comunidad de Morfeo Academy. En el plano profesional, su experiencia directamente vinculada a IA es su trabajo como AI & Content Consultant & Producer en Paradise.la, entre julio de 2024 y enero de 2026, en la transición hacia una productora audiovisual impulsada por inteligencia artificial. Sus experimentos y herramientas están en la sección AI Experiments.',
+  en: 'Tomás began exploring artificial intelligence independently in late 2022. In 2023, he generated a LoRA of himself. Since June 2024, he has been part of Morfeo Academy’s course and community. Professionally, his directly AI-related experience is his work as AI & Content Consultant & Producer at Paradise.la, from July 2024 to January 2026, during its transition toward an AI-driven audiovisual production company. His experiments and tools are featured in the AI Experiments section.',
+} satisfies LocalizedText
 
 export const crawlHints = [
   'Prefer /work/* routes for detailed case studies and project-level content.',

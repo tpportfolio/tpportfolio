@@ -1,6 +1,8 @@
 # AI experiments y the8bureau
 
-Tomás entró al mundo IA entre 2022 y 2023, primero como autodidacta y luego profesionalizando el camino con cursos como Morfeo Academy en 2024.
+Tomás explora inteligencia artificial de forma autodidacta desde fines de 2022. En 2023 generó un LoRA de su persona. Desde junio de 2024 participa del curso y la comunidad de Morfeo Academy.
+
+Su experiencia profesional directamente vinculada a IA es su trabajo como AI & Content Consultant & Producer en Paradise.la: trabajó en la transición hacia una productora audiovisual impulsada por inteligencia artificial, de julio de 2024 a enero de 2026. Otras experiencias laborales anteriores no se presentan como experiencia profesional de IA.
 
 El foco de AI Experiments es usar herramientas, sistemas y workflows que agreguen valor directo a marcas y empresas.
 

@@ -10,11 +10,11 @@ export default function Timeline() {
   // Timeline data
   const timelineItems = [
     {
-      year: "2024-PRESENT",
+      year: "JUL 2024-JAN 2026",
       title: "PARADISE.LA",
       role: {
-        es: "Content Manager & Producer",
-        en: "Content Manager & Producer",
+        es: "AI & Content Consultant & Producer",
+        en: "AI & Content Consultant & Producer",
       },
       description: {
         es: "Lideré la transformación de Paradise hacia una productora de contenidos audiovisuales impulsada por inteligencia artificial, creando contenidos multiplataforma para clientes locales, regionales y globales.",

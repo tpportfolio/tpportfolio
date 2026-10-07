@@ -59,15 +59,15 @@ const copyEs: AboutCopy = {
   contextHeader: "SELECTED_CONTEXT",
   linksHeader: "LINKS / CONTACT",
   name: "TOM\u00c1S PER\u00d3",
-  positioning: "Brand, content & AI systems",
-  subline: "Storytelling, digital culture and systems thinking for modern teams.",
+  positioning: "Líder estratégico de marca y marketing",
+  subline: "Estrategia de marca y cultura · operaciones de contenido con IA · liderazgo fractional o interino.",
   signals: ["Brand", "Content", "AI", "Storytelling", "Systems", "Strategy"],
   overview: {
     intro:
-      "Trabajo hace 18 a\u00f1os en marketing, publicidad y contenido. Empec\u00e9 en agencias, despu\u00e9s marcas, startups y actualmente trabajo de manera freelance.",
-    academyLead: "En 2022/23 entr\u00e9 al mundo IA, primero como autodidacta y luego mediante cursos como",
-    academyTail: "(2024).",
-    consulting: "Actualmente ofrezco consultor\u00edas, capacitaciones y generaci\u00f3n de contenido AI profesional.",
+      "Trabajo hace más de 18 años en marketing, publicidad y contenido. Empecé en agencias, después pasé por marcas y startups; hoy trabajo como consultor estratégico independiente.",
+    academyLead: "Exploro IA de forma autodidacta desde fines de 2022. En 2023 generé un LoRA de mi persona. Desde junio de 2024 participo del curso y la comunidad de",
+    academyTail: ".",
+    consulting: "Actualmente ofrezco consultoría estratégica, capacitación y apoyo en producción de contenido potenciado por IA.",
     plugin:
       "Hago plug-in a equipos de marketing, marcas o agencias para acelerar producci\u00f3n, iterar, reducir fricci\u00f3n y elevar la calidad en pipelines reales (imagen, video, audio y texto).",
     introLead: "Todo lo que ves ac\u00e1 est\u00e1 vibecodeado con IA, hasta la",
@@ -75,7 +75,7 @@ const copyEs: AboutCopy = {
   },
   skills: {
     positioningLabel: "POSITIONING",
-    positioningValue: "Brand \u00d7 Content \u00d7 AI",
+    positioningValue: "Marca y cultura · Operaciones de contenido con IA · Liderazgo fractional",
     strengthsLabel: "STRENGTHS",
     strengths: ["Narrative systems", "Strategic framing", "AI-assisted content workflows", "Cultural positioning"],
     workingStyleLabel: "WORKING STYLE",
@@ -88,13 +88,14 @@ const copyEs: AboutCopy = {
   contextItems: [
     {
       label: "TRAJECTORY",
-      value: "Ex Disney, Air New Zealand, Airtm, JWT, m\u00e1s de 18 a\u00f1os trabajando en agencias, marcas, startups y como consultor.",
+      value: "Ex Disney, Air New Zealand, Airtm y JWT. Más de 18 años en agencias, marcas, startups y consultoría.",
     },
     {
       label: "CONTEXT",
       value: "Experiencia en corporate, growth y content systems. Multi-industria: entretenimiento, fintech, healthtech, publicidad, turismo y viajes.",
     },
-    { label: "TODAY", value: "Hoy: estrategia, brand, IA aplicada y producci\u00f3n con criterio de marca." },
+    { label: "TODAY", value: "Hoy: estrategia de marca y cultura, operaciones creativas con IA y dirección fractional o interina." },
+    { label: "TARGET_ROLES", value: "Head of Brand · Strategy Director · Culture Marketing Manager" },
   ],
   links: {
     linkedinLabel: "LINKEDIN",
@@ -117,15 +118,15 @@ const copyEn: AboutCopy = {
   contextHeader: "SELECTED_CONTEXT",
   linksHeader: "LINKS / CONTACT",
   name: "TOM\u00c1S PER\u00d3",
-  positioning: "Brand, content & AI systems",
-  subline: "Storytelling, digital culture and systems thinking for modern teams.",
+  positioning: "Strategic Brand & Marketing Leader",
+  subline: "Brand & culture strategy · AI-enabled content operations · fractional / interim brand leadership.",
   signals: ["Brand", "Content", "AI", "Storytelling", "Systems", "Strategy"],
   overview: {
     intro:
-      "I have worked for 18 years in marketing, advertising and content. I started in agencies, then moved into brands, startups and today work independently.",
-    academyLead: "In 2022/23 I entered the AI space, first self-taught and later through courses such as",
-    academyTail: "(2024).",
-    consulting: "Today I offer consulting, training and professional AI content creation.",
+      "I have worked for over 18 years in marketing, advertising and content. I started in agencies, then moved through brands and startups; today I work as an independent strategic consultant.",
+    academyLead: "I have explored AI independently since late 2022. In 2023, I generated a LoRA of myself. Since June 2024, I have been part of",
+    academyTail: "'s course and community.",
+    consulting: "Today I offer strategic consulting, training and support for AI-powered content production.",
     plugin:
       "I plug into marketing teams, brands or agencies to accelerate production, iterate, reduce friction and improve quality across real pipelines (image, video, audio and text).",
     introLead: "Everything you see here is vibe-coded with AI, including the",
@@ -133,7 +134,7 @@ const copyEn: AboutCopy = {
   },
   skills: {
     positioningLabel: "POSITIONING",
-    positioningValue: "Brand \u00d7 Content \u00d7 AI",
+    positioningValue: "Brand & Culture · AI Content Ops · Fractional Leadership",
     strengthsLabel: "STRENGTHS",
     strengths: ["Narrative systems", "Strategic framing", "AI-assisted content workflows", "Cultural positioning"],
     workingStyleLabel: "WORKING STYLE",
@@ -146,13 +147,14 @@ const copyEn: AboutCopy = {
   contextItems: [
     {
       label: "TRAJECTORY",
-      value: "Ex Disney, Air New Zealand, Airtm, JWT, 18+ years across agencies, brands, startups and consulting.",
+      value: "Ex Disney, Air New Zealand, Airtm and JWT. Over 18 years across agencies, brands, startups and consulting.",
     },
     {
       label: "CONTEXT",
       value: "Experience across corporate, growth and content systems. Multi-industry: entertainment, fintech, healthtech, advertising, tourism and travel.",
     },
-    { label: "TODAY", value: "Today: strategy, brand, applied AI and production with brand judgment." },
+    { label: "TODAY", value: "Today: brand and culture strategy, AI-enabled creative operations, and fractional or interim direction." },
+    { label: "TARGET_ROLES", value: "Head of Brand · Strategy Director · Culture Marketing Manager" },
   ],
   links: {
     linkedinLabel: "LINKEDIN",
