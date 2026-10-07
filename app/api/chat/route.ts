@@ -9,7 +9,7 @@ type ChatHistoryItem = {
   text: string
 }
 
-const DEFAULT_MODEL = "llama-3.3-70b-versatile"
+const DEFAULT_MODEL = "openai/gpt-oss-120b"
 
 function fallbackMessage(language: AssistantLang, kind: "offline" | "no-context") {
   if (kind === "offline") {
