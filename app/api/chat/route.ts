@@ -132,7 +132,9 @@ async function askGroq({
       body: JSON.stringify({
         model,
         temperature: 0.3,
-        max_completion_tokens: 700,
+        reasoning_effort: "low",
+        include_reasoning: false,
+        max_completion_tokens: 1200,
         messages: [
           {
             role: "system",
@@ -153,13 +155,31 @@ async function askGroq({
     })
 
     if (!response.ok) {
+      const errorBody = await response.json().catch(() => null)
+      const providerMessage = errorBody?.error?.message
+      console.error("CLIPPY Groq request failed", {
+        status: response.status,
+        message: typeof providerMessage === "string" ? providerMessage.slice(0, 300) : undefined,
+      })
       return null
     }
 
     const json = await response.json()
     const answer = json?.choices?.[0]?.message?.content
-    return typeof answer === "string" && answer.trim().length > 0 ? answer.trim() : null
-  } catch {
+    if (typeof answer === "string" && answer.trim().length > 0) {
+      return answer.trim()
+    }
+
+    console.error("CLIPPY Groq returned no text", {
+      finishReason: json?.choices?.[0]?.finish_reason,
+      contentType: typeof answer,
+    })
+    return null
+  } catch (error) {
+    console.error("CLIPPY Groq request error", {
+      name: error instanceof Error ? error.name : "UnknownError",
+      message: error instanceof Error ? error.message.slice(0, 300) : "Unknown error",
+    })
     return null
   } finally {
     clearTimeout(timeout)
