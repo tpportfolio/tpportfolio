@@ -306,6 +306,33 @@ async function loadExtraDocs(): Promise<AssistantChunk[]> {
       const fullPath = path.join(baseDir, doc.file)
       const text = await readFile(fullPath, "utf8")
 
+      if (doc.file === "assistant-qa.es-en.md") {
+        const sectionHeading = doc.lang === "es" ? "### Sección de Preguntas y Respuestas" : "### Section: Q"
+        const sectionStart = text.indexOf(sectionHeading)
+        const sectionEnd = text.indexOf("\n### ", sectionStart + sectionHeading.length)
+        const localizedText = sectionStart < 0
+          ? ""
+          : text.slice(sectionStart, sectionEnd < 0 ? text.length : sectionEnd)
+        const questionHeading = doc.lang === "es" ? "#### Pregunta" : "#### Question"
+        const answerHeading = doc.lang === "es" ? "\n##### Respuesta" : "\n##### Answer"
+
+        return localizedText.split(questionHeading).slice(1).map((block, index) => {
+          const [question, answerAndMetadata = ""] = block.trim().split(answerHeading)
+          const answer = answerAndMetadata.split("\n##### ", 1)[0].trim()
+
+          return {
+            id: `doc-${doc.lang}-qa-${index}`,
+            route: doc.route,
+            section: doc.section,
+            title: doc.title,
+            lang: doc.lang,
+            text: `${question.trim()}\n${answer}`,
+            keywords: doc.keywords,
+            sourceType: "doc" as const,
+          }
+        })
+      }
+
       return {
         id: `doc-${doc.file}`,
         route: doc.route,
