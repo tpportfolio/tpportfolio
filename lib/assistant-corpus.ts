@@ -333,7 +333,7 @@ async function loadExtraDocs(): Promise<AssistantChunk[]> {
         })
       }
 
-      return {
+      return [{
         id: `doc-${doc.file}`,
         route: doc.route,
         section: doc.section,
@@ -342,9 +342,9 @@ async function loadExtraDocs(): Promise<AssistantChunk[]> {
         text,
         keywords: doc.keywords,
         sourceType: "doc" as const,
-      }
+      }]
     }),
-  )
+  ).then((chunks) => chunks.flat())
 }
 
 export async function getAssistantCorpus() {
