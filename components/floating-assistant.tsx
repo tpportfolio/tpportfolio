@@ -7,6 +7,7 @@ import { Check, Database, Loader2, MessageSquareText, SendHorizontal, Sparkles, 
 
 import { useLanguage } from "@/components/language-context"
 import { useVisualMode } from "@/components/visual-mode-context"
+import styles from "./floating-assistant.module.css"
 
 type AssistantSource = {
   route: string
@@ -130,6 +131,7 @@ export function FloatingAssistant() {
   const [input, setInput] = useState("")
   const [pulse, setPulse] = useState(false)
   const [thinkMs, setThinkMs] = useState(0)
+  const [celebrate, setCelebrate] = useState(false)
   const [messages, setMessages] = useState<AssistantMessage[]>([
     {
       id: "welcome",
@@ -141,6 +143,7 @@ export function FloatingAssistant() {
 
   const inputRef = useRef<HTMLInputElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const prevLoadingRef = useRef(false)
 
   useEffect(() => {
     setMessages((current) => {
@@ -187,6 +190,20 @@ export function FloatingAssistant() {
     : undefined
   const lastMessage = messages.length > 0 ? messages[messages.length - 1] : undefined
   const thinkStep = Math.min(copy.steps.length - 1, Math.floor(thinkMs / 900))
+  const lastRole = lastMessage?.role
+  const fxModeClass = mode === "light" ? styles.fxLight : styles.fxDark
+  const headerCharClass = `${styles.headerBody} ${loading ? styles.thinking : celebrate ? styles.celebrate : ""}`
+
+  // Celebrate once when a request finishes (loading true -> false) with an assistant message, panel open.
+  useEffect(() => {
+    const wasLoading = prevLoadingRef.current
+    prevLoadingRef.current = loading
+    if (loading || !open) {
+      setCelebrate(false)
+      return
+    }
+    if (wasLoading && lastRole === "assistant") setCelebrate(true)
+  }, [loading, open, lastRole])
 
   useEffect(() => {
     if (!loading) return
@@ -259,12 +276,27 @@ export function FloatingAssistant() {
     <>
       {open ? <button type="button" aria-label={copy.close} onClick={() => setOpen(false)} className="fixed inset-0 z-40 bg-black/30" /> : null}
 
-      <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 md:bottom-5 md:right-5">
+      <div className={`pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 md:bottom-5 md:right-5 ${fxModeClass}`}>
         {open ? (
           <div className={`pointer-events-auto flex h-[min(76vh,38rem)] w-[min(94vw,29rem)] flex-col overflow-hidden rounded-sm ${shellClass}`}>
             <div className={`flex items-center gap-3 px-4 py-3 ${headerClass}`}>
-              <div className="relative h-11 w-11 shrink-0">
-                <Image src="/clippy-character.png" alt="CLIPPY.EXE" fill sizes="44px" className="object-contain" style={clippyImageStyle} priority={false} />
+              <div className={`relative h-11 w-11 shrink-0 ${styles.headerWrap}`}>
+                <div
+                  className={headerCharClass}
+                  onAnimationEnd={(event) => {
+                    if (event.target === event.currentTarget) setCelebrate(false)
+                  }}
+                >
+                  <Image src="/clippy-character.png" alt="CLIPPY.EXE" fill sizes="44px" className="object-contain" style={clippyImageStyle} priority={false} />
+                </div>
+                {loading ? <span aria-hidden className={styles.thinkRing} /> : null}
+                {loading ? (
+                  <span aria-hidden className={styles.thinkDots}>
+                    <span />
+                    <span />
+                    <span />
+                  </span>
+                ) : null}
               </div>
               <div className="min-w-0 flex-1">
                 <div className={`font-cyber text-xs uppercase tracking-[0.18em] ${mode === "light" ? "text-neon-cyan" : "text-white"}`}>{copy.title}</div>
@@ -426,23 +458,30 @@ export function FloatingAssistant() {
           type="button"
           onClick={() => setOpen((current) => !current)}
           aria-label={copy.open}
-          className="pointer-events-auto relative inline-flex h-[84px] w-[84px] items-center justify-center md:h-[106px] md:w-[106px]"
+          className={`pointer-events-auto relative inline-flex h-[84px] w-[84px] items-center justify-center md:h-[106px] md:w-[106px] ${styles.launcher}`}
         >
           <span
             className={`absolute inset-0 rounded-full blur-xl ${
               mode === "light" ? "bg-[#e8c19a]/60" : pulse ? "bg-neon-green/20" : "bg-neon-green/10"
             }`}
           />
-          <div className="relative h-[84px] w-[84px] transition-transform hover:scale-[1.04] md:h-[106px] md:w-[106px]">
-            <Image
-              src="/clippy-character.png"
-              alt="Open CLIPPY.EXE"
-              fill
-              sizes="(min-width: 768px) 106px, 84px"
-              className="object-contain"
-              style={clippyImageStyle}
-              priority={false}
-            />
+          {!open ? <span aria-hidden className={styles.halo} /> : null}
+          <div className={`relative h-[84px] w-[84px] md:h-[106px] md:w-[106px] ${styles.peek}`}>
+            <div className={`${styles.float} ${open ? "" : styles.floatIdle}`}>
+              <div className={`${styles.gesture} ${open ? "" : styles.gestureIdle}`}>
+                <div className={styles.char}>
+                  <Image
+                    src="/clippy-character.png"
+                    alt="Open CLIPPY.EXE"
+                    fill
+                    sizes="(min-width: 768px) 106px, 84px"
+                    className="object-contain"
+                    style={clippyImageStyle}
+                    priority={false}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           {!open ? (
             <span

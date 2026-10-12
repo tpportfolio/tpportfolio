@@ -230,13 +230,13 @@ function buildCareerChunk(lang: AssistantLang): AssistantChunk {
   const copy = lang === "es"
     ? {
         title: "Trayectoria",
-        intro: "Trayectoria laboral de Tomás Peró. Referencia para empleadores, roles y fechas: cada línea es una etapa distinta y sus años son los que figuran en esa misma línea.",
+        intro: "Trayectoria laboral de Tomás Peró. Referencia para empleadores, roles y fechas: cada línea es una etapa distinta y sus años son los que figuran en esa misma línea. Desde julio de 2020 Tomás trabaja como consultor independiente: los roles de 2020 en adelante son proyectos y clientes de esa etapa.",
         stages: "Etapas principales (home del portfolio):",
         roles: "Roles en detalle (página /timeline):",
       }
     : {
         title: "Career timeline",
-        intro: "Career timeline of Tomás Peró. Reference for employers, roles and dates: each line is a separate stage and its years are the ones written on that same line.",
+        intro: "Career timeline of Tomás Peró. Reference for employers, roles and dates: each line is a separate stage and its years are the ones written on that same line. Since July 2020 Tomás has worked as an independent consultant: the roles from 2020 onwards are projects and clients within that stage.",
         stages: "Main stages (portfolio home):",
         roles: "Detailed roles (/timeline page):",
       }
@@ -305,7 +305,7 @@ function buildSiteChunks(): AssistantChunk[] {
         lang,
         sourceType: "site",
         keywords: ["timeline", entry.title.toLowerCase(), normalize(entry.role[lang]), entry.year],
-        text: `${entry.year} ${entry.title} ${entry.role[lang]} ${entry.description[lang]}`,
+        text: `${entry.title} (${entry.year}): ${entry.role[lang]}. ${entry.description[lang]}`,
       })
     })
 
@@ -367,16 +367,21 @@ async function loadExtraDocs(): Promise<AssistantChunk[]> {
         })
       }
 
-      return [{
-        id: `doc-${doc.file}`,
-        route: doc.route,
-        section: doc.section,
-        title: doc.title,
-        lang: doc.lang,
-        text,
-        keywords: doc.keywords,
-        sourceType: "doc" as const,
-      }]
+      // One chunk per "## " section, so a question only pulls the part of the document it needs.
+      return text
+        .split(/\r?\n(?=## )/)
+        .map((sectionText) => sectionText.trim())
+        .filter((sectionText) => sectionText.length > 0)
+        .map((sectionText, index) => ({
+          id: index === 0 ? `doc-${doc.file}` : `doc-${doc.file}-${index}`,
+          route: doc.route,
+          section: doc.section,
+          title: doc.title,
+          lang: doc.lang,
+          text: sectionText,
+          keywords: doc.keywords,
+          sourceType: "doc" as const,
+        }))
     }),
   ).then((chunks) => chunks.flat())
 }

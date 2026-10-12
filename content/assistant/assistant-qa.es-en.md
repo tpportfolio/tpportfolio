@@ -10,7 +10,7 @@ Este documento constituye un repositorio exhaustivo de preguntas y respuestas qu
 
 ##### Respuesta
 
-Tomás Peró es un líder estratégico de marca y marketing con más de 18 años de experiencia en marketing, publicidad y contenido. Se especializa en estrategia de marca y cultura, operaciones de contenido potenciadas por IA y liderazgo fractional o interino.
+Tomás Peró es Brand Strategist y líder de marketing de marca, basado en Buenos Aires, con más de 18 años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa.
 
 ##### Tags
 
@@ -58,7 +58,7 @@ Source: Professional Overview \- CVs
 
 ##### Respuesta
 
-Como Ejecutivo de Cuentas para JWT/Glue entre junio de 2008 y marzo de 2011, gestionó una estrategia mixta que abarcó tanto acciones de comunicación "Below The Line" (BTL) como "Above The Line" (ATL), adaptándose a las necesidades de diversas marcas globales.
+Como Ejecutivo de Cuentas (Account Executive) en JWT/Glue entre junio de 2008 y marzo de 2011, gestionó campañas, activaciones y eventos BTL ("Below The Line") para marcas de consumo masivo, banca, telcos y retail.
 
 ##### Tags
 
@@ -170,7 +170,7 @@ Source: Professional Overview \- Digital Distribution
 
 ##### Respuesta
 
-Formó parte del equipo fundacional encargado de iniciar las operaciones de la aerolínea en Sudamérica. Lideró el posicionamiento de la marca desde cero en mercados competitivos como Argentina, Brasil, Chile y Uruguay, consolidando la presencia de la ruta de largo alcance.
+Entre diciembre de 2015 y junio de 2020, como Marketing Specialist & Market Development, fue el líder de marketing regional de Air New Zealand para Sudamérica. Fue responsable del lanzamiento de la marca en la región y ejecutó la estrategia de lanzamiento de mercado de una nueva ruta de larga distancia, construyendo awareness y relevancia cultural en Argentina, Brasil, Chile y Uruguay.
 
 ##### Tags
 
@@ -218,7 +218,7 @@ Source: Professional Overview \- Air New Zealand Section
 
 ##### Respuesta
 
-Entre julio de 2020 y diciembre de 2021, actuó como consultor de marketing para el lanzamiento y la estrategia Go-To-Market de este equipo de esports. Conectó la cultura del gaming con creadores de contenido y alianzas de marca para impulsar el crecimiento de la comunidad.
+Entre julio de 2020 y diciembre de 2021, actuó como Brand & Marketing Consultant para el lanzamiento y la estrategia Go-To-Market de este club de esports y streaming. Conectó la cultura del gaming con creadores de contenido y alianzas de marca para impulsar el crecimiento de la comunidad.
 
 ##### Tags
 
@@ -988,7 +988,7 @@ Who is Tomás Peró, and what is his professional specialty?
 
 ##### Answer
 
-Tomás Peró is a strategic brand and marketing leader with over 18 years of experience across marketing, advertising and content. He specializes in brand and culture strategy, AI-enabled content operations, and fractional or interim brand leadership.
+Tomás Peró is a Brand Strategist and Brand Marketing Leader based in Buenos Aires, with 18+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. He works at the intersection of brand strategy, cultural marketing and creative technology.
 
 ##### Tags
 
@@ -1036,7 +1036,7 @@ What was the focus of his work at J. Walter Thompson (JWT)?
 
 ##### Answer
 
-As an Account Executive for JWT/Glue between June 2008 and March 2011, he managed a mixed strategy covering both "Below The Line" (BTL) and "Above The Line" (ATL) communication actions, adapting to the needs of various global brands.
+As an Account Executive at JWT/Glue between June 2008 and March 2011, he managed BTL ("Below The Line") campaigns, activations and events for mass-consumption, banking, telco and retail brands.
 
 ##### Tags
 
@@ -1148,7 +1148,7 @@ What was Tomás Peró's main challenge at Air New Zealand?
 
 ##### Answer
 
-He was part of the founding team responsible for starting the airline's operations in South America. He led the brand's positioning from scratch in competitive markets such as Argentina, Brazil, Chile, and Uruguay, consolidating the long-haul route's presence.
+Between December 2015 and June 2020, as Marketing Specialist & Market Development, he was Air New Zealand's regional marketing lead for South America. He was responsible for the brand launch in the region and executed the market launch strategy for a new long-haul route, building brand awareness and cultural relevance in Argentina, Brazil, Chile, and Uruguay.
 
 ##### Tags
 
@@ -1196,7 +1196,7 @@ What functions did he perform for the Stone Movistar team?
 
 ##### Answer
 
-Between July 2020 and December 2021, he served as a marketing consultant for the launch and Go-To-Market strategy of this esports team. He connected gaming culture with content creators and brand partnerships to drive community growth.
+Between July 2020 and December 2021, he served as Brand & Marketing Consultant for the launch and Go-To-Market strategy of this esports and streaming club. He connected gaming culture with content creators and brand partnerships to drive community growth.
 
 ##### Tags
 
@@ -1961,7 +1961,7 @@ Source: Professional Overview \- Airtm Section
 ### Gaps / Missing Info
 
 * **Regional C-Suite Names:**  While global leaders like Andy Bird are identified, the specific names of the regional Latin American C-suite members and mentors to whom Tomás pitched Disney Labs projects are not detailed in the source documentation.
-* **Specific Agency Names:**  The documentation mentions that Tomás managed 5 agencies simultaneously at Air New Zealand. While 4 are explicitly named (Don, Muchnik, FG, Ideapolis), the identity of the fifth agency remains a gap.
+* **Specific Agency Names:**  The documentation mentions that Tomás managed 5 agencies simultaneously at Air New Zealand: Don (creative), Muchnik (PR), FG (media), and Ideapolis and Human (activations).
 * **Specific Founder Names:**  It is noted that Tomás developed narrative frameworks for "founders and executive teams" in his independent consulting role, but the specific names of these individual founders are not provided.
 * **Detailed Quantities:**  Per professional directive, specific quantitative performance data—such as exact ROI percentages, daily conversion rates, or precise unit sales for various campaigns—is not included in this repository to focus on strategic methodologies.
 * **Long-term Cooking Durations:**  In the culinary section, while base methods are defined, the specific number of minutes or hours for "slow cooking for a long time" (Bolognese) or "chilling for several hours" (Chocotorta) is not numerically specified.
