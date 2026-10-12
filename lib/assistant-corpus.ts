@@ -143,35 +143,27 @@ const EXTRA_DOCS: ExtraDoc[] = [
   },
 ]
 
-const SPANISH_HINTS = [
-  "hola",
-  "quien",
-  "qué",
-  "que",
-  "cómo",
-  "como",
-  "trabajo",
-  "proyecto",
-  "marca",
-  "consultor",
-  "herramienta",
-  "servicio",
-  "trayectoria",
-]
+// Whole words, stored without diacritics. Words that exist in both languages (a, me, no, has, la, pero…) are left out.
+const SPANISH_HINTS = new Set([
+  "hola", "gracias", "quien", "quienes", "que", "como", "cual", "cuales", "cuando", "donde", "cuanto", "cuantos",
+  "el", "los", "las", "un", "una", "del", "de", "en", "por", "para", "con", "sobre", "y", "su", "sus", "se", "le",
+  "es", "son", "fue", "esta", "estan", "hay", "tiene", "tienen", "hizo", "hace", "sabe", "puedo", "puede", "quiero",
+  "muy", "mas", "tambien", "antes", "ahora", "contame", "cuentame", "decime", "hablame",
+  "trabajo", "trabajos", "trabaja", "proyecto", "proyectos", "marca", "marcas", "empresa", "empresas",
+  "consultor", "consultoria", "herramienta", "herramientas", "servicio", "servicios", "trayectoria", "experiencia",
+  "receta", "recetas", "favoritas", "favoritos",
+])
 
-const ENGLISH_HINTS = [
-  "hello",
-  "who",
-  "what",
-  "how",
-  "project",
-  "brand",
-  "consultant",
-  "tool",
-  "service",
-  "background",
-  "experience",
-]
+const ENGLISH_HINTS = new Set([
+  "hello", "hi", "hey", "thanks", "thank", "please", "who", "whose", "what", "which", "when", "where", "why", "how",
+  "the", "an", "of", "for", "with", "about", "from", "at", "on", "in", "to", "by", "and", "or", "but", "not",
+  "is", "are", "was", "were", "be", "been", "do", "does", "did", "have", "had", "can", "could", "would", "will",
+  "i", "my", "he", "his", "him", "you", "your", "it", "this", "that", "there", "any", "before", "after", "now",
+  "tell", "show", "see", "make",
+  "work", "works", "worked", "working", "project", "projects", "brand", "brands", "company", "companies",
+  "consultant", "consulting", "tool", "tools", "service", "services", "background", "experience", "career",
+  "recipe", "recipes", "favorite", "favourite",
+])
 
 const STOPWORDS = new Set([
   "a",
@@ -402,11 +394,24 @@ export async function getAssistantCorpus() {
 }
 
 export function detectAssistantLanguage(message: string, fallback: AssistantLang): AssistantLang {
-  const normalized = normalize(message)
-  if (/[áéíóúñ¿¡]/i.test(message)) return "es"
+  if (/[ñ¿¡]/i.test(message)) return "es"
 
-  const spanishScore = SPANISH_HINTS.reduce((score, hint) => score + (normalized.includes(normalize(hint)) ? 1 : 0), 0)
-  const englishScore = ENGLISH_HINTS.reduce((score, hint) => score + (normalized.includes(normalize(hint)) ? 1 : 0), 0)
+  // "Tomás Peró" keeps its accents in English too, so the name says nothing about the language.
+  const nameTokens = new Set(tokenize(siteIdentity.name))
+  const words = message
+    .toLowerCase()
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter((word) => word.length > 0 && !nameTokens.has(normalize(word)))
+
+  let spanishScore = 0
+  let englishScore = 0
+
+  for (const word of words) {
+    const plain = normalize(word)
+    if (SPANISH_HINTS.has(plain)) spanishScore += 1
+    if (ENGLISH_HINTS.has(plain)) englishScore += 1
+    if (plain !== word) spanishScore += 1
+  }
 
   if (spanishScore > englishScore) return "es"
   if (englishScore > spanishScore) return "en"
