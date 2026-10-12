@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useLanguage } from "@/components/language-context"
 import { TimelineOrbit } from "@/components/timeline-orbit"
+import styles from "@/components/timeline-orbit.module.css"
 import type { VideoItem } from "@/components/video-carousel"
 import {
   airNewZealandVideos,
@@ -23,17 +24,19 @@ interface TimelineEntry {
   title: string
   role: Localized
   description: Localized
-  /** Which side of the centre line the card sits on (desktop). */
+  /** Short role line shown inside the planet. Defaults to `role`. */
+  planetRole?: Localized
+  /** Which side of the centre line the planet sits on (desktop); the text panel takes the other side. */
   side: "left" | "right"
-  /** Videos orbiting the card. Omit for cards without videos. */
+  /** Videos orbiting the planet. Omit for planets without videos. */
   videos?: VideoItem[]
   /** Render the next entry on the same row, facing this one. */
   sharesRowWithNext?: boolean
-  /** Small tag shown next to the year. */
+  /** Small tag shown inside the planet, under the year. */
   tag?: string
-  /** Link shown at the end of the card. */
+  /** Link shown at the end of the text panel. */
   link?: { href: string; label: Localized }
-  /** Role text holds several lines (one role per line). */
+  /** Role text holds several lines (one role per line) in the text panel. */
   multiRole?: boolean
   showCovidBefore?: boolean
 }
@@ -45,7 +48,9 @@ export default function Timeline() {
   const lang = (language === "en" ? "en" : "es") as "es" | "en"
   const timelineRef = useRef<HTMLDivElement>(null)
 
-  // Timeline data, in display order. MAGAIBA shares a row with DrGea (left of it, facing it).
+  // Timeline data, in display order. `side` is the side of the centre line where the planet sits.
+  // Zig-zag: Paradise L, [$MAGAIBA L | DrGea R pair row], AirTM R, Stone L, Go Broadway R, Air NZ L,
+  // Disney R, JWT L, Altheim R. The pair row sits between L and R, so the weave reads L -> centre -> R.
   const timelineItems: TimelineEntry[] = [
     {
       id: "paradise",
@@ -106,7 +111,7 @@ export default function Timeline() {
         es: "En una fintech pionera en dólares digitales, armé experimentos regionales de adquisición (ads, contenido y funnels con influencers) que conectaban el posicionamiento de marca con crecimiento medible. Creé y lancé Airtalks, el podcast de marca para freelancers y creadores de LATAM, y empujé el pivot de target hacia freelancers y las iniciativas web3.",
         en: "At a pioneering digital-dollars fintech, I ran regional acquisition experiments (ads, content and influencer-led funnels) that tied brand positioning to measurable growth. I created and launched Airtalks, the branded podcast for LATAM freelancers and creators, and pushed the target pivot towards freelancers and the web3 initiatives.",
       },
-      side: "left",
+      side: "right",
       videos: airtmVideos,
     },
     {
@@ -121,7 +126,7 @@ export default function Timeline() {
         es: "Armé el lanzamiento y la estrategia de go-to-market del club de esports y streaming fundado por el tenista Diego “Peque” Schwartzman y Torneos: arquitectura de marca, pilares de contenido y posicionamiento en esports. Trabajé alianzas con streamers y creadores, y eventos, formatos y activaciones gaming para hacer crecer la comunidad.",
         en: "I built the launch and go-to-market strategy for the esports and streaming club founded by tennis player Diego “Peque” Schwartzman and Torneos: brand architecture, content pillars and esports positioning. I worked on partnerships with streamers and creators, plus events, formats and gaming activations to grow the community.",
       },
-      side: "right",
+      side: "left",
       videos: stoneMovistarVideos,
     },
     {
@@ -136,7 +141,7 @@ export default function Timeline() {
         es: "Definí la estrategia de marketing, marca y PR para el lanzamiento en Latinoamérica de Backstage, una plataforma online de castings para artistas escénicos. Armé los planes mensuales de marketing y comunicación, campañas multicanal y alianzas con Ticketek y 47st.",
         en: "I defined the marketing, brand and PR strategy for the LATAM launch of Backstage, an online casting platform for performing artists. I built the monthly marketing and communications plans, multichannel campaigns and partnerships with Ticketek and 47st.",
       },
-      side: "left",
+      side: "right",
     },
     {
       id: "air-new-zealand",
@@ -150,7 +155,7 @@ export default function Timeline() {
         es: "Lideré el marketing regional para Sudamérica (Argentina, Brasil, Chile y Uruguay): lancé la marca en la región, co-desarrollé el plan de negocios a 5 años y manejé un presupuesto anual de más de USD 500K. Conduje cinco agencias de creatividad, PR, medios y activaciones bajo una sola voz de marca, y gestioné alianzas con Tourism New Zealand, All Blacks y UAR, entre otras.",
         en: "I led regional marketing for South America (Argentina, Brazil, Chile and Uruguay): I launched the brand in the region, co-developed the 5-year business plan and managed an annual budget of over USD 500K. I ran five creative, PR, media and activation agencies under a single brand voice, and managed partnerships with Tourism New Zealand, the All Blacks and UAR, among others.",
       },
-      side: "right",
+      side: "left",
       videos: airNewZealandVideos,
       showCovidBefore: true, // Add marker before this item
     },
@@ -166,7 +171,11 @@ export default function Timeline() {
         es: "Acá empezó mi carrera de marca: coordiné promociones 360° y alianzas de marca para toda Latinoamérica en todas las líneas de negocio de Disney, y después pasé a distribución digital (SVOD, TVOD, EST y FVOD) para el resto de Latinoamérica. Dediqué el 20% de mi tiempo a Disney Labs, el primer programa de emprendimiento corporativo de Disney Latinoamérica.",
         en: "My brand career started here: I coordinated 360° promotions and brand partnerships for all of Latin America across every Disney line of business, then moved into digital distribution (SVOD, TVOD, EST and FVOD) for the rest of Latin America. I spent 20% of my time on Disney Labs, Disney Latin America's first corporate entrepreneurship programme.",
       },
-      side: "left",
+      planetRole: {
+        es: "Promotions · Digital Distribution · Disney Labs",
+        en: "Promotions · Digital Distribution · Disney Labs",
+      },
+      side: "right",
       multiRole: true,
     },
     {
@@ -181,7 +190,7 @@ export default function Timeline() {
         es: "Fui ejecutivo de cuentas BTL: gestioné campañas, activaciones y eventos para marcas de consumo masivo, banca, telcos y retail. Trabajé en el rebranding y relanzamiento de Cerveza Imperial (CCU), en Sesiones Imperial y en el programa de Embajadores Nokia N-Series.",
         en: "I was a BTL account executive: I managed campaigns, activations and events for mass-consumption, banking, telco and retail brands. I worked on the Cerveza Imperial (CCU) rebrand and relaunch, Sesiones Imperial and the Nokia N-Series Ambassadors programme.",
       },
-      side: "right",
+      side: "left",
       videos: jwtVideos,
     },
     {
@@ -196,7 +205,7 @@ export default function Timeline() {
         es: "Mi primer trabajo formal, en una agencia boutique, como asistente de cuentas en campañas ATL, BTL y 360°. Sugerí la idea de la acción de Beldent Splash en el superclásico River-Boca de 2007, y se produjo.",
         en: "My first formal job, at a boutique agency, as an account assistant on ATL, BTL and 360° campaigns. I suggested the Beldent Splash stunt at the 2007 River-Boca derby, and it was produced.",
       },
-      side: "left",
+      side: "right",
       videos: altheimVideos,
     },
   ]
@@ -292,71 +301,101 @@ export default function Timeline() {
     }
   }, [])
 
-  const renderCard = (entry: TimelineEntry, entryIndex: number, kind: RowKind) => {
-    const isLeft = entry.side === "left"
+  // Orbit variation per block (index in display order): start angle, direction and lap time differ,
+  // so neighbouring planets never move in sync.
+  const LAPS = [34, 30, 38, 32, 36]
+
+  const renderPanel = (entry: TimelineEntry, className: string) => (
+    <div className={`${styles.panel} ${className}`}>
+      <p className={`${styles.panelRole} ${entry.multiRole ? styles.panelRoleMulti : ""}`}>{entry.role[lang]}</p>
+      <p className={styles.panelText}>{entry.description[lang]}</p>
+      {entry.link && (
+        <Link
+          href={entry.link.href}
+          className="mt-4 inline-block border border-neon-green px-3 py-1 text-sm font-cyber text-neon-green transition-colors hover:bg-neon-green/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0ff]"
+        >
+          {entry.link.label[lang]} &rarr;
+        </Link>
+      )}
+    </div>
+  )
+
+  const renderBlock = (entry: TimelineEntry, entryIndex: number, kind: RowKind) => {
+    const planetLeft = entry.side === "left"
     const isPair = kind !== "single"
 
-    // Mobile: single column, the line and markers sit on the left edge (left-2, items have pl-8).
-    // Desktop: markers sit on the centre line; in a pair the item is 5/12 wide, so the centre is 120% / -20% of it.
-    const markerPosition =
-      kind === "pairLeft"
-        ? "left-2 md:left-[120%]"
-        : kind === "pairRight"
-          ? "left-2 md:left-[-20%]"
-          : "left-2 md:left-1/2"
+    // Reveal-on-scroll: the slide is applied to this outer wrapper only; the orbit inside is never transformed by it.
+    const reveal = `timeline-item relative z-[15] hover:z-[30] focus-within:z-[30] mb-12 md:mb-6 opacity-0 transition-[opacity,transform] duration-1000 transform translate-y-4 md:translate-y-0 ${
+      planetLeft ? "md:translate-x-[-24px]" : "md:translate-x-[24px]"
+    }`
 
-    const itemLayout = isPair
-      ? "mb-16 md:mb-0 md:w-5/12"
-      : `mb-16 flex ${isLeft ? "justify-start" : "justify-end"}`
-    const slide = isLeft ? "md:translate-x-[-50px]" : "md:translate-x-[50px]"
-    const cardLayout = isPair
-      ? "w-full"
-      : `w-full md:w-5/12 ${isLeft ? "md:mr-auto" : "md:ml-auto"}`
+    const orbit = (className: string) => (
+      <TimelineOrbit
+        year={entry.year}
+        name={entry.title}
+        role={(entry.planetRole ?? entry.role)[lang]}
+        tag={entry.tag}
+        videos={entry.videos ?? []}
+        phase={(entryIndex * 0.29) % 1}
+        reverse={entryIndex % 2 === 1}
+        duration={LAPS[entryIndex % LAPS.length]}
+        className={className}
+      />
+    )
 
+    if (isPair) {
+      // Pair row: the planet hugs the centre line, its text sits right under it. The node lines up with the planet centre.
+      const nodeLeft = kind === "pairLeft" ? "calc(100% + var(--half-gap))" : "calc(var(--half-gap) * -1)"
+      const connLeft = kind === "pairLeft" ? "calc(100% - var(--ring-pad))" : "calc(var(--half-gap) * -1)"
+      const nodeTop = "calc(var(--stage) / 2)"
+      return (
+        <div
+          key={entry.id}
+          className={`${reveal} flex flex-col items-center gap-3 ${kind === "pairLeft" ? "md:items-end" : "md:items-start"}`}
+        >
+          <span
+            aria-hidden="true"
+            className={`${styles.conn} hidden md:block`}
+            style={{ top: nodeTop, left: connLeft, width: "calc(var(--ring-pad) + var(--half-gap))" }}
+          />
+          <span aria-hidden="true" className={`${styles.node} hidden md:block`} style={{ top: nodeTop, left: nodeLeft }} />
+          {orbit("")}
+          {renderPanel(entry, "w-full md:max-w-[var(--stage)]")}
+        </div>
+      )
+    }
+
+    // Single row: planet on one side of the line, text panel on the other, vertically centred with each other.
+    // The connector runs from the planet edge, through the node, to the text panel.
+    const connLeft = planetLeft
+      ? "calc(50% - var(--half-gap) - var(--ring-pad))"
+      : "calc(50% - var(--half-gap))"
     return (
       <div
         key={entry.id}
-        className={`timeline-item relative z-[15] hover:z-[30] focus-within:z-[30] ${itemLayout} pl-8 md:pl-0 opacity-0 transition-all duration-1000 transform ${slide}`}
-        style={{ width: isPair ? undefined : "100%" }}
+        className={`${reveal} grid grid-cols-1 justify-items-center gap-y-3 md:grid-cols-2 md:items-center md:gap-x-[calc(var(--half-gap)*2)] md:gap-y-0`}
       >
-        {/* Year marker */}
-        <div
-          className={`absolute ${markerPosition} transform -translate-x-1/2 w-5 h-5 bg-black border-2 border-neon-green rounded-full z-20`}
-          style={{ top: "25px" }}
-        ></div>
-
-        <TimelineOrbit videos={entry.videos ?? []} className={cardLayout} phase={(entryIndex * 0.29) % 1}>
-          {(mobileVideos) => (
-            <div className="terminal">
-              <div className="terminal-header">
-                <span className="text-neon-cyan py-1 inline-block">{entry.year}</span>
-                {entry.tag && (
-                  <span className="ml-3 align-middle inline-block border border-neon-cyan px-2 py-0.5 text-xs text-neon-cyan">
-                    {entry.tag}
-                  </span>
-                )}
-              </div>
-              <div className="terminal-content">
-                <h3 className="text-2xl text-neon-green mb-1 font-bold break-words">{entry.title}</h3>
-                <h4
-                  className={`${entry.multiRole ? "text-base space-y-1" : "text-xl"} text-neon-cyan mb-4 whitespace-pre-line`}
-                >
-                  {entry.role[lang]}
-                </h4>
-                <p className="text-white">{entry.description[lang]}</p>
-                {entry.link && (
-                  <Link
-                    href={entry.link.href}
-                    className="mt-4 inline-block border border-neon-green px-3 py-1 text-sm font-cyber text-neon-green transition-colors hover:bg-neon-green/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0ff]"
-                  >
-                    {entry.link.label[lang]} &rarr;
-                  </Link>
-                )}
-                {mobileVideos}
-              </div>
-            </div>
-          )}
-        </TimelineOrbit>
+        <span
+          aria-hidden="true"
+          className={`${styles.conn} hidden md:block`}
+          style={{
+            top: "50%",
+            left: connLeft,
+            width: "calc(var(--half-gap) * 2 + var(--ring-pad))",
+          }}
+        />
+        <span aria-hidden="true" className={`${styles.node} hidden md:block`} style={{ top: "50%", left: "50%" }} />
+        {orbit(
+          planetLeft
+            ? "md:col-start-1 md:row-start-1 md:justify-self-end"
+            : "md:col-start-2 md:row-start-1 md:justify-self-start",
+        )}
+        {renderPanel(
+          entry,
+          `w-full md:max-w-[30rem] ${
+            planetLeft ? "md:col-start-2 md:row-start-1 md:justify-self-start" : "md:col-start-1 md:row-start-1 md:justify-self-end"
+          }`,
+        )}
       </div>
     )
   }
@@ -380,16 +419,16 @@ export default function Timeline() {
         <h2 className="text-xl text-neon-cyan mb-4 font-cyber">CAREER_PROGRESSION.exe</h2>
       </section>
 
-      <section className="max-w-5xl mx-auto relative z-10" ref={timelineRef}>
-        {/* Center line (left edge on mobile) */}
-        <div className="absolute left-2 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-neon-green z-10"></div>
+      <section className={`${styles.scene} max-w-5xl mx-auto relative z-10`} ref={timelineRef}>
+        {/* Centre line */}
+        <div aria-hidden="true" className={`${styles.spine} absolute left-1/2 -translate-x-1/2 top-0 bottom-0 z-10`}></div>
 
         {/* Timeline items */}
         <div className="relative">
           {rows.map((row) => {
             const first = row[0]
             const marker = first.showCovidBefore && (
-              <div className="timeline-item mb-16 ml-8 md:ml-0 flex justify-start md:justify-center opacity-0 transition-all duration-1000 relative z-20">
+              <div className="timeline-item mb-12 flex justify-center opacity-0 transition-all duration-1000 relative z-20">
                 <div className="terminal-header bg-red-900 px-4 py-2 rounded-lg border border-red-500">
                   <span className="text-white font-bold covid-glitch-digital" data-text="2020: COVID OUTBREAK">2020: COVID OUTBREAK</span>
                 </div>
@@ -403,9 +442,9 @@ export default function Timeline() {
               return (
                 <React.Fragment key={first.id}>
                   {marker}
-                  <div className="md:mb-16 md:flex md:items-start md:justify-between">
-                    {renderCard(left, leftIndex, "pairLeft")}
-                    {renderCard(right, rightIndex, "pairRight")}
+                  <div className="md:grid md:grid-cols-2 md:gap-x-[calc(var(--half-gap)*2)] md:items-start">
+                    {renderBlock(left, leftIndex, "pairLeft")}
+                    {renderBlock(right, rightIndex, "pairRight")}
                   </div>
                 </React.Fragment>
               )
@@ -414,7 +453,7 @@ export default function Timeline() {
             return (
               <React.Fragment key={first.id}>
                 {marker}
-                {renderCard(first, entryCounter++, "single")}
+                {renderBlock(first, entryCounter++, "single")}
               </React.Fragment>
             )
           })}

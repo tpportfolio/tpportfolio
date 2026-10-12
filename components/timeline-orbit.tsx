@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react"
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useLanguage } from "./language-context"
 import { useVisualMode } from "./visual-mode-context"
@@ -8,42 +8,27 @@ import type { VideoItem } from "./video-carousel"
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog"
 import styles from "./timeline-orbit.module.css"
 
-// Distance (px) between the card border and the centre line of the orbit path.
-// Keep in sync with --sat-gap in timeline-orbit.module.css.
-const GAP = 24
-
 type Lang = "es" | "en"
 
 interface TimelineOrbitProps {
+  /** Small cyan label at the top of the planet (dates). */
+  year: string
+  /** Company / project name, the largest text of the planet. */
+  name: string
+  /** Short role line shown inside the planet. */
+  role: string
+  /** Optional tag shown under the year (e.g. "SIDE PROJECT"). */
+  tag?: string
+  /** Videos orbiting the planet. Empty: the planet is drawn alone, with no ring. */
   videos: VideoItem[]
-  className?: string
-  /** Fraction (0-1) added to the lap phase so neighbouring cards do not move in sync. */
+  /** Fraction (0-1) that sets the start angle, so neighbouring planets are not in phase. */
   phase?: number
-  /** Render prop: receives the mobile thumbnail row (or null) to place inside the card. */
-  children: (mobileRow: ReactNode) => ReactNode
-}
-
-/** Rounded rectangle, GAP px outside of a w x h box, clockwise from the top edge. */
-function buildOrbitPath(w: number, h: number) {
-  const r = GAP
-  const x0 = -GAP
-  const y0 = -GAP
-  const x1 = w + GAP
-  const y1 = h + GAP
-  const d = [
-    `M${x0 + r} ${y0}`,
-    `H${x1 - r}`,
-    `A${r} ${r} 0 0 1 ${x1} ${y0 + r}`,
-    `V${y1 - r}`,
-    `A${r} ${r} 0 0 1 ${x1 - r} ${y1}`,
-    `H${x0 + r}`,
-    `A${r} ${r} 0 0 1 ${x0} ${y1 - r}`,
-    `V${y0 + r}`,
-    `A${r} ${r} 0 0 1 ${x0 + r} ${y0}`,
-    "Z",
-  ].join(" ")
-  const perimeter = 2 * (w + 2 * GAP - 2 * r) + 2 * (h + 2 * GAP - 2 * r) + 2 * Math.PI * r
-  return { d, perimeter }
+  /** Revolve counter-clockwise instead of clockwise. */
+  reverse?: boolean
+  /** Seconds per lap. */
+  duration?: number
+  /** Placement classes for the stage (grid column, alignment). */
+  className?: string
 }
 
 function youtubeSrc(video: VideoItem) {
@@ -56,7 +41,37 @@ function thumbSrc(video: VideoItem) {
   return `https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg`
 }
 
-export function TimelineOrbit({ videos, className = "", phase = 0, children }: TimelineOrbitProps) {
+/** Keep a satellite's title label inside the visible area (viewport, and the main column next to the sidebar). */
+function fitLabel(sat: HTMLElement) {
+  const label = sat.querySelector<HTMLElement>("[data-label]")
+  if (!label) return
+  label.style.setProperty("--lx", "0px")
+  label.dataset.below = "false"
+  let rect = label.getBoundingClientRect()
+  if (rect.top < 8) {
+    label.dataset.below = "true"
+    rect = label.getBoundingClientRect()
+  }
+  const main = sat.closest("main")?.getBoundingClientRect()
+  const minX = Math.max(8, (main?.left ?? 0) + 8)
+  const maxX = document.documentElement.clientWidth - 8
+  let dx = 0
+  if (rect.left < minX) dx = minX - rect.left
+  else if (rect.right > maxX) dx = maxX - rect.right
+  label.style.setProperty("--lx", `${Math.round(dx)}px`)
+}
+
+export function TimelineOrbit({
+  year,
+  name,
+  role,
+  tag,
+  videos,
+  phase = 0,
+  reverse = false,
+  duration = 34,
+  className = "",
+}: TimelineOrbitProps) {
   const { language } = useLanguage()
   const { mode } = useVisualMode()
   const lang = (language === "en" ? "en" : "es") as Lang
@@ -64,43 +79,22 @@ export function TimelineOrbit({ videos, className = "", phase = 0, children }: T
 
   const rootRef = useRef<HTMLDivElement>(null)
   const lastTriggerRef = useRef<HTMLElement | null>(null)
-  const [supported, setSupported] = useState<boolean | null>(null)
-  const [size, setSize] = useState<{ w: number; h: number } | null>(null)
   const [visible, setVisible] = useState(false)
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-  // Feature detection (client only).
-  useEffect(() => {
-    if (!hasVideos) return
-    const ok = typeof CSS !== "undefined" && typeof CSS.supports === "function" && CSS.supports("offset-path", "path('M0 0')")
-    setSupported(ok)
-  }, [hasVideos])
-
-  // Measure the card. offsetWidth/Height ignore the reveal transform, so this is correct before and after reveal.
-  useEffect(() => {
-    const el = rootRef.current
-    if (!hasVideos || !el || typeof ResizeObserver === "undefined") return
-    const measure = () => {
-      const w = el.offsetWidth
-      const h = el.offsetHeight
-      setSize((prev) => (prev && prev.w === w && prev.h === h ? prev : { w, h }))
-    }
-    measure()
-    const ro = new ResizeObserver(measure)
-    ro.observe(el)
-    return () => ro.disconnect()
-  }, [hasVideos])
-
-  // Run the animation only while the card is near the viewport.
+  // Run the orbit only while the planet is near the viewport.
   useEffect(() => {
     const el = rootRef.current
     if (!hasVideos || !el || typeof IntersectionObserver === "undefined") {
       setVisible(true)
       return
     }
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => setVisible(entry.isIntersecting))
-    }, { rootMargin: "120px" })
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => setVisible(entry.isIntersecting))
+      },
+      { rootMargin: "120px" },
+    )
     io.observe(el)
     return () => io.disconnect()
   }, [hasVideos])
@@ -117,70 +111,60 @@ export function TimelineOrbit({ videos, className = "", phase = 0, children }: T
     [videos.length],
   )
 
-  if (!hasVideos) {
-    return <div className={className}>{children(null)}</div>
-  }
-
   const playLabel = lang === "es" ? "Reproducir video" : "Play video"
-  const geometry = size ? buildOrbitPath(size.w, size.h) : null
-  const duration = geometry ? Math.min(45, Math.max(30, geometry.perimeter / 46)) : 38
   const current = openIndex !== null ? videos[openIndex] : null
+  const startAngle = (((phase % 1) + 1) % 1) * 360
 
-  const renderThumb = (video: VideoItem, index: number) => (
-    <button
-      type="button"
-      className={styles.satBtn}
-      aria-label={`${playLabel}: ${video.title[lang]}`}
-      onClick={(e) => open(index, e.currentTarget)}
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={thumbSrc(video)} alt="" loading="lazy" decoding="async" draggable={false} />
-      <span className={styles.play} aria-hidden="true" />
-    </button>
-  )
-
-  const mobileRow = (
-    <div className="md:hidden mt-4 pt-3 border-t border-neon-green/30">
-      <p className="text-xs text-neon-cyan mb-2">&gt; VIDEOS</p>
-      <div className="flex flex-wrap gap-3">
-        {videos.map((video, index) => (
-          <div key={video.id} className={styles.rowItem}>
-            {renderThumb(video, index)}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-
-  const layerStyle = geometry
-    ? ({ "--path": `path("${geometry.d}")`, "--dur": `${duration.toFixed(1)}s` } as CSSProperties)
-    : undefined
+  const rootStyle = {
+    "--dur": `${duration}s`,
+    "--dir": reverse ? "reverse" : "normal",
+  } as CSSProperties
 
   return (
     <div
       ref={rootRef}
       className={`${styles.root} ${className}`}
+      style={rootStyle}
       data-mode={mode}
       data-visible={visible ? "true" : "false"}
       data-open={openIndex !== null ? "true" : "false"}
     >
-      {children(mobileRow)}
+      {hasVideos && <span className={styles.ring} aria-hidden="true" />}
 
-      {/* Desktop orbit layer: only after mount + measure, so SSR and mobile never render it. */}
-      {supported !== null && geometry && (
-        <ul className={`${styles.layer} hidden md:block`} style={layerStyle} data-static={supported ? "false" : "true"}>
+      <div className={styles.planet}>
+        <div className={styles.core}>
+          <p className={`${styles.year} font-cyber`}>{year}</p>
+          {tag && <p className={styles.tag}>{tag}</p>}
+          <h3 className={`${styles.name} font-cyber`}>{name}</h3>
+          <p className={styles.role}>{role}</p>
+        </div>
+      </div>
+
+      {hasVideos && (
+        <ul className={styles.spin}>
           {videos.map((video, index) => {
-            const delay = -(((index / videos.length + phase) % 1) * duration)
-            const satStyle = {
-              "--delay": `${delay.toFixed(2)}s`,
-              "--slot": (index + 1) / (videos.length + 1),
-            } as CSSProperties
+            const angle = startAngle + (index * 360) / videos.length
             return (
-              <li key={video.id} className={styles.sat} style={satStyle}>
-                {renderThumb(video, index)}
-                <span className={styles.label} aria-hidden="true">
-                  {video.title[lang]}
-                </span>
+              <li key={video.id} className={styles.slot} style={{ "--a": `${angle.toFixed(2)}deg` } as CSSProperties}>
+                <div
+                  className={styles.sat}
+                  onPointerEnter={(e) => fitLabel(e.currentTarget)}
+                  onFocus={(e) => fitLabel(e.currentTarget)}
+                >
+                  <button
+                    type="button"
+                    className={styles.satBtn}
+                    aria-label={`${playLabel}: ${video.title[lang]}`}
+                    onClick={(e) => open(index, e.currentTarget)}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={thumbSrc(video)} alt="" loading="lazy" decoding="async" draggable={false} />
+                    <span className={styles.play} aria-hidden="true" />
+                  </button>
+                  <span className={styles.label} data-label="" aria-hidden="true">
+                    {video.title[lang]}
+                  </span>
+                </div>
               </li>
             )
           })}

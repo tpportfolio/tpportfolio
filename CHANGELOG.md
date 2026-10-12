@@ -16,8 +16,8 @@ Positioning and content
 - AI experiments (the page shipped in this release, with the Music Lab): Spanish accents restored across the page, ES/EN parity fixes, intro with the creative-technologist framing.
 
 Timeline
-- Videos orbit each block along its perimeter (CSS motion path); click opens the video in a dialog with previous/next. Static layout with reduced motion; row of thumbnails inside the card on mobile.
-- New `$MAGAIBA` block facing DrGea, with its video and a link to `/magaiba`.
+- Each block is a circular planet (year, company, role) with its description always visible next to it. Videos orbit the planet in a perfect circle on a visible ring; click opens the video in a dialog with previous/next. Satellites rest on the ring with reduced motion.
+- New `$MAGAIBA` planet facing DrGea, with its video and a link to `/magaiba`.
 - Single-column layout on mobile. Copy updated to the canonical titles and dates.
 - Video lists live in one place: `lib/work-videos.ts` (used by the work pages and the timeline).
 
