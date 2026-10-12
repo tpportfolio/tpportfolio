@@ -1,11 +1,13 @@
 "use client"
 
 import { useLanguage } from "@/components/language-context"
+import { useVisualMode } from "@/components/visual-mode-context"
 import Image from "next/image"
+import Link from "next/link"
 import type { ReactNode } from "react"
-import { ArrowUpRight, Linkedin, Mail, MapPin } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
-type Segment = string | { text: string; href: string; external?: boolean }
+type Segment = string | { bold: string } | { text: string; href: string; external?: boolean }
 
 type AboutCopy = {
   title: string
@@ -13,7 +15,6 @@ type AboutCopy = {
   overviewHeader: string
   skillsHeader: string
   contextHeader: string
-  linksHeader: string
   name: string
   positioning: string
   subline: string
@@ -32,21 +33,16 @@ type AboutCopy = {
     focus: string
   }
   contextItems: Array<{ label: string; value: string }>
-  links: {
-    linkedinLabel: string
-    linkedinValue: string
-    locationLabel: string
-    location: string
-    emailLabel: string
-    email: string
-    credentialLabel: string
-    credential: string
-    locationNodes: string[]
+  cta: {
+    prompt: string
+    label: string
   }
 }
 
 const MORFEO_URL = "https://www.morfeoacademy.com/"
 const INTRO_URL = "/intro.html"
+
+const B = (bold: string) => ({ bold })
 
 const copyEs: AboutCopy = {
   title: "ACERCA DE MÍ",
@@ -54,31 +50,39 @@ const copyEs: AboutCopy = {
   overviewHeader: "PROFILE_OVERVIEW",
   skillsHeader: "SKILLS",
   contextHeader: "SELECTED_CONTEXT",
-  linksHeader: "LINKS / CONTACT",
   name: "TOMÁS PERÓ",
   positioning: "Brand Strategist & Brand Marketing Leader",
   subline: "Estrategia de marca · marketing cultural · tecnología creativa. Más de 18 años construyendo, lanzando y escalando marcas.",
   signals: ["Brand Strategy", "Brand Marketing", "Cultural Marketing", "Go-To-Market", "Creative Technology", "AI Workflows"],
   overview: [
     [
-      "Soy Brand Strategist y líder de marketing de marca, con más de 18 años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabajo en el cruce entre estrategia de marca, marketing cultural y tecnología creativa: defino posicionamiento y plataformas de marca, los convierto en campañas integradas de go-to-market y acelero la ejecución con workflows creativos potenciados por IA.",
+      "Soy ", B("Brand Strategist"), " y líder de ", B("marketing de marca"), ", con más de ", B("18 años"),
+      " construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabajo en el cruce entre ",
+      B("estrategia de marca"), ", ", B("marketing cultural"), " y ", B("tecnología creativa"), ".",
     ],
     [
-      "Me formé en agencias (Altheim y J. Walter Thompson) y mi carrera de marca empezó en The Walt Disney Company: coordiné promociones y alianzas de marca para toda Latinoamérica dentro de uno de los sistemas de marca más disciplinados del mundo, después pasé a distribución digital y dediqué el 20% de mi tiempo a Disney Labs, su programa de innovación y emprendimiento corporativo.",
+      "Me formé en agencias (", B("Altheim"), " y ", B("J. Walter Thompson"), ") y mi carrera de marca empezó en ", B("The Walt Disney Company"),
+      ": ", B("promociones y alianzas de marca"), " para toda Latinoamérica, después ", B("distribución digital"), " y ", B("Disney Labs"),
+      ", su programa de innovación.",
     ],
     [
-      "Entre 2015 y 2020 lideré el marketing regional y el desarrollo de mercado de Air New Zealand en Sudamérica: lanzamiento de marca en mercados nuevos, plan de negocios a 5 años y cinco agencias de creatividad, medios, PR y activaciones trabajando con una sola voz de marca.",
+      "En ", B("Air New Zealand"), " (2015–2020) lideré el ", B("marketing regional"), " y el ", B("desarrollo de mercado"),
+      " para Sudamérica: ", B("lanzamiento de marca"), ", plan de negocios a 5 años y cinco agencias trabajando con una sola voz de marca.",
     ],
     [
-      "Desde 2020 acompaño a marcas en lanzamiento o en transición: Stone Movistar (esports y streaming), Airtm (fintech), DrGea.com (healthtech, como Head of Communications) y Paradise.la, la productora a la que asesoré en su transición hacia la producción creativa con IA.",
+      "Desde 2020 acompaño a marcas en lanzamiento o en transición: ", B("Stone Movistar"), " (esports y streaming), ", B("Airtm"),
+      " (fintech), ", B("DrGea.com"), " (healthtech) y ", B("Paradise.la"), " (producción creativa con ", B("IA"), ").",
     ],
     [
-      "Miro las marcas con lente cultural: entretenimiento, deporte, gaming, streaming, música y creadores son los espacios donde hoy una marca gana relevancia. No los miro desde afuera: soy fan del deporte, del stand-up y del hardware de alto rendimiento, y entreno varios días por semana.",
+      "Miro las marcas con ", B("lente cultural"),
+      ": entretenimiento, deporte, gaming, streaming, música y creadores. No los miro desde afuera: soy fan del deporte, del stand-up y del hardware.",
     ],
     [
-      "Como creative technologist uso todos los días un stack de IA (ChatGPT, Claude, Perplexity, NotebookLM, Flux, Midjourney, Kling, Veo, ElevenLabs y v0, entre otros) para prototipar campañas, acelerar la producción de contenido y ampliar lo que puede entregar un equipo de marca chico. Exploro IA de forma autodidacta desde fines de 2022, en 2023 generé un LoRA de mi persona y desde junio de 2024 participo del curso y la comunidad de ",
+      "Como ", B("creative technologist"), " uso todos los días un stack de ", B("IA"), " para ", B("prototipar campañas"),
+      ", acelerar la ", B("producción de contenido"),
+      " y ampliar lo que puede entregar un equipo de marca chico. Me formo en ",
       { text: "Morfeo Academy", href: MORFEO_URL, external: true },
-      ". También desarrollo mis propias herramientas: transcripción local de audio, subtitulado de video, redimensionado de imágenes y extracción de leads.",
+      " desde 2024 y desarrollo mis propias herramientas.",
     ],
     [
       "Todo lo que ves acá está vibecodeado con IA, hasta la ",
@@ -123,16 +127,9 @@ const copyEs: AboutCopy = {
       value: "Head of Brand · Brand Lead · Brand Manager · Brand Marketing Manager · Brand Strategist · Cultural Marketing · Creative Technologist",
     },
   ],
-  links: {
-    linkedinLabel: "LINKEDIN",
-    linkedinValue: "linkedin.com/in/tomaspero",
-    locationLabel: "LOCATION",
-    location: "Buenos Aires, Argentina",
-    emailLabel: "EMAIL",
-    email: "tomaspero@gmail.com",
-    credentialLabel: "PROFILE_NOTE",
-    credential: "Disponible para roles de liderazgo de marca y para proyectos de consultoría con marcas, agencias y equipos lean.",
-    locationNodes: ["ARG", "BA", "CABA"],
+  cta: {
+    prompt: "¿Hablamos? Todos mis canales están en la página de contacto.",
+    label: "CONTACTO",
   },
 }
 
@@ -142,31 +139,39 @@ const copyEn: AboutCopy = {
   overviewHeader: "PROFILE_OVERVIEW",
   skillsHeader: "SKILLS",
   contextHeader: "SELECTED_CONTEXT",
-  linksHeader: "LINKS / CONTACT",
   name: "TOMÁS PERÓ",
   positioning: "Brand Strategist & Brand Marketing Leader",
   subline: "Brand strategy · cultural marketing · creative technology. 18+ years building, launching and scaling brands.",
   signals: ["Brand Strategy", "Brand Marketing", "Cultural Marketing", "Go-To-Market", "Creative Technology", "AI Workflows"],
   overview: [
     [
-      "I'm a Brand Strategist and Brand Marketing Leader with 18+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. I work at the intersection of brand strategy, cultural marketing and creative technology: I define positioning and brand platforms, turn them into integrated go-to-market campaigns, and speed up execution with AI-powered creative workflows.",
+      "I'm a ", B("Brand Strategist"), " and ", B("Brand Marketing Leader"), " with ", B("18+ years"),
+      " building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. I work at the intersection of ",
+      B("brand strategy"), ", ", B("cultural marketing"), " and ", B("creative technology"), ".",
     ],
     [
-      "I trained in agencies (Altheim and J. Walter Thompson), and my brand career began at The Walt Disney Company: I coordinated promotions and brand partnerships for all of Latin America inside one of the world's most disciplined brand systems, then moved into digital distribution and spent 20% of my time on Disney Labs, its corporate entrepreneurship and innovation programme.",
+      "I trained in agencies (", B("Altheim"), " and ", B("J. Walter Thompson"), "), and my brand career began at ", B("The Walt Disney Company"),
+      ": ", B("brand promotions and partnerships"), " for all of Latin America, then ", B("digital distribution"), " and ", B("Disney Labs"),
+      ", its innovation programme.",
     ],
     [
-      "From 2015 to 2020 I led regional marketing and market development for Air New Zealand in South America: brand launches in new markets, a 5-year business plan, and five creative, media, PR and activation agencies working with a single brand voice.",
+      "At ", B("Air New Zealand"), " (2015–2020) I led ", B("regional marketing"), " and ", B("market development"),
+      " for South America: ", B("brand launch"), ", a 5-year business plan and five agencies working with a single brand voice.",
     ],
     [
-      "Since 2020 I have worked with brands that are launching or in transition: Stone Movistar (esports and streaming), Airtm (fintech), DrGea.com (healthtech, as Head of Communications) and Paradise.la, the production studio I advised on its transition to AI-enabled creative production.",
+      "Since 2020 I have worked with brands that are launching or in transition: ", B("Stone Movistar"), " (esports and streaming), ", B("Airtm"),
+      " (fintech), ", B("DrGea.com"), " (healthtech) and ", B("Paradise.la"), " (creative production with ", B("AI"), ").",
     ],
     [
-      "I look at brands through a cultural lens: entertainment, sport, gaming, streaming, music and creators are where brands earn relevance today. I don't watch them from the outside: I'm a sports fan, a stand-up comedy fan and a high-performance hardware nerd, and I train several days a week.",
+      "I look at brands through a ", B("cultural lens"),
+      ": entertainment, sport, gaming, streaming, music and creators. I don't watch them from the outside: I'm a fan of sport, stand-up comedy and hardware.",
     ],
     [
-      "As a creative technologist I run a daily AI stack (ChatGPT, Claude, Perplexity, NotebookLM, Flux, Midjourney, Kling, Veo, ElevenLabs and v0, among others) to prototype campaigns, accelerate content production and expand what a small brand team can deliver. I have explored AI independently since late 2022, generated a LoRA of myself in 2023, and since June 2024 I have been part of ",
+      "As a ", B("creative technologist"), " I run a daily ", B("AI"), " stack to ", B("prototype campaigns"),
+      ", speed up ", B("content production"),
+      " and expand what a small brand team can deliver. I have trained at ",
       { text: "Morfeo Academy", href: MORFEO_URL, external: true },
-      "'s course and community. I also build my own tools: local audio transcription, video subtitling, image resizing and lead extraction.",
+      " since 2024 and I build my own tools.",
     ],
     [
       "Everything you see here is vibe-coded with AI, including the ",
@@ -211,16 +216,9 @@ const copyEn: AboutCopy = {
       value: "Head of Brand · Brand Lead · Brand Manager · Brand Marketing Manager · Brand Strategist · Cultural Marketing · Creative Technologist",
     },
   ],
-  links: {
-    linkedinLabel: "LINKEDIN",
-    linkedinValue: "linkedin.com/in/tomaspero",
-    locationLabel: "LOCATION",
-    location: "Buenos Aires, Argentina",
-    emailLabel: "EMAIL",
-    email: "tomaspero@gmail.com",
-    credentialLabel: "PROFILE_NOTE",
-    credential: "Available for brand leadership roles and for consulting projects with brands, agencies and lean teams.",
-    locationNodes: ["ARG", "BA", "CABA"],
+  cta: {
+    prompt: "Shall we talk? All my channels are on the contact page.",
+    label: "CONTACT",
   },
 }
 
@@ -247,12 +245,14 @@ function BlockLabel({ children }: { children: ReactNode }) {
 function SkillsSection({
   label,
   children,
+  className = "",
 }: {
   label: string
   children: ReactNode
+  className?: string
 }) {
   return (
-    <div className="rounded-sm border border-neon-green/20 bg-black/20 p-4">
+    <div className={`rounded-sm border border-neon-green/20 bg-black/20 p-4 ${className}`}>
       <BlockLabel>{label}</BlockLabel>
       {children}
     </div>
@@ -261,7 +261,15 @@ function SkillsSection({
 
 export default function About() {
   const { language } = useLanguage()
+  const { mode } = useVisualMode()
   const copy = language === "es" ? copyEs : copyEn
+
+  // One bold treatment for brands, skills and key terms: bright white in dark mode, deep brown in light mode.
+  const boldClass = mode === "light" ? "font-bold text-[#2e1305]" : "font-bold text-white"
+  const ctaToneClass =
+    mode === "light"
+      ? "border-[#c57b45] bg-[#fff2e3] text-[#8b4315] hover:bg-[#f5e4d2]"
+      : "border-neon-green bg-black text-neon-green shadow-[0_0_12px_rgba(57,255,20,0.25)] hover:bg-neon-green/10"
 
   return (
     <main className="px-4 py-8 md:px-12">
@@ -325,6 +333,10 @@ export default function About() {
                     {paragraph.map((segment, segmentIndex) =>
                       typeof segment === "string" ? (
                         <span key={segmentIndex}>{segment}</span>
+                      ) : "bold" in segment ? (
+                        <strong key={segmentIndex} className={boldClass}>
+                          {segment.bold}
+                        </strong>
                       ) : (
                         <a
                           key={segmentIndex}
@@ -358,113 +370,58 @@ export default function About() {
             </div>
           </div>
 
-          <div className="terminal flex flex-col xl:col-span-4">
-            <div className="terminal-header">
-              <span>{copy.linksHeader}</span>
-            </div>
-            <div className="terminal-content p-5 md:p-6">
-              <div className="grid grid-cols-1 gap-4">
-                <a
-                  href="https://www.linkedin.com/in/tomaspero"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between rounded-sm border border-neon-green/30 bg-black/20 px-4 py-4 text-neon-green transition-colors hover:border-neon-cyan hover:text-neon-cyan"
-                >
-                  <div className="flex items-center gap-3">
-                    <Linkedin className="h-5 w-5" />
-                    <div>
-                      <div className="font-cyber text-[11px] uppercase tracking-[0.18em] text-neon-cyan">
-                        {copy.links.linkedinLabel}
-                      </div>
-                      <div className="text-sm">{copy.links.linkedinValue}</div>
-                    </div>
-                  </div>
-                  <ArrowUpRight className="h-4 w-4" />
-                </a>
-
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="rounded-sm border border-neon-green/20 bg-black/20 p-4">
-                    <div className="mb-3 flex items-center gap-2 font-cyber text-[11px] uppercase tracking-[0.18em] text-neon-cyan">
-                      <MapPin className="h-3.5 w-3.5" />
-                      {copy.links.locationLabel}
-                    </div>
-                    <p className="text-sm leading-relaxed text-neon-green/90">{copy.links.location}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {copy.links.locationNodes.map((node) => (
-                        <span
-                          key={node}
-                          className="rounded-sm border border-neon-green/20 px-2.5 py-1 font-cyber text-[10px] uppercase tracking-[0.18em] text-neon-cyan"
-                        >
-                          {node}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="rounded-sm border border-neon-green/20 bg-black/20 p-4">
-                    <div className="mb-3 flex items-center gap-2 font-cyber text-[11px] uppercase tracking-[0.18em] text-neon-cyan">
-                      <Mail className="h-3.5 w-3.5" />
-                      {copy.links.emailLabel}
-                    </div>
-                    <a href={`mailto:${copy.links.email}`} className="text-sm text-neon-green/90 hover:text-neon-cyan">
-                      {copy.links.email}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="rounded-sm border border-neon-green/20 bg-black/20 p-4">
-                  <BlockLabel>{copy.links.credentialLabel}</BlockLabel>
-                  <p className="text-sm leading-relaxed text-neon-green/90">{copy.links.credential}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="terminal flex flex-col xl:col-span-8">
+          <div className="terminal flex flex-col xl:col-span-12">
             <div className="terminal-header">
               <span>{copy.skillsHeader}</span>
             </div>
             <div className="terminal-content p-5 md:p-6">
-              <div className="grid grid-cols-1 gap-4 xl:grid-cols-[0.9fr_1.2fr_1fr]">
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
                 <SkillsSection label={copy.skills.positioningLabel}>
-                  <div className="font-cyber text-lg text-neon-green">{copy.skills.positioningValue}</div>
+                  <div className="font-cyber text-lg leading-snug text-neon-green">{copy.skills.positioningValue}</div>
                 </SkillsSection>
 
-                <div className="grid grid-cols-1 gap-4">
-                  <SkillsSection label={copy.skills.strengthsLabel}>
-                    <div className="flex flex-wrap gap-2">
-                      {copy.skills.strengths.map((item) => (
-                        <SkillPill key={item} label={item} />
-                      ))}
-                    </div>
-                  </SkillsSection>
+                <SkillsSection label={copy.skills.focusLabel} className="xl:col-span-2">
+                  <p className="text-sm leading-relaxed text-neon-green/90 md:text-[15px]">{copy.skills.focus}</p>
+                </SkillsSection>
 
-                  <SkillsSection label={copy.skills.workingStyleLabel}>
-                    <div className="flex flex-wrap gap-2">
-                      {copy.skills.workingStyle.map((item) => (
-                        <SkillPill key={item} label={item} />
-                      ))}
-                    </div>
-                  </SkillsSection>
-                </div>
+                <SkillsSection label={copy.skills.strengthsLabel}>
+                  <div className="flex flex-wrap gap-2">
+                    {copy.skills.strengths.map((item) => (
+                      <SkillPill key={item} label={item} />
+                    ))}
+                  </div>
+                </SkillsSection>
 
-                <div className="grid grid-cols-1 gap-4">
-                  <SkillsSection label={copy.skills.bestFitLabel}>
-                    <div className="space-y-2">
-                      {copy.skills.bestFit.map((item) => (
-                        <div key={item} className="rounded-sm border border-neon-green/20 px-3 py-2 text-sm text-neon-green/85">
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </SkillsSection>
+                <SkillsSection label={copy.skills.workingStyleLabel}>
+                  <div className="flex flex-wrap gap-2">
+                    {copy.skills.workingStyle.map((item) => (
+                      <SkillPill key={item} label={item} />
+                    ))}
+                  </div>
+                </SkillsSection>
 
-                  <SkillsSection label={copy.skills.focusLabel}>
-                    <p className="text-sm leading-relaxed text-neon-green/90">{copy.skills.focus}</p>
-                  </SkillsSection>
-                </div>
+                <SkillsSection label={copy.skills.bestFitLabel} className="lg:col-span-2 xl:col-span-1">
+                  <div className="space-y-2">
+                    {copy.skills.bestFit.map((item) => (
+                      <div key={item} className="rounded-sm border border-neon-green/20 px-3 py-2 text-sm text-neon-green/85">
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </SkillsSection>
               </div>
             </div>
+          </div>
+
+          <div className="flex flex-col items-start gap-4 rounded-sm border border-neon-green/30 bg-black/20 p-5 sm:flex-row sm:items-center sm:justify-start sm:gap-6 md:p-6 xl:col-span-12">
+            <p className="text-sm leading-relaxed text-neon-green/90 md:text-base">{copy.cta.prompt}</p>
+            <Link
+              href="/contact"
+              className={`inline-flex shrink-0 items-center gap-2 rounded-sm border px-5 py-3 font-cyber text-sm uppercase tracking-[0.18em] transition-colors ${ctaToneClass}`}
+            >
+              {copy.cta.label}
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
           </div>
         </div>
       </section>

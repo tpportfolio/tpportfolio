@@ -59,7 +59,7 @@ export function VideoCarousel({ items, title, variant = "terminal" }: VideoCarou
         <div className="relative w-full flex justify-center items-center bg-black">
           <div className="w-full max-w-2xl aspect-video">
             {currentItem.type === "youtube" && (
-              <YouTubeEmbed videoId={currentItem.videoId} isPlaylist={currentItem.isPlaylist} />
+              <YouTubeEmbed videoId={currentItem.videoId} isPlaylist={currentItem.isPlaylist} title={currentItem.title[language]} />
             )}
           </div>
 

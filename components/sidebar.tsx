@@ -108,11 +108,6 @@ export default function Sidebar() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="sidebar-link" onClick={closeSidebar}>
-                    ABOUT
-                  </Link>
-                </li>
-                <li>
                   <Link href="/#trabajos" className="sidebar-link" onClick={goToWorkSection}>
                     {t("work")}
                   </Link>
@@ -128,14 +123,14 @@ export default function Sidebar() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/magaiba" className="sidebar-link sidebar-link--controlled-wrap" onClick={closeSidebar}>
-                    MAGAIBA (WEB3 + AI)
+                  <Link href="/about" className="sidebar-link" onClick={closeSidebar}>
+                    ABOUT
                   </Link>
                 </li>
                 <li>
-                  <a href="mailto:tomaspero@gmail.com" className="sidebar-link" onClick={closeSidebar}>
+                  <Link href="/contact" className="sidebar-link" onClick={closeSidebar}>
                     {t("contact")}
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
