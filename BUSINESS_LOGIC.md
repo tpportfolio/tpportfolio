@@ -20,7 +20,7 @@ This is a personal portfolio with a "Matrix + 90s web" look (terminal + neon + r
 - Page is structured as:
   1) WIP banner
   2) Single "RESUMEN" panel (no duplicates)
-  3) "EJEMPLOS TRABAJOS IA 2025" cases (Jumex / Subway)
+  3) "EJEMPLOS TRABAJOS IA 2025" cases (two 2025 pitches)
   4) "VIBE-CODING: WEBAPPS" with the 3 mini tools
   5) Historical carousel "EXPERIMENTOS IA (2022–2024)"
 
