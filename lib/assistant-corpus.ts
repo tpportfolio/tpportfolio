@@ -7,6 +7,7 @@ import {
   siteIdentity,
   specialties,
   timelineEntries,
+  type HomeProject,
   type LocalizedText,
 } from "@/lib/site-content"
 
@@ -219,6 +220,55 @@ function tokenize(value: string) {
     .filter((token) => token.length > 1 && !STOPWORDS.has(token))
 }
 
+// One self-contained line per project: the years sit right next to the name they belong to.
+function projectHeading(project: HomeProject, lang: AssistantLang) {
+  const details = [project.bodyTitle, project.clientLine2, project.clientLine3]
+    .filter((detail): detail is string | LocalizedText => Boolean(detail))
+    .map((detail) => localized(detail, lang))
+
+  return `${localized(project.client, lang)} (${localized(project.year, lang)}): ${details.join(" · ")}`
+}
+
+function projectLine(project: HomeProject, lang: AssistantLang) {
+  return `${projectHeading(project, lang)}. ${project.summary[lang]}`
+}
+
+function buildCareerChunk(lang: AssistantLang): AssistantChunk {
+  const stages = homeProjects.filter((project) => `/work/${project.slug}` !== aiExperimentsAgentSummary.route)
+  const copy = lang === "es"
+    ? {
+        title: "Trayectoria",
+        intro: "Trayectoria laboral de Tomás Peró. Referencia para empleadores, roles y fechas: cada línea es una etapa distinta y sus años son los que figuran en esa misma línea.",
+        stages: "Etapas principales (home del portfolio):",
+        roles: "Roles en detalle (página /timeline):",
+      }
+    : {
+        title: "Career timeline",
+        intro: "Career timeline of Tomás Peró. Reference for employers, roles and dates: each line is a separate stage and its years are the ones written on that same line.",
+        stages: "Main stages (portfolio home):",
+        roles: "Detailed roles (/timeline page):",
+      }
+
+  return {
+    id: `career-${lang}`,
+    route: "/timeline",
+    section: "career",
+    title: copy.title,
+    lang,
+    sourceType: "site",
+    keywords: lang === "es"
+      ? ["trayectoria", "carrera", "laboral", "empresas", "empresa", "empleadores", "trabajo", "trabajos", "trabajaba", "roles", "cargos", "puestos", "fechas", "anos", "cuando", "cv", "experiencia"]
+      : ["career", "timeline", "companies", "company", "employers", "employer", "work", "worked", "working", "jobs", "job", "roles", "positions", "dates", "years", "when", "resume", "cv", "experience", "background"],
+    text: [
+      copy.intro,
+      copy.stages,
+      ...stages.map((project) => `- ${projectHeading(project, lang)}`),
+      copy.roles,
+      ...timelineEntries.map((entry) => `- ${entry.title} (${entry.year}): ${entry.role[lang]}`),
+    ].join("\n"),
+  }
+}
+
 function buildSiteChunks(): AssistantChunk[] {
   const chunks: AssistantChunk[] = []
 
@@ -234,13 +284,12 @@ function buildSiteChunks(): AssistantChunk[] {
       text: [
         localized(siteIdentity.name, lang as never),
         siteIdentity.heroCopy[lang],
-        ...homeProjects.map(
-          (project) =>
-            `${localized(project.client, lang)} ${project.bodyTitle ? localized(project.bodyTitle, lang) : ""} ${project.summary[lang]} ${localized(project.year, lang)}`,
-        ),
+        ...homeProjects.map((project) => `- ${projectLine(project, lang)}`),
         specialties.join(", "),
-      ].join(" "),
+      ].join("\n"),
     })
+
+    chunks.push(buildCareerChunk(lang))
 
     homeProjects.forEach((project) => {
       chunks.push({
@@ -251,14 +300,7 @@ function buildSiteChunks(): AssistantChunk[] {
         lang,
         sourceType: "site",
         keywords: [project.slug, normalize(localized(project.client, lang)), "project", "work", "case study"],
-        text: [
-          localized(project.client, lang),
-          project.bodyTitle ? localized(project.bodyTitle, lang) : "",
-          project.clientLine2 ? localized(project.clientLine2, lang) : "",
-          project.clientLine3 ? localized(project.clientLine3, lang) : "",
-          localized(project.year, lang),
-          project.summary[lang],
-        ].join(" "),
+        text: projectLine(project, lang),
       })
     })
 
@@ -412,6 +454,10 @@ export async function retrieveAssistantContext(query: string, options: SearchOpt
     selected = [...fallbackChunks, generalChunk, profileChunk].filter(Boolean) as AssistantChunk[]
   }
 
+  // The career timeline always travels with the context, so dates never depend on what was retrieved.
+  const career = localizedChunks.find((chunk) => chunk.section === "career")
+  const chunks = career ? [career, ...selected.filter((chunk) => chunk !== career)] : selected
+
   const uniqueSources = Array.from(
     new Map(
       selected.map((chunk) => [
@@ -427,7 +473,7 @@ export async function retrieveAssistantContext(query: string, options: SearchOpt
 
   return {
     language,
-    chunks: selected,
+    chunks,
     sources: uniqueSources,
   }
 }
