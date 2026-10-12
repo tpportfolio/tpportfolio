@@ -1,4 +1,4 @@
-﻿const translations = {
+const translations = {
   es: {
     home: "INICIO",
     work: "TRABAJOS",
@@ -8,16 +8,16 @@
     access_data: "[ACCEDER A DATOS]",
     system_status: "[ESTADO DEL SISTEMA: OPERATIVO]",
     access_count: "CONTADOR DE VISITAS:",
-    last_update: "ÚLTIMA ACTUALIZACIÓN DEL SISTEMA: 04/03/2025 // FIN DE TRANSMISIÓN",
-    about_me: "ACERCA DE MI",
+    last_update: "ÚLTIMA ACTUALIZACIÓN DEL SISTEMA: 12 OCT 2026 // FIN DE TRANSMISIÓN",
+    about_me: "ACERCA DE MÍ",
     return_to_mainframe: "VOLVER AL MAINFRAME",
     timeline: "TIMELINE",
     agency_overview:
-      "Primeros años en agencias. Trabajé en cuentas y producción de campañas ATL/BTL y digital para marcas de consumo masivo, telcos y retail.",
+      "Mis primeros años fueron en agencias de publicidad (2007-2011): primero como asistente de cuentas en Altheim Comunicaciones y después como ejecutivo de cuentas BTL en J. Walter Thompson (JWT/GLUE), con campañas, activaciones y eventos para marcas de consumo masivo, banca, telecomunicaciones y retail. Ahí aprendí el oficio de las cuentas: trabajar de cerca con clientes, creativos y proveedores.",
     air_nz_overview:
-      "Entre 2015 y 2020 trabajé en Air New Zealand (Sudamérica) en market development y marketing. Armé estrategia regional, alianzas, sponsorships y campañas B2C/B2B.",
+      "Entre diciembre de 2015 y junio de 2020 fui el líder de marketing regional de Air New Zealand para Sudamérica (Argentina, Brasil, Chile y Uruguay), como Marketing Specialist & Market Development. Fui responsable del lanzamiento de la marca en la región y de la estrategia de salida al mercado de una nueva ruta de larga distancia, con campañas 360° B2C y B2B, sponsorships, alianzas y cinco agencias trabajando bajo una sola voz de marca.",
     disney_overview:
-      "Entre 2011 y 2015 trabajé en The Walt Disney Company, en roles de marketing/sales/promotions. Participé en lanzamientos y campañas para contenido y plataformas digitales.",
+      "Mi carrera de marca empezó en The Walt Disney Company, dentro de uno de los sistemas de marca más disciplinados del mundo. Entre 2011 y 2015 pasé por tres roles: coordiné promociones y alianzas de marca para toda Latinoamérica, gestioné la distribución digital de contenido de Disney, Marvel, Pixar y Lucasfilm en el resto de la región, y dediqué el 20% de mi tiempo a Disney Labs, el programa de emprendedurismo corporativo de Disney Latinoamérica. Ahí apareció por primera vez mi perfil dual de marca y tecnología.",
   },
   en: {
     home: "HOME",
@@ -28,16 +28,16 @@
     access_data: "[ACCESS DATA]",
     system_status: "[SYSTEM STATUS: OPERATIONAL]",
     access_count: "VISITOR COUNT:",
-    last_update: "LAST SYSTEM UPDATE: 04/03/2025 // END TRANSMISSION",
+    last_update: "LAST SYSTEM UPDATE: 12 OCT 2026 // END TRANSMISSION",
     about_me: "ABOUT ME",
     return_to_mainframe: "RETURN TO MAINFRAME",
     timeline: "TIMELINE",
     agency_overview:
-      "Early years in agencies. I worked in accounts and campaign production (ATL/BTL + digital) for mass-market, telco, and retail brands.",
+      "My first years were in advertising agencies (2007-2011): first as an account assistant at Altheim Comunicaciones and then as a BTL account executive at J. Walter Thompson (JWT/GLUE), running campaigns, activations and events for mass-consumption, banking, telecom and retail brands. That is where I learned the account craft: working closely with clients, creatives and suppliers.",
     air_nz_overview:
-      "Between 2015 and 2020 I worked at Air New Zealand (South America) in market development and marketing. I led regional strategy, partnerships, sponsorships, and B2C/B2B campaigns.",
+      "From December 2015 to June 2020 I was Air New Zealand's regional marketing lead for South America (Argentina, Brazil, Chile and Uruguay), as Marketing Specialist & Market Development. I was responsible for the brand launch in the region and for the market launch strategy of a new long-haul route, with 360° B2C and B2B campaigns, sponsorships, partnerships and five agencies working under one brand voice.",
     disney_overview:
-      "Between 2011 and 2015 I worked at The Walt Disney Company in marketing/sales/promotions roles. I supported launches and campaigns for content and digital platforms.",
+      "My brand career began at The Walt Disney Company, inside one of the world's most disciplined brand systems. Between 2011 and 2015 I held three roles: I coordinated brand promotions and partnerships for all of Latin America, managed the digital distribution of Disney, Marvel, Pixar and Lucasfilm content across the rest of the region, and spent 20% of my time on Disney Labs, Disney Latin America's corporate entrepreneurship programme. That is where my dual brand and technology profile first showed up.",
   },
 }
 

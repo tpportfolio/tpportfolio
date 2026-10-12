@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 
@@ -13,7 +13,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Tom\u00e1s Per\u00f3 | GEN_MARKETER.exe",
-  description: "Professional portfolio of Tom\u00e1s Per\u00f3.",
+  description:
+    "Tomás Peró: Brand Strategist & Brand Marketing Leader. Brand strategy, cultural marketing and creative technology. 18+ years building, launching and scaling brands.",
   generator: "v0.dev",
 };
 

@@ -68,7 +68,7 @@ export function VideoCarousel({ items, title, variant = "terminal" }: VideoCarou
             onKeyDown={e => (e.key === "Enter" || e.key === " " ? prevItem(e) : undefined)}
             tabIndex={0}
             className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-neon-green hover:text-neon-cyan p-1 rounded-full z-20 focus:outline-none focus:ring-2 focus:ring-neon-cyan"
-            aria-label="Previous item"
+            aria-label={language === "es" ? "Video anterior" : "Previous video"}
             type="button"
           >
             <ChevronLeft size={24} />
@@ -78,7 +78,7 @@ export function VideoCarousel({ items, title, variant = "terminal" }: VideoCarou
             onKeyDown={e => (e.key === "Enter" || e.key === " " ? nextItem(e) : undefined)}
             tabIndex={0}
             className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-neon-green hover:text-neon-cyan p-1 rounded-full z-20 focus:outline-none focus:ring-2 focus:ring-neon-cyan"
-            aria-label="Next item"
+            aria-label={language === "es" ? "Video siguiente" : "Next video"}
             type="button"
           >
             <ChevronRight size={24} />
@@ -106,7 +106,7 @@ export function VideoCarousel({ items, title, variant = "terminal" }: VideoCarou
               className={`relative h-26 overflow-hidden border ${
                 index === currentIndex ? "border-neon-cyan" : "border-neon-green border-opacity-30"
               } focus:outline-none focus:ring-2 focus:ring-neon-cyan`}
-              aria-label={`View ${item.title[language]}`}
+              aria-label={`${language === "es" ? "Ver" : "View"}: ${item.title[language]}`}
               type="button"
             >
               <img

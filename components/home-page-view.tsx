@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useMemo, useState } from "react"
 import { useVisualMode } from "@/components/visual-mode-context"
@@ -54,8 +54,8 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
   const statusStyle = isLight ? { color: "#7a3913" } : undefined
 
   const experienceYears = useMemo(() => getExperienceYears(), [])
-  const heroCopyEs = `Soy Tomás, líder estratégico de marca y marketing. Conecto cultura y entretenimiento con tecnología para construir marcas y mejorar operaciones creativas, con ${experienceYears} años de trayectoria.`
-  const heroCopyEn = `I'm Tomás, a strategic brand and marketing leader. I connect culture and entertainment with technology to build brands and improve creative operations, with ${experienceYears} years of experience.`
+  const heroCopyEs = `Soy Tomás, Brand Strategist y líder de marketing de marca. Trabajo en el cruce entre estrategia de marca, marketing cultural y tecnología creativa para construir, lanzar y escalar marcas, con ${experienceYears} años de trayectoria.`
+  const heroCopyEn = `I'm Tomás, a Brand Strategist and Brand Marketing Leader. I work at the intersection of brand strategy, cultural marketing and creative technology to build, launch and scale brands, with ${experienceYears} years of experience.`
 
   useEffect(() => {
     if (typeof window === "undefined") return
