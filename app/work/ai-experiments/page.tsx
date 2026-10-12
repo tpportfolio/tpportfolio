@@ -1,7 +1,17 @@
 "use client"
 
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react"
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type FocusEvent as ReactFocusEvent,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react"
 import Image, { type StaticImageData } from "next/image"
+import Link from "next/link"
 import {
   ChevronLeft,
   ChevronRight,
@@ -25,8 +35,8 @@ import { RetroPanel } from "@/components/retro-panel"
 import thumbMCBK1 from "./thumb_MCBK_1.png"
 import thumbAND1 from "./thumb_AND_1.png"
 import thumbUGCMODEL1 from "./thumb_UGCMODEL_1.png"
-import the8bureauPopupThumb from "./thumb_the8bureau_1.png"
-import the8bureauThumb from "./thumb_the8bureau_2.png"
+import the8bureauPopupThumb from "./thumb_the8bureau_v2_popup.png"
+import the8bureauThumb from "./thumb_the8bureau_v2_card.png"
 import andRefe1 from "./and_refe1.png"
 import andRefe2 from "./and_refe2.png"
 import andRefe3 from "./and_refe3.png"
@@ -95,12 +105,25 @@ type Work2026Item = {
   videoId?: string
   galleryImages?: GalleryImage[]
   thumbnail?: StaticImageData
+  /** Shows the "Próximamente / Coming soon" lock over the preview. */
+  locked: boolean
+  /** Whether the item can open its popup (and any link inside it). */
+  opensPopup: boolean
 }
 
 type The8BureauFeature = {
   title: string
   description: Record<SupportedLanguage, string>
+  deprecated?: boolean
 }
+
+type The8BureauV2Tool = {
+  title: Record<SupportedLanguage, string>
+  description: Record<SupportedLanguage, string>
+}
+
+const REEL_VIDEO_ID = "5T6cRU6AdNs"
+const REEL_URL = "https://youtu.be/5T6cRU6AdNs"
 
 const modaGallery: GalleryImage[] = Array.from({ length: 16 }, (_, index) => {
   const hue = 18 + index * 7
@@ -130,18 +153,6 @@ const modaGallery: GalleryImage[] = Array.from({ length: 16 }, (_, index) => {
 function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
   return [
     {
-      id: "ad-30-40",
-      kind: "youtube-link",
-      mediaTag: "video",
-      title: { es: "Ad 30-40", en: "Ad 30-40" },
-      description: {
-        es: "Placeholder de video. El popup deja el CTA para abrir YouTube hasta definir el link final.",
-        en: "Video placeholder. The popup keeps a YouTube CTA until the final URL is defined.",
-      },
-      youtubeUrl: "https://www.youtube.com/results?search_query=Ad+30-40",
-      thumbnail: thumbMCBK1,
-    },
-    {
       id: "demo-producto",
       kind: "embed",
       mediaTag: "video",
@@ -153,6 +164,8 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       videoId: "zW8DP4fr7xA",
       youtubeUrl:
         "https://www.youtube.com/watch?v=zW8DP4fr7xA&list=PLTai-gQI1os01OvFV9Xid5OXWWgoM9FCP&index=2",
+      locked: false,
+      opensPopup: true,
     },
     {
       id: "campana-moda",
@@ -165,6 +178,8 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       },
       galleryImages: modaGallery,
       thumbnail: thumbAND1,
+      locked: false,
+      opensPopup: true,
     },
     {
       id: "ugc-content",
@@ -177,23 +192,31 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       },
       youtubeUrl: "https://www.youtube.com/results?search_query=UGC+content",
       thumbnail: thumbUGCMODEL1,
+      locked: true,
+      opensPopup: true,
+    },
+    {
+      id: "ad-30-40-messi",
+      kind: "youtube-link",
+      mediaTag: "video",
+      title: { es: "Ad 30-40 Messi", en: "Ad 30-40 Messi" },
+      description: {
+        es: "Placeholder de video bloqueado. Sin popup ni link hasta que esté listo el video final.",
+        en: "Locked video placeholder. No popup or link until the final video is ready.",
+      },
+      thumbnail: thumbMCBK1,
+      locked: true,
+      opensPopup: false,
     },
   ]
 }
 
 const the8BureauIntro: Record<SupportedLanguage, string> = {
-  es: "the8bureau es mi marca personal de IA y también es mi sistema operativo: la idea es convertirlo en un set de herramientas que pueda correr de manera local en mi computadora, de manera privada y offline. Quiero que sea una capa práctica para experimentar, orquestar y ejecutar sin depender de flujos de trabajo que solo funcionan en la nube.",
-  en: "the8bureau is my personal AI brand and also my operating system: the idea is to turn it into a set of tools that can run locally on my computer, privately and offline. I want it to become a practical layer for experimentation, orchestration and execution without depending on cloud-only workflows.",
+  es: "the8bureau es mi marca personal de IA y mi sandbox para testear herramientas, skills y workflows. Comparto un set de herramientas que corre de manera local en mi computadora, de manera privada y offline.",
+  en: "the8bureau is my personal AI brand and my sandbox for testing tools, skills and workflows. I share a set of tools that runs locally on my computer, privately and offline.",
 }
 
 const the8BureauFeatures: The8BureauFeature[] = [
-  {
-    title: "AUTONOMOUS AD AGENCY",
-    description: {
-      es: "Sistema de agentes que reciben un brief y lo trabajan con inputs humanos. Estado: en construcción.",
-      en: "Agent system that receives a brief and works it with human inputs. Status: under construction.",
-    },
-  },
   {
     title: "NEURAL OPTIMIZATION SUITE (SEO/AEO/GEO)",
     description: {
@@ -227,6 +250,45 @@ const the8BureauFeatures: The8BureauFeature[] = [
     description: {
       es: "Determiná un punto en un mapa, un radio en km, una categoría, y extraé LEADS.",
       en: "Set a point on a map, a radius in km and a category, and extract LEADS.",
+    },
+  },
+  {
+    title: "AUTONOMOUS AD AGENCY",
+    description: {
+      es: "Sistema de agentes que reciben un brief y lo trabajan con inputs humanos. Estado: Deprecated.",
+      en: "Agent system that receives a brief and works it with human inputs. Status: Deprecated.",
+    },
+    deprecated: true,
+  },
+]
+
+const the8BureauV2Tools: The8BureauV2Tool[] = [
+  {
+    title: { es: "PROMPT STUDIO", en: "PROMPT STUDIO" },
+    description: {
+      es: "Estudio de prompt engineering para generación de imagen y video.",
+      en: "Prompt engineering studio for image and video generation.",
+    },
+  },
+  {
+    title: { es: "PDF TOOLKIT", en: "PDF TOOLKIT" },
+    description: {
+      es: "Kit de herramientas para PDF que corre en local.",
+      en: "Local PDF toolkit.",
+    },
+  },
+  {
+    title: { es: "CALCULADORA DE COSTOS", en: "COST CALCULATOR" },
+    description: {
+      es: "Calculadora de costos de producción con IA.",
+      en: "AI production cost calculator.",
+    },
+  },
+  {
+    title: { es: "BRAND ANALYZER", en: "BRAND ANALYZER" },
+    description: {
+      es: "Analizador de identidad de marca y restyler.",
+      en: "Brand identity analyzer and restyler.",
     },
   },
 ]
@@ -299,7 +361,7 @@ function The8BureauScreenshotThumb({ isLight, onOpen }: { isLight: boolean; onOp
     <button
       type="button"
       onClick={onOpen}
-      aria-label={language === "es" ? "Abrir la imagen del dashboard de the8bureau" : "Open the8bureau dashboard image"}
+      aria-label={language === "es" ? "Abrir la imagen del dashboard v2 de the8bureau" : "Open the8bureau v2 dashboard image"}
       className={`block h-full w-full max-w-[300px] overflow-hidden rounded-sm border text-left shadow-[0_0_24px_rgba(0,0,0,0.22)] transition-transform hover:scale-[1.01] ${
         isLight ? "border-[#c57b45] bg-[#fff5e8]" : "border-neon-green/30 bg-[#03190f]"
       }`}
@@ -307,7 +369,11 @@ function The8BureauScreenshotThumb({ isLight, onOpen }: { isLight: boolean; onOp
       <div className={`relative h-full min-h-[220px] w-full ${isLight ? "bg-[#f7ead8]" : "bg-[#04150d]"}`}>
         <Image
           src={the8bureauThumb}
-          alt={language === "es" ? "Dashboard de the8bureau" : "the8bureau dashboard"}
+          alt={
+            language === "es"
+              ? "Dashboard v2 de the8bureau con las herramientas locales, entre ellas Prompt Studio, PDF Toolkit, Calculadora de costos y Brand Analyzer"
+              : "the8bureau v2 dashboard with the local tools, including Prompt Studio, PDF Toolkit, Cost Calculator and Brand Analyzer"
+          }
           fill
           sizes="(max-width: 1280px) 300px, 300px"
           className="object-contain object-top"
@@ -321,7 +387,7 @@ function The8BureauScreenshotThumb({ isLight, onOpen }: { isLight: boolean; onOp
 function The8BureauImageModal({ isLight, onClose }: { isLight: boolean; onClose: () => void }) {
   const { language } = useLanguage()
   const closePreviewLabel = language === "es" ? "Cerrar vista previa de la imagen" : "Close image preview"
-  const dashboardLabel = language === "es" ? "Dashboard de the8bureau" : "the8bureau dashboard"
+  const dashboardLabel = language === "es" ? "Dashboard v2 de the8bureau" : "the8bureau v2 dashboard"
   return (
     <div
       className="fixed inset-3 z-[90] md:bottom-6 md:right-6 md:top-6 md:left-[13.5rem] lg:left-[14rem]"
@@ -618,28 +684,32 @@ function Work2026Modal({
               <div className="mx-auto w-[90%] overflow-hidden rounded-sm border border-neon-green/30">
                 <YouTubeEmbed videoId={item.videoId ?? ""} aspectClassName="aspect-[16/9.45]" />
               </div>
-              <a
-                href={item.youtubeUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-neon-magenta underline hover:text-neon-cyan"
-              >
-                {language === "es" ? "Abrir en YouTube" : "Open on YouTube"}
-                <ExternalLink className="h-4 w-4" />
-              </a>
+              {item.youtubeUrl ? (
+                <a
+                  href={item.youtubeUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-neon-magenta underline hover:text-neon-cyan"
+                >
+                  {language === "es" ? "Abrir en YouTube" : "Open on YouTube"}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              ) : null}
             </div>
           ) : (
             <div className="space-y-4">
               <PreviewStage item={item} isLight={isLight} />
-              <a
-                href={item.youtubeUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-neon-magenta underline hover:text-neon-cyan"
-              >
-                {language === "es" ? "Abrir en YouTube" : "Open on YouTube"}
-                <ExternalLink className="h-4 w-4" />
-              </a>
+              {item.youtubeUrl ? (
+                <a
+                  href={item.youtubeUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-neon-magenta underline hover:text-neon-cyan"
+                >
+                  {language === "es" ? "Abrir en YouTube" : "Open on YouTube"}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              ) : null}
             </div>
           )}
         </div>
@@ -896,6 +966,203 @@ function StageBackdrop({ isLight, isPlaying }: { isLight: boolean; isPlaying: bo
   )
 }
 
+/* ── Music Lab cover flow ───────────────────────────────────────────────
+   The whole row is driven by ONE floating-point position (3.42 = 42% of the
+   way from cover 3 to cover 4). Every cover's pose is a pure function of
+   `index - position`. A requestAnimationFrame loop writes transforms and
+   opacities straight to the DOM; React state only changes when the selected
+   track changes. Everything the loop reads lives in refs. */
+
+type FlowMetrics = {
+  /** Edge of the centre cover, in px. */
+  size: number
+  /** Distance from the centre cover to its first neighbour, in px. Also the px of drag per cover. */
+  gap: number
+  /** Distance between covers inside the side stacks, in px. */
+  step: number
+  /** How far back the side stacks sit, in px. */
+  depth: number
+  /** Extra recession per cover of distance, in px. */
+  far: number
+  perspective: number
+  halfWidth: number
+  labelWidth: number
+}
+
+type FlowDrag = {
+  id: number
+  startX: number
+  startY: number
+  /** Position at the start of the drag, before rubber-banding. */
+  startRaw: number
+  moved: boolean
+  /** The pointer went down while the row was still in flight. */
+  caught: boolean
+  /** A finger or pen that caught the row also stops it dead until it lifts. */
+  frozen: boolean
+  samples: { t: number; x: number }[]
+}
+
+type FlowMotion = {
+  pos: number
+  prevPos: number
+  /** Covers per second. */
+  vel: number
+  target: number
+  /** Angular frequency of the critically damped spring pulling pos to target. */
+  omega: number
+  /** Smoothed |velocity|, used to hide the labels while the row flies past. */
+  speed: number
+  flip: number[]
+  flipVel: number[]
+  /** Mirror of the selected track index, readable from the rAF loop. */
+  selected: number
+  /** The selection must be committed once the row arrives at its target. */
+  pending: boolean
+  drag: FlowDrag | null
+  /** Index a wheel / trackpad gesture started from; null when there is none. */
+  wheelStart: number | null
+  wheelPx: number
+  keyHeld: boolean
+  edgeNudged: boolean
+  lastKeyStep: number
+  running: boolean
+  dirty: boolean
+  raf: number
+  last: number
+  inView: boolean
+  reduced: boolean
+}
+
+const FLOW_ANGLE = 56
+/** rad/s. Critically damped: one step is visually settled in about 0.55s. */
+const FLOW_SPRING = 12.5
+const FLOW_WHEEL_SPRING = 28
+const FLOW_FLIP_SPRING = 13
+/** 1/s. Release velocity divided by this is how many covers a flick travels. */
+const FLOW_FLICK_DECAY = 5.5
+const FLOW_MAX_VELOCITY = 24
+const FLOW_RUBBER = 0.55
+const FLOW_RUBBER_LIMIT = 0.9
+
+function getFlowMetrics(stageWidth: number): FlowMetrics {
+  const size = stageWidth < 420 ? 132 : stageWidth < 560 ? 148 : stageWidth < 820 ? 176 : 210
+  // The title card may be wider than the cover; an even difference keeps it on whole pixels.
+  const spare = Math.max(0, Math.min(size * 0.3, stageWidth - 32 - size))
+  return {
+    size,
+    gap: size * 0.8,
+    step: size * 0.3,
+    depth: size * 0.55,
+    far: size * 0.1,
+    perspective: Math.round(size * 4.6),
+    halfWidth: stageWidth / 2,
+    labelWidth: size + 2 * Math.floor(spare / 2),
+  }
+}
+
+function createFlowMotion(count: number): FlowMotion {
+  return {
+    pos: 0,
+    prevPos: 0,
+    vel: 0,
+    target: 0,
+    omega: FLOW_SPRING,
+    speed: 0,
+    flip: Array.from({ length: count }, (_, index) => (index === 0 ? 180 : 0)),
+    flipVel: Array.from({ length: count }, () => 0),
+    selected: 0,
+    pending: false,
+    drag: null,
+    wheelStart: null,
+    wheelPx: 0,
+    keyHeld: false,
+    edgeNudged: false,
+    lastKeyStep: 0,
+    running: false,
+    dirty: false,
+    raf: 0,
+    last: 0,
+    inView: true,
+    reduced: false,
+  }
+}
+
+/** Linear near zero, saturating smoothly at ±1 (no kink anywhere). */
+function flowSoftClamp(value: number) {
+  return value / Math.pow(1 + value * value * value * value, 0.25)
+}
+
+function flowSmooth(from: number, to: number, value: number) {
+  const t = Math.min(1, Math.max(0, (value - from) / (to - from)))
+  return t * t * (3 - 2 * t)
+}
+
+/** Pose of a cover that sits `offset` covers away from the centre (negative = left). */
+function computeFlowPose(offset: number, metrics: FlowMetrics, speed: number) {
+  const distance = Math.abs(offset)
+  const slide = flowSoftClamp(offset)
+  const turn = flowSoftClamp(offset * 1.5)
+  const turned = turn * turn
+  const beyond = distance - Math.abs(slide)
+  const x = metrics.step * offset + (metrics.gap - metrics.step) * slide
+  const z = -(metrics.depth * turned + metrics.far * beyond)
+  const screenX = (Math.abs(x) * metrics.perspective) / (metrics.perspective - z)
+  const fadeEnd = metrics.halfWidth + metrics.size * 0.15
+  return {
+    transform: `translate3d(${x.toFixed(2)}px,0,${z.toFixed(2)}px) rotateY(${(-FLOW_ANGLE * turn).toFixed(2)}deg) scale(${(1 - 0.08 * turned).toFixed(4)})`,
+    /** Covers fade out as they reach the edge of the stage. */
+    opacity: 1 - flowSmooth(fadeEnd - metrics.size * 0.6, fadeEnd, screenX),
+    /** Fallback order for engines that do not depth-sort; it only flips where two covers do not overlap. */
+    zIndex: 40 - Math.min(30, Math.round(distance)),
+    shade: Math.min(0.78, 0.3 * turned + 0.07 * beyond),
+    glow: 1 - flowSmooth(0.05, 0.7, distance),
+    /** Title card and play button: only the centre cover shows them, and never mid-flick. */
+    chrome: (1 - flowSmooth(0.08, 0.55, distance)) * (1 - flowSmooth(3, 6.5, speed)),
+  }
+}
+
+/** iOS-style resistance past the first and last cover. */
+function flowRubberBand(raw: number, max: number) {
+  const band = (over: number) =>
+    (over * FLOW_RUBBER * FLOW_RUBBER_LIMIT) / (FLOW_RUBBER_LIMIT + FLOW_RUBBER * over)
+  if (raw < 0) return -band(-raw)
+  if (raw > max) return max + band(raw - max)
+  return raw
+}
+
+/** Inverse of flowRubberBand, so a drag can start from an overshot position without a jump. */
+function flowRubberRelease(pos: number, max: number) {
+  const unband = (banded: number) => {
+    const b = Math.min(banded, FLOW_RUBBER_LIMIT * 0.95)
+    return (b * FLOW_RUBBER_LIMIT) / (FLOW_RUBBER * (FLOW_RUBBER_LIMIT - b))
+  }
+  if (pos < 0) return -unband(-pos)
+  if (pos > max) return max + unband(pos - max)
+  return pos
+}
+
+/** Softer spring for long glides so a nine-cover jump does not whip past. */
+function flowSpringFor(distance: number) {
+  return FLOW_SPRING / (1 + 0.15 * Math.max(0, distance - 1))
+}
+
+/** Pointer velocity in px/ms over the last ~90ms before release; 0 if the pointer had stopped. */
+function flowReleaseVelocity(samples: { t: number; x: number }[], releasedAt: number) {
+  const count = samples.length
+  if (count < 2) return 0
+  const last = samples[count - 1]
+  if (releasedAt - last.t > 70) return 0
+  let first = last
+  for (let i = count - 2; i >= 0; i--) {
+    if (last.t - samples[i].t > 90) break
+    first = samples[i]
+  }
+  const elapsed = last.t - first.t
+  if (elapsed < 8) return 0
+  return (last.x - first.x) / elapsed
+}
+
 function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; isLight: boolean }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -904,12 +1171,34 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
   const [volume, setVolume] = useState(0.85)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [coversReady, setCoversReady] = useState<Record<string, boolean>>({})
+  const [coversArmed, setCoversArmed] = useState(false)
   const [buffering, setBuffering] = useState(false)
   const stageRef = useRef<HTMLDivElement | null>(null)
-  const [stageWidth, setStageWidth] = useState(960)
+  const viewportRef = useRef<HTMLDivElement | null>(null)
+  /** 0 until the stage has been measured. */
+  const [stageWidth, setStageWidth] = useState(0)
   const currentTrack = IA_AUDIO_TRACKS[currentIndex]
   const accent = isLight ? "#f59e0b" : "#39ff14"
   const total = IA_AUDIO_TRACKS.length
+  const lastIndex = total - 1
+
+  const metrics = getFlowMetrics(stageWidth || 960)
+  const metricsRef = useRef(metrics)
+  metricsRef.current = metrics
+
+  const motionRef = useRef<FlowMotion | null>(null)
+  if (motionRef.current === null) motionRef.current = createFlowMotion(total)
+  const motion = motionRef.current
+
+  const itemEls = useRef<(HTMLDivElement | null)[]>([])
+  const flipEls = useRef<(HTMLDivElement | null)[]>([])
+  const shadeEls = useRef<(HTMLDivElement | null)[]>([])
+  const glowEls = useRef<(HTMLDivElement | null)[]>([])
+  const playEls = useRef<(HTMLButtonElement | null)[]>([])
+  const labelEls = useRef<(HTMLDivElement | null)[]>([])
+  const suppressClickUntil = useRef(0)
+  const lastPickAt = useRef(0)
+  const wheelTimer = useRef(0)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -921,184 +1210,17 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
     const audio = audioRef.current
     if (!audio) return
     if (isPlaying) {
-      void audio.play().catch(() => setIsPlaying(false))
+      void audio.play().catch((error: unknown) => {
+        // Interrupted by a newer track or by pause(): this effect already ran again for that.
+        if (error instanceof DOMException && error.name === "AbortError") return
+        setIsPlaying(false)
+      })
     } else {
       audio.pause()
     }
   }, [isPlaying, currentIndex])
 
-  const selectTrack = (index: number) => {
-    if (index === currentIndex) {
-      setIsPlaying((playing) => !playing)
-    } else {
-      setCurrentIndex(index)
-      setProgress(0)
-      setIsPlaying(true)
-      playClack()
-    }
-  }
-
-  const stepTrack = (direction: 1 | -1) => {
-    setCurrentIndex((current) => (current + direction + total) % total)
-    setProgress(0)
-    playClack()
-  }
-
   const togglePlay = () => setIsPlaying((playing) => !playing)
-
-  const posRef = useRef(0)
-  const velRef = useRef(0)
-  const tiltRef = useRef(0)
-  const tiltVelRef = useRef(0)
-  const tiltTargetRef = useRef(0)
-  const targetRef = useRef(0)
-  const rafRef = useRef(0)
-  const loopOnRef = useRef(false)
-  const dragRef = useRef<{
-    startX: number
-    startPos: number
-    id: number
-    moved: boolean
-    lastX: number
-    lastT: number
-    vel: number
-  } | null>(null)
-
-  const applyLayout = (pos: number) => {
-    const stage = stageRef.current
-    if (!stage) return
-    const items = stage.querySelectorAll(".flow-item")
-    items.forEach((el, i) => {
-      const item = el as HTMLDivElement
-      const s = computeFlowStyle(i, pos)
-      item.style.transform = s.transform
-      item.style.opacity = String(s.opacity)
-      item.style.filter = s.filter
-      item.style.zIndex = String(s.zIndex)
-    })
-    const track = stage.querySelector(".coverflow-track") as HTMLDivElement | null
-    if (track) track.style.transform = `rotateY(${tiltRef.current}deg)`
-  }
-
-  const runLoop = () => {
-    if (loopOnRef.current) return
-    loopOnRef.current = true
-    let last = performance.now()
-    const stepFn = (now: number) => {
-      if (!loopOnRef.current) return
-      const dt = Math.min(1 / 30, (now - last) / 1000)
-      last = now
-      const target = targetRef.current
-      const acc = (target - posRef.current) * 210 - velRef.current * 25
-      velRef.current += acc * dt
-      posRef.current += velRef.current * dt
-      posRef.current = Math.max(-0.6, Math.min(total - 0.4, posRef.current))
-      const tacc = (tiltTargetRef.current - tiltRef.current) * 60 - tiltVelRef.current * 12
-      tiltVelRef.current += tacc * dt
-      tiltRef.current += tiltVelRef.current * dt
-      const settled =
-        Math.abs(target - posRef.current) < 0.001 &&
-        Math.abs(velRef.current) < 0.02 &&
-        Math.abs(tiltTargetRef.current - tiltRef.current) < 0.01 &&
-        Math.abs(tiltVelRef.current) < 0.05
-      if (settled) {
-        posRef.current = target
-        velRef.current = 0
-        tiltRef.current = tiltTargetRef.current
-        tiltVelRef.current = 0
-        applyLayout(target)
-        loopOnRef.current = false
-        return
-      }
-      applyLayout(posRef.current)
-      rafRef.current = requestAnimationFrame(stepFn)
-    }
-    rafRef.current = requestAnimationFrame(stepFn)
-  }
-
-  useEffect(() => {
-    targetRef.current = currentIndex
-    runLoop()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex])
-
-  useEffect(
-    () => () => {
-      loopOnRef.current = false
-      cancelAnimationFrame(rafRef.current)
-    },
-    []
-  )
-
-  const onStagePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-    const t = e.target as HTMLElement
-    if (t.closest("input")) return
-    dragRef.current = {
-      startX: e.clientX,
-      startPos: posRef.current,
-      id: e.pointerId,
-      moved: false,
-      lastX: e.clientX,
-      lastT: performance.now(),
-      vel: 0,
-    }
-  }
-
-  const onStagePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
-    const dr = dragRef.current
-    if (!dr || e.pointerId !== dr.id) {
-      const rect = e.currentTarget.getBoundingClientRect()
-      tiltTargetRef.current = ((e.clientX - rect.left) / rect.width - 0.5) * 5
-      runLoop()
-      return
-    }
-    const dx = e.clientX - dr.startX
-    if (!dr.moved && Math.abs(dx) > 8) {
-      dr.moved = true
-      try {
-        e.currentTarget.setPointerCapture(e.pointerId)
-      } catch {
-        /* noop */
-      }
-    }
-    if (dr.moved) {
-      const now = performance.now()
-      const dt = Math.max(1, now - dr.lastT)
-      dr.vel = 0.8 * dr.vel + 0.2 * (((e.clientX - dr.lastX) / dt) * (1000 / slotStep))
-      dr.lastX = e.clientX
-      dr.lastT = now
-      const next = Math.max(-0.6, Math.min(total - 0.4, dr.startPos - dx / slotStep))
-      posRef.current = next
-      velRef.current = 0
-      targetRef.current = next
-      tiltTargetRef.current = 0
-      applyLayout(next)
-    }
-  }
-
-  const endStageDrag = (e: ReactPointerEvent<HTMLDivElement>) => {
-    const dr = dragRef.current
-    if (!dr || e.pointerId !== dr.id) return
-    dragRef.current = null
-    if (!dr.moved) return
-    const predicted = posRef.current + dr.vel * 0.18
-    const snap = Math.max(0, Math.min(total - 1, Math.round(predicted)))
-    velRef.current = dr.vel * 0.6
-    if (snap !== currentIndex) {
-      setProgress(0)
-      setCurrentIndex(snap)
-      playClack()
-    } else {
-      targetRef.current = snap
-      runLoop()
-    }
-  }
-
-  const onStagePointerLeave = () => {
-    if (dragRef.current) return
-    tiltTargetRef.current = 0
-    runLoop()
-  }
 
   const mechCtx = useRef<AudioContext | null>(null)
   const volumeRef = useRef(volume)
@@ -1170,61 +1292,502 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
     }
   }
 
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") stepTrack(1)
-      else if (event.key === "ArrowLeft") stepTrack(-1)
-      else if (event.key === " ") {
-        const target = event.target as HTMLElement | null
-        if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return
-        event.preventDefault()
-        togglePlay()
+  /* ── Motion engine. These functions are also called from the rAF loop, from
+     timers and from listeners attached once, so they must only touch refs,
+     state setters and each other: never props or state directly. ── */
+
+  const clampIndex = (value: number) => Math.min(lastIndex, Math.max(0, value))
+
+  /** The pointer owns the position (dragging, or a finger holding a row it caught mid-glide). */
+  const holding = () => motion.drag !== null && (motion.drag.moved || motion.drag.frozen)
+
+  /** The vinyl only shows on the selected cover, and only while it sits in the centre. */
+  const flipTargetFor = (index: number) =>
+    index === motion.selected ? 180 * (1 - flowSmooth(0.2, 0.6, Math.abs(index - motion.pos))) : 0
+
+  const applyLayout = () => {
+    const m = metricsRef.current
+    for (let i = 0; i < total; i++) {
+      const item = itemEls.current[i]
+      if (!item) continue
+      const pose = computeFlowPose(i - motion.pos, m, motion.speed)
+      item.style.transform = pose.transform
+      item.style.opacity = pose.opacity.toFixed(3)
+      item.style.zIndex = String(pose.zIndex)
+      const flipper = flipEls.current[i]
+      if (flipper) flipper.style.transform = `rotateY(${motion.flip[i].toFixed(2)}deg)`
+      const shade = shadeEls.current[i]
+      if (shade) shade.style.opacity = pose.shade.toFixed(3)
+      const glow = glowEls.current[i]
+      if (glow) glow.style.opacity = pose.glow.toFixed(3)
+      const chrome = pose.chrome.toFixed(3)
+      const play = playEls.current[i]
+      if (play) play.style.opacity = chrome
+      const label = labelEls.current[i]
+      if (label) label.style.opacity = chrome
+    }
+  }
+
+  const commitSelection = (index: number) => {
+    if (index === motion.selected) return
+    motion.selected = index
+    setCurrentIndex(index)
+    setProgress(0)
+    playClack()
+  }
+
+  const cancelWheel = () => {
+    window.clearTimeout(wheelTimer.current)
+    motion.wheelStart = null
+    motion.wheelPx = 0
+  }
+
+  /** Jump to the target with no animation: reduced motion, off-screen or background tab. */
+  const finishNow = (fade: boolean) => {
+    cancelAnimationFrame(motion.raf)
+    motion.running = false
+    motion.dirty = false
+    if (!holding()) motion.pos = motion.target
+    motion.prevPos = motion.pos
+    motion.vel = 0
+    motion.speed = 0
+    if (motion.pending && !holding() && !motion.keyHeld && motion.wheelStart === null) {
+      motion.pending = false
+      commitSelection(clampIndex(Math.round(motion.target)))
+    }
+    for (let i = 0; i < total; i++) {
+      motion.flip[i] = flipTargetFor(i)
+      motion.flipVel[i] = 0
+    }
+    applyLayout()
+    if (fade) {
+      viewportRef.current?.animate?.([{ opacity: 0.35 }, { opacity: 1 }], { duration: 180, easing: "ease-out" })
+    }
+  }
+
+  const tick = (now: number) => {
+    if (motion.reduced || !motion.inView) {
+      finishNow(false)
+      return
+    }
+    const dt = Math.min(0.05, Math.max(0.001, (now - motion.last) / 1000))
+    motion.last = now
+    let active = motion.dirty
+    motion.dirty = false
+
+    if (!holding()) {
+      const x = motion.pos - motion.target
+      if (Math.abs(x) < 0.0004 && Math.abs(motion.vel) < 0.004) {
+        motion.pos = motion.target
+        motion.vel = 0
+      } else {
+        // Exact step of a critically damped spring: stable for any dt.
+        const decay = Math.exp(-motion.omega * dt)
+        const temp = (motion.vel + motion.omega * x) * dt
+        motion.pos = Math.min(lastIndex + 1.5, Math.max(-1.5, motion.target + (x + temp) * decay))
+        motion.vel = (motion.vel - motion.omega * temp) * decay
+        active = true
       }
     }
-    window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [total])
+
+    const instant = Math.abs(motion.pos - motion.prevPos) / dt
+    motion.prevPos = motion.pos
+    motion.speed += (instant - motion.speed) * (1 - Math.exp(-dt / 0.09))
+    if (motion.speed > 2.9) active = true
+
+    const flipDecay = Math.exp(-FLOW_FLIP_SPRING * dt)
+    for (let i = 0; i < total; i++) {
+      const goal = flipTargetFor(i)
+      const fx = motion.flip[i] - goal
+      const fv = motion.flipVel[i]
+      if (Math.abs(fx) < 0.15 && Math.abs(fv) < 1.5) {
+        motion.flip[i] = goal
+        motion.flipVel[i] = 0
+      } else {
+        const temp = (fv + FLOW_FLIP_SPRING * fx) * dt
+        motion.flip[i] = goal + (fx + temp) * flipDecay
+        motion.flipVel[i] = (fv - FLOW_FLIP_SPRING * temp) * flipDecay
+        active = true
+      }
+    }
+
+    // The selection changes once, when the row is arriving at its final cover.
+    if (
+      motion.pending &&
+      !holding() &&
+      !motion.keyHeld &&
+      motion.wheelStart === null &&
+      Math.abs(motion.pos - motion.target) < 0.5
+    ) {
+      motion.pending = false
+      commitSelection(clampIndex(Math.round(motion.target)))
+      active = true
+    }
+
+    applyLayout()
+    if (active) {
+      motion.raf = requestAnimationFrame(tick)
+    } else {
+      motion.running = false
+      motion.speed = 0
+    }
+  }
+
+  const kick = () => {
+    if (motion.running) return
+    motion.running = true
+    motion.last = performance.now()
+    motion.raf = requestAnimationFrame(tick)
+  }
+
+  /** Glide to a cover from wherever the row is, keeping its current velocity. */
+  const glideTo = (index: number, pending: boolean) => {
+    if (motion.wheelStart !== null) cancelWheel()
+    const travels = Math.abs(index - motion.pos) > 0.001
+    motion.target = index
+    motion.pending = pending
+    motion.omega = flowSpringFor(Math.abs(index - motion.pos))
+    if (motion.reduced || !motion.inView || document.hidden) {
+      finishNow(travels && motion.reduced && motion.inView && !document.hidden)
+    } else {
+      kick()
+    }
+  }
+
+  const selectTrack = (index: number) => {
+    if (index === motion.selected) {
+      setIsPlaying((playing) => !playing)
+    } else {
+      // The second click of a double-click lands on whichever cover slid under the pointer: ignore it.
+      const now = performance.now()
+      if (now - lastPickAt.current < 400) return
+      lastPickAt.current = now
+      commitSelection(index)
+      setIsPlaying(true)
+    }
+    glideTo(index, false)
+  }
+
+  const stepTrack = (direction: 1 | -1) => {
+    const base = clampIndex(Math.round(holding() ? motion.pos : motion.target))
+    const next = (base + direction + total) % total
+    commitSelection(next)
+    glideTo(next, false)
+  }
+
+  const advanceAfterEnd = () => {
+    const next = (motion.selected + 1) % total
+    commitSelection(next)
+    glideTo(next, false)
+  }
+
+  const wheelBy = (px: number) => {
+    if (motion.wheelStart === null) {
+      motion.wheelStart = clampIndex(Math.round(motion.target))
+      motion.wheelPx = 0
+      if (!motion.reduced) motion.target = motion.pos
+    }
+    motion.wheelPx += px
+    if (!motion.reduced) {
+      motion.target = Math.min(
+        lastIndex + 0.35,
+        Math.max(-0.35, motion.target + px / metricsRef.current.gap)
+      )
+      motion.omega = FLOW_WHEEL_SPRING
+      motion.pending = false
+      kick()
+    }
+    window.clearTimeout(wheelTimer.current)
+    wheelTimer.current = window.setTimeout(() => flowApi.current.settleWheel(), 110)
+  }
+
+  const settleWheel = () => {
+    const start = motion.wheelStart
+    if (start === null) return
+    let next = start
+    if (motion.reduced) {
+      if (Math.abs(motion.wheelPx) > 24) next = start + (motion.wheelPx > 0 ? 1 : -1)
+    } else {
+      next = Math.round(motion.target)
+      const travelled = motion.target - start
+      // A short but deliberate swipe still moves one cover.
+      if (next === start && Math.abs(travelled) > 0.18) next = start + (travelled > 0 ? 1 : -1)
+    }
+    cancelWheel()
+    glideTo(clampIndex(next), true)
+  }
+
+  const flowApi = useRef({ finishNow, wheelBy, settleWheel })
+  flowApi.current = { finishNow, wheelBy, settleWheel }
+
+  const releaseKeyHold = () => {
+    if (!motion.keyHeld) return
+    motion.keyHeld = false
+    motion.edgeNudged = false
+    if (motion.pending) kick()
+  }
+
+  const onStageKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.altKey || event.ctrlKey || event.metaKey) return
+    const el = event.target as HTMLElement
+    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") return
+    const key = event.key
+    if (key === "ArrowRight" || key === "ArrowLeft") {
+      event.preventDefault()
+      if (motion.drag) return
+      const direction = key === "ArrowRight" ? 1 : -1
+      // A cover's own button is about to move away: keep focus on the stage.
+      if (el.closest("[data-flow-item]")) event.currentTarget.focus({ preventScroll: true })
+      ensureMechCtx()
+      if (!event.repeat) {
+        motion.keyHeld = false
+        motion.edgeNudged = false
+        stepTrack(direction)
+        return
+      }
+      // Key held down: keep gliding, one cover ahead of the row, and select on release.
+      motion.keyHeld = true
+      if (motion.reduced) {
+        if (event.timeStamp - motion.lastKeyStep < 220) return
+        motion.lastKeyStep = event.timeStamp
+      } else if (Math.abs(motion.target - motion.pos) > 0.5) {
+        return
+      }
+      const next = clampIndex(Math.round(motion.target)) + direction
+      if (next < 0 || next > lastIndex) {
+        if (!motion.reduced && !motion.edgeNudged && Math.abs(motion.vel) < 0.5) {
+          motion.edgeNudged = true
+          motion.vel += direction * 2.6
+          kick()
+        }
+        return
+      }
+      glideTo(next, true)
+    } else if (key === "Home" || key === "End") {
+      event.preventDefault()
+      if (motion.drag) return
+      const next = key === "Home" ? 0 : lastIndex
+      ensureMechCtx()
+      commitSelection(next)
+      glideTo(next, false)
+    } else if ((key === " " || key === "Enter") && event.target === event.currentTarget) {
+      event.preventDefault()
+      if (!event.repeat) togglePlay()
+    }
+  }
+
+  const onStageKeyUp = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "ArrowRight" || event.key === "ArrowLeft") releaseKeyHold()
+  }
+
+  const onStageBlur = (event: ReactFocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) releaseKeyHold()
+  }
+
+  const onStagePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return
+    if ((event.target as HTMLElement).closest("[data-flow-control]")) return
+    // A second finger is ignored; the same pointer going down again means the last press was never closed.
+    if (motion.drag && motion.drag.id !== event.pointerId) return
+    event.currentTarget.focus({ preventScroll: true })
+    suppressClickUntil.current = 0
+    if (motion.wheelStart !== null) settleWheel()
+    // A press on a row that is still in flight is not a click on whatever cover is passing under it.
+    const caught =
+      !motion.reduced && (Math.abs(motion.vel) > 1.2 || Math.abs(motion.target - motion.pos) > 0.2)
+    // A finger also stops the row dead, like a scroll view; the mouse lets it run until it really drags.
+    const frozen = caught && event.pointerType !== "mouse"
+    if (frozen) {
+      motion.vel = 0
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId)
+      } catch {
+        /* noop */
+      }
+    }
+    motion.drag = {
+      id: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startRaw: flowRubberRelease(motion.pos, lastIndex),
+      moved: false,
+      caught,
+      frozen,
+      samples: [{ t: event.timeStamp, x: event.clientX }],
+    }
+  }
+
+  const onStagePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const dr = motion.drag
+    if (!dr || event.pointerId !== dr.id) return
+    if (event.pointerType === "mouse" && event.buttons === 0) {
+      // The button was released somewhere this element could not see.
+      finishStageDrag(event, true)
+      return
+    }
+    dr.samples.push({ t: event.timeStamp, x: event.clientX })
+    while (dr.samples.length > 2 && event.timeStamp - dr.samples[0].t > 200) dr.samples.shift()
+    if (!dr.moved) {
+      const dx = event.clientX - dr.startX
+      const dy = event.clientY - dr.startY
+      if (Math.abs(dx) < (event.pointerType === "mouse" ? 5 : 9)) return
+      if (event.pointerType !== "mouse" && Math.abs(dx) <= Math.abs(dy)) return
+      dr.moved = true
+      // Re-anchor here so the row does not jump by the distance it took to recognise the drag.
+      dr.startX = event.clientX
+      dr.startRaw = flowRubberRelease(motion.pos, lastIndex)
+      motion.vel = 0
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId)
+      } catch {
+        /* noop */
+      }
+    }
+    if (motion.reduced) return
+    // 1:1 with the pointer: no spring, no smoothing.
+    motion.pos = flowRubberBand(
+      dr.startRaw - (event.clientX - dr.startX) / metricsRef.current.gap,
+      lastIndex
+    )
+    motion.dirty = true
+    kick()
+  }
+
+  const finishStageDrag = (event: ReactPointerEvent<HTMLDivElement>, cancelled: boolean) => {
+    const dr = motion.drag
+    if (!dr || event.pointerId !== dr.id) return
+    motion.drag = null
+    try {
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId)
+      }
+    } catch {
+      /* noop */
+    }
+    if (!dr.moved && !dr.caught) return
+    // This gesture moved the row: the click that follows must not select anything.
+    suppressClickUntil.current = performance.now() + 400
+    ensureMechCtx()
+    if (motion.reduced) {
+      const dx = event.clientX - dr.startX
+      if (dr.moved && !cancelled && Math.abs(dx) > 24) {
+        glideTo(clampIndex(Math.round(motion.target) + (dx < 0 ? 1 : -1)), true)
+      }
+      return
+    }
+    if (!dr.moved) {
+      // Tap on a row in flight: a flick brakes onto the next cover; a glide to a cover that is
+      // already selected carries on to it.
+      if (motion.pending) glideTo(clampIndex(Math.round(motion.pos + motion.vel / FLOW_SPRING)), true)
+      else if (dr.frozen) glideTo(motion.target, false)
+      return
+    }
+    let velocity = 0
+    if (!cancelled && motion.pos >= 0 && motion.pos <= lastIndex) {
+      velocity = (-flowReleaseVelocity(dr.samples, event.timeStamp) * 1000) / metricsRef.current.gap
+      velocity = Math.min(FLOW_MAX_VELOCITY, Math.max(-FLOW_MAX_VELOCITY, velocity))
+    }
+    motion.vel = velocity
+    // Project the release velocity: a flick travels several covers, a slow drag settles on the nearest.
+    glideTo(clampIndex(Math.round(motion.pos + velocity / FLOW_FLICK_DECAY)), true)
+  }
+
+  const onStagePointerLeave = (event: ReactPointerEvent<HTMLDivElement>) => {
+    // A press that leaves the stage before it became a drag is not captured: its release never arrives here.
+    const dr = motion.drag
+    if (dr && dr.id === event.pointerId && !dr.moved && !dr.frozen) motion.drag = null
+  }
+
+  const onStageMouseDown = (event: ReactMouseEvent<HTMLDivElement>) => {
+    // Keeps focus on the stage and stops native image dragging / text selection.
+    if (!(event.target as HTMLElement).closest("[data-flow-control]")) event.preventDefault()
+  }
+
+  const onStageClickCapture = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (performance.now() < suppressClickUntil.current) {
+      suppressClickUntil.current = 0
+      event.preventDefault()
+      event.stopPropagation()
+    }
+  }
 
   useEffect(() => {
     const stage = stageRef.current
     if (!stage) return
-    const update = () => setStageWidth(stage.clientWidth)
+
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const syncMotionPreference = () => {
+      motion.reduced = media.matches
+      if (media.matches) flowApi.current.finishNow(false)
+    }
+    syncMotionPreference()
+    media.addEventListener("change", syncMotionPreference)
+
+    let observer: IntersectionObserver | null = null
+    if (typeof IntersectionObserver === "undefined") {
+      setCoversArmed(true)
+    } else {
+      observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[entries.length - 1]
+          if (!entry) return
+          // Off-screen the loop stops itself on its next frame and lands on the target.
+          motion.inView = entry.isIntersecting
+          if (entry.isIntersecting) setCoversArmed(true)
+        },
+        { rootMargin: "240px 0px" }
+      )
+      observer.observe(stage)
+    }
+
+    // Native listener: React's wheel listener is passive, and horizontal gestures must not navigate back.
+    const onWheel = (event: WheelEvent) => {
+      if (event.ctrlKey || motion.drag) return
+      const unit =
+        event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? metricsRef.current.halfWidth * 2 : 1
+      const dx = event.deltaX * unit
+      // Vertical scrolling stays with the page.
+      if (dx === 0 || Math.abs(dx) <= Math.abs(event.deltaY * unit)) return
+      event.preventDefault()
+      flowApi.current.wheelBy(dx)
+    }
+    stage.addEventListener("wheel", onWheel, { passive: false })
+
+    return () => {
+      media.removeEventListener("change", syncMotionPreference)
+      observer?.disconnect()
+      stage.removeEventListener("wheel", onWheel)
+      window.clearTimeout(wheelTimer.current)
+      cancelAnimationFrame(motion.raf)
+      motion.running = false
+      motion.wheelStart = null
+      motion.keyHeld = false
+      if (motion.drag) {
+        try {
+          stage.releasePointerCapture(motion.drag.id)
+        } catch {
+          /* noop */
+        }
+        motion.drag = null
+      }
+      const ctx = mechCtx.current
+      mechCtx.current = null
+      if (ctx) void ctx.close().catch(() => undefined)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return
+    const update = () => {
+      if (stage.clientWidth > 0) setStageWidth(stage.clientWidth)
+    }
     update()
     const observer = new ResizeObserver(update)
     observer.observe(stage)
     return () => observer.disconnect()
   }, [])
-
-  const itemSize = stageWidth < 520 ? 116 : stageWidth < 820 ? 144 : 172
-  const slotStep = Math.max(16, (stageWidth / 2 - 140) / ((total - 1) / 2))
-  const centerSlot = (total - 1) / 2
-
-  function computeFlowStyle(index: number, pos: number) {
-    const offset = index - pos
-    const distance = Math.abs(offset)
-    const x = Math.round((index - centerSlot) * slotStep)
-    const arc = Math.round(Math.pow(Math.abs(index - centerSlot), 1.5) * (itemSize / 172) * 3)
-    const glow = trackGlowColor(
-      IA_AUDIO_TRACKS[index].gradient,
-      isLight ? "rgba(245,158,11,0.5)" : "rgba(57,255,20,0.4)"
-    )
-    const close = Math.max(0, 1 - Math.min(1, distance))
-    const scale = 0.82 + 0.4 * close
-    const rot = -28 * Math.max(-1, Math.min(1, offset))
-    const lift = Math.round(-8 * close)
-    const bright = 0.75 + 0.25 * close
-    const front = close > 0.6
-    return {
-      transform: `translate3d(calc(-50% + ${x}px), calc(-50% + ${lift}px + ${arc}px), 0px) rotateY(${rot}deg) scale(${scale})`,
-      zIndex: front ? 50 : 30 - Math.round(distance),
-      opacity: Math.max(0.55, 1 - distance * 0.05),
-      filter: front ? `drop-shadow(0 14px 26px ${glow})` : `brightness(${bright})`,
-    }
-  }
-
-  const getFlowStyle = (index: number): CSSProperties =>
-    computeFlowStyle(index, posRef.current) as CSSProperties
 
   const statusText = buffering
     ? language === "es" ? "CARGANDO" : "LOADING"
@@ -1234,16 +1797,25 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
         ? language === "es" ? "PAUSA" : "PAUSED"
         : language === "es" ? "LISTO" : "READY"
 
+  const currentTag = localizeTrackTag(currentTrack.tag, language)
+  const liveText =
+    language === "es"
+      ? `Pista ${currentIndex + 1} de ${total}: ${currentTrack.title} (${currentTag})`
+      : `Track ${currentIndex + 1} of ${total}: ${currentTrack.title} (${currentTag})`
+
   return (
     <div className="space-y-4">
       <style>{`
-        .coverflow-stage { perspective: 900px; perspective-origin: 50% 40%; }
+        .coverflow-stage { touch-action: pan-y; overflow: hidden; overflow: clip; outline: none; }
+        .coverflow-stage:focus-visible { outline: 2px solid var(--flow-accent, #39ff14); outline-offset: 3px; }
         .coverflow-track { transform-style: preserve-3d; }
         .flow-item {
-          transform-style: preserve-3d;
-          transition: filter 0.3s ease, opacity 0.3s ease;
-          will-change: transform;
+          will-change: transform, opacity;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
+        .flipper-inner { will-change: transform; }
+        .flow-fade { will-change: opacity; }
         .vinyl-grooves {
           background:
             radial-gradient(circle, transparent 18%, rgba(0,0,0,0.95) 19%, rgba(255,255,255,0.18) 20%, transparent 21%),
@@ -1277,7 +1849,7 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
         }
         .card-live { animation: cardGlow 2.4s ease-in-out infinite; }
         @media (prefers-reduced-motion: reduce) {
-          .spinning-disc, .card-live, .flipper-inner { animation: none; transition: none; }
+          .spinning-disc, .card-live, .cover-shimmer::after { animation: none; }
         }
       `}</style>
 
@@ -1290,8 +1862,12 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
         onWaiting={() => setBuffering(true)}
         onPlaying={() => setBuffering(false)}
         onCanPlay={() => setBuffering(false)}
-        onEnded={() => stepTrack(1)}
+        onEnded={advanceAfterEnd}
       />
+
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        {liveText}
+      </p>
 
       <div className="flex items-center justify-between gap-2">
         <div
@@ -1300,9 +1876,6 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
           }`}
         >
           Track <span className="font-bold" style={{ color: accent }}>{currentIndex + 1}</span> / {total}
-        </div>
-        <div className="hidden font-cyber text-[10px] uppercase tracking-[0.2em] opacity-60 sm:block">
-          {language === "es" ? "Arrastrá • Click • ← →" : "Drag • Click • ← →"}
         </div>
         <div
           className="rounded-full border border-white/15 bg-black/40 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em]"
@@ -1314,145 +1887,187 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
 
       <div
         ref={stageRef}
+        tabIndex={0}
+        role="group"
+        aria-roledescription={language === "es" ? "carrusel" : "carousel"}
+        aria-label={
+          language === "es"
+            ? "Reproductor Music Lab: flechas izquierda y derecha para cambiar de pista, espacio para reproducir o pausar"
+            : "Music Lab player: left and right arrows change track, space plays or pauses"
+        }
         onPointerDown={onStagePointerDown}
         onPointerMove={onStagePointerMove}
-        onPointerUp={endStageDrag}
-        onPointerCancel={endStageDrag}
+        onPointerUp={(event) => finishStageDrag(event, false)}
+        onPointerCancel={(event) => finishStageDrag(event, true)}
+        onLostPointerCapture={(event) => finishStageDrag(event, true)}
         onPointerLeave={onStagePointerLeave}
-        className={`coverflow-stage relative flex h-[360px] w-full touch-pan-y cursor-grab select-none items-center justify-center overflow-hidden rounded-sm border active:cursor-grabbing sm:h-[440px] ${
+        onMouseDown={onStageMouseDown}
+        onClickCapture={onStageClickCapture}
+        onKeyDown={onStageKeyDown}
+        onKeyUp={onStageKeyUp}
+        onBlur={onStageBlur}
+        onScroll={(event) => {
+          event.currentTarget.scrollLeft = 0
+          event.currentTarget.scrollTop = 0
+        }}
+        className={`coverflow-stage relative isolate h-[360px] w-full cursor-grab select-none rounded-sm border active:cursor-grabbing sm:h-[440px] ${
           isLight ? "border-[#d9a06b]/60 bg-[#170f05]" : "border-neon-green/20 bg-black/60"
         }`}
+        style={{ "--flow-accent": accent } as CSSProperties}
       >
         <StageBackdrop isLight={isLight} isPlaying={isPlaying} />
-        <button
-          type="button"
-          onClick={() => stepTrack(-1)}
-          aria-label={language === "es" ? "Anterior" : "Previous"}
-          className={`absolute left-2 top-1/2 z-[60] inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border bg-black/50 backdrop-blur-sm transition-colors sm:left-3 ${
-            isLight
-              ? "border-[#8b4315] text-[#f59e0b] hover:bg-[#8b4315]/30"
-              : "border-neon-green/50 text-neon-green hover:bg-neon-green/15"
-          }`}
+        <div
+          ref={viewportRef}
+          className="absolute inset-0"
+          style={{ perspective: `${metrics.perspective}px`, perspectiveOrigin: "50% 35%" }}
         >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => stepTrack(1)}
-          aria-label={language === "es" ? "Siguiente" : "Next"}
-          className={`absolute right-2 top-1/2 z-[60] inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border bg-black/50 backdrop-blur-sm transition-colors sm:right-3 ${
-            isLight
-              ? "border-[#8b4315] text-[#f59e0b] hover:bg-[#8b4315]/30"
-              : "border-neon-green/50 text-neon-green hover:bg-neon-green/15"
-          }`}
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-        <div className="coverflow-track relative flex h-0 w-0 items-center justify-center">
-          {IA_AUDIO_TRACKS.map((track, index) => {
-            const isActive = index === currentIndex
-            return (
-              <div
-                key={track.id}
-                role="option"
-                aria-selected={isActive}
-                data-active={isActive}
-                className="flow-item absolute left-1/2 top-[44%] flex flex-col items-center"
-                style={{ ...getFlowStyle(index), width: itemSize }}
-              >
-                <div className="relative" style={{ width: itemSize, height: itemSize, perspective: "800px" }}>
+          {/* 35% of either stage height and half of the measured width are whole pixels: the centre cover stays sharp. */}
+          <div
+            className="coverflow-track absolute h-0 w-0"
+            style={{ top: "35%", left: stageWidth ? Math.floor(stageWidth / 2) : "50%" }}
+          >
+            {IA_AUDIO_TRACKS.map((track, index) => {
+              const isActive = index === currentIndex
+              const pose = computeFlowPose(index - motion.pos, metrics, motion.speed)
+              const glow = trackGlowColor(track.gradient, isLight ? "rgba(245,158,11,0.5)" : "rgba(57,255,20,0.4)")
+              const playLabel =
+                language === "es"
+                  ? isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`
+                  : isActive && isPlaying ? `Pause ${track.title}` : `Play ${track.title}`
+              return (
+                <div
+                  key={track.id}
+                  ref={(el) => {
+                    itemEls.current[index] = el
+                  }}
+                  data-flow-item
+                  role="group"
+                  aria-label={`${index + 1} / ${total}: ${track.title}`}
+                  aria-current={isActive ? "true" : undefined}
+                  className="flow-item absolute"
+                  style={{
+                    left: -metrics.size / 2,
+                    top: -metrics.size / 2,
+                    width: metrics.size,
+                    height: metrics.size,
+                    transform: pose.transform,
+                    opacity: pose.opacity,
+                    zIndex: pose.zIndex,
+                  }}
+                >
                   <div
-                    className="flipper-inner relative h-full w-full"
-                    style={{
-                      transformStyle: "preserve-3d",
-                      transform: isActive ? "rotateY(180deg)" : "rotateY(0deg)",
-                      transition: "transform 0.65s cubic-bezier(0.16,1,0.3,1)",
+                    ref={(el) => {
+                      glowEls.current[index] = el
                     }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => selectTrack(index)}
-                      aria-label={
-                        language === "es"
-                          ? isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`
-                          : isActive && isPlaying ? `Pause ${track.title}` : `Play ${track.title}`
-                      }
-                      className={`absolute inset-0 block cursor-pointer overflow-hidden rounded-sm border shadow-2xl transition-colors ${
-                        isActive
-                          ? isLight
-                            ? "border-[#f59e0b] shadow-[#f59e0b]/30"
-                            : "border-neon-green/70 shadow-neon-green/25"
-                          : isLight
-                            ? "border-[#d9a06b]/50"
-                            : "border-white/15"
-                      }`}
-                      style={{ background: track.gradient, backfaceVisibility: "hidden" }}
-                    >
-                      <div
-                        aria-hidden
-                        className={`cover-shimmer absolute inset-0 transition-opacity duration-500 ${coversReady[track.id] ? "opacity-0" : "opacity-100"}`}
-                        style={{ background: track.gradient }}
-                      />
-                      <img
-                        src={track.cover}
-                        alt={track.title}
-                        onLoad={() => setCoversReady((prev) => (prev[track.id] ? prev : { ...prev, [track.id]: true }))}
-                        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${coversReady[track.id] ? "opacity-100" : "opacity-0"}`}
-                        loading="lazy"
-                      />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => selectTrack(index)}
-                      aria-label={
-                        language === "es"
-                          ? isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`
-                          : isActive && isPlaying ? `Pause ${track.title}` : `Play ${track.title}`
-                      }
-                      className="absolute inset-0 flex cursor-pointer items-center justify-center overflow-hidden rounded-sm border border-white/15 bg-[#0a0a0c] shadow-2xl"
+                    aria-hidden="true"
+                    className="flow-fade pointer-events-none absolute inset-[5%] rounded-sm"
+                    style={{ boxShadow: `0 14px 44px 8px ${glow}`, opacity: pose.glow }}
+                  />
+                  <div className="relative h-full w-full" style={{ perspective: "800px" }}>
+                    <div
+                      ref={(el) => {
+                        flipEls.current[index] = el
+                      }}
+                      className="flipper-inner relative h-full w-full"
                       style={{
-                        backfaceVisibility: "hidden",
-                        transform: "rotateY(180deg)",
-                        boxShadow: isActive ? `0 0 24px ${trackGlowColor(track.gradient, accent)}` : undefined,
+                        transformStyle: "preserve-3d",
+                        transform: `rotateY(${motion.flip[index].toFixed(2)}deg)`,
                       }}
                     >
-                      <div
-                        className={`relative h-[92%] w-[92%] overflow-hidden rounded-full border ${
-                          isActive ? "spinning-disc" : ""
-                        } ${isLight ? "border-[#f59e0b]/40" : "border-white/20"}`}
-                        style={{ animationPlayState: isPlaying ? "running" : "paused" }}
+                      <button
+                        type="button"
+                        tabIndex={-1}
+                        aria-hidden="true"
+                        onClick={() => selectTrack(index)}
+                        className={`absolute inset-0 block cursor-pointer overflow-hidden rounded-sm border shadow-2xl transition-colors duration-300 ${
+                          isActive
+                            ? isLight
+                              ? "border-[#f59e0b] shadow-[#f59e0b]/30"
+                              : "border-neon-green/70 shadow-neon-green/25"
+                            : isLight
+                              ? "border-[#d9a06b]/50"
+                              : "border-white/15"
+                        }`}
+                        style={{
+                          background: track.gradient,
+                          backfaceVisibility: "hidden",
+                          WebkitBackfaceVisibility: "hidden",
+                        }}
                       >
-                        <div className="absolute inset-0 rounded-full bg-[#0a0a0c]" />
-                        <div className="vinyl-grooves absolute inset-0 rounded-full opacity-85" />
-                        <div className="vinyl-shine absolute inset-0 rounded-full" />
-                        <span
-                          aria-hidden
-                          className="absolute left-1/2 top-[7%] h-2 w-2 -translate-x-1/2 rounded-full"
-                          style={{ background: accent, boxShadow: `0 0 8px ${accent}` }}
-                        />
                         <div
-                          className="absolute left-1/2 top-1/2 flex h-[36%] w-[36%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-black shadow-inner"
+                          aria-hidden
+                          className={`cover-shimmer absolute inset-0 transition-opacity duration-500 ${coversReady[track.id] ? "opacity-0" : "opacity-100"}`}
                           style={{ background: track.gradient }}
+                        />
+                        <img
+                          src={track.cover}
+                          alt={track.title}
+                          draggable={false}
+                          onLoad={() => setCoversReady((prev) => (prev[track.id] ? prev : { ...prev, [track.id]: true }))}
+                          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${coversReady[track.id] ? "opacity-100" : "opacity-0"}`}
+                          loading={coversArmed ? "eager" : "lazy"}
+                        />
+                      </button>
+                      <button
+                        type="button"
+                        tabIndex={-1}
+                        aria-hidden="true"
+                        onClick={() => selectTrack(index)}
+                        className="absolute inset-0 flex cursor-pointer items-center justify-center overflow-hidden rounded-sm border border-white/15 bg-[#0a0a0c] shadow-2xl"
+                        style={{
+                          backfaceVisibility: "hidden",
+                          WebkitBackfaceVisibility: "hidden",
+                          transform: "rotateY(180deg)",
+                          boxShadow: isActive ? `0 0 24px ${trackGlowColor(track.gradient, accent)}` : undefined,
+                        }}
+                      >
+                        <div
+                          className={`relative h-[92%] w-[92%] overflow-hidden rounded-full border ${
+                            isActive ? "spinning-disc" : ""
+                          } ${isLight ? "border-[#f59e0b]/40" : "border-white/20"}`}
+                          style={{ animationPlayState: isPlaying ? "running" : "paused" }}
                         >
-                          <div className="h-2.5 w-2.5 rounded-full border border-white/40 bg-black" />
+                          <div className="absolute inset-0 rounded-full bg-[#0a0a0c]" />
+                          <div className="vinyl-grooves absolute inset-0 rounded-full opacity-85" />
+                          <div className="vinyl-shine absolute inset-0 rounded-full" />
+                          <span
+                            aria-hidden
+                            className="absolute left-1/2 top-[7%] h-2 w-2 -translate-x-1/2 rounded-full"
+                            style={{ background: accent, boxShadow: `0 0 8px ${accent}` }}
+                          />
+                          <div
+                            className="absolute left-1/2 top-1/2 flex h-[36%] w-[36%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-black shadow-inner"
+                            style={{ background: track.gradient }}
+                          >
+                            <div className="h-2.5 w-2.5 rounded-full border border-white/40 bg-black" />
+                          </div>
                         </div>
-                      </div>
-                    </button>
+                      </button>
+                      <div
+                        ref={(el) => {
+                          shadeEls.current[index] = el
+                        }}
+                        aria-hidden="true"
+                        className="flow-fade pointer-events-none absolute inset-0 rounded-sm bg-black"
+                        style={{ opacity: pose.shade }}
+                      />
+                    </div>
                   </div>
                   <button
+                    ref={(el) => {
+                      playEls.current[index] = el
+                    }}
                     type="button"
+                    tabIndex={isActive ? 0 : -1}
                     onClick={() => selectTrack(index)}
-                    aria-label={
-                        language === "es"
-                          ? isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`
-                          : isActive && isPlaying ? `Pause ${track.title}` : `Play ${track.title}`
-                      }
-                    className="absolute left-1/2 top-1/2 z-30 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border bg-black/60 backdrop-blur-sm transition-transform hover:scale-110 active:scale-95"
-                    style={
-                      isActive
+                    aria-label={playLabel}
+                    className="flow-fade absolute left-1/2 top-1/2 z-30 -ml-6 -mt-6 flex h-12 w-12 items-center justify-center rounded-full border bg-black/60 backdrop-blur-sm transition-transform hover:scale-110 active:scale-95"
+                    style={{
+                      opacity: pose.chrome,
+                      ...(isActive
                         ? { borderColor: accent, color: accent, boxShadow: `0 0 18px ${trackGlowColor(track.gradient, accent)}` }
-                        : { borderColor: "rgba(255,255,255,0.35)", color: "#fff" }
-                    }
+                        : { borderColor: "rgba(255,255,255,0.35)", color: "#fff" }),
+                    }}
                   >
                     {isActive && isPlaying ? (
                       <Pause className="h-5 w-5" />
@@ -1460,98 +2075,148 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
                       <Play className="ml-0.5 h-5 w-5" />
                     )}
                   </button>
-                </div>
-
-                <div
-                  className={`mt-2 rounded-sm border px-2 py-1.5 text-center ${
-                    isActive && isPlaying ? "card-live" : ""
-                  } ${
-                    isActive
-                      ? isLight
-                        ? "border-[#f59e0b]/70 bg-[#0b0d0c]/95"
-                        : "border-neon-green/50 bg-[#0b0d0c]/95"
-                      : "border-white/10 bg-[#0b0d0c]/85"
-                  }`}
-                  style={{ width: itemSize, "--card-glow": trackGlowColor(track.gradient, accent) } as CSSProperties}
-                >
-                  <p
-                    className={`font-cyber text-[11px] font-bold leading-snug [overflow-wrap:anywhere] ${
-                      isLight ? "text-[#fff4e8]" : "text-white"
-                    }`}
+                  <div
+                    ref={(el) => {
+                      labelEls.current[index] = el
+                    }}
+                    className="flow-fade pointer-events-none absolute top-full mt-2"
                     style={{
-                      textShadow: isLight
-                        ? "0 0 10px rgba(245,158,11,0.45), 0 2px 4px #000"
-                        : "0 0 10px rgba(57,255,20,0.4), 0 2px 4px #000",
+                      left: (metrics.size - metrics.labelWidth) / 2,
+                      width: metrics.labelWidth,
+                      opacity: pose.chrome,
                     }}
                   >
-                    {track.title}
-                  </p>
-                  <p
-                    className={`mt-0.5 font-cyber text-[10px] uppercase tracking-[0.18em] ${
-                      isLight ? "text-[#f5b942]" : "text-neon-cyan"
-                    }`}
-                    style={isLight ? { textShadow: "0 0 8px rgba(245,158,11,0.65)" } : undefined}
-                  >
-                    {localizeTrackTag(track.tag, language)}
-                  </p>
-                  {isActive ? (
-                    <div className="mt-1.5 flex w-full items-center justify-center gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() => setVolume((current) => (current === 0 ? 0.85 : 0))}
-                        aria-label={
-                          language === "es"
-                            ? volume === 0 ? "Activar sonido" : "Silenciar"
-                            : volume === 0 ? "Unmute" : "Mute"
-                        }
-                        className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border ${
-                          isLight ? "border-[#d9a06b]/70 text-[#8b4315]" : "border-white/20 text-white/80"
+                    <div
+                      className={`rounded-sm border px-2 py-1.5 text-center transition-colors duration-300 ${
+                        isActive && isPlaying ? "card-live" : ""
+                      } ${
+                        isActive
+                          ? isLight
+                            ? "border-[#f59e0b]/70 bg-[#0b0d0c]/95"
+                            : "border-neon-green/50 bg-[#0b0d0c]/95"
+                          : "border-white/10 bg-[#0b0d0c]/85"
+                      }`}
+                      style={{ "--card-glow": trackGlowColor(track.gradient, accent) } as CSSProperties}
+                    >
+                      <p
+                        className={`font-cyber text-[12px] font-bold leading-snug [overflow-wrap:anywhere] sm:text-[13px] ${
+                          isLight ? "text-[#fff4e8]" : "text-white"
                         }`}
-                      >
-                        {volume === 0 ? <VolumeX className="h-3 w-3" /> : <Volume2 className="h-3 w-3" />}
-                      </button>
-                      <input
-                        type="range"
-                        min={0}
-                        max={1}
-                        step={0.01}
-                        value={volume}
-                        onChange={(event) => setVolume(Number(event.target.value))}
-                        className="h-1 min-w-0 flex-1 cursor-pointer"
-                        style={{ accentColor: accent }}
-                        aria-label={language === "es" ? "Volumen" : "Volume"}
-                      />
-                    </div>
-                  ) : null}
-                  {isActive ? (
-                    <div className="mt-1 w-full">
-                      <input
-                        type="range"
-                        min={0}
-                        max={duration || 0}
-                        step={0.1}
-                        value={progress}
-                        onChange={(event) => {
-                          const next = Number(event.target.value)
-                          setProgress(next)
-                          if (audioRef.current) audioRef.current.currentTime = next
+                        style={{
+                          textShadow: isLight
+                            ? "0 0 10px rgba(245,158,11,0.45), 0 2px 4px #000"
+                            : "0 0 10px rgba(57,255,20,0.4), 0 2px 4px #000",
                         }}
-                        className="h-1 w-full min-w-0 cursor-pointer"
-                        style={{ accentColor: accent }}
-                        aria-label={language === "es" ? "Progreso" : "Progress"}
-                      />
-                      <div className="mt-0.5 flex items-center justify-between font-mono text-[9px] opacity-60">
-                        <span>{formatTrackTime(progress)}</span>
-                        <span>{formatTrackTime(duration)}</span>
-                      </div>
+                      >
+                        {track.title}
+                      </p>
+                      <p
+                        className={`mt-0.5 font-cyber text-[10px] uppercase tracking-[0.18em] sm:text-[11px] ${
+                          isLight ? "text-[#f5b942]" : "text-neon-cyan"
+                        }`}
+                        style={isLight ? { textShadow: "0 0 8px rgba(245,158,11,0.65)" } : undefined}
+                      >
+                        {localizeTrackTag(track.tag, language)}
+                      </p>
                     </div>
-                  ) : null}
+                  </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
+        <button
+          type="button"
+          data-flow-control
+          onClick={() => stepTrack(-1)}
+          aria-label={language === "es" ? "Anterior" : "Previous"}
+          className={`absolute left-2 z-[60] inline-flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border bg-black/50 backdrop-blur-sm transition-colors sm:left-3 ${
+            isLight
+              ? "border-[#8b4315] text-[#f59e0b] hover:bg-[#8b4315]/30"
+              : "border-neon-green/50 text-neon-green hover:bg-neon-green/15"
+          }`}
+          style={{ top: "35%" }}
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          type="button"
+          data-flow-control
+          onClick={() => stepTrack(1)}
+          aria-label={language === "es" ? "Siguiente" : "Next"}
+          className={`absolute right-2 z-[60] inline-flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border bg-black/50 backdrop-blur-sm transition-colors sm:right-3 ${
+            isLight
+              ? "border-[#8b4315] text-[#f59e0b] hover:bg-[#8b4315]/30"
+              : "border-neon-green/50 text-neon-green hover:bg-neon-green/15"
+          }`}
+          style={{ top: "35%" }}
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/60 to-transparent" />
+        <div
+          data-flow-control
+          role="group"
+          aria-label={language === "es" ? "Controles de reproducción" : "Playback controls"}
+          className={`absolute bottom-3 left-1/2 z-[60] flex w-[min(22rem,calc(100%-1.5rem))] -translate-x-1/2 cursor-default items-center gap-2 rounded-sm border bg-[#0b0d0c]/95 px-2 py-1.5 ${
+            isLight ? "border-[#f59e0b]/70" : "border-neon-green/50"
+          }`}
+        >
+          <button
+            type="button"
+            onClick={() => setVolume((current) => (current === 0 ? 0.85 : 0))}
+            aria-label={
+              language === "es"
+                ? volume === 0 ? "Activar sonido" : "Silenciar"
+                : volume === 0 ? "Unmute" : "Mute"
+            }
+            className={`inline-flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-full border ${
+              isLight ? "border-[#d9a06b]/70 text-[#f5b942]" : "border-white/20 text-white/80"
+            }`}
+          >
+            {volume === 0 ? <VolumeX className="h-3 w-3" /> : <Volume2 className="h-3 w-3" />}
+          </button>
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            value={volume}
+            onChange={(event) => setVolume(Number(event.target.value))}
+            className="h-1 w-12 shrink-0 cursor-pointer sm:w-16"
+            style={{ accentColor: accent }}
+            aria-label={language === "es" ? "Volumen" : "Volume"}
+          />
+          <span
+            className={`shrink-0 font-mono text-[10px] tabular-nums ${
+              isLight ? "text-[#f5b942]/80" : "text-white/70"
+            }`}
+          >
+            {formatTrackTime(progress)}
+          </span>
+          <input
+            type="range"
+            min={0}
+            max={duration || 0}
+            step={0.1}
+            value={progress}
+            onChange={(event) => {
+              const next = Number(event.target.value)
+              setProgress(next)
+              if (audioRef.current) audioRef.current.currentTime = next
+            }}
+            className="h-1 min-w-0 flex-1 cursor-pointer"
+            style={{ accentColor: accent }}
+            aria-label={language === "es" ? "Progreso" : "Progress"}
+          />
+          <span
+            className={`shrink-0 font-mono text-[10px] tabular-nums ${
+              isLight ? "text-[#f5b942]/80" : "text-white/70"
+            }`}
+          >
+            {formatTrackTime(duration)}
+          </span>
+        </div>
       </div>
 
     </div>
@@ -1595,13 +2260,19 @@ function Works2026Carousel({
       >
         <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_212px] xl:items-stretch">
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(true)}
-                className="block w-full rounded-sm bg-transparent p-0 text-left"
-              >
-                <PreviewStage item={activeItem} isLight={isLight} lockedPreview />
-              </button>
+              {activeItem.opensPopup ? (
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(true)}
+                  className="block w-full rounded-sm bg-transparent p-0 text-left"
+                >
+                  <PreviewStage item={activeItem} isLight={isLight} lockedPreview={activeItem.locked} />
+                </button>
+              ) : (
+                <div className="block w-full rounded-sm">
+                  <PreviewStage item={activeItem} isLight={isLight} lockedPreview={activeItem.locked} />
+                </div>
+              )}
 
               <div className="grid gap-3 xl:h-full xl:grid-rows-[40px_repeat(4,minmax(0,1fr))]">
                 <div className="flex items-center justify-end gap-2">
@@ -1648,6 +2319,9 @@ function Works2026Carousel({
                     >
                       <div className="font-cyber text-sm uppercase tracking-[0.18em] text-neon-cyan">
                         {item.title[language]}
+                        {item.locked ? (
+                          <span className="sr-only">{language === "es" ? " (Próximamente)" : " (Coming soon)"}</span>
+                        ) : null}
                       </div>
                     </button>
                   )
@@ -1657,13 +2331,20 @@ function Works2026Carousel({
 
             <div>
               <div className="font-cyber text-lg text-neon-cyan">{activeItem.title[language]}</div>
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(true)}
-                className="mt-2 inline-flex items-center gap-2 text-sm text-neon-magenta underline"
-              >
-                {language === "es" ? "Abrir popup" : "Open popup"}
-              </button>
+              {activeItem.opensPopup ? (
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(true)}
+                  className="mt-2 inline-flex items-center gap-2 text-sm text-neon-magenta underline"
+                >
+                  {language === "es" ? "Abrir popup" : "Open popup"}
+                </button>
+              ) : (
+                <p className="mt-2 inline-flex items-center gap-2 text-sm text-neon-green/70">
+                  <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span>{language === "es" ? "Próximamente" : "Coming soon"}</span>
+                </p>
+              )}
             </div>
         </div>
       </RetroPanel>
@@ -1905,14 +2586,37 @@ export default function AIExperimentsPage() {
             onChange={setActiveFilter}
           />
 
-          {showAudioSection ? (
+          {showVideoSections ? (
             <RetroPanel
-              title={currentLanguage === "es" ? "AUDIO IA — MUSIC LAB" : "AI AUDIO — MUSIC LAB"}
-              statusRight={`${IA_AUDIO_TRACKS.length} TRACKS`}
+              title="REEL 2025/2026"
+              statusRight="REEL"
               highlight
               accent={isLight ? "amber" : "blue"}
             >
-              <SpotifyGallery language={currentLanguage} isLight={isLight} />
+              <div className="mx-auto w-full max-w-4xl space-y-3">
+                <div
+                  className={`overflow-hidden rounded-sm border ${
+                    isLight ? "border-[#d9a06b] bg-[#f8ead9]" : "border-neon-green/30 bg-black/40"
+                  }`}
+                >
+                  <YouTubeEmbed videoId={REEL_VIDEO_ID} />
+                </div>
+                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                  <p className="text-base leading-relaxed text-neon-green/90">
+                    {currentLanguage === "es"
+                      ? "Reel 2025/2026: selección de trabajos y experimentos con IA."
+                      : "Reel 2025/2026: a selection of AI works and experiments."}
+                  </p>
+                  <a
+                    href={REEL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-neon-magenta underline hover:text-neon-cyan"
+                  >
+                    {currentLanguage === "es" ? "Ver en YouTube ↗" : "Watch on YouTube ↗"}
+                  </a>
+                </div>
+              </div>
             </RetroPanel>
           ) : null}
 
@@ -1920,37 +2624,50 @@ export default function AIExperimentsPage() {
             <Works2026Carousel language={currentLanguage} isLight={isLight} filter={activeFilter} />
           ) : null}
 
-          {showSystemSections ? (
-            <RetroPanel title="the8bureau" statusRight={currentLanguage === "es" ? "PRIVATE / OFFLINE" : "PRIVATE / OFFLINE"} highlight>
-            <div className="grid grid-cols-1 gap-6 xl:grid-cols-[300px_minmax(0,1fr)] xl:items-start">
-              <div className="xl:pt-10">
-                <The8BureauScreenshotThumb isLight={isLight} onOpen={() => setIsThe8BureauModalOpen(true)} />
-              </div>
+          {showAudioSection ? (
+            <div className="space-y-3">
+              <RetroPanel
+                title={currentLanguage === "es" ? "AUDIO IA — MUSIC LAB" : "AI AUDIO — MUSIC LAB"}
+                statusRight={`${IA_AUDIO_TRACKS.length} TRACKS`}
+                highlight
+                accent={isLight ? "amber" : "blue"}
+              >
+                <SpotifyGallery language={currentLanguage} isLight={isLight} />
+              </RetroPanel>
 
-              <div className="space-y-4">
-                <p className="text-base leading-relaxed text-neon-green/90">{the8BureauIntro[currentLanguage]}</p>
-
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  {the8BureauFeatures.map((feature) => (
-                    <div
-                      key={feature.title}
-                      className={`rounded-sm border p-4 ${
-                        isLight ? "border-[#d9a06b]/55 bg-[#fff4e6]" : "border-neon-green/25 bg-black/25"
-                      }`}
-                    >
-                      <div className="mb-2 font-cyber text-sm uppercase tracking-[0.16em] text-neon-cyan">
-                        {feature.title}
-                      </div>
-                      <p className="text-sm leading-relaxed text-neon-green/85">{feature.description[currentLanguage]}</p>
-                    </div>
-                  ))}
+              <div
+                className={`flex flex-col gap-3 rounded-sm border px-4 py-3 sm:flex-row sm:items-center sm:justify-between ${
+                  isLight ? "border-[#d9a06b] bg-[#fff4e6]" : "border-neon-green/30 bg-black/30"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src="/magaibacoin.gif"
+                    alt=""
+                    aria-hidden="true"
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 shrink-0 rounded-full"
+                  />
+                  <p className="text-sm leading-relaxed text-neon-green/90">
+                    {currentLanguage === "es"
+                      ? "RADIO MAGAIBA: el canal 24/7 con canciones generadas con IA que armé para $MAGAIBA, la memecoin argentina comunitaria."
+                      : "RADIO MAGAIBA: the 24/7 channel with AI-generated songs I built for $MAGAIBA, the community-driven Argentine memecoin."}
+                  </p>
                 </div>
-                </div>
+                <Link
+                  href="/magaiba"
+                  className={`inline-flex shrink-0 items-center justify-center rounded-sm border px-4 py-2 font-cyber text-xs uppercase tracking-[0.16em] transition-colors ${
+                    isLight
+                      ? "border-[#8b4315] text-[#8b4315] hover:bg-[#f6e6d2]"
+                      : "border-neon-cyan/60 text-neon-cyan hover:bg-neon-cyan/10"
+                  }`}
+                >
+                  {currentLanguage === "es" ? "VER MAGAIBA →" : "VIEW MAGAIBA →"}
+                </Link>
               </div>
-            </RetroPanel>
+            </div>
           ) : null}
-
-          {isThe8BureauModalOpen ? <The8BureauImageModal isLight={isLight} onClose={() => setIsThe8BureauModalOpen(false)} /> : null}
 
           {showVideoSections ? (
           <div id="ejemplos-trabajos-ia-2025">
@@ -2043,6 +2760,79 @@ export default function AIExperimentsPage() {
             </RetroPanel>
           </div>
           ) : null}
+
+          {showSystemSections ? (
+            <RetroPanel title="the8bureau" statusRight="PRIVATE / OFFLINE" highlight>
+              <div className="grid grid-cols-1 gap-6 xl:grid-cols-[300px_minmax(0,1fr)] xl:items-start">
+                <div className="xl:pt-10">
+                  <The8BureauScreenshotThumb isLight={isLight} onOpen={() => setIsThe8BureauModalOpen(true)} />
+                </div>
+
+                <div className="space-y-4">
+                  <p className="text-base leading-relaxed text-neon-green/90">{the8BureauIntro[currentLanguage]}</p>
+
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    {the8BureauFeatures.map((feature) => (
+                      <div
+                        key={feature.title}
+                        className={`rounded-sm border p-4 ${
+                          feature.deprecated
+                            ? isLight
+                              ? "border-dashed border-[#d9a06b]/45 bg-[#fff4e6]/60 opacity-75"
+                              : "border-dashed border-neon-green/20 bg-black/15 opacity-75"
+                            : isLight
+                              ? "border-[#d9a06b]/55 bg-[#fff4e6]"
+                              : "border-neon-green/25 bg-black/25"
+                        }`}
+                      >
+                        <div className="mb-2 flex flex-wrap items-center gap-2">
+                          <div className="font-cyber text-sm uppercase tracking-[0.16em] text-neon-cyan">
+                            {feature.title}
+                          </div>
+                          {feature.deprecated ? (
+                            <span
+                              className={`rounded-full border px-2 py-0.5 font-cyber text-[10px] uppercase tracking-[0.16em] ${
+                                isLight ? "border-[#8b4315]/50 text-[#8b4315]" : "border-neon-magenta/60 text-neon-magenta"
+                              }`}
+                            >
+                              DEPRECATED
+                            </span>
+                          ) : null}
+                        </div>
+                        <p className="text-sm leading-relaxed text-neon-green/85">{feature.description[currentLanguage]}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-center gap-3">
+                      <h3 className="font-cyber text-xs uppercase tracking-[0.2em] text-neon-cyan">
+                        {currentLanguage === "es" ? "NUEVO EN V2" : "NEW IN V2"}
+                      </h3>
+                      <div className={`h-px flex-1 ${isLight ? "bg-[#d9a06b]/50" : "bg-neon-green/25"}`} />
+                    </div>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 2xl:grid-cols-4">
+                      {the8BureauV2Tools.map((tool) => (
+                        <div
+                          key={tool.title.en}
+                          className={`rounded-sm border p-3 ${
+                            isLight ? "border-[#d9a06b]/55 bg-[#fff4e6]" : "border-neon-green/25 bg-black/25"
+                          }`}
+                        >
+                          <div className="mb-1 font-cyber text-xs uppercase tracking-[0.14em] text-neon-cyan">
+                            {tool.title[currentLanguage]}
+                          </div>
+                          <p className="text-xs leading-relaxed text-neon-green/85">{tool.description[currentLanguage]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </RetroPanel>
+          ) : null}
+
+          {isThe8BureauModalOpen ? <The8BureauImageModal isLight={isLight} onClose={() => setIsThe8BureauModalOpen(false)} /> : null}
 
           {showSystemSections ? (
           <RetroPanel title="VIBE-CODING: WEBAPPS" statusRight="TOOLS">
