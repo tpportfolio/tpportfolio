@@ -26,22 +26,40 @@ interface TimelineEntry {
   description: Localized
   /** Short role line shown inside the planet. Defaults to `role`. */
   planetRole?: Localized
-  /** Which side of the centre line the planet sits on (desktop); the text panel takes the other side. */
+  /** Which side of the centre line the planet sits on (desktop); the callout hangs on the other side. */
   side: "left" | "right"
   /** Videos orbiting the planet. Omit for planets without videos. */
   videos?: VideoItem[]
-  /** Render the next entry on the same row, facing this one. */
-  sharesRowWithNext?: boolean
   /** Small tag shown inside the planet, under the year. */
   tag?: string
-  /** Link shown at the end of the text panel. */
+  /** Link shown under the description in the callout. */
   link?: { href: string; label: Localized }
-  /** Role text holds several lines (one role per line) in the text panel. */
+  /** Role text holds several lines (one role per line, each ending in its dates) in the callout. */
   multiRole?: boolean
   showCovidBefore?: boolean
 }
 
-type RowKind = "single" | "pairLeft" | "pairRight"
+/** Role heading of the callout: one short stacked line per role. Dates in parentheses are dimmed. */
+function RoleLines({ text, multi }: { text: string; multi: boolean }) {
+  return (
+    <>
+      {text.split("\n").map((line) => {
+        const match = multi ? line.match(/^(.*?)\s*(\(.*\))$/) : null
+        return (
+          <span key={line} className={styles.roleLine}>
+            {match ? (
+              <>
+                {match[1]} <span className={styles.roleDates}>{match[2]}</span>
+              </>
+            ) : (
+              line
+            )}
+          </span>
+        )
+      })}
+    </>
+  )
+}
 
 export default function Timeline() {
   const { t, language } = useLanguage()
@@ -49,8 +67,8 @@ export default function Timeline() {
   const timelineRef = useRef<HTMLDivElement>(null)
 
   // Timeline data, in display order. `side` is the side of the centre line where the planet sits.
-  // Zig-zag: Paradise L, [$MAGAIBA L | DrGea R pair row], AirTM R, Stone L, Go Broadway R, Air NZ L,
-  // Disney R, JWT L, Altheim R. The pair row sits between L and R, so the weave reads L -> centre -> R.
+  // Strict zig-zag, one row per block: Paradise L, $MAGAIBA R, DrGea L, AirTM R, Stone L, Go Broadway R,
+  // Air NZ L, Disney R, JWT L, Altheim R.
   const timelineItems: TimelineEntry[] = [
     {
       id: "paradise",
@@ -79,9 +97,8 @@ export default function Timeline() {
         es: "Side project: participé de la comunicación de $MAGAIBA, la primera memecoin argentina que se viralizó a nivel global, y creé RADIO MAGAIBA, un canal de YouTube 24/7 con canciones generadas con IA.",
         en: "Side project: I took part in the communications of $MAGAIBA, the first Argentine memecoin to go globally viral, and created RADIO MAGAIBA, a 24/7 YouTube channel with AI-generated songs.",
       },
-      side: "left",
+      side: "right",
       videos: magaibaVideos,
-      sharesRowWithNext: true,
       tag: "SIDE PROJECT",
       link: { href: "/magaiba", label: { es: "VER PROYECTO", en: "VIEW PROJECT" } },
     },
@@ -97,7 +114,7 @@ export default function Timeline() {
         es: "Definí la narrativa de marca, la arquitectura de mensajes y la estrategia de comunicación, PR y KOLs de una plataforma de telemedicina en Colombia, Argentina, México y Perú. Alineé a producto, marketing, IT y equipo médico para sostener la consistencia de marca y estructuré las comunicaciones del lanzamiento regional.",
         en: "I defined the brand narrative, messaging architecture and communications, PR and KOL strategy for a telemedicine platform in Colombia, Argentina, Mexico and Peru. I aligned product, marketing, IT and medical stakeholders to keep the brand consistent and structured the communications for the regional launch.",
       },
-      side: "right",
+      side: "left",
     },
     {
       id: "airtm",
@@ -210,18 +227,6 @@ export default function Timeline() {
     },
   ]
 
-  // Group entries into rows: one entry per row, except entries that share a row with the next one.
-  const rows: TimelineEntry[][] = []
-  for (let i = 0; i < timelineItems.length; i++) {
-    const entry = timelineItems[i]
-    if (entry.sharesRowWithNext && i + 1 < timelineItems.length) {
-      rows.push([entry, timelineItems[i + 1]])
-      i++
-    } else {
-      rows.push([entry])
-    }
-  }
-
   useEffect(() => {
     // Matrix rain effect
     const canvas = document.getElementById("matrix-canvas") as HTMLCanvasElement
@@ -305,102 +310,56 @@ export default function Timeline() {
   // so neighbouring planets never move in sync.
   const LAPS = [34, 30, 38, 32, 36]
 
-  const renderPanel = (entry: TimelineEntry, className: string) => (
-    <div className={`${styles.panel} ${className}`}>
-      <p className={`${styles.panelRole} ${entry.multiRole ? styles.panelRoleMulti : ""}`}>{entry.role[lang]}</p>
-      <p className={styles.panelText}>{entry.description[lang]}</p>
+  const renderCallout = (entry: TimelineEntry) => (
+    <div className={`${styles.callout} ${entry.multiRole ? styles.calloutMulti : ""}`}>
+      {/* Leader rule: continues the line that leaves the centre-line node and ends in a dot. */}
+      <span aria-hidden="true" className={styles.rule}>
+        <span className={styles.ruleLine} />
+        <span className={styles.ruleDot} />
+      </span>
+      <div className={styles.head}>
+        <h4 className={`${styles.calloutRole} font-cyber`}>
+          <RoleLines text={entry.role[lang]} multi={!!entry.multiRole} />
+        </h4>
+      </div>
+      <p className={styles.calloutText}>{entry.description[lang]}</p>
       {entry.link && (
-        <Link
-          href={entry.link.href}
-          className="mt-4 inline-block border border-neon-green px-3 py-1 text-sm font-cyber text-neon-green transition-colors hover:bg-neon-green/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0ff]"
-        >
-          {entry.link.label[lang]} &rarr;
+        <Link href={entry.link.href} className={`${styles.link} font-cyber`}>
+          <span>{entry.link.label[lang]}</span> <span aria-hidden="true" className={styles.arrow}>&rarr;</span>
         </Link>
       )}
     </div>
   )
 
-  const renderBlock = (entry: TimelineEntry, entryIndex: number, kind: RowKind) => {
+  // Every block is one row: the planet on one side of the centre line, the callout hanging from the line on the other.
+  const renderRow = (entry: TimelineEntry, entryIndex: number) => {
     const planetLeft = entry.side === "left"
-    const isPair = kind !== "single"
 
     // Reveal-on-scroll: the slide is applied to this outer wrapper only; the orbit inside is never transformed by it.
-    const reveal = `timeline-item relative z-[15] hover:z-[30] focus-within:z-[30] mb-12 md:mb-6 opacity-0 transition-[opacity,transform] duration-1000 transform translate-y-4 md:translate-y-0 ${
+    const reveal = `timeline-item ${styles.row} relative z-[15] hover:z-[30] focus-within:z-[30] mb-12 md:mb-10 opacity-0 transition-[opacity,transform] duration-1000 motion-reduce:transition-none transform translate-y-4 md:translate-y-0 ${
       planetLeft ? "md:translate-x-[-24px]" : "md:translate-x-[24px]"
     }`
 
-    const orbit = (className: string) => (
-      <TimelineOrbit
-        year={entry.year}
-        name={entry.title}
-        role={(entry.planetRole ?? entry.role)[lang]}
-        tag={entry.tag}
-        videos={entry.videos ?? []}
-        phase={(entryIndex * 0.29) % 1}
-        reverse={entryIndex % 2 === 1}
-        duration={LAPS[entryIndex % LAPS.length]}
-        className={className}
-      />
-    )
-
-    if (isPair) {
-      // Pair row: the planet hugs the centre line, its text sits right under it. The node lines up with the planet centre.
-      const nodeLeft = kind === "pairLeft" ? "calc(100% + var(--half-gap))" : "calc(var(--half-gap) * -1)"
-      const connLeft = kind === "pairLeft" ? "calc(100% - var(--ring-pad))" : "calc(var(--half-gap) * -1)"
-      const nodeTop = "calc(var(--stage) / 2)"
-      return (
-        <div
-          key={entry.id}
-          className={`${reveal} flex flex-col items-center gap-3 ${kind === "pairLeft" ? "md:items-end" : "md:items-start"}`}
-        >
-          <span
-            aria-hidden="true"
-            className={`${styles.conn} hidden md:block`}
-            style={{ top: nodeTop, left: connLeft, width: "calc(var(--ring-pad) + var(--half-gap))" }}
-          />
-          <span aria-hidden="true" className={`${styles.node} hidden md:block`} style={{ top: nodeTop, left: nodeLeft }} />
-          {orbit("")}
-          {renderPanel(entry, "w-full md:max-w-[var(--stage)]")}
-        </div>
-      )
-    }
-
-    // Single row: planet on one side of the line, text panel on the other, vertically centred with each other.
-    // The connector runs from the planet edge, through the node, to the text panel.
-    const connLeft = planetLeft
-      ? "calc(50% - var(--half-gap) - var(--ring-pad))"
-      : "calc(50% - var(--half-gap))"
     return (
-      <div
-        key={entry.id}
-        className={`${reveal} grid grid-cols-1 justify-items-center gap-y-3 md:grid-cols-2 md:items-center md:gap-x-[calc(var(--half-gap)*2)] md:gap-y-0`}
-      >
-        <span
-          aria-hidden="true"
-          className={`${styles.conn} hidden md:block`}
-          style={{
-            top: "50%",
-            left: connLeft,
-            width: "calc(var(--half-gap) * 2 + var(--ring-pad))",
-          }}
+      <div key={entry.id} className={reveal} data-side={entry.side}>
+        {/* Desktop only: dashed link from the planet edge to the centre-line node. */}
+        <span aria-hidden="true" className={styles.conn} />
+        <span aria-hidden="true" className={styles.node} />
+        <TimelineOrbit
+          year={entry.year}
+          name={entry.title}
+          role={(entry.planetRole ?? entry.role)[lang]}
+          tag={entry.tag}
+          videos={entry.videos ?? []}
+          phase={(entryIndex * 0.29) % 1}
+          reverse={entryIndex % 2 === 1}
+          duration={LAPS[entryIndex % LAPS.length]}
+          className={styles.planetCell}
         />
-        <span aria-hidden="true" className={`${styles.node} hidden md:block`} style={{ top: "50%", left: "50%" }} />
-        {orbit(
-          planetLeft
-            ? "md:col-start-1 md:row-start-1 md:justify-self-end"
-            : "md:col-start-2 md:row-start-1 md:justify-self-start",
-        )}
-        {renderPanel(
-          entry,
-          `w-full md:max-w-[30rem] ${
-            planetLeft ? "md:col-start-2 md:row-start-1 md:justify-self-start" : "md:col-start-1 md:row-start-1 md:justify-self-end"
-          }`,
-        )}
+        {renderCallout(entry)}
       </div>
     )
   }
-
-  let entryCounter = 0
 
   return (
     <main className="py-8 px-4 md:px-12 relative">
@@ -425,38 +384,18 @@ export default function Timeline() {
 
         {/* Timeline items */}
         <div className="relative">
-          {rows.map((row) => {
-            const first = row[0]
-            const marker = first.showCovidBefore && (
-              <div className="timeline-item mb-12 flex justify-center opacity-0 transition-all duration-1000 relative z-20">
-                <div className="terminal-header bg-red-900 px-4 py-2 rounded-lg border border-red-500">
-                  <span className="text-white font-bold covid-glitch-digital" data-text="2020: COVID OUTBREAK">2020: COVID OUTBREAK</span>
-                </div>
-              </div>
-            )
-
-            if (row.length === 2) {
-              const [left, right] = row
-              const leftIndex = entryCounter++
-              const rightIndex = entryCounter++
-              return (
-                <React.Fragment key={first.id}>
-                  {marker}
-                  <div className="md:grid md:grid-cols-2 md:gap-x-[calc(var(--half-gap)*2)] md:items-start">
-                    {renderBlock(left, leftIndex, "pairLeft")}
-                    {renderBlock(right, rightIndex, "pairRight")}
+          {timelineItems.map((entry, index) => (
+            <React.Fragment key={entry.id}>
+              {entry.showCovidBefore && (
+                <div className="timeline-item mb-12 flex justify-center opacity-0 transition-all duration-1000 relative z-20">
+                  <div className="terminal-header bg-red-900 px-4 py-2 rounded-lg border border-red-500">
+                    <span className="text-white font-bold covid-glitch-digital" data-text="2020: COVID OUTBREAK">2020: COVID OUTBREAK</span>
                   </div>
-                </React.Fragment>
-              )
-            }
-
-            return (
-              <React.Fragment key={first.id}>
-                {marker}
-                {renderBlock(first, entryCounter++, "single")}
-              </React.Fragment>
-            )
-          })}
+                </div>
+              )}
+              {renderRow(entry, index)}
+            </React.Fragment>
+          ))}
         </div>
       </section>
     </main>
