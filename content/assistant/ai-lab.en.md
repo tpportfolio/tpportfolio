@@ -12,14 +12,18 @@ Current stack reflected in the site:
 - Audio: ElevenLabs, fish.audio, Suno, Udio
 - LLMs: ChatGPT, Kimi, Gemini, Perplexity, Claude
 
-the8bureau is both the personal AI brand and a conceptual operating system: the long-term idea is to turn it into a private, offline toolset that runs locally.
+the8bureau is Tomás's personal AI brand and his sandbox for testing tools, skills and workflows. He shares a set of tools that runs locally on his computer, privately and offline.
 
-Highlighted tools in the the8bureau block:
-- Autonomous Ad Agency
+Tools in the the8bureau block:
 - Neural Optimization Suite (SEO/AEO/GEO)
 - Video Subtitle Suite
 - Transcribe Anything Now
 - Side-by-side Image Compare
 - Maps Lead Extractor
+- Autonomous Ad Agency (status: deprecated)
 
-The 2026 Work and Experiments block currently previews four items: Ad 30-40, Product Demo, Fashion Campaign and UGC Content.
+New in the8bureau v2: Prompt Studio, PDF Toolkit, Cost Calculator and Brand Analyzer.
+
+The AI Experiments page (/work/ai-experiments) opens with REEL 2025/2026, a video reel with a selection of AI works and experiments. Then come 2026 Works and Experiments, AUDIO IA — MUSIC LAB (with a shortcut to RADIO MAGAIBA), 2025 Works and Experiments, the8bureau, the webapps and the 2022-2024 archive.
+
+The 2026 Works and Experiments block shows four items: Product Demo, Fashion Campaign, UGC content and Ad 30-40 Messi. Product Demo and Fashion Campaign are open; UGC content and Ad 30-40 Messi are coming soon.

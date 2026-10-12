@@ -12,14 +12,18 @@ Stack actual del sitio:
 - Audio: ElevenLabs, fish.audio, Suno, Udio
 - LLMs: ChatGPT, Kimi, Gemini, Perplexity, Claude
 
-the8bureau es la marca personal de IA y también un sistema operativo conceptual: la idea es convertirlo en un set de herramientas privadas y offline que corran de manera local.
+the8bureau es la marca personal de IA de Tomás y su sandbox para testear herramientas, skills y workflows. Comparte un set de herramientas que corre de manera local en su computadora, de manera privada y offline.
 
-Herramientas destacadas del bloque the8bureau:
-- Autonomous Ad Agency
+Herramientas del bloque the8bureau:
 - Neural Optimization Suite (SEO/AEO/GEO)
 - Video Subtitle Suite
 - Transcribe Anything Now
 - Side-by-side Image Compare
 - Maps Lead Extractor
+- Autonomous Ad Agency (estado: deprecated)
 
-En 2026 Trabajos y Experimentos hoy aparecen cuatro ítems en preview: Ad 30-40, Demo de producto, Campaña Moda y UGC Content.
+Nuevo en la v2 de the8bureau: Prompt Studio, PDF Toolkit, Calculadora de Costos y Brand Analyzer.
+
+La página de Experimentos IA (/work/ai-experiments) abre con el REEL 2025/2026, un reel en video con una selección de trabajos y experimentos con IA. Después vienen 2026 Trabajos y Experimentos, AUDIO IA — MUSIC LAB (con un atajo a RADIO MAGAIBA), 2025 Trabajos y Experimentos, the8bureau, las webapps y el archivo 2022-2024.
+
+En el bloque 2026 Trabajos y Experimentos aparecen cuatro ítems: Demo de producto, Campaña Moda, UGC content y Ad 30-40 Messi. Demo de producto y Campaña Moda están abiertos; UGC content y Ad 30-40 Messi figuran como próximamente.

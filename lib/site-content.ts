@@ -144,11 +144,11 @@ export const homeProjects: HomeProject[] = [
 
 export const primaryNavigation: NavigationItem[] = [
   { href: '/', label: { es: 'INICIO', en: 'HOME' }, note: 'Primary portfolio home.' },
-  { href: '/about', label: { es: 'ACERCA DE M\u00cd', en: 'ABOUT' }, note: 'Profile, positioning and specialties.' },
   { href: '/timeline', label: { es: 'TIMELINE', en: 'TIMELINE' }, note: 'Career timeline and roles.' },
-  { href: '/work/ai-experiments', label: { es: 'EXPERIMENTOS IA', en: 'AI EXPERIMENTS' }, note: 'AI portfolio, tool stack, work examples and archive.' },
-  { href: '/magaiba', label: { es: 'MAGAIBA', en: 'MAGAIBA' }, note: 'Web + AI project.' },
-  { href: '/contact', label: { es: 'CONTACTO', en: 'CONTACT' }, note: 'Contact route and external contact options.' },
+  { href: '/work/ai-experiments', label: { es: 'EXPERIMENTOS IA', en: 'AI EXPERIMENTS' }, note: 'AI reel, works, music lab, the8bureau tools and archive.' },
+  { href: '/about', label: { es: 'ACERCA DE MÍ', en: 'ABOUT' }, note: 'Profile, positioning and specialties.' },
+  { href: '/contact', label: { es: 'CONTACTO', en: 'CONTACT' }, note: 'Contact landing: LinkedIn, email, location and message form.' },
+  { href: '/magaiba', label: { es: 'MAGAIBA', en: 'MAGAIBA' }, note: 'Web3 + AI side project. Not in the sidebar.' },
   { href: '/home-variant', label: { es: 'HOME VARIANT', en: 'HOME VARIANT' }, note: 'Experimental home variant with local dark/light toggle and agent shortcut.' },
 ]
 

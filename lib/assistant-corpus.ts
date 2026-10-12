@@ -94,6 +94,22 @@ const EXTRA_DOCS: ExtraDoc[] = [
     keywords: ["ai", "experiments", "the8bureau", "tools", "workflows", "veo", "kling", "chatgpt"],
   },
   {
+    file: "magaiba.es.md",
+    lang: "es",
+    route: "/magaiba",
+    section: "magaiba",
+    title: "MAGAIBA",
+    keywords: ["magaiba", "memecoin", "cripto", "web3", "radio", "circulo", "vicioso", "comunidad", "suno"],
+  },
+  {
+    file: "magaiba.en.md",
+    lang: "en",
+    route: "/magaiba",
+    section: "magaiba",
+    title: "MAGAIBA",
+    keywords: ["magaiba", "memecoin", "crypto", "web3", "radio", "circulo", "vicioso", "community", "suno"],
+  },
+  {
     file: "curiosidades.es.md",
     lang: "es",
     route: "/about",

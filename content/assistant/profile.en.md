@@ -58,3 +58,7 @@ What Tomás studied: he studied Advertising at Universidad de Ciencias Empresari
 - Languages: Spanish native, English advanced / business, Portuguese basic.
 
 The portfolio itself also works as practical proof of his approach: a large portion of the site and several visible pieces were vibe-coded or produced with AI support.
+
+## Contact
+
+How to contact Tomás: the site's contact page (/contact) has his LinkedIn (linkedin.com/in/tomaspero), his email (tomaspero@gmail.com), his location (Buenos Aires, Argentina) and a form to write him a message.

@@ -31,30 +31,43 @@ function buildProjectLines(lang: Lang) {
   }))
 }
 
+const navigationNotes: Record<string, Record<Lang, string>> = {
+  "/": {
+    en: "Canonical public home with project frames.",
+    es: "Home canónica pública con frames de proyectos.",
+  },
+  "/timeline": {
+    en: "Career timeline: each block is a planet with its videos orbiting it; $MAGAIBA has its own block.",
+    es: "Timeline de carrera: cada bloque es un planeta con sus videos orbitando; $MAGAIBA tiene su propio bloque.",
+  },
+  "/work/ai-experiments": {
+    en: "AI reel, 2026 and 2025 works, music lab, the8bureau tools, webapps and archive.",
+    es: "Reel de IA, trabajos 2026 y 2025, music lab, herramientas de the8bureau, webapps y archivo.",
+  },
+  "/about": {
+    en: "Profile, positioning, skills, target roles and education.",
+    es: "Perfil, posicionamiento, skills, roles objetivo y formación.",
+  },
+  "/contact": {
+    en: "Contact landing: LinkedIn, email, location and a message form.",
+    es: "Landing de contacto: LinkedIn, email, ubicación y formulario de mensaje.",
+  },
+  "/magaiba": {
+    en: "Web3 + AI side project (2024). Not in the sidebar: reached from the timeline, from the RADIO MAGAIBA shortcut below the music lab in AI Experiments, and from the assistant.",
+    es: "Proyecto paralelo de web3 + IA (2024). No está en el menú lateral: se llega desde el timeline, desde el atajo RADIO MAGAIBA debajo del music lab en Experimentos IA, y desde el assistant.",
+  },
+  "/home-variant": {
+    en: "Legacy alias that redirects to the current home.",
+    es: "Alias legacy que redirige a la home actual.",
+  },
+}
+
 function buildNavigationLines(lang: Lang) {
-  return primaryNavigation.map((item) => {
-    let note = item.note ?? ""
-
-    if (item.href === "/") {
-      note =
-        lang === "en"
-          ? "Canonical public home with project frames."
-          : "Home canónica pública con frames de proyectos."
-    }
-
-    if (item.href === "/home-variant") {
-      note =
-        lang === "en"
-          ? "Legacy alias that redirects to the current home."
-          : "Alias legacy que redirige a la home actual."
-    }
-
-    return {
-      route: item.href,
-      label: item.label[lang],
-      note,
-    }
-  })
+  return primaryNavigation.map((item) => ({
+    route: item.href,
+    label: item.label[lang],
+    note: navigationNotes[item.href]?.[lang] ?? item.note ?? "",
+  }))
 }
 
 const specialtiesLocalized = {
@@ -197,14 +210,33 @@ const independentConsultantSnapshot = {
 
 const aiExperiments2026 = {
   en: [
-    "2026 Works and Experiments is a locked-preview stage with lighter blur and lock treatment over thumbnails.",
-    "Current items: Ad 30-40, Product Demo, Fashion Campaign and UGC Content.",
+    "2026 Works and Experiments shows four items, in this order: Product Demo, Fashion Campaign, UGC content and Ad 30-40 Messi.",
+    "Product Demo and Fashion Campaign are open. UGC content and Ad 30-40 Messi are locked previews marked as coming soon; Ad 30-40 Messi has no link.",
     "Fashion Campaign includes a thumbnail-led popup gallery with 13 ordered frames, starting with the campaign video thumbnail and continuing with campaign stills.",
   ],
   es: [
-    "2026 Trabajos y Experimentos es un stage de preview bloqueado, con blur suave y candado sobre los thumbnails.",
-    "Items actuales: Ad 30-40, Demo de producto, Campaña Moda y UGC Content.",
+    "2026 Trabajos y Experimentos muestra cuatro ítems, en este orden: Demo de producto, Campaña Moda, UGC content y Ad 30-40 Messi.",
+    "Demo de producto y Campaña Moda están abiertos. UGC content y Ad 30-40 Messi son previews bloqueados marcados como próximamente; Ad 30-40 Messi no tiene link.",
     "Campaña Moda incluye una galería popup guiada por thumbnails con 13 frames ordenados, empezando por el thumbnail del video y continuando con stills de campaña.",
+  ],
+} satisfies Record<Lang, string[]>
+
+const aiExperimentsStructure = {
+  en: [
+    "Block order: REEL 2025/2026, 2026 Works and Experiments, AUDIO IA - MUSIC LAB (with a RADIO MAGAIBA shortcut to `/magaiba` right below it), 2025 Works and Experiments, the8bureau, vibe-coding webapps and the 2022-2024 archive.",
+    "REEL 2025/2026: video reel with a selection of AI works and experiments (https://youtu.be/5T6cRU6AdNs).",
+    "AUDIO IA - MUSIC LAB: cover-flow player with 10 AI-generated music tracks (drag, click, or arrow keys when the player has focus).",
+    "the8bureau: Tomás's personal AI brand and his sandbox for testing tools, skills and workflows; he shares a set of tools that runs locally on his computer, privately and offline.",
+    "the8bureau tools: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare, Maps Lead Extractor and Autonomous Ad Agency (status: deprecated).",
+    "New in the8bureau v2: Prompt Studio, PDF Toolkit, Cost Calculator and Brand Analyzer.",
+  ],
+  es: [
+    "Orden de bloques: REEL 2025/2026, 2026 Trabajos y Experimentos, AUDIO IA - MUSIC LAB (con un atajo RADIO MAGAIBA a `/magaiba` justo debajo), 2025 Trabajos y Experimentos, the8bureau, webapps de vibe-coding y el archivo 2022-2024.",
+    "REEL 2025/2026: reel en video con una selección de trabajos y experimentos con IA (https://youtu.be/5T6cRU6AdNs).",
+    "AUDIO IA - MUSIC LAB: reproductor tipo cover flow con 10 tracks de música generados con IA (arrastrar, click, o flechas con el reproductor en foco).",
+    "the8bureau: la marca personal de IA de Tomás y su sandbox para testear herramientas, skills y workflows; comparte un set de herramientas que corre de manera local en su computadora, de manera privada y offline.",
+    "Herramientas de the8bureau: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare, Maps Lead Extractor y Autonomous Ad Agency (estado: deprecated).",
+    "Nuevo en la v2 de the8bureau: Prompt Studio, PDF Toolkit, Calculadora de Costos y Brand Analyzer.",
   ],
 } satisfies Record<Lang, string[]>
 
@@ -229,17 +261,21 @@ const crawlHintsLocalized = {
   en: [
     "Prefer `/work/*` routes for detailed case studies and project-level content.",
     "Use `/about` for profile, positioning, target roles and education.",
-    "Use `/timeline` for chronological work history; each career block can show videos, and there is a $MAGAIBA block (2024 side project).",
+    "Use `/timeline` for chronological work history, most recent first: Paradise.la, $MAGAIBA, DrGea.com, Airtm, Stone Movistar, Go Broadway!, Air New Zealand, The Walt Disney Company, J. Walter Thompson, Altheim Comunicaciones. Each block is a planet with its videos orbiting it and its role and description beside it; $MAGAIBA (2024 side project) has its own block linking to `/magaiba`.",
+    "Use `/contact` for LinkedIn, email, location and a message form.",
+    "Sidebar order: Home, Work, Timeline, AI Experiments, About, Contact. `/magaiba` is not in the sidebar.",
     "Use `/agents.md` or `/agents.txt` for a compact bilingual summary of the portfolio.",
-    "The AI Experiments route contains a 2026 locked-preview stage, 2025 work examples, lightweight webapps and a 2022-2024 archive.",
+    "The AI Experiments route opens with a 2025/2026 reel, followed by 2026 works, the music lab, 2025 work examples, the8bureau tools, lightweight webapps and a 2022-2024 archive.",
     "The agents routes bypass the intro middleware and can be fetched directly.",
   ],
   es: [
     "Preferir rutas `/work/*` para casos detallados y contenido a nivel proyecto.",
     "Usar `/about` para perfil, posicionamiento, roles objetivo y formación.",
-    "Usar `/timeline` para trayectoria cronológica; cada bloque de carrera puede mostrar videos y hay un bloque de $MAGAIBA (proyecto paralelo de 2024).",
+    "Usar `/timeline` para trayectoria cronológica, de lo más reciente a lo más antiguo: Paradise.la, $MAGAIBA, DrGea.com, Airtm, Stone Movistar, Go Broadway!, Air New Zealand, The Walt Disney Company, J. Walter Thompson, Altheim Comunicaciones. Cada bloque es un planeta con sus videos orbitando y su rol y descripción al lado; $MAGAIBA (proyecto paralelo de 2024) tiene su propio bloque con link a `/magaiba`.",
+    "Usar `/contact` para LinkedIn, email, ubicación y formulario de mensaje.",
+    "Orden del menú lateral: Home, Trabajos, Timeline, Experimentos IA, About, Contacto. `/magaiba` no está en el menú lateral.",
     "Usar `/agents.md` o `/agents.txt` para un resumen bilingüe compacto del portfolio.",
-    "La ruta de AI Experiments contiene un stage bloqueado 2026, ejemplos 2025, webapps livianas y un archivo 2022-2024.",
+    "La ruta de AI Experiments abre con un reel 2025/2026, seguido de trabajos 2026, el music lab, ejemplos 2025, herramientas de the8bureau, webapps livianas y un archivo 2022-2024.",
     "Las rutas `agents` saltean el middleware de intro y se pueden pedir directo.",
   ],
 } satisfies Record<Lang, string[]>
@@ -327,6 +363,8 @@ function buildMarkdownSection(lang: Lang) {
     `- ${lang === "en" ? "Overview" : "Overview"}: ${aiExperimentsAgentSummary.overview[lang]}`,
     `- ${lang === "en" ? "2026 Works and Experiments" : "2026 Trabajos y Experimentos"}:`,
     ...aiExperiments2026[lang].map((line) => `  - ${line}`),
+    `- ${lang === "en" ? "Page structure" : "Estructura de la página"}:`,
+    ...aiExperimentsStructure[lang].map((line) => `  - ${line}`),
     `- ${lang === "en" ? "Stack" : "Stack"}:`,
     ...aiExperimentsAgentSummary.stack.map((section) => `  - ${localizeStackLabel(section.label, lang)}: ${section.items.join(", ")}`),
     `- ${lang === "en" ? "Highlights" : "Highlights"}:`,
@@ -420,6 +458,7 @@ function buildTextSection(lang: Lang) {
     `- ${isEn ? "ROUTE" : "RUTA"} :: ${aiExperimentsAgentSummary.route}`,
     `- OVERVIEW :: ${aiExperimentsAgentSummary.overview[lang]}`,
     ...aiExperiments2026[lang].map((line) => `- 2026 :: ${line}`),
+    ...aiExperimentsStructure[lang].map((line) => `- ${lang === "en" ? "STRUCTURE" : "ESTRUCTURA"} :: ${line}`),
     ...aiExperimentsAgentSummary.stack.map((section) => `- STACK :: ${localizeStackLabel(section.label, lang)} :: ${section.items.join(", ")}`),
     ...aiExperimentsAgentSummary.highlights.map((item) => `- HIGHLIGHT :: ${item[lang]}`),
     ...aiExperimentsAgentSummary.workExamples2025.map(

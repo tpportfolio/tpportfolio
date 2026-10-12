@@ -58,3 +58,7 @@ Qué estudió Tomás: estudió Publicidad en la Universidad de Ciencias Empresar
 - Idiomas: español nativo, inglés avanzado / business y portugués básico.
 
 El portfolio también funciona como demostración práctica de su enfoque: gran parte del sitio y varias piezas visibles fueron vibecodeadas o producidas con apoyo de IA.
+
+## Contacto
+
+Cómo contactar a Tomás: en la página de contacto del sitio (/contact) están su LinkedIn (linkedin.com/in/tomaspero), su email (tomaspero@gmail.com), su ubicación (Buenos Aires, Argentina) y un formulario para escribirle un mensaje.
