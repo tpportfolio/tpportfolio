@@ -1,0 +1,201 @@
+/*
+ * Timeline orbit: video thumbnails travelling around a timeline card.
+ *
+ * Geometry (path string, duration, delays) is computed in timeline-orbit.tsx and
+ * passed in as custom properties:
+ *   --path   offset-path value, a rounded rectangle offset outward from the card
+ *   --dur    duration of one lap
+ *   --delay  per-satellite negative animation-delay (even spacing)
+ *   --slot   per-satellite fraction (i+1)/(n+1), used by the static fallback
+ */
+
+.root {
+  --sat-size: 56px;
+  --sat-half: 28px;
+  --sat-gap: 24px; /* must match GAP in timeline-orbit.tsx */
+  --sat-bg: #000;
+  --sat-edge: var(--neon-green);
+  --sat-glow: color-mix(in srgb, var(--neon-green) 60%, transparent);
+  --label-bg: rgba(0, 0, 0, 0.94);
+  --label-fg: var(--neon-cyan);
+  --label-edge: var(--neon-cyan);
+  position: relative;
+}
+
+.root[data-mode="light"] {
+  --sat-bg: #fff7ea;
+  --label-bg: rgba(255, 247, 234, 0.98);
+  --label-fg: #351c0e;
+  --label-edge: var(--neon-green);
+}
+
+/* The layer matches the card box exactly; satellites travel outside of it. */
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.sat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--sat-size);
+  height: var(--sat-size);
+  pointer-events: auto;
+  offset-path: var(--path);
+  offset-rotate: 0deg;
+  offset-distance: 0%;
+  animation: orbit var(--dur, 38s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  animation-play-state: paused;
+}
+
+@keyframes orbit {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+/* Only run while the card is in view and nothing is hovered / focused / open. */
+.root[data-visible="true"] .sat {
+  animation-play-state: running;
+}
+
+.root[data-visible="true"]:hover .sat,
+.root[data-visible="true"]:focus-within .sat,
+.root[data-visible="true"][data-open="true"] .sat {
+  animation-play-state: paused;
+}
+
+/* Static fallback: no offset-path support, or reduced motion. Evenly spaced on the top edge. */
+.layer[data-static="true"] .sat {
+  offset-path: none;
+  animation: none;
+  left: calc(var(--slot, 0.5) * 100% - var(--sat-half));
+  top: calc(-1 * (var(--sat-gap) + var(--sat-half)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sat {
+    offset-path: none;
+    animation: none;
+    left: calc(var(--slot, 0.5) * 100% - var(--sat-half));
+    top: calc(-1 * (var(--sat-gap) + var(--sat-half)));
+  }
+}
+
+/* Thumbnail button (shared by the orbit and the mobile row). */
+.satBtn {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--sat-bg);
+  border: 2px solid var(--sat-edge);
+  border-radius: 14px;
+  box-shadow: 0 0 8px var(--sat-glow), 0 0 0 1px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.satBtn img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.sat:hover .satBtn,
+.satBtn:focus-visible,
+.rowItem .satBtn:hover {
+  transform: scale(1.14);
+  box-shadow: 0 0 14px var(--sat-glow), 0 0 0 1px rgba(0, 0, 0, 0.6);
+}
+
+.satBtn:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 3px;
+}
+
+.satBtn:hover img,
+.satBtn:focus-visible img {
+  opacity: 1;
+}
+
+/* Play glyph */
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.68);
+  border: 1px solid var(--sat-edge);
+  border-radius: 50%;
+}
+
+.play::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 10px;
+  transform: translate(-35%, -50%);
+  background: #fff;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* Title tooltip */
+.label {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  z-index: 3;
+  width: max-content;
+  max-width: 200px;
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--label-fg);
+  background: var(--label-bg);
+  border: 1px solid var(--label-edge);
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+}
+
+.sat:hover .label,
+.sat:focus-within .label {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Mobile row, inside the card */
+.rowItem {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .satBtn,
+  .label {
+    transition: none;
+  }
+}
