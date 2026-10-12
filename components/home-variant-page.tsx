@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { HomePageView } from "@/components/home-page-view"
 import { HomeVariantShader } from "@/components/home-variant-shader"

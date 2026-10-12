@@ -9,7 +9,7 @@ import { LanguageSwitcher } from "./language-switcher"
 import { useVisualMode } from "./visual-mode-context"
 
 export default function Sidebar() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const { mode, toggleMode } = useVisualMode()
   const pathname = usePathname()
   const router = useRouter()
@@ -64,7 +64,7 @@ export default function Sidebar() {
       {isMobileOpen ? (
         <button
           type="button"
-          aria-label="Close menu"
+          aria-label={language === "es" ? "Cerrar menú" : "Close menu"}
           className="fixed inset-0 z-40 bg-black/80 backdrop-blur-[2px] lg:hidden"
           onClick={closeSidebar}
         />
@@ -77,7 +77,7 @@ export default function Sidebar() {
       >
         <button
           type="button"
-          aria-label="Close menu"
+          aria-label={language === "es" ? "Cerrar menú" : "Close menu"}
           className={`absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-md border lg:hidden ${mobileCloseToneClass}`}
           onClick={closeSidebar}
         >
@@ -148,7 +148,11 @@ export default function Sidebar() {
                 type="button"
                 role="switch"
                 aria-checked={mode === "light"}
-                aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
+                aria-label={
+                  language === "es"
+                    ? `Cambiar a modo ${mode === "dark" ? "claro" : "oscuro"}`
+                    : `Switch to ${mode === "dark" ? "light" : "dark"} mode`
+                }
                 className={`sidebar-mode-switch sidebar-mode-switch--${mode}`}
                 onClick={toggleMode}
               >
@@ -162,7 +166,7 @@ export default function Sidebar() {
             <Link href="/agents.md" target="_blank" rel="noopener noreferrer" className="sidebar-agent-link" onClick={closeSidebar}>
               AGENT_MODE
             </Link>
-            <div className="text-xs text-neon-green">{"\u00a9 1986-2025 TOM\u00c1S PER\u00d3"}</div>
+            <div className="text-xs text-neon-green">{`\u00a9 1986-${new Date().getFullYear()} TOM\u00c1S PER\u00d3`}</div>
           </div>
         </div>
       </aside>

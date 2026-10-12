@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
 import { Play, Pause, Volume2, VolumeX, Maximize, Minimize } from "lucide-react"
+import { useLanguage } from "./language-context"
 
 interface VideoPlayerProps {
   src: string
@@ -18,6 +19,8 @@ export function VideoPlayer({
   title,
   description,
 }: VideoPlayerProps) {
+  const { language } = useLanguage()
+  const isEs = language === "es"
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -126,7 +129,7 @@ export function VideoPlayer({
             <button
               onClick={togglePlay}
               className="bg-neon-green bg-opacity-20 text-neon-green hover:bg-opacity-40 rounded-full p-4"
-              aria-label={isPlaying ? "Pause" : "Play"}
+              aria-label={isPlaying ? (isEs ? "Pausar" : "Pause") : isEs ? "Reproducir" : "Play"}
             >
               {isPlaying ? <Pause size={24} /> : <Play size={24} />}
             </button>
@@ -144,7 +147,7 @@ export function VideoPlayer({
                 <button
                   onClick={togglePlay}
                   className="text-neon-green hover:text-neon-cyan"
-                  aria-label={isPlaying ? "Pause" : "Play"}
+                  aria-label={isPlaying ? (isEs ? "Pausar" : "Pause") : isEs ? "Reproducir" : "Play"}
                 >
                   {isPlaying ? <Pause size={16} /> : <Play size={16} />}
                 </button>
@@ -152,7 +155,7 @@ export function VideoPlayer({
                 <button
                   onClick={toggleMute}
                   className="text-neon-green hover:text-neon-cyan"
-                  aria-label={isMuted ? "Unmute" : "Mute"}
+                  aria-label={isMuted ? (isEs ? "Activar sonido" : "Unmute") : isEs ? "Silenciar" : "Mute"}
                 >
                   {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
                 </button>
@@ -165,7 +168,7 @@ export function VideoPlayer({
               <button
                 onClick={toggleFullscreen}
                 className="text-neon-green hover:text-neon-cyan"
-                aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                aria-label={isFullscreen ? (isEs ? "Salir de pantalla completa" : "Exit fullscreen") : isEs ? "Pantalla completa" : "Enter fullscreen"}
               >
                 {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
               </button>

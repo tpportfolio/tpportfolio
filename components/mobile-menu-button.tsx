@@ -2,11 +2,13 @@
 
 import { Menu } from "lucide-react"
 import { useEffect, useState } from "react"
+import { useLanguage } from "./language-context"
 import { useVisualMode } from "./visual-mode-context"
 
 export function MobileMenuButton() {
   const [open, setOpen] = useState(false)
   const { mode } = useVisualMode()
+  const { language } = useLanguage()
 
   useEffect(() => {
     const handleState = (event: Event) => {
@@ -36,7 +38,11 @@ export function MobileMenuButton() {
         open ? "hidden" : "flex"
       }`}
       onClick={toggleSidebar}
-      aria-label={open ? "Close menu" : "Open menu"}
+      aria-label={
+        language === "es"
+          ? open ? "Cerrar menú" : "Abrir menú"
+          : open ? "Close menu" : "Open menu"
+      }
       aria-expanded={open}
       aria-controls="sidebar"
     >

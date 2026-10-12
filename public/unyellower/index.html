@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es" data-theme="dark">
 <head>
   <meta charset="utf-8" />
@@ -354,10 +354,10 @@
           <input id="files" type="file" accept="image/*" multiple />
           <span class="pill" id="countPill">0 images</span>
         </div>
-        <div id="drop" class="drop">ArrastrÃ¡ imÃ¡genes acÃ¡ (batch)</div>
+        <div id="drop" class="drop">Arrastrá imágenes acá (batch)</div>
 
         <p class="hint">
-          Global por default. ActivÃ¡ <span class="mono">Edit selected</span> para override individual y luego descargÃ¡s todo el batch.
+          Global por default. Activá <span class="mono">Edit selected</span> para override individual y luego descargás todo el batch.
         </p>
 
         <div class="divider"></div>
@@ -397,7 +397,7 @@
         </label>
 
         <div class="btns">
-          <button class="btnPrimary" id="toggleAB">Antes/DespuÃ©s</button>
+          <button class="btnPrimary" id="toggleAB">Antes/Después</button>
           <button id="reset">Reset</button>
           <button id="downloadOne">Download (selected)</button>
           <button id="downloadAll">Download (batch)</button>
@@ -406,7 +406,7 @@
 
       <div class="right">
         <div class="card preview">
-          <div id="tag" class="tag">DESPUÃ‰S</div>
+          <div id="tag" class="tag">DESPUÉS</div>
           <div id="viewport" class="viewport">
             <canvas id="mainCanvas"></canvas>
           </div>
@@ -415,7 +415,7 @@
         <div class="card">
           <div class="gridBar">
             <strong>BATCH GRID</strong>
-            <span class="pill" id="selectedPill">Selected: â€”</span>
+            <span class="pill" id="selectedPill">Selected: —</span>
             <span class="sp"></span>
             <span class="editPill" id="overridePill" style="display:none;">Override active</span>
           </div>
@@ -620,7 +620,7 @@
       tag.style.display = 'none';
       mainCanvas.width = 1; mainCanvas.height = 1;
       mctx.clearRect(0,0,1,1);
-      selectedPill.textContent = `Selected: â€”`;
+      selectedPill.textContent = `Selected: —`;
       updateEditUI();
       return;
     }
@@ -642,7 +642,7 @@
       const out = computeAfter(it.baseImageData, it.w, it.h, s);
       mctx.putImageData(out, 0, 0);
       tag.style.display = 'block';
-      tag.textContent = 'DESPUÃ‰S';
+      tag.textContent = 'DESPUÉS';
     }
     updateEditUI();
   }
@@ -870,7 +870,7 @@
   downloadOneBtn.addEventListener('click', downloadSelected);
   downloadAllBtn.addEventListener('click', downloadBatch);
 
-  // Ctrl/âŒ˜ + wheel zoom on main
+  // Ctrl/⌘ + wheel zoom on main
   viewport.addEventListener('wheel', (e) => {
     if (!e.ctrlKey && !e.metaKey) return;
     e.preventDefault();
@@ -906,7 +906,7 @@
   updateEditUI();
 })();
 </script>
-<footer class="footerCredit">ðŸ„¯ 2025 - HECHO POR TOMÃS P.</footer>
+<footer class="footerCredit">🄯 2025 - HECHO POR TOMÁS P.</footer>
 <script src="/tool-suite/the8bureau-bridge.js"></script>
 </body>
 </html>

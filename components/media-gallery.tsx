@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, Maximize, X } from "lucide-react"
+import { useLanguage } from "./language-context"
 
 interface MediaItem {
   id: number
@@ -19,6 +20,8 @@ interface MediaGalleryProps {
 }
 
 export function MediaGallery({ items, title = "MEDIA_ARCHIVE" }: MediaGalleryProps) {
+  const { language } = useLanguage()
+  const isEs = language === "es"
   const [currentIndex, setCurrentIndex] = useState(0)
   const [fullscreen, setFullscreen] = useState(false)
 
@@ -44,7 +47,7 @@ export function MediaGallery({ items, title = "MEDIA_ARCHIVE" }: MediaGalleryPro
           <button
             onClick={toggleFullscreen}
             className="text-neon-green hover:text-neon-cyan transition-colors"
-            aria-label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+            aria-label={fullscreen ? (isEs ? "Salir de pantalla completa" : "Exit fullscreen") : isEs ? "Pantalla completa" : "Enter fullscreen"}
           >
             {fullscreen ? <X size={16} /> : <Maximize size={16} />}
           </button>
@@ -61,7 +64,7 @@ export function MediaGallery({ items, title = "MEDIA_ARCHIVE" }: MediaGalleryPro
             <button
               onClick={toggleFullscreen}
               className="text-neon-green hover:text-neon-cyan transition-colors"
-              aria-label="Exit fullscreen"
+              aria-label={isEs ? "Salir de pantalla completa" : "Exit fullscreen"}
             >
               <X size={20} />
             </button>
@@ -101,14 +104,14 @@ export function MediaGallery({ items, title = "MEDIA_ARCHIVE" }: MediaGalleryPro
           <button
             onClick={prevItem}
             className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-neon-green hover:text-neon-cyan p-1 rounded-full"
-            aria-label="Previous item"
+            aria-label={isEs ? "Elemento anterior" : "Previous item"}
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={nextItem}
             className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-neon-green hover:text-neon-cyan p-1 rounded-full"
-            aria-label="Next item"
+            aria-label={isEs ? "Elemento siguiente" : "Next item"}
           >
             <ChevronRight size={24} />
           </button>
@@ -134,7 +137,7 @@ export function MediaGallery({ items, title = "MEDIA_ARCHIVE" }: MediaGalleryPro
                 className={`relative h-16 overflow-hidden border ${
                   index === currentIndex ? "border-neon-cyan" : "border-neon-green border-opacity-30"
                 }`}
-                aria-label={`View ${item.alt}`}
+                aria-label={isEs ? `Ver ${item.alt}` : `View ${item.alt}`}
               >
                 {item.type === "image" ? (
                   <Image

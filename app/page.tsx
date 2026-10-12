@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next"
+import type { Metadata } from "next"
 import { HomeVariantPage } from "@/components/home-variant-page"
 
 export const metadata: Metadata = {

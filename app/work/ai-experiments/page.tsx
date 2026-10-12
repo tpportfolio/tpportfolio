@@ -66,6 +66,11 @@ const IA_AUDIO_TRACKS: AudioTrack[] = [
   { id: "parody-chacal", title: "Parody — La cumbia del chacal", tag: "Parodia / Cumbia", file: "/audio/ia-tracks/parody-la-cumbia-del-chacal.mp3", cover: "/audio/ia-tracks/covers/parody-la-cumbia-del-chacal.jpg", gradient: "linear-gradient(135deg,#dc2626,#f59e0b)" },
 ]
 
+function localizeTrackTag(tag: string, language: SupportedLanguage) {
+  if (language === "es") return tag
+  return tag.replace("Fragancia", "Fragrance").replace("Parodia", "Parody")
+}
+
 function formatTrackTime(seconds: number) {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00"
   const minutes = Math.floor(seconds / 60)
@@ -116,7 +121,7 @@ const modaGallery: GalleryImage[] = Array.from({ length: 16 }, (_, index) => {
   ]
   return {
     id: `moda-${index + 1}`,
-    label: `Moda ${String(index + 1).padStart(2, "0")}`,
+    label: `Look ${String(index + 1).padStart(2, "0")}`,
     gradient: `linear-gradient(135deg, hsl(${hue} 82% 62%), hsl(${hue + 20} 78% 26%))`,
     imageSrc: modaGalleryImages[index],
   }
@@ -142,7 +147,7 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       mediaTag: "video",
       title: { es: "Demo de producto", en: "Product Demo" },
       description: {
-        es: "Video embebido de referencia. Usa el mismo espacio visual que una galeria.",
+        es: "Video embebido de referencia. Usa el mismo espacio visual que una galería.",
         en: "Embedded reference video. It uses the same visual area as a gallery.",
       },
       videoId: "zW8DP4fr7xA",
@@ -153,10 +158,10 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       id: "campana-moda",
       kind: "gallery",
       mediaTag: "imagen",
-      title: { es: "Campana Moda", en: "Fashion Campaign" },
+      title: { es: "Campaña Moda", en: "Fashion Campaign" },
       description: {
-        es: "Galeria placeholder de 16 imagenes en grilla 4x4. Click para abrir fullscreen.",
-        en: "16-image placeholder gallery in a 4x4 grid. Click to open fullscreen.",
+        es: "Galería placeholder de 16 imágenes en grilla 4x4. Click para abrir en pantalla completa.",
+        en: "16-image placeholder gallery in a 4x4 grid. Click to open in fullscreen.",
       },
       galleryImages: modaGallery,
       thumbnail: thumbAND1,
@@ -177,7 +182,7 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
 }
 
 const the8BureauIntro: Record<SupportedLanguage, string> = {
-  es: "the8bureau es mi marca personal de IA y también es mi sistema operativo: la idea es convertirlo en un set de herramientas que pueda correr de manera local en mi computadora, de manera privada y offline.",
+  es: "the8bureau es mi marca personal de IA y también es mi sistema operativo: la idea es convertirlo en un set de herramientas que pueda correr de manera local en mi computadora, de manera privada y offline. Quiero que sea una capa práctica para experimentar, orquestar y ejecutar sin depender de flujos de trabajo que solo funcionan en la nube.",
   en: "the8bureau is my personal AI brand and also my operating system: the idea is to turn it into a set of tools that can run locally on my computer, privately and offline. I want it to become a practical layer for experimentation, orchestration and execution without depending on cloud-only workflows.",
 }
 
@@ -192,7 +197,7 @@ const the8BureauFeatures: The8BureauFeature[] = [
   {
     title: "NEURAL OPTIMIZATION SUITE (SEO/AEO/GEO)",
     description: {
-      es: "Análisis de tu marca online, reportes de posicionamiento en Google (SEO) y LLM's (AEO/GEO).",
+      es: "Análisis de tu marca online, reportes de posicionamiento en Google (SEO) y en LLMs (AEO/GEO).",
       en: "Analysis of your brand online, with positioning reports for Google (SEO) and LLMs (AEO/GEO).",
     },
   },
@@ -271,7 +276,7 @@ function The8BureauThumbnail({ isLight }: { isLight: boolean }) {
             <div className={`mt-2 text-[11px] leading-snug ${textMuted}`}>
               {feature.title === "AUTONOMOUS AD AGENCY"
                 ? "Autonomous advertising + CEO agent"
-                : feature.title === "NEURAL OPTIMIZATION SUITE"
+                : feature.title === "NEURAL OPTIMIZATION SUITE (SEO/AEO/GEO)"
                   ? "AEO / GEO / SEO visibility"
                   : feature.title === "VIDEO SUBTITLE SUITE"
                     ? "Subtitle editor"
@@ -289,11 +294,12 @@ function The8BureauThumbnail({ isLight }: { isLight: boolean }) {
 }
 
 function The8BureauScreenshotThumb({ isLight, onOpen }: { isLight: boolean; onOpen: () => void }) {
+  const { language } = useLanguage()
   return (
     <button
       type="button"
       onClick={onOpen}
-      aria-label="Open the8bureau dashboard image"
+      aria-label={language === "es" ? "Abrir la imagen del dashboard de the8bureau" : "Open the8bureau dashboard image"}
       className={`block h-full w-full max-w-[300px] overflow-hidden rounded-sm border text-left shadow-[0_0_24px_rgba(0,0,0,0.22)] transition-transform hover:scale-[1.01] ${
         isLight ? "border-[#c57b45] bg-[#fff5e8]" : "border-neon-green/30 bg-[#03190f]"
       }`}
@@ -301,7 +307,7 @@ function The8BureauScreenshotThumb({ isLight, onOpen }: { isLight: boolean; onOp
       <div className={`relative h-full min-h-[220px] w-full ${isLight ? "bg-[#f7ead8]" : "bg-[#04150d]"}`}>
         <Image
           src={the8bureauThumb}
-          alt="the8bureau dashboard"
+          alt={language === "es" ? "Dashboard de the8bureau" : "the8bureau dashboard"}
           fill
           sizes="(max-width: 1280px) 300px, 300px"
           className="object-contain object-top"
@@ -313,14 +319,17 @@ function The8BureauScreenshotThumb({ isLight, onOpen }: { isLight: boolean; onOp
 }
 
 function The8BureauImageModal({ isLight, onClose }: { isLight: boolean; onClose: () => void }) {
+  const { language } = useLanguage()
+  const closePreviewLabel = language === "es" ? "Cerrar vista previa de la imagen" : "Close image preview"
+  const dashboardLabel = language === "es" ? "Dashboard de the8bureau" : "the8bureau dashboard"
   return (
     <div
       className="fixed inset-3 z-[90] md:bottom-6 md:right-6 md:top-6 md:left-[13.5rem] lg:left-[14rem]"
       role="dialog"
       aria-modal="true"
-      aria-label="the8bureau dashboard"
+      aria-label={dashboardLabel}
     >
-      <button type="button" className="absolute inset-0 bg-black/80" onClick={onClose} aria-label="Close image preview" />
+      <button type="button" className="absolute inset-0 bg-black/80" onClick={onClose} aria-label={closePreviewLabel} />
       <div
         className={`relative mx-auto flex h-full max-h-[90vh] w-full md:w-[88%] max-w-none flex-col overflow-hidden rounded-sm border-2 ${
           isLight ? "border-[#8b4315] bg-[#fff8f1]" : "border-neon-green bg-black"
@@ -338,14 +347,14 @@ function The8BureauImageModal({ isLight, onClose }: { isLight: boolean; onClose:
             className={`inline-flex h-9 w-9 items-center justify-center rounded-sm border ${
               isLight ? "border-[#8b4315] text-[#6f3210] hover:bg-[#f6e6d2]" : "border-neon-green/40 text-neon-green hover:bg-neon-green/10"
             }`}
-            aria-label="Close image preview"
+            aria-label={closePreviewLabel}
           >
             X
           </button>
         </div>
         <div className={`relative flex-1 p-4 ${isLight ? "bg-[#fff8f1]" : "bg-black"}`}>
           <div className="relative h-full w-full">
-            <Image src={the8bureauPopupThumb} alt="the8bureau dashboard" fill sizes="90vw" className="object-contain" />
+            <Image src={the8bureauPopupThumb} alt={dashboardLabel} fill sizes="90vw" className="object-contain" />
           </div>
         </div>
       </div>
@@ -362,6 +371,7 @@ function PreviewStage({
   isLight: boolean
   lockedPreview?: boolean
 }) {
+  const { language } = useLanguage()
   const frameClass = isLight
     ? "border-[#d9a06b] bg-[#f8ead9]"
     : "border-neon-green/20 bg-black/40"
@@ -381,7 +391,7 @@ function PreviewStage({
         style={{ backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }}
       >
         <Lock className="h-3.5 w-3.5" />
-        <span>{isLight ? "Proximamente" : "Coming soon"}</span>
+        <span>{language === "es" ? "Próximamente" : "Coming soon"}</span>
       </div>
     </div>
   ) : null
@@ -392,7 +402,7 @@ function PreviewStage({
         <div className="relative h-full w-full overflow-hidden">
           <Image
             src={item.thumbnail}
-            alt={item.title.es}
+            alt={item.title[language]}
             fill
             sizes="(max-width: 1280px) 100vw, 900px"
             className="object-contain"
@@ -440,7 +450,7 @@ function PreviewStage({
         <div className="relative h-full w-full overflow-hidden">
           <img
             src={`https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`}
-            alt={item.title.es}
+            alt={item.title[language]}
             className="h-full w-full object-contain"
             style={previewInnerStyle}
             loading="lazy"
@@ -466,7 +476,7 @@ function PreviewStage({
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-neon-green/40 bg-neon-green/10">
               <Play className="h-5 w-5 fill-current text-neon-green" />
             </div>
-            <div className="font-cyber text-xl text-neon-cyan">{item.title.es}</div>
+            <div className="font-cyber text-xl text-neon-cyan">{item.title[language]}</div>
           </div>
         </div>
         {previewOverlay}
@@ -550,7 +560,7 @@ function Work2026Modal({
       aria-modal="true"
       aria-label={item.title[language]}
     >
-      <button className="absolute inset-0 bg-black/80" onClick={onClose} aria-label="Close popup" />
+      <button className="absolute inset-0 bg-black/80" onClick={onClose} aria-label={language === "es" ? "Cerrar popup" : "Close popup"} />
       <div className={shellClass}>
         <div
           className={`flex items-center justify-between border-b px-4 py-3 ${
@@ -565,7 +575,7 @@ function Work2026Modal({
                 ? "border-[#8b4315] text-[#6f3210] hover:bg-[#f6e6d2]"
                 : "border-neon-green/40 text-neon-green hover:bg-neon-green/10"
             }`}
-            aria-label="Close popup"
+            aria-label={language === "es" ? "Cerrar popup" : "Close popup"}
           >
             <X className="h-4 w-4" />
           </button>
@@ -636,7 +646,7 @@ function Work2026Modal({
 
         {selectedGalleryImage?.imageSrc ? (
           <div className="absolute inset-0 z-[20] flex items-center justify-center bg-black/88 p-2 sm:p-4">
-            <button className="absolute inset-0" onClick={() => setSelectedGalleryImage(null)} aria-label="Close image preview" />
+            <button className="absolute inset-0" onClick={() => setSelectedGalleryImage(null)} aria-label={language === "es" ? "Cerrar vista previa de la imagen" : "Close image preview"} />
             <div
               className={`relative z-[1] w-full max-w-[min(92vw,1120px)] overflow-hidden rounded-sm border p-2 sm:p-3 ${
                 isLight ? "border-[#c57b45] bg-[#fff8f1]" : "border-neon-green/40 bg-black"
@@ -650,7 +660,7 @@ function Work2026Modal({
                     ? "border-[#8b4315] text-[#6f3210] hover:bg-[#f6e6d2]"
                     : "border-neon-green/40 text-neon-green hover:bg-neon-green/10"
                 }`}
-                aria-label="Close image preview"
+                aria-label={language === "es" ? "Cerrar vista previa de la imagen" : "Close image preview"}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1292,7 +1302,7 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
           Track <span className="font-bold" style={{ color: accent }}>{currentIndex + 1}</span> / {total}
         </div>
         <div className="hidden font-cyber text-[10px] uppercase tracking-[0.2em] opacity-60 sm:block">
-          Drag • Click • ← →
+          {language === "es" ? "Arrastrá • Click • ← →" : "Drag • Click • ← →"}
         </div>
         <div
           className="rounded-full border border-white/15 bg-black/40 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em]"
@@ -1362,7 +1372,11 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
                     <button
                       type="button"
                       onClick={() => selectTrack(index)}
-                      aria-label={isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`}
+                      aria-label={
+                        language === "es"
+                          ? isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`
+                          : isActive && isPlaying ? `Pause ${track.title}` : `Play ${track.title}`
+                      }
                       className={`absolute inset-0 block cursor-pointer overflow-hidden rounded-sm border shadow-2xl transition-colors ${
                         isActive
                           ? isLight
@@ -1390,7 +1404,11 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
                     <button
                       type="button"
                       onClick={() => selectTrack(index)}
-                      aria-label={isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`}
+                      aria-label={
+                        language === "es"
+                          ? isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`
+                          : isActive && isPlaying ? `Pause ${track.title}` : `Play ${track.title}`
+                      }
                       className="absolute inset-0 flex cursor-pointer items-center justify-center overflow-hidden rounded-sm border border-white/15 bg-[#0a0a0c] shadow-2xl"
                       style={{
                         backfaceVisibility: "hidden",
@@ -1424,7 +1442,11 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
                   <button
                     type="button"
                     onClick={() => selectTrack(index)}
-                    aria-label={isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`}
+                    aria-label={
+                        language === "es"
+                          ? isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`
+                          : isActive && isPlaying ? `Pause ${track.title}` : `Play ${track.title}`
+                      }
                     className="absolute left-1/2 top-1/2 z-30 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border bg-black/60 backdrop-blur-sm transition-transform hover:scale-110 active:scale-95"
                     style={
                       isActive
@@ -1470,14 +1492,18 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
                     }`}
                     style={isLight ? { textShadow: "0 0 8px rgba(245,158,11,0.65)" } : undefined}
                   >
-                    {track.tag}
+                    {localizeTrackTag(track.tag, language)}
                   </p>
                   {isActive ? (
                     <div className="mt-1.5 flex w-full items-center justify-center gap-1.5">
                       <button
                         type="button"
                         onClick={() => setVolume((current) => (current === 0 ? 0.85 : 0))}
-                        aria-label={volume === 0 ? "Unmute" : "Mute"}
+                        aria-label={
+                          language === "es"
+                            ? volume === 0 ? "Activar sonido" : "Silenciar"
+                            : volume === 0 ? "Unmute" : "Mute"
+                        }
                         className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border ${
                           isLight ? "border-[#d9a06b]/70 text-[#8b4315]" : "border-white/20 text-white/80"
                         }`}
@@ -1669,12 +1695,12 @@ export default function AIExperimentsPage() {
       videoId: "PLTai-gQI1os2Pz82VXGrAZ9Jov1dujRCl",
       isPlaylist: true,
       title: {
-        es: "JUN'24 - LUMA TESTING. El mato a un policia motorizado animated artworks.",
-        en: "JUN'24 - LUMA TESTING. El mato a un policia motorizado animated artworks.",
+        es: "JUN'24 - LUMA TESTING. Artworks animados de El mató a un policía motorizado.",
+        en: "JUN'24 - LUMA TESTING. El mató a un policía motorizado animated artworks.",
       },
       description: {
-        es: 'Probe Luma Labs en los artworks de "El mato a un policia motorizado".',
-        en: 'Tests performed with Luma Labs on the artworks of "El mato a un policia motorizado".',
+        es: 'Probé Luma Labs en los artworks de "El mató a un policía motorizado".',
+        en: 'I tested Luma Labs on the artworks of "El mató a un policía motorizado".',
       },
     },
     {
@@ -1682,12 +1708,12 @@ export default function AIExperimentsPage() {
       type: "youtube",
       videoId: "1wRmJKLHZ5A",
       title: {
-        es: "JUN'24 - Playground Endless: recomendacion del vocero presidencial",
+        es: "JUN'24 - Playground Endless: recomendación del vocero presidencial",
         en: "JUN'24 - Playground Endless: recommendation from the presidential spokesman",
       },
       description: {
-        es: "Probe la plataforma Endless (un playground creativo). Use clonacion de voz de Manuel Adorni y edite el video.",
-        en: "Testing of the Endless platform, a creative playground. Use of voice cloning of Manuel Adorni and video editing.",
+        es: "Probé la plataforma Endless (un playground creativo). Usé clonación de voz de Manuel Adorni y edité el video.",
+        en: "I tested the Endless platform, a creative playground. I used voice cloning of Manuel Adorni and edited the video.",
       },
     },
     {
@@ -1699,8 +1725,8 @@ export default function AIExperimentsPage() {
         en: "SEP'24 - Google NotebookLM Podcast",
       },
       description: {
-        es: "Probe Google NotebookLM y genere un podcast a partir de mi propio curriculum vitae.",
-        en: "Testing of Google NotebookLM, creating a podcast from my own curriculum vitae.",
+        es: "Probé Google NotebookLM y generé un podcast a partir de mi propio currículum vitae.",
+        en: "I tested Google NotebookLM and generated a podcast from my own curriculum vitae.",
       },
     },
     {
@@ -1712,8 +1738,8 @@ export default function AIExperimentsPage() {
         en: "MAR'24 - Suno freestyle CV song",
       },
       description: {
-        es: "Hice mis primeras pruebas con Suno en creacion de canciones: un freestyle/hip-hop sobre mi CV. Trabaje parte de la letra con ChatGPT.",
-        en: "First tests with Suno in song creation: a freestyle/hip-hop based on my CV. Part of the lyrics was developed with ChatGPT.",
+        es: "Hice mis primeras pruebas con Suno en creación de canciones: un freestyle/hip-hop sobre mi CV. Trabajé parte de la letra con ChatGPT.",
+        en: "My first tests with Suno in song creation: a freestyle/hip-hop track based on my CV. I worked on part of the lyrics with ChatGPT.",
       },
     },
     {
@@ -1725,8 +1751,8 @@ export default function AIExperimentsPage() {
         en: "NOV'22 - Stable Diffusion Testing",
       },
       description: {
-        es: "Hice mis primeras pruebas con Stable Diffusion. Desde aca empece a entusiasmarme y profundizar a diario.",
-        en: "First tests with Stable Diffusion. From there I got excited and started going deeper every day.",
+        es: "Hice mis primeras pruebas con Stable Diffusion. Desde acá empecé a entusiasmarme y a profundizar a diario.",
+        en: "My first tests with Stable Diffusion. From there I got excited and started going deeper every day.",
       },
     },
   ]
@@ -1838,12 +1864,15 @@ export default function AIExperimentsPage() {
                   Desde junio de 2024 participo del curso y la comunidad de Morfeo Academy. Mi experiencia profesional
                   directamente vinculada a IA es mi trabajo como AI & Content Consultant & Producer en Paradise.la
                   (julio de 2024 a enero de 2026), donde trabajé en la
-                  transición hacia una productora audiovisual impulsada por IA. Exploro herramientas y workflows para
+                  transición hacia una productora audiovisual impulsada por IA. Trabajo como creative technologist: uso
+                  un stack de IA todos los días para prototipar campañas y acelerar la producción de contenido. En
+                  Paradise.la el resultado fue pasar de ciclos de concepto a entrega de más de 2 semanas a 3–4 días en
+                  producciones piloto. Exploro herramientas y workflows para
                   marcas y equipos, con foco en acelerar, iterar, reducir fricción y mejorar la calidad. Trabajo con IA en:{" "}
                   <span className="font-cyber text-neon-cyan">IMAGEN</span>: Nanobanana, GPT-2, Flux, Midjourney.{" "}
                   <span className="font-cyber text-neon-cyan">VIDEO</span>: Flow / Veo, Kling, Runway,
                   Higgsfield/Freepik. <span className="font-cyber text-neon-cyan">AUDIO</span>: ElevenLabs,
-                  fish.audio, Suno, Udio. <span className="font-cyber text-neon-cyan">LLM&apos;S</span>: ChatGPT,
+                  fish.audio, Suno, Udio. <span className="font-cyber text-neon-cyan">LLMS</span>: ChatGPT,
                   Kimi, Gemini, Perplexity, Claude.
                 </>
               ) : (
@@ -1852,12 +1881,14 @@ export default function AIExperimentsPage() {
                   myself. Since June 2024, I have been part of Morfeo Academy's course and community. My professional
                   AI experience is my work as AI & Content Consultant & Producer at Paradise.la (July 2024 to January
                   2026), where I worked on its transition toward
-                  an AI-driven audiovisual production company. I explore tools and workflows for brands and teams,
+                  an AI-driven audiovisual production company. I work as a creative technologist: I run an AI stack
+                  every day to prototype campaigns and speed up content production. At Paradise.la, concept-to-delivery
+                  cycles went from 2+ weeks to 3–4 days on pilot productions. I explore tools and workflows for brands and teams,
                   focused on accelerating, iterating, reducing friction and improving quality. I work with AI across{" "}
                   <span className="font-cyber text-neon-cyan">IMAGE</span>: Nanobanana, GPT-2, Flux, Midjourney.{" "}
                   <span className="font-cyber text-neon-cyan">VIDEO</span>: Flow / Veo, Kling, Runway,
                   Higgsfield/Freepik. <span className="font-cyber text-neon-cyan">AUDIO</span>: ElevenLabs,
-                  fish.audio, Suno, Udio. <span className="font-cyber text-neon-cyan">LLM&apos;S</span>: ChatGPT,
+                  fish.audio, Suno, Udio. <span className="font-cyber text-neon-cyan">LLMS</span>: ChatGPT,
                   Kimi, Gemini, Perplexity, Claude.
                 </>
               )}
@@ -1930,17 +1961,19 @@ export default function AIExperimentsPage() {
             >
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="h-full rounded-sm border border-neon-green/30 bg-black/30 p-4">
-                  <div className="mb-2 font-cyber text-lg text-neon-cyan">Pitch Jugos Mexico - Animatic</div>
+                  <div className="mb-2 font-cyber text-lg text-neon-cyan">
+                    {currentLanguage === "es" ? "Pitch Jugos México - Animatic" : "Mexico Juice Pitch - Animatic"}
+                  </div>
                   <div className="whitespace-pre-line text-base leading-relaxed text-neon-green/90">
                     {currentLanguage === "es"
-                      ? "Animatic tecnica mixta footage + contenido IA (esto ultimo a mi cargo).\nPipeline IA end-to-end: im\u00e1genes -> video -> voz."
-                      : "Mixed-technique animatic (footage + AI content, AI part by me).\nEnd-to-end AI pipeline: images -> video -> voice."}
+                      ? "Animatic de técnica mixta: footage + contenido IA (esto último a mi cargo).\nPipeline IA end-to-end: im\u00e1genes -> video -> voz."
+                      : "Mixed-technique animatic: footage + AI content (the AI part was my responsibility).\nEnd-to-end AI pipeline: images -> video -> voice."}
                   </div>
                   <a href={jumexLink[currentLanguage]} target="_blank" rel="noreferrer" className="mt-3 block">
                     <div className="aspect-video w-full overflow-hidden rounded-sm border border-neon-green/30">
                       <img
                         src="https://img.youtube.com/vi/U6_3OB7ljvY/hqdefault.jpg"
-                        alt="Jumex animatic thumbnail"
+                        alt={currentLanguage === "es" ? "Miniatura del animatic del pitch de jugos" : "Juice pitch animatic thumbnail"}
                         className="h-full w-full object-cover"
                         loading="lazy"
                       />
@@ -1968,17 +2001,19 @@ export default function AIExperimentsPage() {
                 </div>
 
                 <div className="h-full rounded-sm border border-neon-green/30 bg-black/30 p-4">
-                  <div className="mb-2 font-cyber text-lg text-neon-cyan">Pitch Sandwiches Mexico - Animatic</div>
+                  <div className="mb-2 font-cyber text-lg text-neon-cyan">
+                    {currentLanguage === "es" ? "Pitch Sandwiches México - Animatic" : "Mexico Sandwich Pitch - Animatic"}
+                  </div>
                   <div className="whitespace-pre-line text-base leading-relaxed text-neon-green/90">
                     {currentLanguage === "es"
-                      ? "Animatic tecnica mixta footage + contenido IA (esto ultimo a mi cargo).\nPipeline IA end-to-end: im\u00e1genes -> video."
-                      : "Mixed-technique animatic (footage + AI content, AI part by me).\nEnd-to-end AI pipeline: images -> video."}
+                      ? "Animatic de técnica mixta: footage + contenido IA (esto último a mi cargo).\nPipeline IA end-to-end: im\u00e1genes -> video."
+                      : "Mixed-technique animatic: footage + AI content (the AI part was my responsibility).\nEnd-to-end AI pipeline: images -> video."}
                   </div>
                   <a href={subwayLink[currentLanguage]} target="_blank" rel="noreferrer" className="mt-3 block">
                     <div className="aspect-video w-full overflow-hidden rounded-sm border border-neon-green/30">
                       <img
                         src="https://img.youtube.com/vi/zW8DP4fr7xA/hqdefault.jpg"
-                        alt="Subway animatic thumbnail"
+                        alt={currentLanguage === "es" ? "Miniatura del animatic del pitch de sandwiches" : "Sandwich pitch animatic thumbnail"}
                         className="h-full w-full object-cover"
                         loading="lazy"
                       />
@@ -2013,7 +2048,7 @@ export default function AIExperimentsPage() {
           <RetroPanel title="VIBE-CODING: WEBAPPS" statusRight="TOOLS">
             <p className="mb-4 text-base leading-relaxed text-neon-green/90">
               {currentLanguage === "es"
-                ? "de the8bureau, marca personal para proyectos IA: Mini apps utiles, gratuitas y livianas para trabajo de produccion. Corren offline (abris el HTML en tu Mac/PC) o las podes usar desde esta misma web."
+                ? "de the8bureau, marca personal para proyectos de IA: mini apps útiles, gratuitas y livianas para trabajo de producción. Corren offline (abrís el HTML en tu Mac/PC) o las podés usar desde esta misma web."
                 : "from the8bureau, personal brand for AI projects: lightweight, free mini-apps for production work. They run offline (open the HTML on your Mac/PC) or you can use them from this website."}
             </p>
 
@@ -2029,11 +2064,11 @@ export default function AIExperimentsPage() {
                   href="/canva_productora"
                   className="mt-3 block overflow-hidden rounded border border-neon-green/40 bg-black/20 transition-colors hover:border-neon-cyan/60"
                 >
-                  <div className="border-b border-neon-green/30 px-3 py-2 text-xs text-neon-green/80">preview</div>
+                  <div className="border-b border-neon-green/30 px-3 py-2 text-xs text-neon-green/80">{currentLanguage === "es" ? "vista previa" : "preview"}</div>
                   <div className="relative aspect-video w-full overflow-hidden bg-black">
                     <iframe
                       src="/canva_productora/index.html"
-                      title="CANVA_PRODUCTORA preview"
+                      title={`CANVA_PRODUCTORA ${currentLanguage === "es" ? "vista previa" : "preview"}`}
                       className="absolute left-0 top-0 h-[400%] w-[400%] origin-top-left scale-[0.25] border-0 pointer-events-none"
                       sandbox="allow-scripts allow-same-origin allow-forms allow-downloads"
                     />
@@ -2041,7 +2076,7 @@ export default function AIExperimentsPage() {
                 </a>
                 <p className="mt-3 text-base leading-relaxed text-neon-green/90">
                   {currentLanguage === "es"
-                    ? "Canva ad-hoc para Paradise. Propuesta de grilla 3: (1) placa intro -CANVA- (2) foto/screen del video (3) placa negra con marca/ano."
+                    ? "Canva ad hoc para Paradise. Propuesta de grilla de 3 para Instagram: (1) placa intro -CANVA- (2) foto/captura del video (3) placa negra con marca/año."
                     : "Custom Canva for Paradise. 3-tile Instagram grid: (1) intro card -CANVA- (2) video still (3) black card with brand/year."}
                 </p>
               </div>
@@ -2057,11 +2092,11 @@ export default function AIExperimentsPage() {
                   href="/unyellower"
                   className="mt-3 block overflow-hidden rounded border border-neon-green/40 bg-black/20 transition-colors hover:border-neon-cyan/60"
                 >
-                  <div className="border-b border-neon-green/30 px-3 py-2 text-xs text-neon-green/80">preview</div>
+                  <div className="border-b border-neon-green/30 px-3 py-2 text-xs text-neon-green/80">{currentLanguage === "es" ? "vista previa" : "preview"}</div>
                   <div className="relative aspect-video w-full overflow-hidden bg-black">
                     <iframe
                       src="/unyellower/index.html"
-                      title="UNYELLOWER preview"
+                      title={`UNYELLOWER ${currentLanguage === "es" ? "vista previa" : "preview"}`}
                       className="absolute left-0 top-0 h-[400%] w-[400%] origin-top-left scale-[0.25] border-0 pointer-events-none"
                       sandbox="allow-scripts allow-same-origin allow-forms allow-downloads"
                     />
@@ -2069,7 +2104,7 @@ export default function AIExperimentsPage() {
                 </a>
                 <p className="mt-3 text-base leading-relaxed text-neon-green/90">
                   {currentLanguage === "es"
-                    ? "Correccion de color para imagenes (por ejemplo, imagenes de ChatGPT con tinte amarillo). Incluye preset de auto-correccion mas azulado."
+                    ? "Corrección de color para imágenes (por ejemplo, imágenes de ChatGPT con tinte amarillo). Incluye un preset de autocorrección más azulado."
                     : "Color correction tool (e.g., ChatGPT images with yellow tint). Includes a cooler auto-correction preset."}
                 </p>
               </div>
@@ -2085,11 +2120,11 @@ export default function AIExperimentsPage() {
                   href="/comparador_videos"
                   className="mt-3 block overflow-hidden rounded border border-neon-green/40 bg-black/20 transition-colors hover:border-neon-cyan/60"
                 >
-                  <div className="border-b border-neon-green/30 px-3 py-2 text-xs text-neon-green/80">preview</div>
+                  <div className="border-b border-neon-green/30 px-3 py-2 text-xs text-neon-green/80">{currentLanguage === "es" ? "vista previa" : "preview"}</div>
                   <div className="relative aspect-video w-full overflow-hidden bg-black">
                     <iframe
                       src="/comparador_videos/index.html"
-                      title="COMPARADOR_VIDEOS preview"
+                      title={`COMPARADOR_VIDEOS ${currentLanguage === "es" ? "vista previa" : "preview"}`}
                       className="absolute left-0 top-0 h-[400%] w-[400%] origin-top-left scale-[0.25] border-0 pointer-events-none"
                       sandbox="allow-scripts allow-same-origin allow-forms allow-downloads"
                     />
@@ -2097,8 +2132,8 @@ export default function AIExperimentsPage() {
                 </a>
                 <p className="mt-3 text-base leading-relaxed text-neon-green/90">
                   {currentLanguage === "es"
-                    ? "Comparador lado a lado de 2 versiones de un video. Feature no disponible en Dropbox Replay o Frame.io, herramientas pagas de productora."
-                    : "Side-by-side comparison of 2 video versions. Not available in Dropbox Replay or Frame.io (paid tools)."}
+                    ? "Comparador lado a lado de 2 versiones de un video. Feature no disponible en Dropbox Replay ni en Frame.io, herramientas pagas de productora."
+                    : "Side-by-side comparison of 2 video versions. Not available in Dropbox Replay or Frame.io (paid production-company tools)."}
                 </p>
               </div>
             </div>
@@ -2119,7 +2154,7 @@ export default function AIExperimentsPage() {
             className={`mb-6 h-px bg-gradient-to-r from-transparent ${isLight ? "via-[#b45309]" : "via-neon-green"} to-transparent`}
           ></div>
           <p className="mt-6 text-xs text-neon-green">
-            &copy; 1986-{new Date().getFullYear()} TOMAS PERO // SESSION_TIMEOUT: 30:00 // END_TRANSMISSION
+            &copy; 1986-{new Date().getFullYear()} TOMÁS PERÓ // SESSION_TIMEOUT: 30:00 // END_TRANSMISSION
           </p>
         </div>
       </div>

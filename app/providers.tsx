@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { LanguageProvider } from "@/components/language-context"
 import { VisualModeProvider } from "@/components/visual-mode-context"
