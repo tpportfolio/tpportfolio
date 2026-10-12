@@ -18,11 +18,20 @@ This is a personal portfolio with a "Matrix + 90s web" look (terminal + neon + r
 ## AI section (/work/ai-experiments)
 
 - Page is structured as:
-  1) WIP banner
-  2) Single "RESUMEN" panel (no duplicates)
-  3) "EJEMPLOS TRABAJOS IA 2025" cases (two 2025 pitches)
-  4) "VIBE-CODING: WEBAPPS" with the 3 mini tools
-  5) Historical carousel "EXPERIMENTOS IA (2022–2024)"
+  1) Intro and content filter (all / image / video / audio)
+  2) REEL 2025/2026 (YouTube reel)
+  3) 2026 works and experiments: Product Demo, Fashion Campaign (open), UGC content, Ad 30-40 Messi (coming soon)
+  4) AUDIO IA - MUSIC LAB, with a RADIO MAGAIBA shortcut to /magaiba right below it
+  5) 2025 works and experiments (two pitch cases)
+  6) the8bureau: six tools (Autonomous Ad Agency is deprecated) plus the tools added in v2
+  7) VIBE-CODING: WEBAPPS with the 3 mini tools
+  8) Historical carousel "EXPERIMENTOS IA (2022-2024)"
+
+## Navigation
+
+- Sidebar order: Home, Work, Timeline, AI Experiments, About, Contact.
+- /contact is a landing with links (LinkedIn, email, location) and a message form that opens the visitor's mail app.
+- /magaiba is not in the sidebar: it is reached from the timeline, from the AI section and from the assistant.
 
 ## Mini tools
 

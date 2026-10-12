@@ -1,5 +1,34 @@
 # Changelog
 
+## r14 (2026-10-12) — Navigation, timeline callouts, AI section
+Branch `release/r14-nav-timeline-ai`. Builds on r13.
+
+Project rules
+- New `CLAUDE.md` with the owner's rules: every change in Spanish and English, every change reflected in `/agents.md`, versions never overwritten.
+
+Navigation
+- Sidebar order: Home, Work, Timeline, AI Experiments, About, Contact. MAGAIBA leaves the sidebar; `/magaiba` is reached from the timeline, from a RADIO MAGAIBA shortcut below the Music Lab, and from the assistant (new suggestion chip and a dedicated knowledge document).
+- Contact is now a landing (`/contact`) with the links card that used to live in About (LinkedIn, email, location, profile note) and the message form. The sidebar entry links to it instead of opening a mail client.
+
+About
+- Shorter overview (seven short paragraphs) with brands, skills and key terms in bold.
+- The links card moved to Contact; Skills spans the full width; a call to action leads to `/contact`.
+
+Timeline
+- The detail of each block is a boxless callout: a line leaves the centre-line node, runs under the role heading, and the description hangs below it. No rectangular panels.
+- $MAGAIBA and DrGea each have their own row; planets alternate sides along the whole timeline.
+
+AI experiments
+- New first block: REEL 2025/2026.
+- Block order: reel, 2026 works, AUDIO IA — MUSIC LAB, 2025 works, the8bureau, webapps, archive.
+- 2026 works: Product Demo, Fashion Campaign, UGC content, Ad 30-40 Messi. The first two are open; Ad 30-40 Messi has no link.
+- Music Lab: rebuilt as a continuous cover flow (drag with momentum, spring settling, interruptible; click, arrow keys and trackpad). The hint text was removed; controls sit in a fixed strip.
+- the8bureau: new intro, Autonomous Ad Agency marked deprecated and moved to sixth place, new "New in v2" group (Prompt Studio, PDF Toolkit, Cost Calculator, Brand Analyzer), new screenshots of the v2 dashboard.
+
+Agent mode and assistant
+- `/agents.md` and `/agents.txt` updated: navigation with localized notes, timeline order, AI page structure, the8bureau tools, contact route.
+- Assistant knowledge base: MAGAIBA document, contact details, updated AI lab notes.
+
 ## r13 (2026-10-12) — Brand positioning
 Branch `release/r13-brand-positioning`. Builds on production (`main` @ `722a743`).
 

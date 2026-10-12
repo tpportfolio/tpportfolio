@@ -2,16 +2,18 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r13 (2026-10-12) — Brand positioning
+## Current version: r14 (2026-10-12) — Navigation, timeline callouts, AI section
 
 What changed in this version:
 
-- **Positioning.** The site now presents Tomás as a Brand Strategist & Brand Marketing Leader (brand strategy, cultural marketing, creative technology). About, home, work pages, timeline, `/agents.md` and the assistant's knowledge base tell the same story in Spanish and English.
-- **Work pages.** Disney, Air New Zealand, Independent consultant and Agency years were rebuilt from the CVs, with exact titles, dates and results.
-- **Timeline.** Videos orbit each block and open on click; new `$MAGAIBA` block facing DrGea; single column on mobile.
-- **AI experiments.** New page with the Music Lab; Spanish accents and ES/EN parity fixed.
-- **CLIPPY.EXE.** Stays on Groq's free plan with a three-model fallback chain, input caps, a per-visitor limit and an answer cache; character animation.
-- **Text quality.** Broken accents (`Ã³`, `Â¿`) fixed, bilingual error pages and labels.
+- **Navigation.** Sidebar order is Home, Work, Timeline, AI Experiments, About, Contact. MAGAIBA left the sidebar and is reached from the timeline, the AI section and the assistant.
+- **Contact.** `/contact` is now a landing with LinkedIn, email, location and a message form.
+- **About.** Shorter overview with brands, skills and key terms in bold; Skills at full width.
+- **Timeline.** Each block is a planet with its videos orbiting it; the detail hangs from the centre line as a boxless callout. $MAGAIBA and DrGea have their own rows.
+- **AI experiments.** Opens with REEL 2025/2026; new block order; the Music Lab is a continuous cover flow; the8bureau updated to its v2 tools.
+- **Project rules.** `CLAUDE.md`: every change in both languages and reflected in `/agents.md`.
+
+Previous version, r13 (brand positioning): the site presents Tomás as a Brand Strategist & Brand Marketing Leader; work pages rebuilt from the CVs; the assistant stays on Groq's free plan with a fallback chain.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -22,7 +24,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r13-brand-positioning`, tag `r13` | This version |
+| `release/r14-nav-timeline-ai`, tag `r14` | This version |
+| `release/r13-brand-positioning`, tag `r13` | Brand positioning |
 | tag `r12-production-2026-10-07` | Production before r13 |
 | `backup/vercel-production-2026-10-06` | Production backup taken on 2026-10-06 |
 
@@ -47,7 +50,8 @@ The assistant needs `GROQ_API_KEY` in `.env.local`. Without it the site works an
 - About: `/about`
 - Timeline: `/timeline`
 - Work: `/work/ai-experiments`, `/work/independent-consultant`, `/work/air-new-zealand`, `/work/walt-disney-company`, `/work/agency-experience`
-- Magaiba: `/magaiba`
+- Contact: `/contact`
+- Magaiba: `/magaiba` (not in the sidebar)
 - Agent mode: `/agents.md`, `/agents.txt`
 - Assistant API: `POST /api/chat`
 
