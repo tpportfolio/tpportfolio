@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { Loader2, MessageSquareText, SendHorizontal, Sparkles, X } from "lucide-react"
+import { Check, Database, Loader2, MessageSquareText, SendHorizontal, Sparkles, X } from "lucide-react"
 
 import { useLanguage } from "@/components/language-context"
 import { useVisualMode } from "@/components/visual-mode-context"
@@ -43,6 +43,9 @@ const UI_COPY = {
     open: "Abrir assistant",
     close: "Cerrar assistant",
     sourceLabel: "Fuentes",
+    hitsLabel: "fuentes",
+    steps: ["Consultando base de conocimiento", "Rankeando fragmentos", "Redactando respuesta"],
+    followUps: ["¿Qué servicios ofrece Tomás?", "Contame de AI experiments", "¿Qué es the8bureau?"],
     fallback: "No tengo suficiente contexto para responder eso con precisión desde el portfolio actual.",
     offline: "El assistant está momentáneamente offline. Falta configuración del proveedor o hubo un error aguas arriba.",
   },
@@ -58,6 +61,9 @@ const UI_COPY = {
     open: "Open assistant",
     close: "Close assistant",
     sourceLabel: "Sources",
+    hitsLabel: "sources",
+    steps: ["Searching knowledge base", "Ranking passages", "Drafting answer"],
+    followUps: ["What services does Tomás offer?", "Tell me about AI experiments", "What is the8bureau?"],
     fallback: "I do not have enough context to answer that accurately from the current portfolio.",
     offline: "The assistant is temporarily offline. The provider is not configured or an upstream error occurred.",
   },
@@ -74,6 +80,45 @@ function makeId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
 }
 
+function StreamText({ text }: { text: string }) {
+  const [count, setCount] = useState(0)
+  const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    setCount(0)
+    setDone(false)
+    if (text.length === 0) {
+      setDone(true)
+      return
+    }
+    const perTick = Math.max(1, Math.ceil(text.length / 90))
+    const id = window.setInterval(() => {
+      setCount((current) => Math.min(text.length, current + perTick))
+    }, 24)
+    return () => window.clearInterval(id)
+  }, [text])
+
+  useEffect(() => {
+    if (count >= text.length) setDone(true)
+  }, [count, text.length])
+
+  return (
+    <span
+      onClick={() => {
+        setCount(text.length)
+        setDone(true)
+      }}
+      className="cursor-pointer"
+      title="Click to complete"
+    >
+      {text.slice(0, count)}
+      {!done ? (
+        <span aria-hidden className="ml-0.5 inline-block h-3.5 w-[7px] animate-pulse bg-current align-middle" />
+      ) : null}
+    </span>
+  )
+}
+
 export function FloatingAssistant() {
   const pathname = usePathname()
   const { language } = useLanguage()
@@ -84,6 +129,7 @@ export function FloatingAssistant() {
   const [loading, setLoading] = useState(false)
   const [input, setInput] = useState("")
   const [pulse, setPulse] = useState(false)
+  const [thinkMs, setThinkMs] = useState(0)
   const [messages, setMessages] = useState<AssistantMessage[]>([
     {
       id: "welcome",
@@ -139,9 +185,19 @@ export function FloatingAssistant() {
   const clippyImageStyle = mode === "light"
     ? { filter: "sepia(0.95) saturate(1.45) hue-rotate(-18deg) brightness(1.03) contrast(0.94)" }
     : undefined
+  const lastMessage = messages.length > 0 ? messages[messages.length - 1] : undefined
+  const thinkStep = Math.min(copy.steps.length - 1, Math.floor(thinkMs / 900))
 
-  async function send() {
-    const message = input.trim()
+  useEffect(() => {
+    if (!loading) return
+    setThinkMs(0)
+    const started = performance.now()
+    const id = window.setInterval(() => setThinkMs(performance.now() - started), 100)
+    return () => window.clearInterval(id)
+  }, [loading])
+
+  async function send(preset?: string) {
+    const message = (preset ?? input).trim()
     if (!message || loading) return
 
     const userMessage: AssistantMessage = {
@@ -240,7 +296,17 @@ export function FloatingAssistant() {
                       </span>
                       <span className={mode === "light" ? "text-[#9b6b42]" : "text-white/45"}>{message.ts}</span>
                     </div>
-                    <p className="whitespace-pre-wrap">{message.text}</p>
+                    <p className="whitespace-pre-wrap">
+                      {message.role === "assistant" ? <StreamText text={message.text} /> : message.text}
+                    </p>
+                    {message.role === "assistant" && message.sources && message.sources.length > 0 ? (
+                      <div className="mt-2 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] opacity-70">
+                        <Database className="h-3 w-3" />
+                        <span>
+                          corpus.search ✓ · {message.sources.length} {copy.hitsLabel}
+                        </span>
+                      </div>
+                    ) : null}
                     {message.role === "assistant" && message.sources?.length ? (
                       <div className="mt-3">
                         <div className={`mb-2 text-[10px] uppercase tracking-[0.16em] ${mode === "light" ? "text-[#8b4315]" : "text-white/65"}`}>
@@ -268,10 +334,50 @@ export function FloatingAssistant() {
 
                 {loading ? (
                   <div className={`rounded-sm border px-3 py-3 text-sm ${bubbleBotClass}`}>
-                    <div className={`flex items-center gap-2 font-cyber text-xs uppercase tracking-[0.14em] ${mode === "light" ? "text-neon-cyan" : "text-white"}`}>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      {copy.statusThinking}
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className={`flex items-center gap-2 font-cyber text-xs uppercase tracking-[0.14em] ${mode === "light" ? "text-neon-cyan" : "text-white"}`}>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        {copy.statusThinking}
+                      </div>
+                      <span className="font-mono text-[11px] opacity-70">{(thinkMs / 1000).toFixed(1)}s</span>
                     </div>
+                    <div className="space-y-1.5">
+                      {copy.steps.map((step, i) => {
+                        const stepDone = i < thinkStep
+                        const stepActive = i === thinkStep
+                        return (
+                          <div key={step} className="flex items-center gap-2 text-xs">
+                            {stepDone ? (
+                              <Check className="h-3.5 w-3.5 shrink-0 text-emerald-400" />
+                            ) : stepActive ? (
+                              <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin opacity-80" />
+                            ) : (
+                              <span aria-hidden className="h-3.5 w-3.5 shrink-0 text-center opacity-40">·</span>
+                            )}
+                            <span className={stepDone ? "opacity-70" : stepActive ? "" : "opacity-40"}>{step}</span>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ) : null}
+
+                {!loading && lastMessage?.role === "assistant" ? (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {copy.followUps.map((followUp) => (
+                      <button
+                        key={followUp}
+                        type="button"
+                        onClick={() => void send(followUp)}
+                        className={`rounded-full border px-3 py-1.5 font-cyber text-[10px] uppercase tracking-[0.12em] transition-colors ${
+                          mode === "light"
+                            ? "border-[#c57b45] text-[#7a3511] hover:bg-[#f5e4d2]"
+                            : "border-neon-green/30 text-neon-green hover:bg-neon-green/10"
+                        }`}
+                      >
+                        {followUp}
+                      </button>
+                    ))}
                   </div>
                 ) : null}
 

@@ -1,8 +1,22 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react"
 import Image, { type StaticImageData } from "next/image"
-import { ChevronLeft, ChevronRight, ExternalLink, Lock, Play, X } from "lucide-react"
+import {
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  Image as ImageIcon,
+  LayoutGrid,
+  ListMusic,
+  Lock,
+  Pause,
+  Play,
+  Video,
+  Volume2,
+  VolumeX,
+  X,
+} from "lucide-react"
 import { VideoCarousel, type VideoItem } from "@/components/video-carousel"
 import { YouTubeEmbed } from "@/components/youtube-embed"
 import { useLanguage } from "@/components/language-context"
@@ -28,6 +42,37 @@ import andRefe12 from "./and_refe12.png"
 
 type SupportedLanguage = "es" | "en"
 
+type ContentFilter = "all" | "imagen" | "video" | "audio"
+
+type AudioTrack = {
+  id: string
+  title: string
+  tag: string
+  file: string
+  cover: string
+  gradient: string
+}
+
+const IA_AUDIO_TRACKS: AudioTrack[] = [
+  { id: "indie-vc-la-pari", title: "INDIE ARG Tribute - Bandalos Chinos lyrics", tag: "Indie", file: "/audio/ia-tracks/indie-vc-la-pari.mp3", cover: "/audio/ia-tracks/covers/indie-vc-la-pari.jpg", gradient: "linear-gradient(135deg,#f59e0b,#ef4444)" },
+  { id: "indie-hacerla-silvestre", title: "INDIE ARG Tribute - Silvestre y la naranja", tag: "Indie", file: "/audio/ia-tracks/indie-hacerla-silvestre-y-la-naranja.mp3", cover: "/audio/ia-tracks/covers/indie-hacerla-silvestre-y-la-naranja.jpg", gradient: "linear-gradient(135deg,#a21caf,#f59e0b)" },
+  { id: "quetomas-rap-2", title: "QueTomas Rap", tag: "Rap", file: "/audio/ia-tracks/quetomas-rap-2.mp3", cover: "/audio/ia-tracks/covers/quetomas-rap-2.jpg", gradient: "linear-gradient(135deg,#22d3ee,#a3e635)" },
+  { id: "ad-parfum-1", title: "AD Parfum - Spike Jonze tribute", tag: "Ad / Fragancia", file: "/audio/ia-tracks/ad-parfum-1.mp3", cover: "/audio/ia-tracks/covers/ad-parfum-1.jpg", gradient: "linear-gradient(135deg,#7c3aed,#db2777)" },
+  { id: "mogmaxxing-anthem", title: "Mogmaxxing Anthem", tag: "Anthem", file: "/audio/ia-tracks/mogmaxxing-anthem.mp3", cover: "/audio/ia-tracks/covers/mogmaxxing-anthem.jpg", gradient: "linear-gradient(135deg,#111827,#6b21a8)" },
+  { id: "humming-deals", title: "Electronic Humming Deals", tag: "Jingle", file: "/audio/ia-tracks/humming-deals.mp3", cover: "/audio/ia-tracks/covers/humming-deals.jpg", gradient: "linear-gradient(135deg,#0ea5e9,#22c55e)" },
+  { id: "jingle-the8bureau-indie", title: "the8bureau - Indie Jingle", tag: "Jingle", file: "/audio/ia-tracks/jingle-the8bureau-indie-version.mp3", cover: "/audio/ia-tracks/covers/jingle-the8bureau-indie-version.jpg", gradient: "linear-gradient(135deg,#065f46,#39ff14)" },
+  { id: "parody-herbon", title: "Parody — Deja que entre Herbon", tag: "Parodia", file: "/audio/ia-tracks/parody-deja-que-entre-herbon.mp3", cover: "/audio/ia-tracks/covers/parody-deja-que-entre-herbon.jpg", gradient: "linear-gradient(135deg,#16a34a,#84cc16)" },
+  { id: "parody-todos", title: "Parody — Todos dicen todo", tag: "Parodia", file: "/audio/ia-tracks/parody-todos-dicen-todo.mp3", cover: "/audio/ia-tracks/covers/parody-todos-dicen-todo.jpg", gradient: "linear-gradient(135deg,#0891b2,#6366f1)" },
+  { id: "parody-chacal", title: "Parody — La cumbia del chacal", tag: "Parodia / Cumbia", file: "/audio/ia-tracks/parody-la-cumbia-del-chacal.mp3", cover: "/audio/ia-tracks/covers/parody-la-cumbia-del-chacal.jpg", gradient: "linear-gradient(135deg,#dc2626,#f59e0b)" },
+]
+
+function formatTrackTime(seconds: number) {
+  if (!Number.isFinite(seconds) || seconds < 0) return "0:00"
+  const minutes = Math.floor(seconds / 60)
+  const rest = Math.floor(seconds % 60)
+  return `${minutes}:${String(rest).padStart(2, "0")}`
+}
+
 type GalleryImage = {
   id: string
   label: string
@@ -38,6 +83,7 @@ type GalleryImage = {
 type Work2026Item = {
   id: string
   kind: "youtube-link" | "gallery" | "embed"
+  mediaTag: "imagen" | "video"
   title: Record<SupportedLanguage, string>
   description: Record<SupportedLanguage, string>
   youtubeUrl?: string
@@ -81,6 +127,7 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
     {
       id: "ad-30-40",
       kind: "youtube-link",
+      mediaTag: "video",
       title: { es: "Ad 30-40", en: "Ad 30-40" },
       description: {
         es: "Placeholder de video. El popup deja el CTA para abrir YouTube hasta definir el link final.",
@@ -92,6 +139,7 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
     {
       id: "demo-producto",
       kind: "embed",
+      mediaTag: "video",
       title: { es: "Demo de producto", en: "Product Demo" },
       description: {
         es: "Video embebido de referencia. Usa el mismo espacio visual que una galeria.",
@@ -104,6 +152,7 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
     {
       id: "campana-moda",
       kind: "gallery",
+      mediaTag: "imagen",
       title: { es: "Campana Moda", en: "Fashion Campaign" },
       description: {
         es: "Galeria placeholder de 16 imagenes en grilla 4x4. Click para abrir fullscreen.",
@@ -115,6 +164,7 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
     {
       id: "ugc-content",
       kind: "youtube-link",
+      mediaTag: "video",
       title: { es: "UGC content", en: "UGC content" },
       description: {
         es: "Placeholder de video. El popup deja el CTA para abrir YouTube hasta definir el link final.",
@@ -621,11 +671,889 @@ function Work2026Modal({
   )
 }
 
-function Works2026Carousel({ language, isLight }: { language: SupportedLanguage; isLight: boolean }) {
-  const items = getWorks2026Items(language)
+function ContentFilterBar({
+  active,
+  language,
+  isLight,
+  onChange,
+}: {
+  active: ContentFilter
+  language: SupportedLanguage
+  isLight: boolean
+  onChange: (filter: ContentFilter) => void
+}) {
+  const filters: { id: ContentFilter; label: string; icon: typeof LayoutGrid; count?: string }[] = [
+    { id: "all", label: language === "es" ? "Todos" : "All", icon: LayoutGrid },
+    { id: "imagen", label: language === "es" ? "Imagen" : "Image", icon: ImageIcon, count: "1" },
+    { id: "video", label: "Video", icon: Video, count: "3+" },
+    { id: "audio", label: "Audio", icon: ListMusic, count: String(IA_AUDIO_TRACKS.length) },
+  ]
+
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="mr-1 font-cyber text-xs uppercase tracking-[0.2em] text-neon-cyan">
+        {language === "es" ? "Filtrar:" : "Filter:"}
+      </span>
+      {filters.map((filter) => {
+        const Icon = filter.icon
+        const isActive = active === filter.id
+        return (
+          <button
+            key={filter.id}
+            type="button"
+            onClick={() => onChange(filter.id)}
+            aria-pressed={isActive}
+            className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-cyber text-xs uppercase tracking-[0.16em] transition-colors ${
+              isActive
+                ? isLight
+                  ? "border-[#8b4315] bg-[#8b4315] text-[#fff4e8]"
+                  : "border-neon-green bg-neon-green text-black"
+                : isLight
+                  ? "border-[#d9a06b] bg-[#fff8f1] text-[#8b4315] hover:border-[#8b4315]"
+                  : "border-neon-green/40 bg-black/40 text-neon-green hover:border-neon-green hover:text-neon-cyan"
+            }`}
+          >
+            <Icon className="h-3.5 w-3.5" />
+            <span>{filter.label}</span>
+            {filter.count ? (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[10px] ${
+                  isActive ? "bg-black/25 text-inherit" : isLight ? "bg-[#f6e6d2] text-[#8b4315]" : "bg-neon-green/15 text-neon-green"
+                }`}
+              >
+                {filter.count}
+              </span>
+            ) : null}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+function trackGlowColor(gradient: string, fallback: string) {
+  const match = gradient.match(/#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}/)
+  return match ? `${match[0]}80` : fallback
+}
+
+function StageBackdrop({ isLight, isPlaying }: { isLight: boolean; isPlaying: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const playingRef = useRef(isPlaying)
+  playingRef.current = isPlaying
+  const lightRef = useRef(isLight)
+  lightRef.current = isLight
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const parent = canvas.parentElement
+    if (!parent) return
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const ratio = Math.min(window.devicePixelRatio || 1, 2)
+    let w = 0
+    let h = 0
+
+    const resize = () => {
+      w = Math.max(1, parent.clientWidth)
+      h = Math.max(1, parent.clientHeight)
+      canvas.width = Math.floor(w * ratio)
+      canvas.height = Math.floor(h * ratio)
+    }
+    resize()
+    const resizeObserver = new ResizeObserver(resize)
+    resizeObserver.observe(parent)
+
+    type Dust = { x: number; y: number; r: number; s: number; a: number; drift: number }
+    const spawn = (anywhere = false): Dust => ({
+      x: Math.random() * w,
+      y: anywhere ? Math.random() * h : h + 10,
+      r: 0.6 + Math.random() * 1.8,
+      s: 0.15 + Math.random() * 0.5,
+      a: 0.15 + Math.random() * 0.5,
+      drift: (Math.random() - 0.5) * 0.3,
+    })
+    const dust: Dust[] = Array.from({ length: 70 }, () => spawn(true))
+
+    let rafId = 0
+    let running = true
+    let t = Math.random() * 1000
+    let scanY = -1
+    let scanTimer = 200
+
+    const frame = () => {
+      if (!running) return
+      const playing = playingRef.current
+      const ac = lightRef.current ? "245,158,11" : "57,255,20"
+      const cy = lightRef.current ? "245,158,11" : "0,255,255"
+      t += playing ? 0.03 : 0.008
+
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0)
+      ctx.clearRect(0, 0, w, h)
+
+      const blobs = [
+        { x: w * (0.5 + 0.3 * Math.sin(t * 0.4)), y: h * 0.42, r: Math.min(w, h) * 0.45, a: playing ? 0.1 : 0.06 },
+        { x: w * (0.5 + 0.35 * Math.cos(t * 0.3 + 2)), y: h * 0.55, r: Math.min(w, h) * 0.35, a: playing ? 0.08 : 0.05 },
+      ]
+      for (const b of blobs) {
+        const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r)
+        g.addColorStop(0, `rgba(${ac},${b.a})`)
+        g.addColorStop(1, `rgba(${ac},0)`)
+        ctx.fillStyle = g
+        ctx.fillRect(0, 0, w, h)
+      }
+
+      const baseY = h * 0.4
+      const amp = (playing ? 10 : 5) + Math.sin(t * 0.7) * 2
+      const speed = playing ? 2.2 : 0.7
+      ctx.save()
+      ctx.shadowBlur = playing ? 18 : 10
+      ctx.shadowColor = `rgba(${ac},${playing ? 0.8 : 0.45})`
+      ctx.strokeStyle = `rgba(${ac},${playing ? 0.55 : 0.3})`
+      ctx.lineWidth = playing ? 2 : 1.25
+      ctx.beginPath()
+      for (let x = -20; x <= w + 20; x += 8) {
+        const y =
+          baseY +
+          Math.sin(x * 0.012 + t * speed) * amp +
+          Math.sin(x * 0.03 - t * 1.1) * amp * 0.3
+        if (x === -20) ctx.moveTo(x, y)
+        else ctx.lineTo(x, y)
+      }
+      ctx.stroke()
+      ctx.restore()
+
+      const rise = playing ? 1.6 : 0.6
+      for (let i = 0; i < dust.length; i++) {
+        const p = dust[i]
+        p.y -= p.s * rise
+        p.x += p.drift * rise + Math.sin(t * 2 + i) * 0.15
+        if (p.y < -12 || p.x < -12 || p.x > w + 12) dust[i] = spawn()
+        else {
+          ctx.fillStyle = `rgba(${ac},${p.a * (playing ? 1 : 0.6)})`
+          ctx.beginPath()
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+          ctx.fill()
+        }
+      }
+
+      scanTimer -= 1
+      if (scanTimer <= 0 && scanY < 0) {
+        scanY = -30
+        scanTimer = 240 + Math.random() * 240
+      }
+      if (scanY >= 0) {
+        scanY += h / 90
+        const sg = ctx.createLinearGradient(0, scanY - 24, 0, scanY + 24)
+        sg.addColorStop(0, `rgba(${cy},0)`)
+        sg.addColorStop(0.5, `rgba(${cy},0.1)`)
+        sg.addColorStop(1, `rgba(${cy},0)`)
+        ctx.fillStyle = sg
+        ctx.fillRect(0, scanY - 24, w, 48)
+        if (scanY > h + 30) scanY = -1
+      }
+
+      if (!prefersReducedMotion) rafId = requestAnimationFrame(frame)
+    }
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        running = false
+        cancelAnimationFrame(rafId)
+      } else if (!prefersReducedMotion) {
+        running = true
+        rafId = requestAnimationFrame(frame)
+      }
+    }
+    document.addEventListener("visibilitychange", onVisibility)
+    rafId = requestAnimationFrame(frame)
+    return () => {
+      running = false
+      cancelAnimationFrame(rafId)
+      resizeObserver.disconnect()
+      document.removeEventListener("visibilitychange", onVisibility)
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 h-full w-full"
+    />
+  )
+}
+
+function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; isLight: boolean }) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const [volume, setVolume] = useState(0.85)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [coversReady, setCoversReady] = useState<Record<string, boolean>>({})
+  const [buffering, setBuffering] = useState(false)
+  const stageRef = useRef<HTMLDivElement | null>(null)
+  const [stageWidth, setStageWidth] = useState(960)
+  const currentTrack = IA_AUDIO_TRACKS[currentIndex]
+  const accent = isLight ? "#f59e0b" : "#39ff14"
+  const total = IA_AUDIO_TRACKS.length
+
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+    audio.volume = volume
+  }, [volume])
+
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (isPlaying) {
+      void audio.play().catch(() => setIsPlaying(false))
+    } else {
+      audio.pause()
+    }
+  }, [isPlaying, currentIndex])
+
+  const selectTrack = (index: number) => {
+    if (index === currentIndex) {
+      setIsPlaying((playing) => !playing)
+    } else {
+      setCurrentIndex(index)
+      setProgress(0)
+      setIsPlaying(true)
+      playClack()
+    }
+  }
+
+  const stepTrack = (direction: 1 | -1) => {
+    setCurrentIndex((current) => (current + direction + total) % total)
+    setProgress(0)
+    playClack()
+  }
+
+  const togglePlay = () => setIsPlaying((playing) => !playing)
+
+  const posRef = useRef(0)
+  const velRef = useRef(0)
+  const tiltRef = useRef(0)
+  const tiltVelRef = useRef(0)
+  const tiltTargetRef = useRef(0)
+  const targetRef = useRef(0)
+  const rafRef = useRef(0)
+  const loopOnRef = useRef(false)
+  const dragRef = useRef<{
+    startX: number
+    startPos: number
+    id: number
+    moved: boolean
+    lastX: number
+    lastT: number
+    vel: number
+  } | null>(null)
+
+  const applyLayout = (pos: number) => {
+    const stage = stageRef.current
+    if (!stage) return
+    const items = stage.querySelectorAll(".flow-item")
+    items.forEach((el, i) => {
+      const item = el as HTMLDivElement
+      const s = computeFlowStyle(i, pos)
+      item.style.transform = s.transform
+      item.style.opacity = String(s.opacity)
+      item.style.filter = s.filter
+      item.style.zIndex = String(s.zIndex)
+    })
+    const track = stage.querySelector(".coverflow-track") as HTMLDivElement | null
+    if (track) track.style.transform = `rotateY(${tiltRef.current}deg)`
+  }
+
+  const runLoop = () => {
+    if (loopOnRef.current) return
+    loopOnRef.current = true
+    let last = performance.now()
+    const stepFn = (now: number) => {
+      if (!loopOnRef.current) return
+      const dt = Math.min(1 / 30, (now - last) / 1000)
+      last = now
+      const target = targetRef.current
+      const acc = (target - posRef.current) * 210 - velRef.current * 25
+      velRef.current += acc * dt
+      posRef.current += velRef.current * dt
+      posRef.current = Math.max(-0.6, Math.min(total - 0.4, posRef.current))
+      const tacc = (tiltTargetRef.current - tiltRef.current) * 60 - tiltVelRef.current * 12
+      tiltVelRef.current += tacc * dt
+      tiltRef.current += tiltVelRef.current * dt
+      const settled =
+        Math.abs(target - posRef.current) < 0.001 &&
+        Math.abs(velRef.current) < 0.02 &&
+        Math.abs(tiltTargetRef.current - tiltRef.current) < 0.01 &&
+        Math.abs(tiltVelRef.current) < 0.05
+      if (settled) {
+        posRef.current = target
+        velRef.current = 0
+        tiltRef.current = tiltTargetRef.current
+        tiltVelRef.current = 0
+        applyLayout(target)
+        loopOnRef.current = false
+        return
+      }
+      applyLayout(posRef.current)
+      rafRef.current = requestAnimationFrame(stepFn)
+    }
+    rafRef.current = requestAnimationFrame(stepFn)
+  }
+
+  useEffect(() => {
+    targetRef.current = currentIndex
+    runLoop()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex])
+
+  useEffect(
+    () => () => {
+      loopOnRef.current = false
+      cancelAnimationFrame(rafRef.current)
+    },
+    []
+  )
+
+  const onStagePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const t = e.target as HTMLElement
+    if (t.closest("input")) return
+    dragRef.current = {
+      startX: e.clientX,
+      startPos: posRef.current,
+      id: e.pointerId,
+      moved: false,
+      lastX: e.clientX,
+      lastT: performance.now(),
+      vel: 0,
+    }
+  }
+
+  const onStagePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const dr = dragRef.current
+    if (!dr || e.pointerId !== dr.id) {
+      const rect = e.currentTarget.getBoundingClientRect()
+      tiltTargetRef.current = ((e.clientX - rect.left) / rect.width - 0.5) * 5
+      runLoop()
+      return
+    }
+    const dx = e.clientX - dr.startX
+    if (!dr.moved && Math.abs(dx) > 8) {
+      dr.moved = true
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId)
+      } catch {
+        /* noop */
+      }
+    }
+    if (dr.moved) {
+      const now = performance.now()
+      const dt = Math.max(1, now - dr.lastT)
+      dr.vel = 0.8 * dr.vel + 0.2 * (((e.clientX - dr.lastX) / dt) * (1000 / slotStep))
+      dr.lastX = e.clientX
+      dr.lastT = now
+      const next = Math.max(-0.6, Math.min(total - 0.4, dr.startPos - dx / slotStep))
+      posRef.current = next
+      velRef.current = 0
+      targetRef.current = next
+      tiltTargetRef.current = 0
+      applyLayout(next)
+    }
+  }
+
+  const endStageDrag = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const dr = dragRef.current
+    if (!dr || e.pointerId !== dr.id) return
+    dragRef.current = null
+    if (!dr.moved) return
+    const predicted = posRef.current + dr.vel * 0.18
+    const snap = Math.max(0, Math.min(total - 1, Math.round(predicted)))
+    velRef.current = dr.vel * 0.6
+    if (snap !== currentIndex) {
+      setProgress(0)
+      setCurrentIndex(snap)
+      playClack()
+    } else {
+      targetRef.current = snap
+      runLoop()
+    }
+  }
+
+  const onStagePointerLeave = () => {
+    if (dragRef.current) return
+    tiltTargetRef.current = 0
+    runLoop()
+  }
+
+  const mechCtx = useRef<AudioContext | null>(null)
+  const volumeRef = useRef(volume)
+  volumeRef.current = volume
+
+  const ensureMechCtx = () => {
+    if (typeof window === "undefined") return null
+    if (!mechCtx.current) {
+      const AC =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+      if (!AC) return null
+      mechCtx.current = new AC()
+    }
+    if (mechCtx.current.state === "suspended") void mechCtx.current.resume()
+    return mechCtx.current
+  }
+
+  const playThud = () => {
+    try {
+      const ctx = ensureMechCtx()
+      const vol = volumeRef.current
+      if (!ctx || vol === 0) return
+      const t0 = ctx.currentTime
+      const master = ctx.createGain()
+      master.gain.setValueAtTime(Math.min(0.22, vol * 0.22), t0)
+      master.connect(ctx.destination)
+      const osc = ctx.createOscillator()
+      osc.type = "sine"
+      osc.frequency.setValueAtTime(140, t0)
+      osc.frequency.exponentialRampToValueAtTime(48, t0 + 0.12)
+      const og = ctx.createGain()
+      og.gain.setValueAtTime(0.7, t0)
+      og.gain.exponentialRampToValueAtTime(0.001, t0 + 0.15)
+      osc.connect(og)
+      og.connect(master)
+      osc.start(t0)
+      osc.stop(t0 + 0.16)
+    } catch {
+      /* noop */
+    }
+  }
+
+  const playClack = () => {
+    try {
+      const ctx = ensureMechCtx()
+      const vol = volumeRef.current
+      if (!ctx || vol === 0) return
+      const t0 = ctx.currentTime
+      const master = ctx.createGain()
+      master.gain.setValueAtTime(Math.min(0.2, vol * 0.2), t0)
+      master.connect(ctx.destination)
+      const len = Math.floor(ctx.sampleRate * 0.07)
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate)
+      const d = buf.getChannelData(0)
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2)
+      const src = ctx.createBufferSource()
+      src.buffer = buf
+      const bp = ctx.createBiquadFilter()
+      bp.type = "bandpass"
+      bp.frequency.value = 1800
+      bp.Q.value = 1.1
+      src.connect(bp)
+      bp.connect(master)
+      src.start(t0)
+      playThud()
+    } catch {
+      /* noop */
+    }
+  }
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") stepTrack(1)
+      else if (event.key === "ArrowLeft") stepTrack(-1)
+      else if (event.key === " ") {
+        const target = event.target as HTMLElement | null
+        if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return
+        event.preventDefault()
+        togglePlay()
+      }
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [total])
+
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return
+    const update = () => setStageWidth(stage.clientWidth)
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(stage)
+    return () => observer.disconnect()
+  }, [])
+
+  const itemSize = stageWidth < 520 ? 116 : stageWidth < 820 ? 144 : 172
+  const slotStep = Math.max(16, (stageWidth / 2 - 140) / ((total - 1) / 2))
+  const centerSlot = (total - 1) / 2
+
+  function computeFlowStyle(index: number, pos: number) {
+    const offset = index - pos
+    const distance = Math.abs(offset)
+    const x = Math.round((index - centerSlot) * slotStep)
+    const arc = Math.round(Math.pow(Math.abs(index - centerSlot), 1.5) * (itemSize / 172) * 3)
+    const glow = trackGlowColor(
+      IA_AUDIO_TRACKS[index].gradient,
+      isLight ? "rgba(245,158,11,0.5)" : "rgba(57,255,20,0.4)"
+    )
+    const close = Math.max(0, 1 - Math.min(1, distance))
+    const scale = 0.82 + 0.4 * close
+    const rot = -28 * Math.max(-1, Math.min(1, offset))
+    const lift = Math.round(-8 * close)
+    const bright = 0.75 + 0.25 * close
+    const front = close > 0.6
+    return {
+      transform: `translate3d(calc(-50% + ${x}px), calc(-50% + ${lift}px + ${arc}px), 0px) rotateY(${rot}deg) scale(${scale})`,
+      zIndex: front ? 50 : 30 - Math.round(distance),
+      opacity: Math.max(0.55, 1 - distance * 0.05),
+      filter: front ? `drop-shadow(0 14px 26px ${glow})` : `brightness(${bright})`,
+    }
+  }
+
+  const getFlowStyle = (index: number): CSSProperties =>
+    computeFlowStyle(index, posRef.current) as CSSProperties
+
+  const statusText = buffering
+    ? language === "es" ? "CARGANDO" : "LOADING"
+    : isPlaying
+      ? language === "es" ? "SONANDO" : "PLAYING"
+      : progress > 0
+        ? language === "es" ? "PAUSA" : "PAUSED"
+        : language === "es" ? "LISTO" : "READY"
+
+  return (
+    <div className="space-y-4">
+      <style>{`
+        .coverflow-stage { perspective: 900px; perspective-origin: 50% 40%; }
+        .coverflow-track { transform-style: preserve-3d; }
+        .flow-item {
+          transform-style: preserve-3d;
+          transition: filter 0.3s ease, opacity 0.3s ease;
+          will-change: transform;
+        }
+        .vinyl-grooves {
+          background:
+            radial-gradient(circle, transparent 18%, rgba(0,0,0,0.95) 19%, rgba(255,255,255,0.18) 20%, transparent 21%),
+            repeating-radial-gradient(circle, rgba(255,255,255,0.08) 0px, rgba(0,0,0,0.65) 2px, rgba(255,255,255,0.05) 4px, rgba(0,0,0,0.95) 6px);
+        }
+        .vinyl-shine {
+          background: conic-gradient(
+            from 0deg,
+            rgba(255,255,255,0.35) 0deg, rgba(255,255,255,0.01) 45deg,
+            rgba(255,255,255,0.4) 90deg, rgba(255,255,255,0.01) 135deg,
+            rgba(255,255,255,0.35) 180deg, rgba(255,255,255,0.01) 225deg,
+            rgba(255,255,255,0.4) 270deg, rgba(255,255,255,0.01) 315deg,
+            rgba(255,255,255,0.35) 360deg
+          );
+          mix-blend-mode: overlay;
+        }
+        @keyframes spinDisc {
+          to { transform: rotate(360deg); }
+        }
+        .spinning-disc { animation: spinDisc 2.4s linear infinite; }
+        .cover-shimmer { position: relative; overflow: hidden; }
+        .cover-shimmer::after {
+          content: ""; position: absolute; inset: 0;
+          background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.22) 50%, transparent 80%);
+          animation: shimmerSweep 1.6s linear infinite;
+        }
+        @keyframes shimmerSweep { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+        @keyframes cardGlow {
+          0%, 100% { box-shadow: 0 0 8px transparent; }
+          50% { box-shadow: 0 0 26px var(--card-glow, rgba(57,255,20,0.4)); }
+        }
+        .card-live { animation: cardGlow 2.4s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .spinning-disc, .card-live, .flipper-inner { animation: none; transition: none; }
+        }
+      `}</style>
+
+      <audio
+        ref={audioRef}
+        src={currentTrack.file}
+        preload="metadata"
+        onTimeUpdate={(event) => setProgress(event.currentTarget.currentTime)}
+        onLoadedMetadata={(event) => setDuration(event.currentTarget.duration)}
+        onWaiting={() => setBuffering(true)}
+        onPlaying={() => setBuffering(false)}
+        onCanPlay={() => setBuffering(false)}
+        onEnded={() => stepTrack(1)}
+      />
+
+      <div className="flex items-center justify-between gap-2">
+        <div
+          className={`rounded-full border px-3 py-1 font-mono text-xs ${
+            isLight ? "border-[#d9a06b]/60 bg-[#fff8f1] text-[#8b4315]" : "border-neon-green/30 bg-black/40 text-neon-green/80"
+          }`}
+        >
+          Track <span className="font-bold" style={{ color: accent }}>{currentIndex + 1}</span> / {total}
+        </div>
+        <div className="hidden font-cyber text-[10px] uppercase tracking-[0.2em] opacity-60 sm:block">
+          Drag • Click • ← →
+        </div>
+        <div
+          className="rounded-full border border-white/15 bg-black/40 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em]"
+          style={{ color: isPlaying ? "#34d399" : undefined, opacity: isPlaying ? 1 : 0.55 }}
+        >
+          {statusText}
+        </div>
+      </div>
+
+      <div
+        ref={stageRef}
+        onPointerDown={onStagePointerDown}
+        onPointerMove={onStagePointerMove}
+        onPointerUp={endStageDrag}
+        onPointerCancel={endStageDrag}
+        onPointerLeave={onStagePointerLeave}
+        className={`coverflow-stage relative flex h-[360px] w-full touch-pan-y cursor-grab select-none items-center justify-center overflow-hidden rounded-sm border active:cursor-grabbing sm:h-[440px] ${
+          isLight ? "border-[#d9a06b]/60 bg-[#170f05]" : "border-neon-green/20 bg-black/60"
+        }`}
+      >
+        <StageBackdrop isLight={isLight} isPlaying={isPlaying} />
+        <button
+          type="button"
+          onClick={() => stepTrack(-1)}
+          aria-label={language === "es" ? "Anterior" : "Previous"}
+          className={`absolute left-2 top-1/2 z-[60] inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border bg-black/50 backdrop-blur-sm transition-colors sm:left-3 ${
+            isLight
+              ? "border-[#8b4315] text-[#f59e0b] hover:bg-[#8b4315]/30"
+              : "border-neon-green/50 text-neon-green hover:bg-neon-green/15"
+          }`}
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => stepTrack(1)}
+          aria-label={language === "es" ? "Siguiente" : "Next"}
+          className={`absolute right-2 top-1/2 z-[60] inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border bg-black/50 backdrop-blur-sm transition-colors sm:right-3 ${
+            isLight
+              ? "border-[#8b4315] text-[#f59e0b] hover:bg-[#8b4315]/30"
+              : "border-neon-green/50 text-neon-green hover:bg-neon-green/15"
+          }`}
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+        <div className="coverflow-track relative flex h-0 w-0 items-center justify-center">
+          {IA_AUDIO_TRACKS.map((track, index) => {
+            const isActive = index === currentIndex
+            return (
+              <div
+                key={track.id}
+                role="option"
+                aria-selected={isActive}
+                data-active={isActive}
+                className="flow-item absolute left-1/2 top-[44%] flex flex-col items-center"
+                style={{ ...getFlowStyle(index), width: itemSize }}
+              >
+                <div className="relative" style={{ width: itemSize, height: itemSize, perspective: "800px" }}>
+                  <div
+                    className="flipper-inner relative h-full w-full"
+                    style={{
+                      transformStyle: "preserve-3d",
+                      transform: isActive ? "rotateY(180deg)" : "rotateY(0deg)",
+                      transition: "transform 0.65s cubic-bezier(0.16,1,0.3,1)",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => selectTrack(index)}
+                      aria-label={isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`}
+                      className={`absolute inset-0 block cursor-pointer overflow-hidden rounded-sm border shadow-2xl transition-colors ${
+                        isActive
+                          ? isLight
+                            ? "border-[#f59e0b] shadow-[#f59e0b]/30"
+                            : "border-neon-green/70 shadow-neon-green/25"
+                          : isLight
+                            ? "border-[#d9a06b]/50"
+                            : "border-white/15"
+                      }`}
+                      style={{ background: track.gradient, backfaceVisibility: "hidden" }}
+                    >
+                      <div
+                        aria-hidden
+                        className={`cover-shimmer absolute inset-0 transition-opacity duration-500 ${coversReady[track.id] ? "opacity-0" : "opacity-100"}`}
+                        style={{ background: track.gradient }}
+                      />
+                      <img
+                        src={track.cover}
+                        alt={track.title}
+                        onLoad={() => setCoversReady((prev) => (prev[track.id] ? prev : { ...prev, [track.id]: true }))}
+                        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${coversReady[track.id] ? "opacity-100" : "opacity-0"}`}
+                        loading="lazy"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => selectTrack(index)}
+                      aria-label={isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`}
+                      className="absolute inset-0 flex cursor-pointer items-center justify-center overflow-hidden rounded-sm border border-white/15 bg-[#0a0a0c] shadow-2xl"
+                      style={{
+                        backfaceVisibility: "hidden",
+                        transform: "rotateY(180deg)",
+                        boxShadow: isActive ? `0 0 24px ${trackGlowColor(track.gradient, accent)}` : undefined,
+                      }}
+                    >
+                      <div
+                        className={`relative h-[92%] w-[92%] overflow-hidden rounded-full border ${
+                          isActive ? "spinning-disc" : ""
+                        } ${isLight ? "border-[#f59e0b]/40" : "border-white/20"}`}
+                        style={{ animationPlayState: isPlaying ? "running" : "paused" }}
+                      >
+                        <div className="absolute inset-0 rounded-full bg-[#0a0a0c]" />
+                        <div className="vinyl-grooves absolute inset-0 rounded-full opacity-85" />
+                        <div className="vinyl-shine absolute inset-0 rounded-full" />
+                        <span
+                          aria-hidden
+                          className="absolute left-1/2 top-[7%] h-2 w-2 -translate-x-1/2 rounded-full"
+                          style={{ background: accent, boxShadow: `0 0 8px ${accent}` }}
+                        />
+                        <div
+                          className="absolute left-1/2 top-1/2 flex h-[36%] w-[36%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-black shadow-inner"
+                          style={{ background: track.gradient }}
+                        >
+                          <div className="h-2.5 w-2.5 rounded-full border border-white/40 bg-black" />
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => selectTrack(index)}
+                    aria-label={isActive && isPlaying ? `Pausar ${track.title}` : `Reproducir ${track.title}`}
+                    className="absolute left-1/2 top-1/2 z-30 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border bg-black/60 backdrop-blur-sm transition-transform hover:scale-110 active:scale-95"
+                    style={
+                      isActive
+                        ? { borderColor: accent, color: accent, boxShadow: `0 0 18px ${trackGlowColor(track.gradient, accent)}` }
+                        : { borderColor: "rgba(255,255,255,0.35)", color: "#fff" }
+                    }
+                  >
+                    {isActive && isPlaying ? (
+                      <Pause className="h-5 w-5" />
+                    ) : (
+                      <Play className="ml-0.5 h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+
+                <div
+                  className={`mt-2 rounded-sm border px-2 py-1.5 text-center ${
+                    isActive && isPlaying ? "card-live" : ""
+                  } ${
+                    isActive
+                      ? isLight
+                        ? "border-[#f59e0b]/70 bg-[#0b0d0c]/95"
+                        : "border-neon-green/50 bg-[#0b0d0c]/95"
+                      : "border-white/10 bg-[#0b0d0c]/85"
+                  }`}
+                  style={{ width: itemSize, "--card-glow": trackGlowColor(track.gradient, accent) } as CSSProperties}
+                >
+                  <p
+                    className={`font-cyber text-[11px] font-bold leading-snug [overflow-wrap:anywhere] ${
+                      isLight ? "text-[#fff4e8]" : "text-white"
+                    }`}
+                    style={{
+                      textShadow: isLight
+                        ? "0 0 10px rgba(245,158,11,0.45), 0 2px 4px #000"
+                        : "0 0 10px rgba(57,255,20,0.4), 0 2px 4px #000",
+                    }}
+                  >
+                    {track.title}
+                  </p>
+                  <p
+                    className={`mt-0.5 font-cyber text-[10px] uppercase tracking-[0.18em] ${
+                      isLight ? "text-[#f5b942]" : "text-neon-cyan"
+                    }`}
+                    style={isLight ? { textShadow: "0 0 8px rgba(245,158,11,0.65)" } : undefined}
+                  >
+                    {track.tag}
+                  </p>
+                  {isActive ? (
+                    <div className="mt-1.5 flex w-full items-center justify-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => setVolume((current) => (current === 0 ? 0.85 : 0))}
+                        aria-label={volume === 0 ? "Unmute" : "Mute"}
+                        className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border ${
+                          isLight ? "border-[#d9a06b]/70 text-[#8b4315]" : "border-white/20 text-white/80"
+                        }`}
+                      >
+                        {volume === 0 ? <VolumeX className="h-3 w-3" /> : <Volume2 className="h-3 w-3" />}
+                      </button>
+                      <input
+                        type="range"
+                        min={0}
+                        max={1}
+                        step={0.01}
+                        value={volume}
+                        onChange={(event) => setVolume(Number(event.target.value))}
+                        className="h-1 min-w-0 flex-1 cursor-pointer"
+                        style={{ accentColor: accent }}
+                        aria-label={language === "es" ? "Volumen" : "Volume"}
+                      />
+                    </div>
+                  ) : null}
+                  {isActive ? (
+                    <div className="mt-1 w-full">
+                      <input
+                        type="range"
+                        min={0}
+                        max={duration || 0}
+                        step={0.1}
+                        value={progress}
+                        onChange={(event) => {
+                          const next = Number(event.target.value)
+                          setProgress(next)
+                          if (audioRef.current) audioRef.current.currentTime = next
+                        }}
+                        className="h-1 w-full min-w-0 cursor-pointer"
+                        style={{ accentColor: accent }}
+                        aria-label={language === "es" ? "Progreso" : "Progress"}
+                      />
+                      <div className="mt-0.5 flex items-center justify-between font-mono text-[9px] opacity-60">
+                        <span>{formatTrackTime(progress)}</span>
+                        <span>{formatTrackTime(duration)}</span>
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/60 to-transparent" />
+      </div>
+
+    </div>
+  )
+}
+
+function Works2026Carousel({
+  language,
+  isLight,
+  filter,
+}: {
+  language: SupportedLanguage
+  isLight: boolean
+  filter: ContentFilter
+}) {
+  const allItems = getWorks2026Items(language)
+  const items = allItems.filter((item) => filter === "all" || item.mediaTag === filter)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const activeItem = items[activeIndex]
+
+  useEffect(() => {
+    setActiveIndex(0)
+    setIsModalOpen(false)
+  }, [filter, language])
+
+  if (items.length === 0) return null
+  const safeIndex = Math.min(activeIndex, items.length - 1)
+  const activeItem = items[safeIndex]
 
   const goPrev = () => setActiveIndex((current) => (current === 0 ? items.length - 1 : current - 1))
   const goNext = () => setActiveIndex((current) => (current === items.length - 1 ? 0 : current + 1))
@@ -727,6 +1655,12 @@ export default function AIExperimentsPage() {
   const isLight = mode === "light"
   const currentLanguage: SupportedLanguage = language === "en" ? "en" : "es"
   const [isThe8BureauModalOpen, setIsThe8BureauModalOpen] = useState(false)
+  const [activeFilter, setActiveFilter] = useState<ContentFilter>("all")
+
+  const showImageVideo2026 = activeFilter !== "audio"
+  const showVideoSections = activeFilter === "all" || activeFilter === "video"
+  const showAudioSection = activeFilter === "all" || activeFilter === "audio"
+  const showSystemSections = activeFilter === "all"
 
   const aiArchiveVideos: VideoItem[] = [
     {
@@ -933,9 +1867,30 @@ export default function AIExperimentsPage() {
         </div>
 
         <div className="mt-8 space-y-8">
-          <Works2026Carousel language={currentLanguage} isLight={isLight} />
+          <ContentFilterBar
+            active={activeFilter}
+            language={currentLanguage}
+            isLight={isLight}
+            onChange={setActiveFilter}
+          />
 
-          <RetroPanel title="the8bureau" statusRight={currentLanguage === "es" ? "PRIVATE / OFFLINE" : "PRIVATE / OFFLINE"} highlight>
+          {showAudioSection ? (
+            <RetroPanel
+              title={currentLanguage === "es" ? "AUDIO IA — MUSIC LAB" : "AI AUDIO — MUSIC LAB"}
+              statusRight={`${IA_AUDIO_TRACKS.length} TRACKS`}
+              highlight
+              accent={isLight ? "amber" : "blue"}
+            >
+              <SpotifyGallery language={currentLanguage} isLight={isLight} />
+            </RetroPanel>
+          ) : null}
+
+          {showImageVideo2026 ? (
+            <Works2026Carousel language={currentLanguage} isLight={isLight} filter={activeFilter} />
+          ) : null}
+
+          {showSystemSections ? (
+            <RetroPanel title="the8bureau" statusRight={currentLanguage === "es" ? "PRIVATE / OFFLINE" : "PRIVATE / OFFLINE"} highlight>
             <div className="grid grid-cols-1 gap-6 xl:grid-cols-[300px_minmax(0,1fr)] xl:items-start">
               <div className="xl:pt-10">
                 <The8BureauScreenshotThumb isLight={isLight} onOpen={() => setIsThe8BureauModalOpen(true)} />
@@ -959,12 +1914,14 @@ export default function AIExperimentsPage() {
                     </div>
                   ))}
                 </div>
+                </div>
               </div>
-            </div>
-          </RetroPanel>
+            </RetroPanel>
+          ) : null}
 
           {isThe8BureauModalOpen ? <The8BureauImageModal isLight={isLight} onClose={() => setIsThe8BureauModalOpen(false)} /> : null}
 
+          {showVideoSections ? (
           <div id="ejemplos-trabajos-ia-2025">
             <RetroPanel
               title={currentLanguage === "es" ? "2025 TRABAJOS Y EXPERIMENTOS" : "2025 WORKS AND EXPERIMENTS"}
@@ -1050,7 +2007,9 @@ export default function AIExperimentsPage() {
               </div>
             </RetroPanel>
           </div>
+          ) : null}
 
+          {showSystemSections ? (
           <RetroPanel title="VIBE-CODING: WEBAPPS" statusRight="TOOLS">
             <p className="mb-4 text-base leading-relaxed text-neon-green/90">
               {currentLanguage === "es"
@@ -1144,12 +2103,15 @@ export default function AIExperimentsPage() {
               </div>
             </div>
           </RetroPanel>
+          ) : null}
 
-          <VideoCarousel
-            items={aiArchiveVideos}
-            title={currentLanguage === "es" ? "EXPERIMENTOS IA (2022-2024)" : "AI EXPERIMENTS (2022-2024)"}
-            variant="retro"
-          />
+          {showVideoSections ? (
+            <VideoCarousel
+              items={aiArchiveVideos}
+              title={currentLanguage === "es" ? "EXPERIMENTOS IA (2022-2024)" : "AI EXPERIMENTS (2022-2024)"}
+              variant="retro"
+            />
+          ) : null}
         </div>
 
         <div className="mt-12 text-center">
