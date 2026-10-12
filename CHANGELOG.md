@@ -32,6 +32,10 @@ CLIPPY.EXE (assistant)
 Agent mode
 - `/agents.md` and `/agents.txt` regenerated from the new content: positioning, pillars, target roles, what he brings, education, career facts, engagements.
 
+Visitor counter
+- The count lives in the KV store, so deploys never reset it. Only the production site adds visits: local runs and preview deploys read the number without incrementing it.
+- The counter shows the last known value (or dashes) instead of zero while loading or when the store is unreachable; the store call has a 5-second timeout.
+
 Text quality
 - Fixed broken encoding (`Ã³`, `Â¿`, `â€™`) in `/magaiba` and the static mini tools; removed UTF-8 BOMs.
 - Error / not-found pages and aria-labels are bilingual. Footer year and "last update" refreshed.
