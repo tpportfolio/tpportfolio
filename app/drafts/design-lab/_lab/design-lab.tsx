@@ -30,6 +30,10 @@ import "./skins/p5.css"
 import "./skins/p6.css"
 import "./skins/p7.css"
 import "./skins/p8.css"
+import "./skins/p3b.css"
+import "./skins/p4b.css"
+import "./skins/p6b.css"
+import "./skins/p8b.css"
 
 type Lang = "es" | "en"
 
@@ -42,6 +46,11 @@ const two = (n: number) => String(n).padStart(2, "0")
 const idx = (i: number) => ({ "--i": i }) as CSSProperties
 
 const isProposalId = (value: string): value is ProposalId => PROPOSALS.some((p) => p.id === value)
+
+const labelOf = (id: ProposalId) => {
+  const at = PROPOSALS.findIndex((p) => p.id === id)
+  return PROPOSALS[at]?.label ?? String(at)
+}
 
 function WinBar({ title, meta, ix, as = "h2" }: { title: string; meta?: string; ix: string; as?: "h2" | "h3" }) {
   const Title = as
@@ -129,8 +138,13 @@ export function DesignLab() {
   }, [])
 
   useEffect(() => {
-    const fromHash = window.location.hash.replace("#", "")
-    if (isProposalId(fromHash)) setProposalId(fromHash)
+    const readHash = () => {
+      const fromHash = window.location.hash.replace("#", "")
+      if (isProposalId(fromHash)) setProposalId(fromHash)
+    }
+    readHash()
+    window.addEventListener("hashchange", readHash)
+    return () => window.removeEventListener("hashchange", readHash)
   }, [])
 
   // Keep the selected tab in view when the tab strip scrolls (narrow screens).
@@ -186,9 +200,11 @@ export function DesignLab() {
                 role="tab"
                 aria-selected={p.id === proposalId}
                 className="dl-bar-tab"
+                data-round={p.round ?? 1}
+                data-first={p.round === 2 && PROPOSALS[i - 1]?.round !== 2 ? "true" : undefined}
                 onClick={() => selectProposal(p.id)}
               >
-                <span className="dl-bar-tab-n">{i}</span>
+                <span className="dl-bar-tab-n">{p.label ?? i}</span>
                 <span className="dl-bar-tab-name">{p.name}</span>
               </button>
             ))}
@@ -219,7 +235,7 @@ export function DesignLab() {
           </span>
           <span className="dl-bar-tagline">
             <b>
-              {PROPOSALS.indexOf(proposal)} · {proposal.name}
+              {labelOf(proposal.id)} · {proposal.name}
             </b>{" "}
             {proposal.tagline[lang]}
           </span>
@@ -281,6 +297,9 @@ export function DesignLab() {
             <div className="dl-ticker">
               <div className="dl-ticker-track">
                 <span>{page.ticker}</span>
+                <span className="dl-ticker-dup" aria-hidden>
+                  {page.ticker}
+                </span>
               </div>
             </div>
 
@@ -591,7 +610,7 @@ export function DesignLab() {
                 {originLabel}
               </span>
               <h2>
-                {PROPOSALS.indexOf(proposal)} · {proposal.name}
+                {labelOf(proposal.id)} · {proposal.name}
               </h2>
             </div>
             <button type="button" className="dl-bar-btn" onClick={() => setNotesOpen(false)} aria-label={ui.closeNotes[lang]}>

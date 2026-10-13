@@ -15,7 +15,7 @@
  *                     .dl-nav > .dl-nav-link[aria-current](.dl-nav-ix .dl-nav-label)
  *                     .dl-side-foot(.dl-mode(.dl-switch) .dl-langs > .dl-lang[aria-pressed] .dl-agent .dl-copy)
  *     .dl-scroll      the scrolling area  > .dl-main
- *       .dl-ticker > .dl-ticker-track > span
+ *       .dl-ticker > .dl-ticker-track > span + span.dl-ticker-dup (same text again, hidden in the base; for seamless loops)
  *       .dl-back
  *       .dl-head(.dl-eyebrow .dl-title .dl-sub .dl-tags > li .dl-rule)
  *       .dl-win.dl-reel    > .dl-win-bar .dl-win-body.dl-reel-body .dl-win-foot
@@ -126,10 +126,28 @@
   color: #fff;
 }
 
+.dl-bar-tab[data-first="true"] {
+  margin-left: 10px;
+}
+
+.dl-bar-tab[data-first="true"]::before {
+  content: "";
+  width: 1px;
+  height: 18px;
+  margin: 0 8px 0 -9px;
+  background: #3a3a44;
+}
+
+.dl-bar-tab[data-round="2"] .dl-bar-tab-n {
+  background: #1c2a45;
+  color: #9cc2ff;
+}
+
 .dl-bar-tab-n {
   display: inline-grid;
   place-items: center;
-  width: 20px;
+  min-width: 20px;
+  padding: 0 4px;
   height: 20px;
   border-radius: 5px;
   background: #2b2b33;
@@ -658,6 +676,10 @@
   background: #000;
   box-shadow: 0 0 10px var(--accent), inset 0 0 5px var(--accent);
   white-space: nowrap;
+}
+
+.dl-stage .dl-ticker-dup {
+  display: none;
 }
 
 .dl-stage .dl-ticker-track {

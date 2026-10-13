@@ -10,7 +10,7 @@ type L = LocalizedText
 
 export const ui = {
   labTitle: { es: "DESIGN LAB", en: "DESIGN LAB" },
-  labHint: { es: "← → o 0-8 para cambiar de propuesta", en: "← → or 0-8 to switch proposal" },
+  labHint: { es: "← → para recorrer todas; 0-8 para la primera ronda", en: "← → to step through all; 0-8 for the first round" },
   notes: { es: "Notas", en: "Notes" },
   closeNotes: { es: "Cerrar notas", en: "Close notes" },
   exit: { es: "Volver al sitio", en: "Back to site" },
@@ -196,11 +196,14 @@ export const clippy = {
   close: { es: "Cerrar assistant", en: "Close assistant" } as L,
 }
 
-export type ProposalId = "p0" | "p1" | "p2" | "p3" | "p4" | "p5" | "p6" | "p7" | "p8"
+export type ProposalId = "p0" | "p1" | "p2" | "p3" | "p4" | "p5" | "p6" | "p7" | "p8" | "p3b" | "p4b" | "p6b" | "p8b"
 
 export interface Proposal {
   id: ProposalId
   name: string
+  // Tab label when it is not the position in the list (second-round variants: "3.2", "6.2").
+  label?: string
+  round?: 2
   origin: "baseline" | "own" | "skill"
   skill?: string
   tagline: L
@@ -677,6 +680,221 @@ export const PROPOSALS: Proposal[] = [
     effort: {
       es: "Alto. Cambia la paleta (el verde deja de ser protagonista).",
       en: "High. It changes the palette (green stops being the lead colour).",
+    },
+  },
+  {
+    id: "p3b",
+    name: "RETRO OS v2",
+    label: "3.2",
+    round: 2,
+    origin: "own",
+    tagline: {
+      es: "Las ventanas de RETRO OS con la paleta del portfolio: fondo negro, verde neón, cian y magenta, scanlines y resplandor.",
+      en: "The RETRO OS windows in the portfolio's palette: black background, neon green, cyan and magenta, scanlines and glow.",
+    },
+    notes: [
+      {
+        area: AREA.boxes,
+        text: {
+          es: "Siguen el borde de 2 px, el radio de 10 px y la sombra dura, pero sobre negro y con un resplandor verde tenue. La tarjeta de IA vuelve a ser cian, como en el sitio.",
+          en: "The 2 px border, 10 px radius and hard shadow stay, but on black and with a faint green glow. The AI card is cyan again, as on the site.",
+        },
+      },
+      {
+        area: AREA.chrome,
+        text: {
+          es: "La barra de título deja de ser un bloque verde: es oscura, con el título en verde neón. Los tres botones de la derecha llevan los colores de las luces originales (amarillo, verde, rojo).",
+          en: "The title bar is no longer a green block: it is dark, with the title in neon green. The three buttons on the right carry the colours of the original lights (yellow, green, red).",
+        },
+      },
+      {
+        area: AREA.reels,
+        text: {
+          es: "El mismo reproductor, con el contador en rojo como el contador de visitas del sitio, la fila activa en cian y miniaturas chicas en la lista.",
+          en: "The same media player, with the counter in red like the site's visitor counter, the active row in cyan and small thumbnails in the list.",
+        },
+      },
+      {
+        area: AREA.width,
+        text: {
+          es: "Igual que en la primera versión: 1200 px con la ficha a la izquierda. Las etiquetas en tipografía de píxel, que se leían mal, pasan a monoespaciada.",
+          en: "Same as the first version: 1200 px with the fact sheet on the left. The pixel-font labels, which were hard to read, become monospaced.",
+        },
+      },
+      {
+        area: AREA.clippy,
+        text: {
+          es: "El globo pasa a ser una ventana oscura con borde neón que conserva la punta hacia el personaje; el mensaje del visitante va en cian, como hoy.",
+          en: "The balloon becomes a dark window with a neon border that keeps its tail towards the character; the visitor's message is cyan, as it is today.",
+        },
+      },
+    ],
+    fonts: "VT323 + IBM Plex Mono",
+    effort: {
+      es: "Medio. Como RETRO OS, pero sin cambiar la paleta del sitio.",
+      en: "Medium. Like RETRO OS, but without changing the site's palette.",
+    },
+  },
+  {
+    id: "p4b",
+    name: "PHOSPHOR POSTER v2",
+    label: "4.2",
+    round: 2,
+    origin: "skill",
+    skill: "frontend-design",
+    tagline: {
+      es: "El mismo afiche, más delicado: tipografía más chica y liviana, más aire entre bloques y menos peso en bordes y números.",
+      en: "The same poster, more delicate: smaller and lighter type, more air between blocks and less weight on borders and numerals.",
+    },
+    notes: [
+      {
+        area: AREA.boxes,
+        text: {
+          es: "Mismas esquinas cortadas, con más separación entre recuadros y más aire adentro. Los números gigantes de fondo son más chicos y más tenues.",
+          en: "Same cut corners, with more separation between boxes and more air inside. The giant background numerals are smaller and fainter.",
+        },
+      },
+      {
+        area: AREA.chrome,
+        text: {
+          es: "La lengüeta ámbar es más baja y su texto más chico y menos ancho.",
+          en: "The amber tab is lower and its text smaller and less wide.",
+        },
+      },
+      {
+        area: AREA.reels,
+        text: {
+          es: "Pantalla con borde fino y casi sin inclinación; la ficha superpuesta es más angosta y las miniaturas tienen más separación.",
+          en: "Screen with a thin border and almost no tilt; the overlapping caption is narrower and the thumbnails have more separation.",
+        },
+      },
+      {
+        area: AREA.width,
+        text: {
+          es: "Mismo ancho de 1400 px; el título baja de tamaño y de peso, y el cuerpo de texto es un punto más chico con más interlínea.",
+          en: "Same 1400 px width; the title drops in size and weight, and the body text is a notch smaller with more line spacing.",
+        },
+      },
+      {
+        area: AREA.clippy,
+        text: {
+          es: "Mismo panel, con textos más chicos y el ámbar del visitante menos saturado.",
+          en: "Same panel, with smaller text and a less saturated amber for the visitor.",
+        },
+      },
+    ],
+    fonts: "Anybody + Martian Mono",
+    effort: {
+      es: "Alto, igual que la primera versión.",
+      en: "High, same as the first version.",
+    },
+  },
+  {
+    id: "p6b",
+    name: "AUDIT FIX v2",
+    label: "6.2",
+    round: 2,
+    origin: "skill",
+    skill: "redesign-skill",
+    tagline: {
+      es: "Los arreglos de AUDIT FIX sin perder la identidad: vuelven el verde neón, el cian, el magenta, las luces de colores, el resplandor y la línea que barre la pantalla.",
+      en: "The AUDIT FIX repairs without losing the identity: neon green, cyan, magenta, the coloured lights, the glow and the sweeping scanline are back.",
+    },
+    notes: [
+      {
+        area: AREA.boxes,
+        text: {
+          es: "Radio de 12 px y un solo resplandor verde por fuera (se va el de adentro). Fondo casi negro, como el sitio.",
+          en: "12 px radius and a single green glow on the outside (the inner one goes). Near-black background, like the site.",
+        },
+      },
+      {
+        area: AREA.chrome,
+        text: {
+          es: "Vuelven las tres luces en rojo, amarillo y verde, más chicas y parejas. Una sola barra de ventana para todo, con el título en verde neón y un pie de estado.",
+          en: "The three lights return in red, yellow and green, smaller and even. One window bar for everything, with the title in neon green and a status footer.",
+        },
+      },
+      {
+        area: AREA.reels,
+        text: {
+          es: "Video grande pero acotado, centrado sobre negro, con el título en cian y miniaturas con nombre; la activa en cian, como hoy.",
+          en: "Large but bounded video, centred on black, with the title in cyan and named thumbnails; the active one in cyan, as it is today.",
+        },
+      },
+      {
+        area: AREA.width,
+        text: {
+          es: "El mismo contenedor de 1240 px con la ficha a la izquierda y párrafos de 65 caracteres.",
+          en: "The same 1240 px container with the fact sheet on the left and 65-character paragraphs.",
+        },
+      },
+      {
+        area: AREA.clippy,
+        text: {
+          es: "El chat es una ventana más del sistema: barra con luces, mensajes con radio, el del visitante con borde cian y foco visible.",
+          en: "The chat is one more window of the system: bar with lights, rounded messages, the visitor's with a cyan border, and visible focus.",
+        },
+      },
+    ],
+    fonts: "Sometype Mono",
+    effort: {
+      es: "Bajo. Es la más cercana al sitio actual: se puede aplicar por pasos.",
+      en: "Low. It is the closest to the current site: it can be applied in steps.",
+    },
+  },
+  {
+    id: "p8b",
+    name: "DOT MATRIX v2",
+    label: "8.2",
+    round: 2,
+    origin: "skill",
+    skill: "nothing-design",
+    tagline: {
+      es: "DOT MATRIX completa: cinta de texto fluida y continua, miniaturas en la lista del reel, ficha legible y todos los bloques terminados.",
+      en: "DOT MATRIX completed: a smooth, continuous text tape, thumbnails in the reel list, a readable fact sheet and every block finished.",
+    },
+    notes: [
+      {
+        area: AREA.boxes,
+        text: {
+          es: "Mismo criterio: casi sin recuadros, superficies gris oscuro de hasta 16 px de radio, sin sombra. Las etiquetas suben a 12 px para leerse mejor.",
+          en: "Same approach: almost no boxes, dark grey surfaces with up to 16 px radius, no shadow. Labels go up to 12 px for legibility.",
+        },
+      },
+      {
+        area: AREA.chrome,
+        text: {
+          es: "Etiqueta de instrumento con el número de sección en matriz de puntos.",
+          en: "Instrument label with the section number in dot matrix.",
+        },
+      },
+      {
+        area: AREA.reels,
+        text: {
+          es: "La lista recupera las miniaturas, en gris, que toman color en la activa. Barra de progreso en segmentos y un único punto rojo.",
+          en: "The list gets its thumbnails back, in grey, taking colour on the active one. Segmented progress bar and a single red dot.",
+        },
+      },
+      {
+        area: AREA.width,
+        text: {
+          es: "La ficha de la derecha deja de alinear a la derecha y partir palabras: etiqueta arriba y valor abajo. La cinta superior corre sin saltos ni vacíos.",
+          en: "The fact sheet on the right stops right-aligning and breaking words: label above, value below. The top tape runs with no jumps or gaps.",
+        },
+      },
+      {
+        area: AREA.clippy,
+        text: {
+          es: "Mismo panel plano, con cabecera más clara y los estados entre corchetes.",
+          en: "Same flat panel, with a clearer header and states in brackets.",
+        },
+      },
+    ],
+    fonts: "Doto + Space Grotesk + Space Mono",
+    effort: {
+      es: "Alto, igual que la primera versión.",
+      en: "High, same as the first version.",
     },
   },
 ]
