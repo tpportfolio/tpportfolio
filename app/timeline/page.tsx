@@ -5,6 +5,7 @@ import { useLanguage } from "@/components/language-context"
 import { TimelineOrbit } from "@/components/timeline-orbit"
 import styles from "@/components/timeline-orbit.module.css"
 import type { VideoItem } from "@/components/video-carousel"
+import { timelineExtras } from "@/lib/timeline-extras"
 import {
   airNewZealandVideos,
   airtmVideos,
@@ -32,8 +33,6 @@ interface TimelineEntry {
   videos?: VideoItem[]
   /** Small tag shown inside the planet, under the year. */
   tag?: string
-  /** Link shown under the description in the callout. */
-  link?: { href: string; label: Localized }
   /** Role text holds several lines (one role per line, each ending in its dates) in the callout. */
   multiRole?: boolean
   showCovidBefore?: boolean
@@ -100,7 +99,6 @@ export default function Timeline() {
       side: "right",
       videos: magaibaVideos,
       tag: "SIDE PROJECT",
-      link: { href: "/magaiba", label: { es: "VER PROYECTO", en: "VIEW PROJECT" } },
     },
     {
       id: "drgea",
@@ -310,26 +308,37 @@ export default function Timeline() {
   // so neighbouring planets never move in sync.
   const LAPS = [34, 30, 38, 32, 36]
 
-  const renderCallout = (entry: TimelineEntry) => (
-    <div className={`${styles.callout} ${entry.multiRole ? styles.calloutMulti : ""}`}>
-      {/* Leader rule: continues the line that leaves the centre-line node and ends in a dot. */}
-      <span aria-hidden="true" className={styles.rule}>
-        <span className={styles.ruleLine} />
-        <span className={styles.ruleDot} />
-      </span>
-      <div className={styles.head}>
-        <h4 className={`${styles.calloutRole} font-cyber`}>
-          <RoleLines text={entry.role[lang]} multi={!!entry.multiRole} />
-        </h4>
-      </div>
-      <p className={styles.calloutText}>{entry.description[lang]}</p>
-      {entry.link && (
-        <Link href={entry.link.href} className={`${styles.link} font-cyber`}>
-          <span>{entry.link.label[lang]}</span> <span aria-hidden="true" className={styles.arrow}>&rarr;</span>
+  const renderCallout = (entry: TimelineEntry) => {
+    const { href, brandGroups } = timelineExtras[entry.id]
+    return (
+      <div className={`${styles.callout} ${entry.multiRole ? styles.calloutMulti : ""}`}>
+        {/* Leader rule: continues the line that leaves the centre-line node and ends in a dot. */}
+        <span aria-hidden="true" className={styles.rule}>
+          <span className={styles.ruleLine} />
+          <span className={styles.ruleDot} />
+        </span>
+        <div className={styles.head}>
+          <h4 className={`${styles.calloutRole} font-cyber`}>
+            <RoleLines text={entry.role[lang]} multi={!!entry.multiRole} />
+          </h4>
+        </div>
+        <p className={styles.calloutText}>{entry.description[lang]}</p>
+        {/* Brands by relationship (sponsorship, partners, agency clients...): a quick-scan line per group. */}
+        <ul className={styles.brands}>
+          {brandGroups.map((group) => (
+            <li key={group.label.en} className={styles.brandGroup}>
+              <span className={styles.brandLabel}>{group.label[lang]}</span>{" "}
+              <strong className={styles.brandNames}>{group.brands[lang].join(" · ")}</strong>
+            </li>
+          ))}
+        </ul>
+        <Link href={href} className={`${styles.cta} font-cyber`} aria-label={`${lang === "es" ? "Ver" : "View"} ${entry.title}`}>
+          <span>{lang === "es" ? "VER" : "VIEW"}</span>
+          <span aria-hidden="true" className={styles.arrow}>&rarr;</span>
         </Link>
-      )}
-    </div>
-  )
+      </div>
+    )
+  }
 
   // Every block is one row: the planet on one side of the centre line, the callout hanging from the line on the other.
   const renderRow = (entry: TimelineEntry, entryIndex: number) => {
@@ -350,6 +359,7 @@ export default function Timeline() {
           name={entry.title}
           role={(entry.planetRole ?? entry.role)[lang]}
           tag={entry.tag}
+          href={timelineExtras[entry.id].href}
           videos={entry.videos ?? []}
           phase={(entryIndex * 0.29) % 1}
           reverse={entryIndex % 2 === 1}

@@ -11,6 +11,8 @@ import { consultantVideos } from "@/lib/work-videos"
 type L = { es: string; en: string }
 
 type Engagement = {
+  // Id of the block in the page, so other pages can link to it (e.g. /timeline).
+  anchor: string
   company: string
   title: string
   dates: string
@@ -69,6 +71,7 @@ const keyAchievements: L[] = [
 
 const engagements: Engagement[] = [
   {
+    anchor: "paradise-la",
     company: "PARADISE.LA",
     title: "AI & CONTENT CONSULTANT & PRODUCER",
     dates: "JUL 2024-JAN 2026",
@@ -102,6 +105,7 @@ const engagements: Engagement[] = [
     ],
   },
   {
+    anchor: "drgea",
     company: "DRGEA.COM",
     title: "HEAD OF COMMUNICATIONS",
     dates: "FEB 2023-APR 2024",
@@ -126,6 +130,7 @@ const engagements: Engagement[] = [
     ],
   },
   {
+    anchor: "sinerlogic",
     company: "SINERLOGIC",
     title: "MARKETING & BRANDING CONSULTANT",
     dates: "2022-2023",
@@ -146,6 +151,7 @@ const engagements: Engagement[] = [
     ],
   },
   {
+    anchor: "airtm",
     company: "AIRTM",
     title: "GROWTH MARKETING + R&D",
     dates: "SEP 2021-JUL 2022",
@@ -170,6 +176,7 @@ const engagements: Engagement[] = [
     ],
   },
   {
+    anchor: "stone-movistar",
     company: "STONE MOVISTAR",
     title: "BRAND & MARKETING CONSULTANT",
     dates: "JUL 2020-DEC 2021",
@@ -194,6 +201,7 @@ const engagements: Engagement[] = [
     ],
   },
   {
+    anchor: "go-broadway",
     company: "GO BROADWAY!",
     title: "MARKETING CONSULTANT",
     dates: "AUG 2020-NOV 2020",
@@ -305,7 +313,7 @@ export default function IndependentConsultantPage() {
           <div className="terminal-header">ENGAGEMENTS</div>
           <div className="terminal-content space-y-8">
             {engagements.map((eng) => (
-              <div className="space-y-2" key={eng.company}>
+              <div className="space-y-2 scroll-mt-24" id={eng.anchor} key={eng.anchor}>
                 <p className={`font-bold ${headingColor}`}>
                   {eng.companyHref ? (
                     <Link href={eng.companyHref} className="underline hover:text-neon-magenta">

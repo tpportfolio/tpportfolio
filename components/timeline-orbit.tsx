@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
+import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useLanguage } from "./language-context"
 import { useVisualMode } from "./visual-mode-context"
@@ -19,6 +20,8 @@ interface TimelineOrbitProps {
   role: string
   /** Optional tag shown under the year (e.g. "SIDE PROJECT"). */
   tag?: string
+  /** Where the planet face leads: the whole face is one link. */
+  href: string
   /** Videos orbiting the planet. Empty: the planet is drawn alone, with no ring. */
   videos: VideoItem[]
   /** Fraction (0-1) that sets the start angle, so neighbouring planets are not in phase. */
@@ -66,6 +69,7 @@ export function TimelineOrbit({
   name,
   role,
   tag,
+  href,
   videos,
   phase = 0,
   reverse = false,
@@ -112,6 +116,7 @@ export function TimelineOrbit({
   )
 
   const playLabel = lang === "es" ? "Reproducir video" : "Play video"
+  const viewLabel = `${lang === "es" ? "Ver" : "View"} ${name}`
   const current = openIndex !== null ? videos[openIndex] : null
   const startAngle = (((phase % 1) + 1) % 1) * 360
 
@@ -132,12 +137,15 @@ export function TimelineOrbit({
       {hasVideos && <span className={styles.ring} aria-hidden="true" />}
 
       <div className={styles.planet}>
-        <div className={styles.core}>
-          <p className={`${styles.year} font-cyber`}>{year}</p>
-          {tag && <p className={styles.tag}>{tag}</p>}
-          <h3 className={`${styles.name} font-cyber`}>{name}</h3>
-          <p className={styles.role}>{role}</p>
-        </div>
+        {/* One link over the whole face; the satellites are separate buttons stacked above it. */}
+        <Link href={href} className={styles.planetLink} aria-label={viewLabel}>
+          <div className={styles.core}>
+            <p className={`${styles.year} font-cyber`}>{year}</p>
+            {tag && <p className={styles.tag}>{tag}</p>}
+            <h3 className={`${styles.name} font-cyber`}>{name}</h3>
+            <p className={styles.role}>{role}</p>
+          </div>
+        </Link>
       </div>
 
       {hasVideos && (

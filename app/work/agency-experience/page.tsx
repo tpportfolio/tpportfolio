@@ -9,8 +9,9 @@ import { agencyVideos } from "@/lib/work-videos"
 
 type L = { es: string; en: string }
 
-const roles: { header: string; intro: L; bullets: L[] }[] = [
+const roles: { anchor: string; header: string; intro: L; bullets: L[] }[] = [
   {
+    anchor: "jwt",
     header: "JUN 2008-MAR 2011 // J. WALTER THOMPSON (JWT/GLUE): ACCOUNT EXECUTIVE",
     intro: {
       es: "Fui ejecutivo de cuentas BTL: campañas, activaciones y eventos para marcas de consumo masivo, banca, telecomunicaciones y retail.",
@@ -40,6 +41,7 @@ const roles: { header: string; intro: L; bullets: L[] }[] = [
     ],
   },
   {
+    anchor: "altheim",
     header: "JUN 2007-JUN 2008 // ALTHEIM COMUNICACIONES: ACCOUNT ASSISTANT",
     intro: {
       es: "Mi primer trabajo formal, en una agencia boutique con campañas ATL, BTL y 360°.",
@@ -100,7 +102,7 @@ export default function AgencyExperiencePage() {
         </div>
 
         {roles.map((role) => (
-          <div className="terminal" key={role.header}>
+          <div className="terminal scroll-mt-24" id={role.anchor} key={role.anchor}>
             <div className="terminal-header">{role.header}</div>
             <div className="terminal-content">
               <p>{role.intro[lang]}</p>
