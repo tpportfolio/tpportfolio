@@ -46,7 +46,7 @@ const INTRO_URL = "/intro.html"
 const B = (bold: string) => ({ bold })
 
 const copyEs: AboutCopy = {
-  title: "ACERCA DE MÍ",
+  title: "ACERCA DE MI",
   subtitle: "PERSONAL_PROFILE.exe",
   overviewHeader: "PROFILE_OVERVIEW",
   skillsHeader: "SKILLS",

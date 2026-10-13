@@ -9,7 +9,7 @@ const translations = {
     system_status: "[ESTADO DEL SISTEMA: OPERATIVO]",
     access_count: "CONTADOR DE VISITAS:",
     last_update: "ÚLTIMA ACTUALIZACIÓN DEL SISTEMA: 12 OCT 2026 // FIN DE TRANSMISIÓN",
-    about_me: "ACERCA DE MÍ",
+    about_me: "ACERCA DE MI",
     return_to_mainframe: "VOLVER AL MAINFRAME",
     timeline: "TIMELINE",
     agency_overview:

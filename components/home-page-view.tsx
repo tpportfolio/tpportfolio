@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { useVisualMode } from "@/components/visual-mode-context"
 import { useLanguage } from "@/components/language-context"
 import { RetroBrowser } from "@/components/retro-browser"
@@ -13,26 +13,6 @@ type VariantMode = "default" | "dark" | "light"
 interface HomePageViewProps {
   className?: string
   variantMode?: VariantMode
-}
-
-function getExperienceYears() {
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Argentina/Buenos_Aires",
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-  }).formatToParts(new Date())
-
-  const year = Number(parts.find((part) => part.type === "year")?.value ?? "2007")
-  const month = Number(parts.find((part) => part.type === "month")?.value ?? "1")
-  const day = Number(parts.find((part) => part.type === "day")?.value ?? "1")
-
-  let years = year - 2007
-  if (month < 6 || (month === 6 && day < 2)) {
-    years -= 1
-  }
-
-  return years
 }
 
 export function HomePageView({ className, variantMode = "default" }: HomePageViewProps) {
@@ -53,9 +33,8 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
   const typewriterColor = isLight ? "#b85a17" : "#00ff00"
   const statusStyle = isLight ? { color: "#7a3913" } : undefined
 
-  const experienceYears = useMemo(() => getExperienceYears(), [])
-  const heroCopyEs = `Soy Tomás, Brand Strategist y líder de marketing de marca. Trabajo en el cruce entre estrategia de marca, marketing cultural y tecnología creativa para construir, lanzar y escalar marcas, con ${experienceYears} años de trayectoria.`
-  const heroCopyEn = `I'm Tomás, a Brand Strategist and Brand Marketing Leader. I work at the intersection of brand strategy, cultural marketing and creative technology to build, launch and scale brands, with ${experienceYears} years of experience.`
+  const heroCopyEs = `Soy Tomás, Brand Strategist y líder de marketing. Trabajo en el cruce entre estrategia de marca, marketing cultural y tecnología creativa para construir, lanzar y escalar marcas, con más de 18 años de trayectoria.`
+  const heroCopyEn = `I'm Tomás, a Brand Strategist and Marketing Leader. I work at the intersection of brand strategy, cultural marketing and creative technology to build, launch and scale brands, with 18+ years of experience.`
 
   useEffect(() => {
     if (typeof window === "undefined") return

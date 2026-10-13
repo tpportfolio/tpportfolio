@@ -1,5 +1,13 @@
 # Changelog
 
+## r21 (2026-10-13) — Copy tweaks
+Branch `release/r21-copy-tweaks`. Builds on r20.
+
+- AI experiments: new intro paragraph, in Spanish and English, with the years and the names Morfeo Academy and Paradise.la in bold. The LLM list now starts with Claude.
+- About: the Spanish title is "ACERCA DE MI" (no accent), also in the navigation label used by `/agents.md`.
+- Home: the intro line says "Brand Strategist y líder de marketing" / "Brand Strategist and Marketing Leader" and "más de 18 años" / "18+ years" (it used to compute the number of years).
+- The assistant's knowledge base keeps the same facts, so it is unchanged.
+
 ## r20 (2026-10-13) — The window on the home cards and the AI panels
 Branch `release/r20-window-everywhere`. Builds on r19. Step 2 of 2. No text changes.
 

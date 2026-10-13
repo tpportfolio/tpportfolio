@@ -2,16 +2,15 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r20 (2026-10-13) — The window on the home cards and the AI panels
+## Current version: r21 (2026-10-13) — Copy tweaks
 
 What changed in this version:
 
-- **Home.** The project cards use the site window; the AI card keeps its cyan accent.
-- **AI experiments.** Music Lab, the8bureau and the webapps panel use the same window, each in its accent colour.
-- **One container.** With r18 and r19, every panel of the site now shares one window, except the timeline planets.
-- **Fixes.** No sideways scroll on the home and About pages at laptop widths, nor on the AI experiments page on phones.
+- **AI experiments.** New intro paragraph (ES and EN) with years and key names in bold.
+- **About.** Spanish title without the accent: "ACERCA DE MI".
+- **Home.** Shorter intro line: Brand Strategist and Marketing Leader, 18+ years.
 
-Previous version: r19 (2026-10-13) — The same window for work pages, About, Contact and MAGAIBA.
+Previous version: r20 (2026-10-13) — The window on the home cards and the AI panels. It completed the move of every panel of the site to one window.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -22,7 +21,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r20-window-everywhere`, tag `r20` | This version |
+| `release/r21-copy-tweaks`, tag `r21` | This version |
+| `release/r20-window-everywhere`, tag `r20` | Window on home cards and AI panels |
 | `release/r19-video-links`, tag `r19` | Window on work pages, About, Contact, MAGAIBA |
 | `release/r18-video-containers`, tag `r18` | One video window |
 | `release/r17-design-lab-v2`, tag `r17` | Design lab, round 2 |

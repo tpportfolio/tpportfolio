@@ -1,5 +1,6 @@
 "use client"
 
+import type { ReactNode } from "react"
 import {
   useEffect,
   useRef,
@@ -2377,6 +2378,9 @@ export default function AIExperimentsPage() {
   const [isThe8BureauModalOpen, setIsThe8BureauModalOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState<ContentFilter>("all")
 
+  const B = ({ children }: { children: ReactNode }) => (
+    <strong className={isLight ? "font-bold text-[#2e1305]" : "font-bold text-white"}>{children}</strong>
+  )
   const showImageVideo2026 = activeFilter !== "audio"
   const showVideoSections = activeFilter === "all" || activeFilter === "video"
   const showAudioSection = activeFilter === "all" || activeFilter === "audio"
@@ -2554,36 +2558,35 @@ export default function AIExperimentsPage() {
             <p>
               {currentLanguage === "es" ? (
                 <>
-                  Empecé a explorar IA de forma autodidacta a fines de 2022. En 2023 generé un LoRA de mi persona.
-                  Desde junio de 2024 participo del curso y la comunidad de Morfeo Academy. Mi experiencia profesional
-                  directamente vinculada a IA es mi trabajo como AI & Content Consultant & Producer en Paradise.la
-                  (julio de 2024 a enero de 2026), donde trabajé en la
-                  transición hacia una productora audiovisual impulsada por IA. Trabajo como creative technologist: uso
-                  un stack de IA todos los días para prototipar campañas y acelerar la producción de contenido. En
-                  Paradise.la el resultado fue pasar de ciclos de concepto a entrega de más de 2 semanas a 3–4 días en
-                  producciones piloto. Exploro herramientas y workflows para
+                  A finales de <B>2022</B> empecé de forma autodidacta a aprender sobre IA, en <B>2023</B> generé un
+                  LoRA de mi persona. Desde junio de <B>2024</B> participo del curso y comunidad de IA generativa{" "}
+                  <B>Morfeo Academy</B>. Desde <B>2024</B> hasta principios de <B>2026</B> fui AI & Content Consultant &
+                  Producer en <B>Paradise.la</B>, donde trabajé en la transición hacia una productora audiovisual
+                  impulsada por IA. Trabajo como creative technologist: uso un stack de IA todos los días para
+                  prototipar ideas y acelerar la producción de contenido. En <B>Paradise.la</B> el resultado fue pasar
+                  de ciclos de concepto a entrega de más de 2 semanas a 3–4 días. Exploro herramientas y workflows para
                   marcas y equipos, con foco en acelerar, iterar, reducir fricción y mejorar la calidad. Trabajo con IA en:{" "}
-                  <span className="font-cyber text-neon-cyan">IMAGEN</span>: Nanobanana, GPT-2, Flux, Midjourney.{" "}
+                  <span className="font-cyber text-neon-cyan">IMAGEN</span>: Nanobanana, GPT2, Flux, Midjourney.{" "}
                   <span className="font-cyber text-neon-cyan">VIDEO</span>: Flow / Veo, Kling, Runway,
                   Higgsfield/Freepik. <span className="font-cyber text-neon-cyan">AUDIO</span>: ElevenLabs,
-                  fish.audio, Suno, Udio. <span className="font-cyber text-neon-cyan">LLMS</span>: ChatGPT,
-                  Kimi, Gemini, Perplexity, Claude.
+                  fish.audio, Suno, Udio. <span className="font-cyber text-neon-cyan">LLMS</span>: Claude,
+                  ChatGPT, Gemini, Perplexity, Kimi.
                 </>
               ) : (
                 <>
-                  I began exploring AI as a self-taught practitioner in late 2022. In 2023, I generated a LoRA of
-                  myself. Since June 2024, I have been part of Morfeo Academy's course and community. My professional
-                  AI experience is my work as AI & Content Consultant & Producer at Paradise.la (July 2024 to January
-                  2026), where I worked on its transition toward
-                  an AI-driven audiovisual production company. I work as a creative technologist: I run an AI stack
-                  every day to prototype campaigns and speed up content production. At Paradise.la, concept-to-delivery
-                  cycles went from 2+ weeks to 3–4 days on pilot productions. I explore tools and workflows for brands and teams,
-                  focused on accelerating, iterating, reducing friction and improving quality. I work with AI across{" "}
-                  <span className="font-cyber text-neon-cyan">IMAGE</span>: Nanobanana, GPT-2, Flux, Midjourney.{" "}
+                  In late <B>2022</B> I started teaching myself about AI, and in <B>2023</B> I generated a LoRA of
+                  myself. Since June <B>2024</B> I have been part of the generative AI course and community{" "}
+                  <B>Morfeo Academy</B>. From <B>2024</B> to early <B>2026</B> I was AI & Content Consultant & Producer
+                  at <B>Paradise.la</B>, where I worked on its transition toward an AI-driven audiovisual production
+                  company. I work as a creative technologist: I use an AI stack every day to prototype ideas and speed
+                  up content production. At <B>Paradise.la</B> the result was going from concept-to-delivery cycles of
+                  2+ weeks to 3–4 days. I explore tools and workflows for brands and teams, focused on accelerating,
+                  iterating, reducing friction and improving quality. I work with AI across{" "}
+                  <span className="font-cyber text-neon-cyan">IMAGE</span>: Nanobanana, GPT2, Flux, Midjourney.{" "}
                   <span className="font-cyber text-neon-cyan">VIDEO</span>: Flow / Veo, Kling, Runway,
                   Higgsfield/Freepik. <span className="font-cyber text-neon-cyan">AUDIO</span>: ElevenLabs,
-                  fish.audio, Suno, Udio. <span className="font-cyber text-neon-cyan">LLMS</span>: ChatGPT,
-                  Kimi, Gemini, Perplexity, Claude.
+                  fish.audio, Suno, Udio. <span className="font-cyber text-neon-cyan">LLMS</span>: Claude,
+                  ChatGPT, Gemini, Perplexity, Kimi.
                 </>
               )}
             </p>
