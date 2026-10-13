@@ -2,21 +2,15 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r15 (2026-10-12) — Design lab, timeline links, sidebar order
+## Current version: r16 (2026-10-13) — Intro, timeline planets, 2026 works
 
 What changed in this version:
 
-- **Design lab.** New draft page `/drafts/design-lab`: a model page in Spanish and English (sidebar, Independent Consultant work page with its reel and fact sheet, home project cards, a CLIPPY.EXE sample) with nine interchangeable styles. Style 0 reproduces the current site as a reference.
-- **The lab is additive.** It changes no existing page. Each proposal answers the same five points: container shape, window buttons, reel and trailer containers, page and block widths, and CLIPPY.EXE containers.
-- **Own proposals.** 1 SOFT SHELL, 2 GLASS HUD and 3 RETRO OS.
-- **Proposals built with a design skill.** 4 PHOSPHOR POSTER (`frontend-design`), 5 ZINC (`taste-skill`), 6 AUDIT FIX (`redesign-skill`), 7 PAPER TERMINAL (`minimalist-skill`, candidate for light mode) and 8 DOT MATRIX (`nothing-design`).
-- **Controls.** Tabs 0-8, keys 0-8 and the left and right arrows, ES/EN, a Clippy button and a Notes panel. The chosen proposal stays in the URL hash (`#p3`).
-- **Where it lives.** `app/drafts/design-lab/page.tsx` and the private folder `app/drafts/design-lab/_lab/`. To remove it, delete the folder `app/drafts/design-lab`.
-- **Timeline.** Every planet links to its section or subsection and each block ends with a VER / VIEW action; brand names in bold under each description.
-- **Navigation.** Sidebar order is Home, Timeline, Work, AI Experiments, About, Contact. Links with a hash now land on their target.
-- **Visit counter.** Production keeps adding visits even if `VERCEL_ENV` is not set.
+- **Intro.** About 10% faster; larger controls on one line; SKIP works from the first frame.
+- **Timeline.** Planets show dates and company only; new tags for Airtm and Stone Movistar.
+- **AI experiments.** 2026 works reordered and renamed (Messi Ad BURGER KING (WIP), Product Demo SUBWAY, Fashion Campaign AY NOT DEAD, UGC content), all open, with new thumbnails.
 
-Previous versions. r14: navigation, contact landing, boxless timeline callouts, and an AI section with the reel and the cover-flow Music Lab. r13 (brand positioning): the site presents Tomás as a Brand Strategist & Brand Marketing Leader; work pages rebuilt from the CVs; the assistant stays on Groq's free plan with a fallback chain.
+Previous version: r15 (2026-10-12) — Design lab, timeline links, sidebar order.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -27,7 +21,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r15-design-lab`, tag `r15` | This version |
+| `release/r16-intro-timeline`, tag `r16` | This version |
+| `release/r15-design-lab`, tag `r15` | Design lab, timeline links |
 | `release/r14-nav-timeline-ai`, tag `r14` | Navigation, timeline callouts, AI section |
 | `release/r13-brand-positioning`, tag `r13` | Brand positioning |
 | tag `r12-production-2026-10-07` | Production before r13 |

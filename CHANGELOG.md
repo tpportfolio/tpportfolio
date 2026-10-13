@@ -1,5 +1,26 @@
 # Changelog
 
+## r16 (2026-10-13) — Intro, timeline planets, 2026 works
+Branch `release/r16-intro-timeline`. Builds on r15.
+
+Intro
+- About 10% faster (13.85s to 12.40s) by trimming holds and fades; texts, objects and typing speed unchanged.
+- SKIP, PLAY/PAUSE, MUTE and the volume slider are 10% larger and always on one line, down to 320px.
+- SKIP and the automatic redirect now live in their own script, so they work from the first frame even if audio or the canvas fail. The redirect only accepts same-site paths.
+
+Timeline
+- Planets show only dates and company; the role stays in the text beside them.
+- Airtm: the brand line is now HIGHLIGHTS (Airtalks, Axie Infinity, B2B Partnerships).
+- Stone Movistar: full list of founders.
+
+AI experiments — 2026 works
+- New order and names: Messi Ad BURGER KING (WIP), Product Demo SUBWAY, Fashion Campaign AY NOT DEAD, UGC content.
+- No locks on any item. The Messi ad plays https://youtu.be/pAdrOyzmmZs.
+- New thumbnails for the Messi ad, the Subway demo and the AY NOT DEAD campaign.
+
+Agent mode
+- `/agents.md`, `/agents.txt` and the assistant's knowledge base reflect the new 2026 items and timeline tags.
+
 ## r15 (2026-10-12) — Design lab, timeline links, sidebar order
 Branch `release/r15-design-lab`. Builds on r14. The design lab is additive and changes no existing page; the changes to the timeline, the sidebar and the visit counter are listed at the end of this entry.
 
