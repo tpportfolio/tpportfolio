@@ -689,16 +689,6 @@
   overflow-wrap: break-word;
 }
 
-.root .role {
-  margin: 0;
-  max-width: 90%;
-  font-size: clamp(10px, calc(var(--planet) * 0.056), 12.5px);
-  line-height: 1.25;
-  color: var(--neon-cyan);
-  text-shadow: var(--small-shadow);
-  text-wrap: balance;
-}
-
 /* ---------- Orbit ---------- */
 
 .spin {

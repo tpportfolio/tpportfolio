@@ -25,8 +25,6 @@ interface TimelineEntry {
   title: string
   role: Localized
   description: Localized
-  /** Short role line shown inside the planet. Defaults to `role`. */
-  planetRole?: Localized
   /** Which side of the centre line the planet sits on (desktop); the callout hangs on the other side. */
   side: "left" | "right"
   /** Videos orbiting the planet. Omit for planets without videos. */
@@ -185,10 +183,6 @@ export default function Timeline() {
       description: {
         es: "Acá empezó mi carrera de marca: coordiné promociones 360° y alianzas de marca para toda Latinoamérica en todas las líneas de negocio de Disney, y después pasé a distribución digital (SVOD, TVOD, EST y FVOD) para el resto de Latinoamérica. Dediqué el 20% de mi tiempo a Disney Labs, el primer programa de emprendimiento corporativo de Disney Latinoamérica.",
         en: "My brand career started here: I coordinated 360° promotions and brand partnerships for all of Latin America across every Disney line of business, then moved into digital distribution (SVOD, TVOD, EST and FVOD) for the rest of Latin America. I spent 20% of my time on Disney Labs, Disney Latin America's first corporate entrepreneurship programme.",
-      },
-      planetRole: {
-        es: "Promotions · Digital Distribution · Disney Labs",
-        en: "Promotions · Digital Distribution · Disney Labs",
       },
       side: "right",
       multiRole: true,
@@ -357,7 +351,6 @@ export default function Timeline() {
         <TimelineOrbit
           year={entry.year}
           name={entry.title}
-          role={(entry.planetRole ?? entry.role)[lang]}
           tag={entry.tag}
           href={timelineExtras[entry.id].href}
           videos={entry.videos ?? []}

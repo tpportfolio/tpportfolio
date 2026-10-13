@@ -16,8 +16,6 @@ interface TimelineOrbitProps {
   year: string
   /** Company / project name, the largest text of the planet. */
   name: string
-  /** Short role line shown inside the planet. */
-  role: string
   /** Optional tag shown under the year (e.g. "SIDE PROJECT"). */
   tag?: string
   /** Where the planet face leads: the whole face is one link. */
@@ -67,7 +65,6 @@ function fitLabel(sat: HTMLElement) {
 export function TimelineOrbit({
   year,
   name,
-  role,
   tag,
   href,
   videos,
@@ -143,7 +140,6 @@ export function TimelineOrbit({
             <p className={`${styles.year} font-cyber`}>{year}</p>
             {tag && <p className={styles.tag}>{tag}</p>}
             <h3 className={`${styles.name} font-cyber`}>{name}</h3>
-            <p className={styles.role}>{role}</p>
           </div>
         </Link>
       </div>

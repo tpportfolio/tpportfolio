@@ -41,14 +41,24 @@ export const timelineExtras: Record<string, TimelineExtra> = {
   airtm: {
     href: "/work/independent-consultant#airtm",
     brandGroups: [
-      { label: { es: "CONTENIDO DE MARCA", en: "BRANDED CONTENT" }, brands: same(["Airtalks"]) },
+      { label: { es: "HIGHLIGHTS", en: "HIGHLIGHTS" }, brands: same(["Airtalks", "Axie Infinity", "B2B Partnerships"]) },
     ],
   },
   "stone-movistar": {
     href: "/work/independent-consultant#stone-movistar",
     brandGroups: [
       { label: { es: "SPONSOR", en: "SPONSOR" }, brands: same(["Movistar"]) },
-      { label: { es: "FUNDADORES", en: "FOUNDERS" }, brands: same(["Diego Schwartzman", "Torneos"]) },
+      {
+        label: { es: "FUNDADORES", en: "FOUNDERS" },
+        brands: same([
+          'Diego "Peque" Schwartzman',
+          "Torneos",
+          "Natalí Doreski",
+          "Andrés Schwartzman",
+          "Gustavo Weledniger",
+          "Corina Bresprevany",
+        ]),
+      },
       { label: { es: "CREADORES", en: "CREATORS" }, brands: same(["Delfi Pignatiello", "Luquitas Rodríguez", "Lit Killah"]) },
     ],
   },
