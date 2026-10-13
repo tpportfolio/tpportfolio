@@ -2,16 +2,16 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r19 (2026-10-13) — The same window for work pages, About, Contact and MAGAIBA
+## Current version: r20 (2026-10-13) — The window on the home cards and the AI panels
 
 What changed in this version:
 
-- **One window for text too.** The text panels of the four work pages, About, Contact and MAGAIBA use the same window as the videos.
-- **Width.** On the work pages, text and video windows share one width; text keeps a readable line length.
-- **Links.** Video links in AI experiments are cyan instead of magenta.
-- **Still to come (step 2).** Home project cards, the remaining AI experiments panels.
+- **Home.** The project cards use the site window; the AI card keeps its cyan accent.
+- **AI experiments.** Music Lab, the8bureau and the webapps panel use the same window, each in its accent colour.
+- **One container.** With r18 and r19, every panel of the site now shares one window, except the timeline planets.
+- **Fixes.** No sideways scroll on the home and About pages at laptop widths, nor on the AI experiments page on phones.
 
-Previous version: r18 (2026-10-13) — One video window for the whole site. It put every video of the site in one window taken from design lab proposal 6.2.
+Previous version: r19 (2026-10-13) — The same window for work pages, About, Contact and MAGAIBA.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -22,7 +22,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r19-video-links`, tag `r19` | This version |
+| `release/r20-window-everywhere`, tag `r20` | This version |
+| `release/r19-video-links`, tag `r19` | Window on work pages, About, Contact, MAGAIBA |
 | `release/r18-video-containers`, tag `r18` | One video window |
 | `release/r17-design-lab-v2`, tag `r17` | Design lab, round 2 |
 | `release/r16-intro-timeline`, tag `r16` | Intro, timeline planets, 2026 works |

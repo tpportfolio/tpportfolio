@@ -1,5 +1,16 @@
 # Changelog
 
+## r20 (2026-10-13) — The window on the home cards and the AI panels
+Branch `release/r20-window-everywhere`. Builds on r19. Step 2 of 2. No text changes.
+
+- Home: the five project cards use the site window. The AI card keeps its cyan accent and glow; cards lift on hover.
+- AI experiments: Music Lab (blue), the8bureau (cyan) and the webapps panel use the same window, each with its accent colour. In LIGHT mode all windows share the amber palette, as before.
+- The window has accent tones (`tone`: default, cyan, blue, amber) and a card variant. `RetroPanel` and `RetroBrowser` keep their props and now draw the window.
+- Fix: on screens around 1280 px wide, the home and About pages scrolled sideways (the main column could not shrink beside the sidebar).
+- Fix: on phones, the AI experiments page title no longer causes a sideways scroll.
+- Not changed: the timeline planets and the `/drafts` pages.
+- `/agents.md` and the assistant's knowledge base are unchanged.
+
 ## r19 (2026-10-13) — The same window for work pages, About, Contact and MAGAIBA
 Branch `release/r19-video-links`. Builds on r18. Step 1 of 2 of taking the r18 window to the whole site. No text changes.
 
