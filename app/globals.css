@@ -1645,3 +1645,561 @@ html[data-visual-mode="light"] .ai-page .shadow-\[3px_3px_0_\#000\] {
   }
 }
 
+/* VIDEO WINDOW START
+   The one container for video (components/video-window.tsx). Ported from the design lab
+   proposal 6.2 AUDIT FIX v2. Every colour is a token, redefined below for LIGHT mode. */
+.vw {
+  --vw-surface: rgba(0, 0, 0, 0.82);
+  --vw-line: rgba(57, 255, 20, 0.5);
+  --vw-line-soft: rgba(57, 255, 20, 0.22);
+  --vw-accent: #00ff41;
+  --vw-accent-hi: #39ff14;
+  --vw-accent-2: #22f0ff;
+  --vw-on-accent: #001a07;
+  --vw-on-accent-2: #001014;
+  --vw-ink: #f2f6f3;
+  --vw-ink-2: #c4cdc7;
+  --vw-ink-3: #9aa79e;
+  --vw-tint: rgba(0, 255, 65, 0.09);
+  --vw-tint-2: rgba(34, 240, 255, 0.09);
+  --vw-bar: linear-gradient(to right, #111827, #1f2937);
+  --vw-foot: #111827;
+  --vw-foot-ink: rgba(0, 255, 65, 0.85);
+  --vw-screen: #000;
+  --vw-btn: rgba(0, 0, 0, 0.6);
+  --vw-thumb: rgba(0, 0, 0, 0.55);
+  --vw-glow-text: 0 0 6px rgba(0, 255, 65, 0.6);
+  --vw-shadow: 0 0 0 1px rgba(57, 255, 20, 0.12), 0 0 22px -8px rgba(0, 255, 65, 0.55);
+  --vw-shadow-current: inset 0 0 0 1px var(--vw-accent-2), 0 0 16px -6px rgba(34, 240, 255, 0.6);
+  --vw-shadow-play: 0 0 18px -4px rgba(0, 255, 65, 0.7);
+  --vw-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --vw-t: 240ms;
+
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--vw-line);
+  border-radius: 12px;
+  background: var(--vw-surface);
+  box-shadow: var(--vw-shadow);
+  color: var(--vw-ink);
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  text-shadow: none;
+}
+
+html[data-visual-mode="light"] .vw {
+  --vw-surface: rgba(252, 246, 238, 0.92);
+  --vw-line: rgba(139, 67, 21, 0.45);
+  --vw-line-soft: rgba(139, 67, 21, 0.2);
+  --vw-accent: #8b4315;
+  --vw-accent-hi: #a3551b;
+  --vw-accent-2: #b85a17;
+  --vw-on-accent: #fff8f1;
+  --vw-on-accent-2: #fff8f1;
+  --vw-ink: #351c0e;
+  --vw-ink-2: #5a3a24;
+  --vw-ink-3: #806049;
+  --vw-tint: rgba(217, 120, 29, 0.14);
+  --vw-tint-2: rgba(184, 90, 23, 0.1);
+  --vw-bar: linear-gradient(to right, #ebdece, #dccdbc);
+  --vw-foot: #e6d7c5;
+  --vw-foot-ink: #7a3913;
+  --vw-screen: #1a110b;
+  --vw-btn: rgba(255, 249, 241, 0.8);
+  --vw-thumb: rgba(255, 251, 246, 0.7);
+  --vw-glow-text: 0 0 0 transparent;
+  --vw-shadow: 0 0 0 1px rgba(139, 67, 21, 0.08), 0 10px 24px -10px rgba(83, 38, 12, 0.3);
+  --vw-shadow-current: inset 0 0 0 1px var(--vw-accent-2), 0 0 16px -6px rgba(184, 90, 23, 0.5);
+  --vw-shadow-play: 0 0 18px -4px rgba(139, 67, 21, 0.6);
+}
+
+.vw button {
+  transition:
+    background-color var(--vw-t) var(--vw-ease),
+    border-color var(--vw-t) var(--vw-ease),
+    color var(--vw-t) var(--vw-ease),
+    box-shadow var(--vw-t) var(--vw-ease),
+    transform var(--vw-t) var(--vw-ease);
+}
+
+.vw :focus-visible {
+  outline: 2px solid var(--vw-accent);
+  outline-offset: 3px;
+}
+
+/* title bar */
+.vw-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.25rem;
+  border-bottom: 1px solid var(--vw-line-soft);
+  /* the window does not clip, so a notice can hang from the title: the bar and the foot round their own corners */
+  border-radius: 11px 11px 0 0;
+  background: var(--vw-bar);
+}
+
+.vw-dots {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  margin-right: 0.25rem;
+}
+
+.vw-dots i {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: inset 0 0 0 1.5px rgba(0, 0, 0, 0.28);
+}
+
+.vw-dots i:nth-child(2) {
+  background: #eab308;
+}
+
+.vw-dots i:nth-child(3) {
+  background: #22c55e;
+}
+
+.vw-title-box {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.vw-title-in {
+  position: relative;
+  min-width: 0;
+}
+
+.vw-title {
+  display: block;
+  color: var(--vw-accent);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  text-shadow: var(--vw-glow-text);
+}
+
+.vw-title-overlay {
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  z-index: 30;
+  margin-left: 0.25rem;
+  pointer-events: none;
+  transform: translateY(-62%);
+}
+
+.vw-meta {
+  flex: none;
+  color: var(--vw-ink-3);
+  font-size: max(0.75rem, 11px);
+  letter-spacing: 0.04em;
+}
+
+.vw-close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--vw-line-soft);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--vw-accent);
+}
+
+.vw-close:hover {
+  border-color: var(--vw-accent);
+  background: var(--vw-tint);
+}
+
+/* body and status foot */
+.vw-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-height: 0;
+  padding: 1.25rem 1.5rem 1.75rem;
+}
+
+.vw-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.3rem 1.25rem 0.35rem;
+  border-top: 1px solid var(--vw-line-soft);
+  border-radius: 0 0 11px 11px;
+  background: var(--vw-foot);
+  color: var(--vw-foot-ink);
+  font-size: max(0.6875rem, 11px);
+  letter-spacing: 0.06em;
+}
+
+/* screen: capped and centred on its black frame */
+.vw-screen-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  border: 1px solid var(--vw-line-soft);
+  border-radius: 6px;
+  background: var(--vw-screen);
+}
+
+.vw-screen {
+  position: relative;
+  width: 100%;
+  max-width: var(--vw-screen-max, 60rem);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #000;
+  box-shadow: 0 0 0 1px var(--vw-line-soft);
+}
+
+.vw-screen > iframe,
+.vw-screen > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+
+.vw-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 3.25rem;
+  border: 0;
+  border-radius: 0.875rem;
+  background: var(--vw-accent);
+  box-shadow: var(--vw-shadow-play);
+  color: var(--vw-on-accent);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+
+/* the whole still starts the video, not only the button */
+.vw-play::before {
+  content: "";
+  position: absolute;
+  inset: -100vmax;
+}
+
+.vw-play svg {
+  margin-left: 2px;
+}
+
+.vw-play:hover {
+  background: var(--vw-accent-hi);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.vw-play:active {
+  transform: translate(-50%, -50%) scale(0.97);
+}
+
+.vw-play:focus-visible {
+  outline-color: #fff;
+}
+
+/* title, description and navigation */
+.vw-info {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem 1.5rem;
+  align-items: end;
+}
+
+.vw-video-title {
+  grid-column: 1;
+  margin: 0;
+  color: var(--vw-accent-2);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.vw-video-desc {
+  grid-column: 1;
+  max-width: 65ch;
+  margin: 0;
+  color: var(--vw-ink-2);
+  font-size: max(0.9375rem, 13px);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.vw-video-extra {
+  grid-column: 1;
+}
+
+.vw-nav {
+  display: flex;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.vw-btn {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--vw-line);
+  border-radius: 6px;
+  background: var(--vw-btn);
+  color: var(--vw-accent);
+  cursor: pointer;
+}
+
+.vw-btn:hover {
+  border-color: var(--vw-accent);
+  background: var(--vw-tint);
+}
+
+.vw-seg {
+  display: flex;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.vw-seg i {
+  flex: 0 1 auto;
+  width: 1.1rem;
+  min-width: 0.3rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--vw-line-soft);
+  transition: background-color var(--vw-t) var(--vw-ease);
+}
+
+.vw-seg i[data-on] {
+  background: var(--vw-accent);
+}
+
+.vw-count {
+  flex: none;
+  min-width: 3.25rem;
+  color: var(--vw-ink-3);
+  font-size: max(0.75rem, 11px);
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* thumbnails */
+.vw-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vw-list > li {
+  display: flex;
+  min-width: 0;
+}
+
+.vw-thumb {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--vw-line-soft);
+  border-radius: 6px;
+  background: var(--vw-thumb);
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.vw-thumb-pic {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+  color: #9aa79e;
+}
+
+.vw-thumb-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  transition: opacity var(--vw-t) var(--vw-ease);
+}
+
+.vw-thumb:hover {
+  border-color: var(--vw-line);
+  transform: translateY(-2px);
+}
+
+.vw-thumb:hover .vw-thumb-pic img,
+.vw-thumb[aria-current="true"] .vw-thumb-pic img {
+  opacity: 1;
+}
+
+.vw-thumb[aria-current="true"] {
+  border-color: var(--vw-accent-2);
+  background: var(--vw-tint-2);
+  box-shadow: var(--vw-shadow-current);
+}
+
+.vw-thumb-ix {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #f2f6f3;
+  font-size: max(0.6875rem, 11px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+.vw-thumb[aria-current="true"] .vw-thumb-ix {
+  background: var(--vw-accent-2);
+  color: var(--vw-on-accent-2);
+}
+
+.vw-thumb-title {
+  display: -webkit-box;
+  min-height: 2.7em;
+  margin: 0.65rem 0.75rem 0.2rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  color: var(--vw-ink);
+  font-size: max(0.8125rem, 12px);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.vw-thumb-meta {
+  display: block;
+  padding: 0 0.75rem 0.7rem;
+  color: var(--vw-ink-3);
+  font-size: max(0.6875rem, 11px);
+  letter-spacing: 0.08em;
+}
+
+.vw-thumb[aria-current="true"] .vw-thumb-meta {
+  color: var(--vw-accent-2);
+}
+
+/* press feedback, after every :hover rule so it wins ties */
+.vw-btn:active,
+.vw-close:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.vw-thumb:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* inside a dialog or popup: opaque, never taller than the viewport, screen sized to fit */
+.vw--modal {
+  --vw-surface: #020403;
+  --vw-screen-max: min(60rem, calc((92vh - 17rem) * 16 / 9));
+  max-height: 92vh;
+}
+
+html[data-visual-mode="light"] .vw--modal {
+  --vw-surface: #fbf5ec;
+}
+
+.vw--modal > .vw-body {
+  overflow-y: auto;
+}
+
+/* the window answers to its own width, so it also works in half columns and dialogs */
+@container (max-width: 44rem) {
+  /* no room beside the title: the notice hangs from the right end of the bar instead */
+  .vw-title-in {
+    position: static;
+  }
+
+  .vw-title-overlay {
+    right: 0.75rem;
+    left: auto;
+    margin-left: 0;
+    transform: translateY(-30%);
+  }
+
+  .vw-info {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vw-nav {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 0.5rem;
+  }
+}
+
+@container (max-width: 40rem) {
+  .vw-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (max-width: 36rem) {
+  .vw-bar {
+    padding: 0.6rem 1rem;
+  }
+
+  .vw-body {
+    padding: 1rem 1rem 1.35rem;
+  }
+
+  .vw-foot {
+    padding-inline: 1rem;
+  }
+
+  .vw-screen-wrap {
+    padding: 0.5rem;
+  }
+
+  .vw-video-title {
+    font-size: 1.125rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vw button,
+  .vw-seg i,
+  .vw-thumb-pic img {
+    transition: none;
+  }
+}
+/* VIDEO WINDOW END */

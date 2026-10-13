@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useLanguage } from "@/components/language-context"
 import { TimelineOrbit } from "@/components/timeline-orbit"
 import styles from "@/components/timeline-orbit.module.css"
-import type { VideoItem } from "@/components/video-carousel"
+import type { VideoItem } from "@/components/video-window"
 import { timelineExtras } from "@/lib/timeline-extras"
 import {
   airNewZealandVideos,

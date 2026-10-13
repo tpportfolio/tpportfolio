@@ -28,7 +28,7 @@ import {
   X,
 } from "lucide-react"
 import { VideoCarousel, type VideoItem } from "@/components/video-carousel"
-import { YouTubeEmbed } from "@/components/youtube-embed"
+import { VideoScreen, VideoWindowFrame, videoCountLabel } from "@/components/video-window"
 import { useLanguage } from "@/components/language-context"
 import { useVisualMode } from "@/components/visual-mode-context"
 import { RetroPanel } from "@/components/retro-panel"
@@ -624,6 +624,53 @@ function Work2026Modal({
       ? "overflow-y-auto p-4 md:p-5"
       : "overflow-y-auto p-3 md:p-4"
 
+  if (item.kind !== "gallery") {
+    return (
+      <div
+        className="fixed inset-3 z-[90] md:bottom-6 md:right-6 md:top-6 md:left-[13.5rem] lg:left-[14rem]"
+        role="dialog"
+        aria-modal="true"
+        aria-label={item.title[language]}
+      >
+        <button className="absolute inset-0 bg-black/80" onClick={onClose} aria-label={language === "es" ? "Cerrar popup" : "Close popup"} />
+        <VideoWindowFrame
+          title={item.title[language]}
+          className="vw--modal relative mx-auto w-full md:w-[88%]"
+          footRight={item.kind === "embed" ? videoCountLabel(1) : "YouTube"}
+          barEnd={
+            <button
+              type="button"
+              className="vw-close"
+              onClick={onClose}
+              aria-label={language === "es" ? "Cerrar popup" : "Close popup"}
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
+          }
+        >
+          {item.kind === "embed" ? (
+            <VideoScreen video={{ videoId: item.videoId ?? "" }} title={item.title[language]} />
+          ) : (
+            <PreviewStage item={item} isLight={isLight} />
+          )}
+          {item.youtubeUrl ? (
+            <div>
+              <a
+                href={item.youtubeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-neon-magenta underline hover:text-neon-cyan"
+              >
+                {language === "es" ? "Abrir en YouTube" : "Open on YouTube"}
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </div>
+          ) : null}
+        </VideoWindowFrame>
+      </div>
+    )
+  }
+
   return (
     <div
       className="fixed inset-3 z-[90] md:bottom-6 md:right-6 md:top-6 md:left-[13.5rem] lg:left-[14rem]"
@@ -684,39 +731,7 @@ function Work2026Modal({
                 </button>
               ))}
             </div>
-          ) : item.kind === "embed" ? (
-            <div className="space-y-4">
-              <div className="mx-auto w-[90%] overflow-hidden rounded-sm border border-neon-green/30">
-                <YouTubeEmbed videoId={item.videoId ?? ""} aspectClassName="aspect-[16/9.45]" />
-              </div>
-              {item.youtubeUrl ? (
-                <a
-                  href={item.youtubeUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-neon-magenta underline hover:text-neon-cyan"
-                >
-                  {language === "es" ? "Abrir en YouTube" : "Open on YouTube"}
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              ) : null}
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <PreviewStage item={item} isLight={isLight} />
-              {item.youtubeUrl ? (
-                <a
-                  href={item.youtubeUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-neon-magenta underline hover:text-neon-cyan"
-                >
-                  {language === "es" ? "Abrir en YouTube" : "Open on YouTube"}
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              ) : null}
-            </div>
-          )}
+          ) : null}
         </div>
 
         {selectedGalleryImage?.imageSrc ? (
@@ -2256,12 +2271,11 @@ function Works2026Carousel({
 
   return (
     <>
-      <RetroPanel
+      <VideoWindowFrame
         title={language === "es" ? "2026 TRABAJOS Y EXPERIMENTOS" : "2026 WORKS AND EXPERIMENTS"}
-        statusRight="2026"
-        highlight
-        accent={isLight ? "amber" : "blue"}
-        headerOverlay={<UpdatesPendingBadge isLight={isLight} compact />}
+        meta={`${safeIndex + 1}/${items.length}`}
+        footRight="2026"
+        titleOverlay={<UpdatesPendingBadge isLight={isLight} compact />}
       >
         <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_212px] xl:items-stretch">
@@ -2283,22 +2297,16 @@ function Works2026Carousel({
                 <div className="flex items-center justify-end gap-2">
                   <button
                     onClick={goPrev}
-                    className={`inline-flex h-10 w-10 items-center justify-center rounded-sm border ${
-                      isLight
-                        ? "border-[#8b4315] text-[#6f3210] hover:bg-[#f6e6d2]"
-                        : "border-neon-cyan/50 text-neon-cyan hover:bg-neon-cyan/10"
-                    }`}
+                    type="button"
+                    className="vw-btn"
                     aria-label={language === "es" ? "Anterior" : "Previous"}
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </button>
                   <button
                     onClick={goNext}
-                    className={`inline-flex h-10 w-10 items-center justify-center rounded-sm border ${
-                      isLight
-                        ? "border-[#8b4315] text-[#6f3210] hover:bg-[#f6e6d2]"
-                        : "border-neon-cyan/50 text-neon-cyan hover:bg-neon-cyan/10"
-                    }`}
+                    type="button"
+                    className="vw-btn"
                     aria-label={language === "es" ? "Siguiente" : "Next"}
                   >
                     <ChevronRight className="h-4 w-4" />
@@ -2352,7 +2360,7 @@ function Works2026Carousel({
               )}
             </div>
         </div>
-      </RetroPanel>
+      </VideoWindowFrame>
 
       {isModalOpen ? (
         <Work2026Modal item={activeItem} language={language} isLight={isLight} onClose={() => setIsModalOpen(false)} />
@@ -2592,37 +2600,24 @@ export default function AIExperimentsPage() {
           />
 
           {showVideoSections ? (
-            <RetroPanel
-              title="REEL 2025/2026"
-              statusRight="REEL"
-              highlight
-              accent={isLight ? "amber" : "blue"}
-            >
-              <div className="mx-auto w-full max-w-4xl space-y-3">
-                <div
-                  className={`overflow-hidden rounded-sm border ${
-                    isLight ? "border-[#d9a06b] bg-[#f8ead9]" : "border-neon-green/30 bg-black/40"
-                  }`}
+            <VideoWindowFrame title="REEL 2025/2026" meta="REEL" footRight={videoCountLabel(1)}>
+              <VideoScreen video={{ videoId: REEL_VIDEO_ID }} title="Reel 2025/2026" />
+              <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                <p className="vw-video-desc">
+                  {currentLanguage === "es"
+                    ? "Reel 2025/2026: selección de trabajos y experimentos con IA."
+                    : "Reel 2025/2026: a selection of AI works and experiments."}
+                </p>
+                <a
+                  href={REEL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-neon-magenta underline hover:text-neon-cyan"
                 >
-                  <YouTubeEmbed videoId={REEL_VIDEO_ID} />
-                </div>
-                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-                  <p className="text-base leading-relaxed text-neon-green/90">
-                    {currentLanguage === "es"
-                      ? "Reel 2025/2026: selección de trabajos y experimentos con IA."
-                      : "Reel 2025/2026: a selection of AI works and experiments."}
-                  </p>
-                  <a
-                    href={REEL_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-neon-magenta underline hover:text-neon-cyan"
-                  >
-                    {currentLanguage === "es" ? "Ver en YouTube ↗" : "Watch on YouTube ↗"}
-                  </a>
-                </div>
+                  {currentLanguage === "es" ? "Ver en YouTube ↗" : "Watch on YouTube ↗"}
+                </a>
               </div>
-            </RetroPanel>
+            </VideoWindowFrame>
           ) : null}
 
           {showImageVideo2026 ? (
@@ -2676,13 +2671,13 @@ export default function AIExperimentsPage() {
 
           {showVideoSections ? (
           <div id="ejemplos-trabajos-ia-2025">
-            <RetroPanel
+            <VideoWindowFrame
               title={currentLanguage === "es" ? "2025 TRABAJOS Y EXPERIMENTOS" : "2025 WORKS AND EXPERIMENTS"}
-              statusRight="PITCH"
-              highlight
+              meta="PITCH"
+              footRight={videoCountLabel(2)}
             >
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="h-full rounded-sm border border-neon-green/30 bg-black/30 p-4">
+                <div className="h-full rounded-md border border-neon-green/30 bg-black/30 p-4">
                   <div className="mb-2 font-cyber text-lg text-neon-cyan">
                     {currentLanguage === "es" ? "Pitch Jugos México - Animatic" : "Mexico Juice Pitch - Animatic"}
                   </div>
@@ -2692,7 +2687,7 @@ export default function AIExperimentsPage() {
                       : "Mixed-technique animatic: footage + AI content (the AI part was my responsibility).\nEnd-to-end AI pipeline: images -> video -> voice."}
                   </div>
                   <a href={jumexLink[currentLanguage]} target="_blank" rel="noreferrer" className="mt-3 block">
-                    <div className="aspect-video w-full overflow-hidden rounded-sm border border-neon-green/30">
+                    <div className="aspect-video w-full overflow-hidden rounded-md border border-neon-green/30 bg-black">
                       <img
                         src="https://img.youtube.com/vi/U6_3OB7ljvY/hqdefault.jpg"
                         alt={currentLanguage === "es" ? "Miniatura del animatic del pitch de jugos" : "Juice pitch animatic thumbnail"}
@@ -2722,7 +2717,7 @@ export default function AIExperimentsPage() {
                   </a>
                 </div>
 
-                <div className="h-full rounded-sm border border-neon-green/30 bg-black/30 p-4">
+                <div className="h-full rounded-md border border-neon-green/30 bg-black/30 p-4">
                   <div className="mb-2 font-cyber text-lg text-neon-cyan">
                     {currentLanguage === "es" ? "Pitch Sandwiches México - Animatic" : "Mexico Sandwich Pitch - Animatic"}
                   </div>
@@ -2732,7 +2727,7 @@ export default function AIExperimentsPage() {
                       : "Mixed-technique animatic: footage + AI content (the AI part was my responsibility).\nEnd-to-end AI pipeline: images -> video."}
                   </div>
                   <a href={subwayLink[currentLanguage]} target="_blank" rel="noreferrer" className="mt-3 block">
-                    <div className="aspect-video w-full overflow-hidden rounded-sm border border-neon-green/30">
+                    <div className="aspect-video w-full overflow-hidden rounded-md border border-neon-green/30 bg-black">
                       <img
                         src="https://img.youtube.com/vi/zW8DP4fr7xA/hqdefault.jpg"
                         alt={currentLanguage === "es" ? "Miniatura del animatic del pitch de sandwiches" : "Sandwich pitch animatic thumbnail"}
@@ -2762,7 +2757,7 @@ export default function AIExperimentsPage() {
                   </a>
                 </div>
               </div>
-            </RetroPanel>
+            </VideoWindowFrame>
           </div>
           ) : null}
 
@@ -2939,7 +2934,7 @@ export default function AIExperimentsPage() {
             <VideoCarousel
               items={aiArchiveVideos}
               title={currentLanguage === "es" ? "EXPERIMENTOS IA (2022-2024)" : "AI EXPERIMENTS (2022-2024)"}
-              variant="retro"
+              className=""
             />
           ) : null}
         </div>

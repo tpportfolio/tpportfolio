@@ -1,4 +1,4 @@
-import type { VideoItem } from "@/components/video-carousel"
+import type { VideoItem } from "@/components/video-window"
 
 // Single source of truth for the videos shown in the work pages and orbiting the timeline blocks.
 

@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { X } from "lucide-react"
 import { useLanguage } from "./language-context"
 import { useVisualMode } from "./visual-mode-context"
-import type { VideoItem } from "./video-carousel"
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog"
+import { VideoWindow, type VideoItem } from "./video-window"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog"
 import styles from "./timeline-orbit.module.css"
 
 type Lang = "es" | "en"
@@ -177,8 +177,7 @@ export function TimelineOrbit({
 
       <Dialog open={openIndex !== null} onOpenChange={(isOpen) => !isOpen && setOpenIndex(null)}>
         <DialogContent
-          className="w-[calc(100vw-2rem)] max-w-3xl max-h-[92vh] overflow-y-auto gap-3 rounded-none border bg-black p-4 text-white sm:rounded-none"
-          style={{ borderColor: "#39ff14", boxShadow: "0 0 18px rgba(57, 255, 20, 0.45)" }}
+          className="block w-[calc(100vw-2rem)] max-w-3xl gap-0 border-0 bg-transparent p-0 shadow-none sm:rounded-none [&>button]:hidden"
           onOpenAutoFocus={(e) => {
             // Focus the dialog itself: if focus lands in the YouTube iframe, Escape never reaches the page.
             e.preventDefault()
@@ -196,46 +195,22 @@ export function TimelineOrbit({
         >
           {current && (
             <>
-              <DialogTitle className="font-cyber text-lg md:text-xl text-neon-green pr-8 leading-snug">
-                {current.title[lang]}
-              </DialogTitle>
-              <div className="aspect-video w-full border border-neon-green/40 bg-black">
-                <iframe
-                  key={current.id}
-                  src={youtubeSrc(current)}
-                  title={current.title[lang]}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full h-full border-0"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
-              </div>
-              <DialogDescription className="text-sm text-white/80 leading-relaxed">
-                {current.description[lang]}
-              </DialogDescription>
-              {videos.length > 1 && (
-                <div className="flex items-center justify-between gap-3 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => step(-1)}
-                    className="inline-flex items-center gap-1 border border-neon-green/60 px-3 py-1 text-sm text-neon-green hover:bg-neon-green/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0ff]"
-                  >
-                    <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-                    {lang === "es" ? "Anterior" : "Previous"}
-                  </button>
-                  <span className="text-xs text-neon-cyan" aria-live="polite">
-                    {(openIndex ?? 0) + 1} / {videos.length}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => step(1)}
-                    className="inline-flex items-center gap-1 border border-neon-green/60 px-3 py-1 text-sm text-neon-green hover:bg-neon-green/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0ff]"
-                  >
-                    {lang === "es" ? "Siguiente" : "Next"}
-                    <ChevronRight className="h-4 w-4" aria-hidden="true" />
-                  </button>
-                </div>
-              )}
+              <DialogTitle className="sr-only">{current.title[lang]}</DialogTitle>
+              <DialogDescription className="sr-only">{current.description[lang]}</DialogDescription>
+              <VideoWindow
+                items={videos}
+                title={name}
+                index={openIndex ?? 0}
+                onIndexChange={setOpenIndex}
+                autoPlay
+                thumbnails={false}
+                className="vw--modal"
+                barEnd={
+                  <DialogClose className="vw-close" aria-label={lang === "es" ? "Cerrar" : "Close"}>
+                    <X size={16} aria-hidden="true" />
+                  </DialogClose>
+                }
+              />
             </>
           )}
         </DialogContent>

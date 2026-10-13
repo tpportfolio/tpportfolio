@@ -1,6 +1,7 @@
 "use client"
 
 import { useLanguage } from "@/components/language-context"
+import { VideoScreen, VideoWindowFrame, videoCountLabel } from "@/components/video-window"
 
 export default function Magaiba() {
   const { t, language } = useLanguage()
@@ -23,25 +24,9 @@ export default function Magaiba() {
       <section className="w-full mb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Video on the left */}
-          <div className="terminal">
-            <div className="terminal-header">
-              <span className="text-xl">MAGAIBA_RECAP</span>
-            </div>
-            <div className="terminal-content p-0">
-              <div className="aspect-video">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/T0jHv0bQ3Kg"
-                  title="Magaiba Recap"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full h-full"
-                ></iframe>
-              </div>
-            </div>
-          </div>
+          <VideoWindowFrame title="MAGAIBA_RECAP" footRight={videoCountLabel(1)}>
+            <VideoScreen video={{ videoId: "T0jHv0bQ3Kg" }} title="Magaiba Recap" />
+          </VideoWindowFrame>
 
           {/* Title on the right */}
           <div className="terminal">
@@ -109,18 +94,12 @@ export default function Magaiba() {
               </>
             )}
 
-            <div className="aspect-video">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/videoseries?list=PLDQ8uca_QeH3eyiqXaBhIY_OUzC9gTMyB"
+            <VideoWindowFrame title="RADIO_MAGAIBA" footRight="Playlist">
+              <VideoScreen
+                video={{ videoId: "PLDQ8uca_QeH3eyiqXaBhIY_OUzC9gTMyB", isPlaylist: true }}
                 title="Radio Magaiba Playlist"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-              ></iframe>
-            </div>
+              />
+            </VideoWindowFrame>
           </div>
         </div>
       </section>
