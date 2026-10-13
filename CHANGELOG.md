@@ -1,5 +1,42 @@
 # Changelog
 
+## r15 (2026-10-12) — Design lab, timeline links, sidebar order
+Branch `release/r15-design-lab`. Builds on r14. The design lab is additive and changes no existing page; the changes to the timeline, the sidebar and the visit counter are listed at the end of this entry.
+
+Design lab
+- New draft route `/drafts/design-lab`. Not indexed, not in the sidebar and not in `/agents.md`, like the other `/drafts` pages.
+- A model page: sidebar, the Independent Consultant work page (reel, fact sheet, overview, engagements), a row of figures taken from the Disney page, the home project cards and a sample of the CLIPPY.EXE chat.
+- Real content in Spanish and English.
+- Nine interchangeable styles on the same HTML. 0 reproduces the current site as a reference; 1 to 8 are design proposals.
+- Each proposal answers the same five points: container shape, window buttons in front of the titles, reel and trailer containers and size, PROJECT_OVERVIEW and other block widths, and CLIPPY.EXE containers.
+- Controls: tabs 0-8 (also keys 0-8 and the left and right arrows), ES/EN, a Clippy button and a Notes panel with the description of each proposal. The chosen proposal stays in the URL hash (`#p3`).
+
+Own proposals
+- 1 SOFT SHELL: same terminal, rounded 14 px boxes, one box system, a single status LED instead of the three window lights, larger reel with a playlist, 1180 px page with a sticky fact sheet.
+- 2 GLASS HUD: translucent panels over a grid, section labels riding the top border, reel as a full-width screening room, 1280 px page.
+- 3 RETRO OS: real OS windows with filled title bars and minimise/maximise/close buttons, hard offset shadows, pixel type, reel as a media player, CLIPPY.EXE in its speech balloon.
+
+Proposals built with a design skill
+- 4 PHOSPHOR POSTER, with the `frontend-design` skill: poster typography, giant outlined section numbers, diagonally cut corners, amber second colour.
+- 5 ZINC, with the `taste-skill` skill: zinc greys with a single emerald accent and no neon, boxes only where needed, asymmetric layout, bento figures.
+- 6 AUDIT FIX, with the `redesign-skill` skill: the current design with each audit finding fixed (real typeface, tinted black, one accent, softer shadows, one 1240 px container, hover/active/focus states).
+- 7 PAPER TERMINAL, with the `minimalist-skill` skill: warm paper, serif headings, 1 px borders, grey window circles; a candidate for light mode.
+- 8 DOT MATRIX, with the `nothing-design` skill: OLED black monochrome, dot-matrix headline, instrument-style labels, a single red signal dot.
+
+How it is built
+- `app/drafts/design-lab/page.tsx` and the private folder `app/drafts/design-lab/_lab/` (`design-lab.tsx`, `content.ts`, `fonts.ts`, `lab.css` and `skins/p1.css` to `skins/p8.css`).
+- Each skin only contains rules that start with `.dl-stage[data-p="pN"]`, so nothing outside the lab is affected.
+- The proposal typefaces load with `next/font/google`, only on that route.
+- To remove it, delete the folder `app/drafts/design-lab`.
+
+Timeline, navigation and visit counter (commits `73f5738`, `c38dd0b`)
+- Timeline: every planet (year, company, role) links to its section or subsection, and each block ends with a VER / VIEW action to the same place. New anchors in the consultant page (`paradise-la`, `drgea`, `sinerlogic`, `airtm`, `stone-movistar`, `go-broadway`) and the agency page (`jwt`, `altheim`).
+- Timeline: brand names in bold under each description, grouped by relationship (sponsorships, partners, media, franchises, platforms, agency clients...). Data in `lib/timeline-extras.ts`, also used by `/agents.md`.
+- Timeline: the three Disney roles each stay on one line.
+- Links with a hash now land on their target; before, every navigation jumped to the top of the page.
+- Sidebar order: Home, Timeline, Work, AI Experiments, About, Contact.
+- Visit counter: the count lives in the KV store and is not affected by deploys (production and the store both read 423 on 2026-10-12). Production keeps adding visits even if `VERCEL_ENV` is not set.
+
 ## r14 (2026-10-12) — Navigation, timeline callouts, AI section
 Branch `release/r14-nav-timeline-ai`. Builds on r13.
 
