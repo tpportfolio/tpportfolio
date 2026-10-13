@@ -43,6 +43,6 @@ This is a personal portfolio with a "Matrix + 90s web" look (terminal + neon + r
 ## Drafts
 
 - `/drafts/*` pages are working pages. They are not indexable and are kept out of the sidebar and `/agents.md`.
-- `/drafts/design-lab` shows a model page with nine interchangeable styles: 0 is the current site, 1-8 are design proposals.
+- `/drafts/design-lab` shows a model page with thirteen interchangeable styles: 0 is the current site, 1-8 are the first-round proposals and 3.2, 4.2, 6.2 and 8.2 are second-round variants.
 - No proposal is applied to the site yet.
-- Navigate with tabs 0-8, the left and right arrows, or the URL hash (for example `#p3`).
+- Navigate with tabs 0-8 and 3.2, 4.2, 6.2 and 8.2, with the left and right arrows (they go through all thirteen), or with the URL hash (for example `#p3` or `#p6b`).

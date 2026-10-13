@@ -1,5 +1,25 @@
 # Changelog
 
+## r17 (2026-10-13) — Design lab, round 2
+Branch `release/r17-design-lab-v2`. Builds on r16. Only the `/drafts/design-lab` draft changes; no existing page is touched.
+
+Second-round variants
+- 3.2 RETRO OS v2: the RETRO OS windows in the portfolio's own palette (black, neon green, cyan, magenta, red counters, scanlines and glow); dark title bars with the minimise/maximise/close buttons in the colours of the original window lights; pixel-font labels replaced by a monospaced face; CLIPPY.EXE as a dark system window that keeps its tail.
+- 4.2 PHOSPHOR POSTER v2: the same poster, lighter: smaller and lighter type, more space between and inside boxes, thinner borders, fainter background numerals, almost no tilt on the reel.
+- 6.2 AUDIT FIX v2: keeps every structural fix of AUDIT FIX and brings back the portfolio's identity: neon green, cyan, magenta on hover, the three coloured window lights, a single outer glow and the sweeping scanline; the reel is large but bounded; CLIPPY.EXE reads as one more window.
+- 8.2 DOT MATRIX v2: the finished version: the top text tape runs as a smooth continuous loop (it used to move in steps and sit empty), the reel list gets its thumbnails back in greyscale, the fact sheet puts each label above its value, labels go up to 12 px, and more figures use the dot-matrix face.
+
+Lab
+- The second-round tabs 3.2, 4.2, 6.2 and 8.2 appear after 0-8, as separate tabs.
+- The left and right arrows go through all thirteen styles; keys 0-8 still go to the first round.
+- Changing the URL hash (for example `#p6b`) with the lab open now switches the proposal.
+- The ticker text is duplicated in the HTML so it can loop continuously.
+
+How it is built
+- New skins: `app/drafts/design-lab/_lab/skins/p3b.css`, `p4b.css`, `p6b.css` and `p8b.css`.
+- Modified: `design-lab.tsx`, `content.ts` and `lab.css` in the same folder.
+- Each new skin only contains rules that start with `.dl-stage[data-p="p3b"]` (and the same for p4b, p6b and p8b), so nothing outside the lab is affected.
+
 ## r16 (2026-10-13) — Intro, timeline planets, 2026 works
 Branch `release/r16-intro-timeline`. Builds on r15.
 
