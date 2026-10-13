@@ -211,13 +211,13 @@ const independentConsultantSnapshot = {
 
 const aiExperiments2026 = {
   en: [
-    "2026 Works and Experiments shows four items, in this order: Product Demo, Fashion Campaign, UGC content and Ad 30-40 Messi.",
-    "Product Demo and Fashion Campaign are open. UGC content and Ad 30-40 Messi are locked previews marked as coming soon; Ad 30-40 Messi has no link.",
+    "2026 Works and Experiments shows four items, in this order: Messi Ad BURGER KING (WIP), Product Demo SUBWAY, Fashion Campaign AY NOT DEAD and UGC content.",
+    "All four items are open, with no lock. The Messi ad is a work in progress (video: https://youtu.be/pAdrOyzmmZs).",
     "Fashion Campaign includes a thumbnail-led popup gallery with 13 ordered frames, starting with the campaign video thumbnail and continuing with campaign stills.",
   ],
   es: [
-    "2026 Trabajos y Experimentos muestra cuatro ítems, en este orden: Demo de producto, Campaña Moda, UGC content y Ad 30-40 Messi.",
-    "Demo de producto y Campaña Moda están abiertos. UGC content y Ad 30-40 Messi son previews bloqueados marcados como próximamente; Ad 30-40 Messi no tiene link.",
+    "2026 Trabajos y Experimentos muestra cuatro ítems, en este orden: Ad Messi BURGER KING (WIP), Demo de producto SUBWAY, Campaña Moda AY NOT DEAD y UGC content.",
+    "Los cuatro ítems están abiertos, sin candado. El ad de Messi es un work in progress (video: https://youtu.be/pAdrOyzmmZs).",
     "Campaña Moda incluye una galería popup guiada por thumbnails con 13 frames ordenados, empezando por el thumbnail del video y continuando con stills de campaña.",
   ],
 } satisfies Record<Lang, string[]>

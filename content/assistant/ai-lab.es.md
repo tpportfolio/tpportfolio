@@ -26,4 +26,4 @@ Nuevo en la v2 de the8bureau: Prompt Studio, PDF Toolkit, Calculadora de Costos 
 
 La página de Experimentos IA (/work/ai-experiments) abre con el REEL 2025/2026, un reel en video con una selección de trabajos y experimentos con IA. Después vienen 2026 Trabajos y Experimentos, AUDIO IA — MUSIC LAB (con un atajo a RADIO MAGAIBA), 2025 Trabajos y Experimentos, the8bureau, las webapps y el archivo 2022-2024.
 
-En el bloque 2026 Trabajos y Experimentos aparecen cuatro ítems: Demo de producto, Campaña Moda, UGC content y Ad 30-40 Messi. Demo de producto y Campaña Moda están abiertos; UGC content y Ad 30-40 Messi figuran como próximamente.
+En el bloque 2026 Trabajos y Experimentos aparecen cuatro ítems, todos abiertos: Ad Messi BURGER KING (WIP, en proceso), Demo de producto SUBWAY, Campaña Moda AY NOT DEAD y UGC content.

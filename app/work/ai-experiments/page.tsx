@@ -32,7 +32,9 @@ import { YouTubeEmbed } from "@/components/youtube-embed"
 import { useLanguage } from "@/components/language-context"
 import { useVisualMode } from "@/components/visual-mode-context"
 import { RetroPanel } from "@/components/retro-panel"
-import thumbMCBK1 from "./thumb_MCBK_1.png"
+import thumbMessiBK from "./thumb_2026_messi_bk.jpg"
+import thumbSubway from "./thumb_2026_subway.jpg"
+import thumbAyNotDead from "./thumb_2026_ay_not_dead.jpg"
 import thumbAND1 from "./thumb_AND_1.png"
 import thumbUGCMODEL1 from "./thumb_UGCMODEL_1.png"
 import the8bureauPopupThumb from "./thumb_the8bureau_v2_popup.png"
@@ -153,10 +155,25 @@ const modaGallery: GalleryImage[] = Array.from({ length: 16 }, (_, index) => {
 function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
   return [
     {
+      id: "ad-messi-bk",
+      kind: "embed",
+      mediaTag: "video",
+      title: { es: "Ad Messi BURGER KING (WIP)", en: "Messi Ad BURGER KING (WIP)" },
+      description: {
+        es: "Ad en proceso (work in progress). Click para ver el video.",
+        en: "Ad in progress (work in progress). Click to watch the video.",
+      },
+      videoId: "pAdrOyzmmZs",
+      youtubeUrl: "https://youtu.be/pAdrOyzmmZs",
+      thumbnail: thumbMessiBK,
+      locked: false,
+      opensPopup: true,
+    },
+    {
       id: "demo-producto",
       kind: "embed",
       mediaTag: "video",
-      title: { es: "Demo de producto", en: "Product Demo" },
+      title: { es: "Demo de producto SUBWAY", en: "Product Demo SUBWAY" },
       description: {
         es: "Video embebido de referencia. Usa el mismo espacio visual que una galería.",
         en: "Embedded reference video. It uses the same visual area as a gallery.",
@@ -164,6 +181,7 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       videoId: "zW8DP4fr7xA",
       youtubeUrl:
         "https://www.youtube.com/watch?v=zW8DP4fr7xA&list=PLTai-gQI1os01OvFV9Xid5OXWWgoM9FCP&index=2",
+      thumbnail: thumbSubway,
       locked: false,
       opensPopup: true,
     },
@@ -171,13 +189,13 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       id: "campana-moda",
       kind: "gallery",
       mediaTag: "imagen",
-      title: { es: "Campaña Moda", en: "Fashion Campaign" },
+      title: { es: "Campaña Moda AY NOT DEAD", en: "Fashion Campaign AY NOT DEAD" },
       description: {
         es: "Galería placeholder de 16 imágenes en grilla 4x4. Click para abrir en pantalla completa.",
         en: "16-image placeholder gallery in a 4x4 grid. Click to open in fullscreen.",
       },
       galleryImages: modaGallery,
-      thumbnail: thumbAND1,
+      thumbnail: thumbAyNotDead,
       locked: false,
       opensPopup: true,
     },
@@ -192,21 +210,8 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       },
       youtubeUrl: "https://www.youtube.com/results?search_query=UGC+content",
       thumbnail: thumbUGCMODEL1,
-      locked: true,
+      locked: false,
       opensPopup: true,
-    },
-    {
-      id: "ad-30-40-messi",
-      kind: "youtube-link",
-      mediaTag: "video",
-      title: { es: "Ad 30-40 Messi", en: "Ad 30-40 Messi" },
-      description: {
-        es: "Placeholder de video bloqueado. Sin popup ni link hasta que esté listo el video final.",
-        en: "Locked video placeholder. No popup or link until the final video is ready.",
-      },
-      thumbnail: thumbMCBK1,
-      locked: true,
-      opensPopup: false,
     },
   ]
 }

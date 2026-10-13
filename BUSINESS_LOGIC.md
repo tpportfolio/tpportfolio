@@ -20,7 +20,7 @@ This is a personal portfolio with a "Matrix + 90s web" look (terminal + neon + r
 - Page is structured as:
   1) Intro and content filter (all / image / video / audio)
   2) REEL 2025/2026 (YouTube reel)
-  3) 2026 works and experiments: Product Demo, Fashion Campaign (open), UGC content, Ad 30-40 Messi (coming soon)
+  3) 2026 works and experiments: Messi Ad BURGER KING (WIP), Product Demo SUBWAY, Fashion Campaign AY NOT DEAD, UGC content (all open)
   4) AUDIO IA - MUSIC LAB, with a RADIO MAGAIBA shortcut to /magaiba right below it
   5) 2025 works and experiments (two pitch cases)
   6) the8bureau: six tools (Autonomous Ad Agency is deprecated) plus the tools added in v2
