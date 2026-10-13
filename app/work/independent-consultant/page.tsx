@@ -7,6 +7,7 @@ import { VideoCarousel } from "@/components/video-carousel"
 import { useLanguage } from "@/components/language-context"
 import { useVisualMode } from "@/components/visual-mode-context"
 import { consultantVideos } from "@/lib/work-videos"
+import { WindowFrame } from "@/components/video-window"
 
 type L = { es: string; en: string }
 
@@ -282,10 +283,9 @@ export default function IndependentConsultantPage() {
       {/* Consulting Videos Carousel */}
       <VideoCarousel items={consultantVideos} title="CONSULTING_SHOWCASE" />
 
-      <div className="space-y-8 max-w-4xl mx-auto mt-8">
-        <div className="terminal">
-          <div className="terminal-header">PROJECT_OVERVIEW</div>
-          <div className="terminal-content">
+      <div className="space-y-8 mt-8">
+        <WindowFrame title="PROJECT_OVERVIEW">
+          <div className="vw-text">
             <p className={`mb-2 font-bold ${headingColor}`}>{copy.overviewHeading[lang]}</p>
             <p className="mb-2">{copy.overviewSub[lang]}</p>
             <p className="mb-4">{copy.overviewBody[lang]}</p>
@@ -296,22 +296,20 @@ export default function IndependentConsultantPage() {
             </ul>
             <p>{copy.clients[lang]}</p>
           </div>
-        </div>
+        </WindowFrame>
 
-        <div className="terminal">
-          <div className="terminal-header">KEY_ACHIEVEMENTS</div>
-          <div className="terminal-content">
+        <WindowFrame title="KEY_ACHIEVEMENTS">
+          <div className="vw-text">
             <ul className="list-disc pl-5 space-y-2">
               {keyAchievements.map((item) => (
                 <li key={item.en}>{item[lang]}</li>
               ))}
             </ul>
           </div>
-        </div>
+        </WindowFrame>
 
-        <div className="terminal">
-          <div className="terminal-header">ENGAGEMENTS</div>
-          <div className="terminal-content space-y-8">
+        <WindowFrame title="ENGAGEMENTS">
+          <div className="vw-text space-y-8">
             {engagements.map((eng) => (
               <div className="space-y-2 scroll-mt-24" id={eng.anchor} key={eng.anchor}>
                 <p className={`font-bold ${headingColor}`}>
@@ -349,7 +347,7 @@ export default function IndependentConsultantPage() {
               </div>
             ))}
           </div>
-        </div>
+        </WindowFrame>
       </div>
 
       <div className="mt-12 text-center">

@@ -6,6 +6,7 @@ import { useLanguage } from "./language-context"
 
 // The one container for video across the site. Its look lives in app/globals.css (VIDEO WINDOW block).
 //   VideoWindowFrame: the window itself (title bar with the three lights, body, status foot).
+//                     Exported also as WindowFrame for windows that hold text instead of video.
 //   VideoScreen:      the 16:9 screen on its black frame.
 //   VideoWindow:      frame + screen + title and description; with more than one video it adds
 //                     the previous / next buttons, the segment bar and the thumbnails.
@@ -46,6 +47,7 @@ function hasPoster(video: VideoSource) {
 
 interface VideoWindowFrameProps {
   title: string
+  id?: string
   /** Small text at the right of the title bar (e.g. "4/4"). */
   meta?: ReactNode
   /** Hangs from the title (e.g. a notice badge). */
@@ -62,6 +64,7 @@ interface VideoWindowFrameProps {
 
 export function VideoWindowFrame({
   title,
+  id,
   meta,
   titleOverlay,
   barEnd,
@@ -73,7 +76,7 @@ export function VideoWindowFrame({
   onKeyDown,
 }: VideoWindowFrameProps) {
   return (
-    <section className={`vw ${className ?? ""}`} aria-label={title} onKeyDown={onKeyDown}>
+    <section id={id} className={`vw ${className ?? ""}`} aria-label={title} onKeyDown={onKeyDown}>
       <header className="vw-bar">
         <span className="vw-dots" aria-hidden="true">
           <i />
@@ -97,6 +100,9 @@ export function VideoWindowFrame({
     </section>
   )
 }
+
+/** The same window around any other content (text, lists, cards). */
+export const WindowFrame = VideoWindowFrame
 
 interface VideoScreenProps {
   video: VideoSource

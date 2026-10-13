@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { useLanguage } from "@/components/language-context"
+import { WindowFrame } from "@/components/video-window"
 
 type L = { es: string; en: string }
 
@@ -180,18 +181,16 @@ export default function WaltDisneyCompanyPage() {
         <div className="h-px bg-gradient-to-r from-transparent via-neon-green to-transparent mb-6"></div>
       </div>
 
-      <div className="space-y-8 max-w-4xl">
-        <div className="terminal">
-          <div className="terminal-header">PROJECT_OVERVIEW</div>
-          <div className="terminal-content">
+      <div className="space-y-8">
+        <WindowFrame title="PROJECT_OVERVIEW">
+          <div className="vw-text">
             <p>{t("disney_overview")}</p>
           </div>
-        </div>
+        </WindowFrame>
 
         {roles.map((role) => (
-          <div className="terminal" key={role.header}>
-            <div className="terminal-header">{role.header}</div>
-            <div className="terminal-content">
+          <WindowFrame title={role.header} key={role.header}>
+            <div className="vw-text">
               <p>{role.intro[lang]}</p>
               <ul className="list-disc pl-5 space-y-2 mt-4">
                 {role.bullets.map((item) => (
@@ -199,12 +198,11 @@ export default function WaltDisneyCompanyPage() {
                 ))}
               </ul>
             </div>
-          </div>
+          </WindowFrame>
         ))}
 
-        <div className="terminal">
-          <div className="terminal-header">HIGHLIGHTS</div>
-          <div className="terminal-content">
+        <WindowFrame title="HIGHLIGHTS">
+          <div className="vw-text">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
               {stats.map((stat) => (
                 <div key={stat.label.en} className="border border-neon-green/40 p-3 text-center min-w-0">
@@ -219,11 +217,10 @@ export default function WaltDisneyCompanyPage() {
               ))}
             </ul>
           </div>
-        </div>
+        </WindowFrame>
 
-        <div className="terminal">
-          <div className="terminal-header">BRAND_TAKEAWAY</div>
-          <div className="terminal-content">
+        <WindowFrame title="BRAND_TAKEAWAY">
+          <div className="vw-text">
             <ul className="list-disc pl-5 space-y-2">
               {takeaway.map((item) => (
                 <li key={item.en}>{item[lang]}</li>
@@ -231,7 +228,7 @@ export default function WaltDisneyCompanyPage() {
             </ul>
             <p className="mt-4 text-neon-cyan">{takeawayClosing[lang]}</p>
           </div>
-        </div>
+        </WindowFrame>
       </div>
 
       <div className="mt-12 text-center">

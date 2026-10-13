@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ArrowUpRight, Linkedin, Mail, MapPin } from "lucide-react"
 import { useLanguage } from "@/components/language-context"
 import { useVisualMode } from "@/components/visual-mode-context"
+import { WindowFrame } from "@/components/video-window"
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/tomaspero"
 const CONTACT_EMAIL = "tomaspero@gmail.com"
@@ -135,11 +136,8 @@ export default function Contact() {
 
       <section className="w-full">
         <div className="grid grid-cols-1 gap-8 xl:grid-cols-12">
-          <div className="terminal flex flex-col xl:col-span-7">
-            <div className="terminal-header">
-              <span>{copy.linksHeader}</span>
-            </div>
-            <div className="terminal-content flex-1 p-5 md:p-6">
+          <WindowFrame title={copy.linksHeader} className="flex flex-col xl:col-span-7">
+            <div className="flex-1">
               <div className="grid h-full grid-cols-1 gap-4 xl:auto-rows-min">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <a
@@ -204,13 +202,10 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-          </div>
+          </WindowFrame>
 
-          <div className="terminal flex flex-col xl:col-span-5">
-            <div className="terminal-header">
-              <span>{copy.formHeader}</span>
-            </div>
-            <div className="terminal-content flex-1 p-5 md:p-6">
+          <WindowFrame title={copy.formHeader} className="flex flex-col xl:col-span-5">
+            <div className="flex-1">
               {submitted ? (
                 <div className="py-8 text-center text-lg text-neon-green">{copy.successMsg}</div>
               ) : (
@@ -260,7 +255,7 @@ export default function Contact() {
                 </form>
               )}
             </div>
-          </div>
+          </WindowFrame>
         </div>
       </section>
     </main>

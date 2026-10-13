@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/components/language-context"
 import { VideoScreen, VideoWindowFrame, videoCountLabel } from "@/components/video-window"
+import { WindowFrame } from "@/components/video-window"
 
 export default function Magaiba() {
   const { t, language } = useLanguage()
@@ -29,11 +30,8 @@ export default function Magaiba() {
           </VideoWindowFrame>
 
           {/* Title on the right */}
-          <div className="terminal">
-            <div className="terminal-header">
-              <span className="text-xl">MAGAIBA_INFO</span>
-            </div>
-            <div className="terminal-content flex items-center justify-center">
+          <WindowFrame title="MAGAIBA_INFO">
+            <div className="flex items-center justify-center">
               <div className="text-center flex flex-col items-center">
   <img src="/magaibacoin.gif" alt="Magaiba Coin" className="mx-auto mb-4 w-24 h-24" />
   <h2 className="text-3xl md:text-4xl text-neon-green mb-6 font-cyber">
@@ -46,16 +44,13 @@ export default function Magaiba() {
   </p>
 </div>
             </div>
-          </div>
+          </WindowFrame>
         </div>
       </section>
 
       <section className="w-full mt-12">
-        <div className="terminal">
-          <div className="terminal-header">
-            <span className="text-xl">MAGAIBA_DETAILS</span>
-          </div>
-          <div className="terminal-content">
+        <WindowFrame title="MAGAIBA_DETAILS">
+          <div>
             {language === "es" ? (
               <>
                 <p className="mb-6 text-lg font-bold">
@@ -101,15 +96,12 @@ export default function Magaiba() {
               />
             </VideoWindowFrame>
           </div>
-        </div>
+        </WindowFrame>
       </section>
 
       <section className="w-full mt-12">
-        <div className="terminal">
-          <div className="terminal-header">
-            <span className="text-xl">MAGAIBA_NEWS</span>
-          </div>
-          <div className="terminal-content">
+        <WindowFrame title="MAGAIBA_NEWS">
+          <div>
             <h3 className="text-xl text-neon-cyan mb-4">
               {language === "es" ? "MAGAIBA EN LOS MEDIOS:" : "MAGAIBA IN THE MEDIA:"}
             </h3>
@@ -287,7 +279,7 @@ export default function Magaiba() {
               </li>
             </ul>
           </div>
-        </div>
+        </WindowFrame>
       </section>
     </main>
   )

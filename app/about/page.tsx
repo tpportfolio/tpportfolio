@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import type { ReactNode } from "react"
 import { ArrowRight } from "lucide-react"
+import { WindowFrame } from "@/components/video-window"
 
 type Segment = string | { bold: string } | { text: string; href: string; external?: boolean }
 
@@ -291,11 +292,8 @@ export default function About() {
 
       <section className="w-full">
         <div className="grid grid-cols-1 gap-8 xl:grid-cols-12">
-          <div className="terminal flex min-h-[420px] flex-col xl:col-span-8">
-            <div className="terminal-header">
-              <span>{copy.overviewHeader}</span>
-            </div>
-            <div className="terminal-content flex-1 p-5 md:p-6">
+          <WindowFrame title={copy.overviewHeader} className="flex min-h-[420px] flex-col xl:col-span-8">
+            <div className="flex-1">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:items-center">
                 <div className="mx-auto w-full max-w-[220px] lg:mx-0 lg:max-w-[240px]">
                   <div className="relative aspect-square overflow-hidden border border-neon-green/35 bg-black/25">
@@ -352,13 +350,10 @@ export default function About() {
                 ))}
               </div>
             </div>
-          </div>
+          </WindowFrame>
 
-          <div className="terminal flex flex-col xl:col-span-4">
-            <div className="terminal-header">
-              <span>{copy.contextHeader}</span>
-            </div>
-            <div className="terminal-content flex-1 p-5 md:p-6">
+          <WindowFrame title={copy.contextHeader} className="flex flex-col xl:col-span-4">
+            <div className="flex-1">
               <div className="grid h-full grid-cols-1 gap-4 xl:auto-rows-fr">
                 {copy.contextItems.map((item) => (
                   <div key={item.label} className="flex flex-col justify-center rounded-sm border border-neon-green/20 bg-black/20 p-4">
@@ -368,13 +363,10 @@ export default function About() {
                 ))}
               </div>
             </div>
-          </div>
+          </WindowFrame>
 
-          <div className="terminal flex flex-col xl:col-span-12">
-            <div className="terminal-header">
-              <span>{copy.skillsHeader}</span>
-            </div>
-            <div className="terminal-content p-5 md:p-6">
+          <WindowFrame title={copy.skillsHeader} className="flex flex-col xl:col-span-12">
+            <div>
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
                 <SkillsSection label={copy.skills.positioningLabel}>
                   <div className="font-cyber text-lg leading-snug text-neon-green">{copy.skills.positioningValue}</div>
@@ -411,7 +403,7 @@ export default function About() {
                 </SkillsSection>
               </div>
             </div>
-          </div>
+          </WindowFrame>
 
           <div className="flex flex-col items-start gap-4 rounded-sm border border-neon-green/30 bg-black/20 p-5 sm:flex-row sm:items-center sm:justify-start sm:gap-6 md:p-6 xl:col-span-12">
             <p className="text-sm leading-relaxed text-neon-green/90 md:text-base">{copy.cta.prompt}</p>

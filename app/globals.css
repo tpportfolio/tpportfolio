@@ -2117,6 +2117,11 @@ html[data-visual-mode="light"] .vw {
   color: var(--vw-accent-2);
 }
 
+/* running text inside a full-width window keeps a readable line length */
+.vw-text :where(p, ul, ol, h3, h4) {
+  max-width: 78ch;
+}
+
 /* links inside the window: the same cyan as the video title */
 .vw-link {
   color: var(--vw-accent-2);

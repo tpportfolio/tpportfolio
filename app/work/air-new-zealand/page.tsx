@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react"
 import { VideoCarousel } from "@/components/video-carousel"
 import { useLanguage } from "@/components/language-context"
 import { airNewZealandVideos } from "@/lib/work-videos"
+import { WindowFrame } from "@/components/video-window"
 
 type L = { es: string; en: string }
 
@@ -124,30 +125,27 @@ export default function AirNewZealandPage() {
       {/* Air NZ Videos Carousel */}
       <VideoCarousel items={airNewZealandVideos} title="AIR_NZ_SHOWCASE" />
 
-      <div className="space-y-8 max-w-4xl mt-8">
-        <div className="terminal">
-          <div className="terminal-header">PROJECT_OVERVIEW</div>
-          <div className="terminal-content">
+      <div className="space-y-8 mt-8">
+        <WindowFrame title="PROJECT_OVERVIEW">
+          <div className="vw-text">
             <p>{t("air_nz_overview")}</p>
           </div>
-        </div>
+        </WindowFrame>
 
         {groups.map((group) => (
-          <div className="terminal" key={group.header}>
-            <div className="terminal-header">{group.header}</div>
-            <div className="terminal-content">
+          <WindowFrame title={group.header} key={group.header}>
+            <div className="vw-text">
               <ul className="list-disc pl-5 space-y-2">
                 {group.items.map((item) => (
                   <li key={item.en}>{item[lang]}</li>
                 ))}
               </ul>
             </div>
-          </div>
+          </WindowFrame>
         ))}
 
-        <div className="terminal">
-          <div className="terminal-header">RESULTS</div>
-          <div className="terminal-content">
+        <WindowFrame title="RESULTS">
+          <div className="vw-text">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
               {stats.map((stat) => (
                 <div key={stat.value.en + stat.label.en} className="border border-neon-green/40 p-3 text-center min-w-0">
@@ -162,7 +160,7 @@ export default function AirNewZealandPage() {
               ))}
             </ul>
           </div>
-        </div>
+        </WindowFrame>
       </div>
 
       <div className="mt-12 text-center">

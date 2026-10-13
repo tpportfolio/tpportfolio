@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react"
 import { VideoCarousel } from "@/components/video-carousel"
 import { useLanguage } from "@/components/language-context"
 import { agencyVideos } from "@/lib/work-videos"
+import { WindowFrame } from "@/components/video-window"
 
 type L = { es: string; en: string }
 
@@ -93,18 +94,16 @@ export default function AgencyExperiencePage() {
       {/* Agency Videos Carousel */}
       <VideoCarousel items={agencyVideos} title="AGENCY_SHOWCASE" />
 
-      <div className="space-y-8 max-w-4xl mt-8">
-        <div className="terminal">
-          <div className="terminal-header">PROJECT_OVERVIEW</div>
-          <div className="terminal-content">
+      <div className="space-y-8 mt-8">
+        <WindowFrame title="PROJECT_OVERVIEW">
+          <div className="vw-text">
             <p>{t("agency_overview")}</p>
           </div>
-        </div>
+        </WindowFrame>
 
         {roles.map((role) => (
-          <div className="terminal scroll-mt-24" id={role.anchor} key={role.anchor}>
-            <div className="terminal-header">{role.header}</div>
-            <div className="terminal-content">
+          <WindowFrame title={role.header} className="scroll-mt-24" id={role.anchor} key={role.anchor}>
+            <div className="vw-text">
               <p>{role.intro[lang]}</p>
               <ul className="list-disc pl-5 space-y-2 mt-4">
                 {role.bullets.map((item) => (
@@ -112,7 +111,7 @@ export default function AgencyExperiencePage() {
                 ))}
               </ul>
             </div>
-          </div>
+          </WindowFrame>
         ))}
       </div>
 
