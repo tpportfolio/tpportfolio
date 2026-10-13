@@ -45,9 +45,15 @@ function hasPoster(video: VideoSource) {
   return video.type !== "vimeo" && !video.isPlaylist
 }
 
+export type WindowTone = "default" | "cyan" | "blue" | "amber"
+
 interface VideoWindowFrameProps {
   title: string
   id?: string
+  /** Accent colour of the window. The default is the site's green. */
+  tone?: WindowTone
+  /** Decoration drawn behind the window (e.g. a glow). */
+  backdrop?: ReactNode
   /** Small text at the right of the title bar (e.g. "4/4"). */
   meta?: ReactNode
   /** Hangs from the title (e.g. a notice badge). */
@@ -65,6 +71,8 @@ interface VideoWindowFrameProps {
 export function VideoWindowFrame({
   title,
   id,
+  tone,
+  backdrop,
   meta,
   titleOverlay,
   barEnd,
@@ -76,7 +84,14 @@ export function VideoWindowFrame({
   onKeyDown,
 }: VideoWindowFrameProps) {
   return (
-    <section id={id} className={`vw ${className ?? ""}`} aria-label={title} onKeyDown={onKeyDown}>
+    <section
+      id={id}
+      className={`vw ${className ?? ""}`}
+      data-tone={tone && tone !== "default" ? tone : undefined}
+      aria-label={title}
+      onKeyDown={onKeyDown}
+    >
+      {backdrop}
       <header className="vw-bar">
         <span className="vw-dots" aria-hidden="true">
           <i />

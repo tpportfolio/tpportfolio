@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="flex min-h-screen">
             <Sidebar />
             <MobileMenuButton />
-            <div className="flex-1 lg:ml-64 w-full">
+            <div className="flex-1 min-w-0 lg:ml-64 w-full">
               <ScrollToTop />
               {children}
             </div>

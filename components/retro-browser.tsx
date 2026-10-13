@@ -3,6 +3,7 @@
 import type { ReactNode } from "react"
 import Link from "next/link"
 import { useLanguage } from "./language-context"
+import { VideoWindowFrame } from "./video-window"
 import type { LocalizedText } from "@/lib/site-content"
 
 type MaybeLocalized = string | LocalizedText | undefined
@@ -43,36 +44,17 @@ export function RetroBrowser({
   const resolvedClientLine3 = resolveLocalized(clientLine3, language)
 
   return (
-    <div
-      className={`retro-browser relative isolate rounded-sm ${highlight ? "overflow-visible" : "overflow-hidden"} flex flex-col transition-all duration-300 w-full h-[15.5rem] sm:h-[16.5rem] md:h-80
-        ${highlight
-          ? "border-2 border-cyan-400 bg-black shadow-xl shadow-cyan-400/40 hover:shadow-cyan-400/70"
-          : "border border-neon-green bg-black shadow-lg shadow-neon-green/20 hover:shadow-neon-green/40"}
-      `}
+    <VideoWindowFrame
+      title={resolvedTitle.toUpperCase()}
+      tone={highlight ? "cyan" : "default"}
+      className="vw--card h-[15.5rem] w-full sm:h-[16.5rem] md:h-80"
+      footLeft="Done"
+      footRight={resolvedYear}
+      backdrop={
+        highlight ? <div aria-hidden className="vw-backdrop pointer-events-none rounded-full ai-molecule-aura" /> : null
+      }
     >
-      {highlight && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -inset-1 rounded-full ai-molecule-aura z-0"
-        />
-      )}
-      <div
-        className={`browser-title-bar flex items-center justify-between p-2 border-b
-        ${highlight
-          ? "bg-cyan-950 border-cyan-400"
-          : "bg-gradient-to-r from-gray-900 to-gray-800 border-neon-green"}
-      `}
-        style={{ position: "relative", zIndex: 10 }}
-      >
-        <div className="flex items-center">
-          <div className={`w-3 h-3 rounded-full mr-2 ${highlight ? "bg-cyan-400" : "bg-red-500"}`}></div>
-          <div className={`w-3 h-3 rounded-full mr-2 ${highlight ? "bg-cyan-200" : "bg-yellow-500"}`}></div>
-          <div className={`w-3 h-3 rounded-full mr-2 ${highlight ? "bg-cyan-600" : "bg-green-500"}`}></div>
-          <span className={`text-base font-bold sm:text-lg ${highlight ? "text-neon-cyan" : "text-neon-green"}`}>{resolvedTitle.toUpperCase()}</span>
-        </div>
-      </div>
-
-      <div className={`browser-content flex-1 p-3 sm:p-4 ${highlight ? "bg-black" : ""}`} style={{ position: "relative", zIndex: 10 }}>
+      <div className="min-h-0 flex-1">
         {children ? (
           children
         ) : (
@@ -96,15 +78,6 @@ export function RetroBrowser({
         )}
       </div>
 
-      <div
-        className={`browser-status-bar p-1 border-t flex justify-between
-        ${highlight ? "bg-cyan-950 border-cyan-400" : "bg-gray-900 border-neon-green"}
-      `}
-        style={{ position: "relative", zIndex: 10 }}
-      >
-        <span className={`text-xs ${highlight ? "text-cyan-400" : "text-neon-green"}`}>Done</span>
-        <span className={`text-xs ${highlight ? "text-cyan-400" : "text-neon-green"}`}>{resolvedYear}</span>
-      </div>
-    </div>
+    </VideoWindowFrame>
   )
 }

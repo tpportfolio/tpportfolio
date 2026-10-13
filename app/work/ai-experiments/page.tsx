@@ -2539,7 +2539,7 @@ export default function AIExperimentsPage() {
         <div className="mb-8">
           <div className="relative mb-5 pt-3 md:pt-4 xl:pt-4">
             <div className="max-w-fit">
-              <h1 className="mb-3 font-cyber text-3xl font-bold text-neon-green lg:text-4xl">
+              <h1 className="mb-3 font-cyber text-[1.65rem] sm:text-3xl font-bold text-neon-green lg:text-4xl">
                 {currentLanguage === "es" ? "/INTELIGENCIA_ARTIFICIAL" : "/ARTIFICIAL_INTELLIGENCE"}
               </h1>
               <div className="relative mb-2 min-h-[2rem] font-cyber text-xl text-neon-cyan">

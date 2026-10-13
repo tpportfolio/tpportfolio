@@ -1675,7 +1675,12 @@ html[data-visual-mode="light"] .ai-page .shadow-\[3px_3px_0_\#000\] {
   --vw-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --vw-t: 240ms;
 
+  --vw-dot-1: #ef4444;
+  --vw-dot-2: #eab308;
+  --vw-dot-3: #22c55e;
+
   container-type: inline-size;
+  position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -1689,7 +1694,8 @@ html[data-visual-mode="light"] .ai-page .shadow-\[3px_3px_0_\#000\] {
   text-shadow: none;
 }
 
-html[data-visual-mode="light"] .vw {
+html[data-visual-mode="light"] .vw,
+.home-variant-page--light .vw {
   --vw-surface: rgba(252, 246, 238, 0.92);
   --vw-line: rgba(139, 67, 21, 0.45);
   --vw-line-soft: rgba(139, 67, 21, 0.2);
@@ -1729,6 +1735,78 @@ html[data-visual-mode="light"] .vw {
   outline-offset: 3px;
 }
 
+/* accent colours: the same window in cyan (AI), blue or amber. LIGHT mode keeps its own palette and only the lights change. */
+.vw[data-tone="cyan"] {
+  --vw-line: rgba(34, 211, 238, 0.75);
+  --vw-line-soft: rgba(34, 211, 238, 0.3);
+  --vw-accent: #22f0ff;
+  --vw-accent-hi: #7df5ff;
+  --vw-tint: rgba(34, 240, 255, 0.09);
+  --vw-bar: linear-gradient(to right, #062a38, #083344);
+  --vw-foot: #083344;
+  --vw-foot-ink: #22d3ee;
+  --vw-glow-text: 0 0 6px rgba(34, 240, 255, 0.5);
+  --vw-shadow: 0 0 0 1px rgba(34, 240, 255, 0.14), 0 0 22px -8px rgba(34, 240, 255, 0.55);
+  --vw-shadow-lift: 0 0 0 1px rgba(34, 240, 255, 0.28), 0 0 30px -6px rgba(34, 240, 255, 0.75);
+  --vw-dot-1: #22d3ee;
+  --vw-dot-2: #a5f3fc;
+  --vw-dot-3: #0891b2;
+}
+
+.vw[data-tone="blue"] {
+  --vw-line: rgba(90, 169, 255, 0.75);
+  --vw-line-soft: rgba(90, 169, 255, 0.3);
+  --vw-accent: #8dc5ff;
+  --vw-accent-hi: #d8eeff;
+  --vw-tint: rgba(90, 169, 255, 0.1);
+  --vw-bar: linear-gradient(to right, #07142f, #154b9c);
+  --vw-foot: #07142f;
+  --vw-foot-ink: #8dc5ff;
+  --vw-glow-text: 0 0 6px rgba(90, 169, 255, 0.5);
+  --vw-shadow: 0 0 0 1px rgba(90, 169, 255, 0.14), 0 0 22px -8px rgba(90, 169, 255, 0.55);
+  --vw-shadow-lift: 0 0 0 1px rgba(90, 169, 255, 0.28), 0 0 30px -6px rgba(90, 169, 255, 0.75);
+  --vw-dot-1: #8dc5ff;
+  --vw-dot-2: #d8eeff;
+  --vw-dot-3: #1d6fe0;
+}
+
+.vw[data-tone="amber"] {
+  --vw-dot-1: #ffd166;
+  --vw-dot-2: #f59e0b;
+  --vw-dot-3: #b45309;
+}
+
+/* a window that is a card (home projects): fills its fixed height and lifts on hover */
+.vw--card {
+  --vw-surface: #000;
+  transition:
+    transform var(--vw-t) var(--vw-ease),
+    border-color var(--vw-t) var(--vw-ease),
+    box-shadow var(--vw-t) var(--vw-ease);
+}
+
+.vw--card > .vw-body {
+  padding: 1rem 1rem 1.1rem;
+  border-radius: 0;
+  background: var(--vw-surface);
+}
+
+.vw--card:hover {
+  border-color: var(--vw-accent);
+  box-shadow: var(--vw-shadow-lift, 0 0 0 1px rgba(57, 255, 20, 0.22), 0 0 30px -6px rgba(0, 255, 65, 0.75));
+  transform: translateY(-3px);
+}
+
+.vw--card:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.vw-backdrop {
+  position: absolute;
+  inset: -0.25rem;
+  z-index: -1;
+}
+
 /* title bar */
 .vw-bar {
   position: relative;
@@ -1755,16 +1833,16 @@ html[data-visual-mode="light"] .vw {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #ef4444;
+  background: var(--vw-dot-1);
   box-shadow: inset 0 0 0 1.5px rgba(0, 0, 0, 0.28);
 }
 
 .vw-dots i:nth-child(2) {
-  background: #eab308;
+  background: var(--vw-dot-2);
 }
 
 .vw-dots i:nth-child(3) {
-  background: #22c55e;
+  background: var(--vw-dot-3);
 }
 
 .vw-title-box {
