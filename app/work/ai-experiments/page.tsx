@@ -659,7 +659,7 @@ function Work2026Modal({
                 href={item.youtubeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-neon-magenta underline hover:text-neon-cyan"
+                className="vw-link inline-flex items-center gap-2"
               >
                 {language === "es" ? "Abrir en YouTube" : "Open on YouTube"}
                 <ExternalLink className="h-4 w-4" />
@@ -2348,7 +2348,7 @@ function Works2026Carousel({
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
-                  className="mt-2 inline-flex items-center gap-2 text-sm text-neon-magenta underline"
+                  className="vw-link mt-2 inline-flex items-center gap-2"
                 >
                   {language === "es" ? "Abrir popup" : "Open popup"}
                 </button>
@@ -2612,7 +2612,7 @@ export default function AIExperimentsPage() {
                   href={REEL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-neon-magenta underline hover:text-neon-cyan"
+                  className="vw-link"
                 >
                   {currentLanguage === "es" ? "Ver en YouTube ↗" : "Watch on YouTube ↗"}
                 </a>
@@ -2711,7 +2711,7 @@ export default function AIExperimentsPage() {
                     href={jumexLink[currentLanguage]}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-3 inline-block text-sm text-neon-magenta underline hover:text-neon-cyan"
+                    className="vw-link mt-3 inline-block"
                   >
                     Video: YouTube
                   </a>
@@ -2751,7 +2751,7 @@ export default function AIExperimentsPage() {
                     href={subwayLink[currentLanguage]}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-3 inline-block text-sm text-neon-magenta underline hover:text-neon-cyan"
+                    className="vw-link mt-3 inline-block"
                   >
                     Video: YouTube
                   </a>
