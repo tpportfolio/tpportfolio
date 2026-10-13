@@ -7,6 +7,7 @@ import {
   timelineEntries,
   type LocalizedText,
 } from "@/lib/site-content"
+import { timelineExtras } from "@/lib/timeline-extras"
 
 type Lang = "en" | "es"
 
@@ -263,7 +264,7 @@ const crawlHintsLocalized = {
     "Use `/about` for profile, positioning, target roles and education.",
     "Use `/timeline` for chronological work history, most recent first: Paradise.la, $MAGAIBA, DrGea.com, Airtm, Stone Movistar, Go Broadway!, Air New Zealand, The Walt Disney Company, J. Walter Thompson, Altheim Comunicaciones. Each block is a planet with its videos orbiting it and its role and description beside it; $MAGAIBA (2024 side project) has its own block linking to `/magaiba`.",
     "Use `/contact` for LinkedIn, email, location and a message form.",
-    "Sidebar order: Home, Work, Timeline, AI Experiments, About, Contact. `/magaiba` is not in the sidebar.",
+    "Sidebar order: Home, Timeline, Work, AI Experiments, About, Contact. `/magaiba` is not in the sidebar.",
     "Use `/agents.md` or `/agents.txt` for a compact bilingual summary of the portfolio.",
     "The AI Experiments route opens with a 2025/2026 reel, followed by 2026 works, the music lab, 2025 work examples, the8bureau tools, lightweight webapps and a 2022-2024 archive.",
     "The agents routes bypass the intro middleware and can be fetched directly.",
@@ -273,12 +274,39 @@ const crawlHintsLocalized = {
     "Usar `/about` para perfil, posicionamiento, roles objetivo y formación.",
     "Usar `/timeline` para trayectoria cronológica, de lo más reciente a lo más antiguo: Paradise.la, $MAGAIBA, DrGea.com, Airtm, Stone Movistar, Go Broadway!, Air New Zealand, The Walt Disney Company, J. Walter Thompson, Altheim Comunicaciones. Cada bloque es un planeta con sus videos orbitando y su rol y descripción al lado; $MAGAIBA (proyecto paralelo de 2024) tiene su propio bloque con link a `/magaiba`.",
     "Usar `/contact` para LinkedIn, email, ubicación y formulario de mensaje.",
-    "Orden del menú lateral: Home, Trabajos, Timeline, Experimentos IA, About, Contacto. `/magaiba` no está en el menú lateral.",
+    "Orden del menú lateral: Home, Timeline, Trabajos, Experimentos IA, About, Contacto. `/magaiba` no está en el menú lateral.",
     "Usar `/agents.md` o `/agents.txt` para un resumen bilingüe compacto del portfolio.",
     "La ruta de AI Experiments abre con un reel 2025/2026, seguido de trabajos 2026, el music lab, ejemplos 2025, herramientas de the8bureau, webapps livianas y un archivo 2022-2024.",
     "Las rutas `agents` saltean el middleware de intro y se pueden pedir directo.",
   ],
 } satisfies Record<Lang, string[]>
+
+// Timeline planets: where each one links to and the brands shown with it (same data the /timeline page uses).
+const timelineBlockNames: Record<string, string> = {
+  paradise: "PARADISE.LA",
+  magaiba: "$MAGAIBA",
+  drgea: "DRGEA.COM",
+  airtm: "AIRTM",
+  "stone-movistar": "STONE MOVISTAR",
+  "go-broadway": "GO BROADWAY!",
+  "air-new-zealand": "AIR NEW ZEALAND",
+  disney: "THE WALT DISNEY COMPANY",
+  jwt: "J. WALTER THOMPSON",
+  altheim: "ALTHEIM COMUNICACIONES",
+}
+
+function buildTimelineBlockLines(lang: Lang) {
+  return Object.entries(timelineExtras).map(([id, extra]) => {
+    const brands = extra.brandGroups
+      .map((group) => `${group.label[lang]}: ${group.brands[lang].join(", ")}`)
+      .join("; ")
+    return {
+      name: timelineBlockNames[id] ?? id,
+      href: extra.href,
+      brands,
+    }
+  })
+}
 
 function buildMarkdownSection(lang: Lang) {
   const isEn = lang === "en"
@@ -383,6 +411,8 @@ function buildMarkdownSection(lang: Lang) {
     "",
     timelineHeading,
     ...timelineEntries.map((entry) => `- ${entry.year} - ${entry.title} - ${entry.role[lang]}. ${entry.description[lang]}`),
+    `- ${lang === "en" ? "Timeline planets: each planet and its VIEW action link to a section; brands are listed by relationship" : "Planetas del timeline: cada planeta y su acción VER llevan a una sección; las marcas se listan por tipo de relación"}:`,
+    ...buildTimelineBlockLines(lang).map((block) => `  - ${block.name} -> \`${block.href}\`. ${block.brands}.`),
     "",
     crawlHeading,
     ...crawlHintsLocalized[lang].map((hint) => `- ${hint}`),
@@ -472,6 +502,7 @@ function buildTextSection(lang: Lang) {
     "",
     isEn ? "TIMELINE :" : "TIMELINE :",
     ...timelineEntries.map((entry) => `- ${entry.year} :: ${entry.title} :: ${entry.role[lang]} :: ${entry.description[lang]}`),
+    ...buildTimelineBlockLines(lang).map((block) => `- ${lang === "en" ? "PLANET" : "PLANETA"} :: ${block.name} :: ${block.href} :: ${block.brands}`),
     "",
     isEn ? "CRAWL_HINTS :" : "CRAWL_HINTS :",
     ...crawlHintsLocalized[lang].map((hint) => `- ${hint}`),

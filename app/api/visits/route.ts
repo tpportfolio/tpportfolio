@@ -23,7 +23,11 @@ export async function POST() {
 
   // The count lives in the KV store, not in the code: deploys never reset it.
   // Only the production site adds visits; local runs and preview deploys just read the number.
-  const countsVisit = process.env.VERCEL_ENV === "production"
+  // VERCEL_ENV is set by Vercel ("production" / "preview"). If it is ever missing, fall back to the
+  // build mode so the live site keeps counting.
+  const countsVisit = process.env.VERCEL_ENV
+    ? process.env.VERCEL_ENV === "production"
+    : process.env.NODE_ENV === "production"
   const readToken = process.env.KV_REST_API_READ_ONLY_TOKEN || token
 
   const controller = new AbortController()

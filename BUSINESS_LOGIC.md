@@ -29,7 +29,7 @@ This is a personal portfolio with a "Matrix + 90s web" look (terminal + neon + r
 
 ## Navigation
 
-- Sidebar order: Home, Work, Timeline, AI Experiments, About, Contact.
+- Sidebar order: Home, Timeline, Work, AI Experiments, About, Contact.
 - /contact is a landing with links (LinkedIn, email, location) and a message form that opens the visitor's mail app.
 - /magaiba is not in the sidebar: it is reached from the timeline, from the AI section and from the assistant.
 
@@ -39,3 +39,10 @@ This is a personal portfolio with a "Matrix + 90s web" look (terminal + neon + r
   - `/canva_productora`
   - `/unyellower`
   - `/comparador_videos`
+
+## Drafts
+
+- `/drafts/*` pages are working pages. They are not indexable and are kept out of the sidebar and `/agents.md`.
+- `/drafts/design-lab` shows a model page with nine interchangeable styles: 0 is the current site, 1-8 are design proposals.
+- No proposal is applied to the site yet.
+- Navigate with tabs 0-8, the left and right arrows, or the URL hash (for example `#p3`).

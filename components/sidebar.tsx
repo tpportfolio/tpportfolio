@@ -108,13 +108,13 @@ export default function Sidebar() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#trabajos" className="sidebar-link" onClick={goToWorkSection}>
-                    {t("work")}
+                  <Link href="/timeline" className="sidebar-link" onClick={closeSidebar}>
+                    TIMELINE
                   </Link>
                 </li>
                 <li>
-                  <Link href="/timeline" className="sidebar-link" onClick={closeSidebar}>
-                    TIMELINE
+                  <Link href="/#trabajos" className="sidebar-link" onClick={goToWorkSection}>
+                    {t("work")}
                   </Link>
                 </li>
                 <li>
