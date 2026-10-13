@@ -1,5 +1,32 @@
 # Changelog
 
+## r18 (2026-10-13) — One video window for the whole site
+Branch `release/r18-video-containers`. Builds on r17. Brings the video container of design lab proposal 6.2 AUDIT FIX v2 to the real pages. No text, video or order changes.
+
+The window
+- 12 px corners, green border, one soft outer glow, dark title bar with the three window lights, the title in neon green and the position ("4/4") at the right.
+- The video sits centred on a black frame, 16:9, at most 60rem wide. It shows a still with a play button; the video loads when the visitor presses it.
+- Under the screen: title and description at the left; previous arrow, one segment per video, "04 / 04" and next arrow at the right. The arrows no longer float over the video.
+- Thumbnails are cards in a row (four per row, two on phones) with number, picture, title and source. The current one is marked in cyan and with `aria-current`.
+- A thin status foot: "OK" and the number of videos.
+- Every control has hover, pressed and keyboard-focus states. With focus inside the window, the left and right arrow keys change video.
+- LIGHT mode has its own amber palette for the window.
+
+Where it is used
+- `/work/independent-consultant`, `/work/air-new-zealand`, `/work/agency-experience`: the video showcase.
+- `/work/ai-experiments`: REEL 2025/2026, 2026 works (frame and arrows; the popup of a video item is the same window), 2025 works (frame) and the 2022-2024 archive.
+- `/timeline`: the video dialog of each planet, with arrows, segments and a close button in the title bar.
+- `/magaiba`: the recap video and the RADIO MAGAIBA playlist.
+
+How it is built
+- New `components/video-window.tsx`: `VideoWindowFrame` (the window), `VideoScreen` (the screen) and `VideoWindow` (both plus navigation and thumbnails). `VideoCarousel` is now a thin wrapper over it.
+- Styles in the VIDEO WINDOW block at the end of `app/globals.css`, as `.vw-*` classes with colour tokens. The window answers to its own width (container queries), so it also fits half columns and dialogs.
+- `.terminal`, `RetroPanel` and `RetroBrowser` are untouched for the rest of the content.
+- Small labels have a minimum of 11 px (the lab drew them at about 9 px).
+
+Agent mode
+- No content changed, so `/agents.md`, `/agents.txt` and the assistant's knowledge base stay as they were.
+
 ## r17 (2026-10-13) — Design lab, round 2
 Branch `release/r17-design-lab-v2`. Builds on r16. Only the `/drafts/design-lab` draft changes; no existing page is touched.
 

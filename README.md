@@ -2,16 +2,16 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r17 (2026-10-13) — Design lab, round 2
+## Current version: r18 (2026-10-13) — One video window for the whole site
 
 What changed in this version:
 
-- **Design lab, round 2.** Only the `/drafts/design-lab` draft changes; no existing page is touched. The eight first-round proposals and style 0 stay for comparison, so the lab now has thirteen styles.
-- **Second-round variants.** 3.2 RETRO OS v2 uses the portfolio palette with dark title bars. 4.2 PHOSPHOR POSTER v2 is a lighter poster. 6.2 AUDIT FIX v2 brings back the portfolio identity. 8.2 DOT MATRIX v2 is the finished dot-matrix version.
-- **Lab navigation.** The second-round tabs sit after 0-8 with labels 3.2, 4.2, 6.2 and 8.2, and the left and right arrows go through all thirteen. Keys 0-8 still go to the first round.
-- **URL hash.** Changing the hash (for example `#p6b`) with the lab open now switches the proposal. The ticker text is duplicated in the HTML so it can loop continuously.
+- **One video window.** Every video on the site now sits in the same window, taken from design lab proposal 6.2 AUDIT FIX v2: title bar with the three lights, the video centred on a black frame, title and description, arrows with a segment bar, thumbnail cards and a status foot.
+- **Where.** The showcases in `/work/independent-consultant`, `/work/air-new-zealand` and `/work/agency-experience`; the reel, 2026, 2025 and 2022-2024 blocks of `/work/ai-experiments`; the video dialog of `/timeline`; and the two videos of `/magaiba`.
+- **Behaviour.** A video loads when the visitor presses play. Arrows, thumbnails and the left and right keys change video. LIGHT mode has its own palette.
+- **Content.** No text, video or order changes; `/agents.md` is unchanged.
 
-Version r16 (2026-10-13) — Intro, timeline planets, 2026 works: a faster intro, timeline planets with only dates and company, and the 2026 AI works reordered and renamed. Previous version: r15 (2026-10-12) — Design lab, timeline links, sidebar order.
+Previous version: r17 (2026-10-13) — Design lab, round 2.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -22,7 +22,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r17-design-lab-v2`, tag `r17` | This version |
+| `release/r18-video-containers`, tag `r18` | This version |
+| `release/r17-design-lab-v2`, tag `r17` | Design lab, round 2 |
 | `release/r16-intro-timeline`, tag `r16` | Intro, timeline planets, 2026 works |
 | `release/r15-design-lab`, tag `r15` | Design lab, timeline links |
 | `release/r14-nav-timeline-ai`, tag `r14` | Navigation, timeline callouts, AI section |
