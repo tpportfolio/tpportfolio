@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Portfolio Boot</title>
     <style>
+        /* TIMELINE (seconds). Keep in sync with the *_MS constants in the scripts below.
+           Previous values in comments. Total to redirect: 13.85s -> 12.40s (-10.5%). */
+        :root {
+            --t-type:      1.2s;   /* was 1.5s  cursor block hold, then typing starts */
+            --t-cursor-off:2.7s;   /* was 3.0s  typing ends (typing duration 1.5s unchanged) */
+            --t-line3:     2.7s;   /* was 3.0s */
+            --t-line4:     3.4s;   /* was 3.7s */
+            --t-line5:     3.95s;  /* was 4.25s */
+            --t-line6:     4.5s;   /* was 4.8s */
+            --t-line7:     5.05s;  /* was 5.35s */
+            --t-fadeout:   6.05s;  /* was 7.0s  hold after last line 1.25s -> 0.6s */
+            --d-fadeout:   2s;     /* was 2.4s  terminal fade-out / matrix fade-in */
+            --t-sf:        8.05s;  /* was 9.4s  ACCESS GRANTED fades in right after the fade-out */
+            --d-sf:        0.5s;   /* was 0.6s */
+            --t-zoom:      8.55s;  /* was 10.0s */
+            --t-flash:     11.55s; /* was 13.0s */
+            --t-content:   11.75s; /* was 13.2s */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -99,7 +118,7 @@
             50%, 100% { opacity: 0; }
         }
 
-        /* TIMELINE 12s */
+        /* TIMELINE (see :root variables above) */
 
         /* 0-1.5s: Cursor bloque */
         #line1 { 
@@ -110,10 +129,10 @@
             min-height: 0;
             margin-bottom: 0;
             line-height: 1;
-            animation: hideCursorLine 0.01s 1.5s forwards;
+            animation: hideCursorLine 0.01s var(--t-type) forwards;
         }
         #line1 .cursor-block {
-            animation: blink 0.8s infinite, stopBlink 0.1s 1.5s forwards;
+            animation: blink 0.8s infinite, stopBlink 0.1s var(--t-type) forwards;
         }
 
         @keyframes stopBlink {
@@ -134,12 +153,12 @@
         #line2 .text-reveal {
             display: inline;
             clip-path: inset(0 100% 0 0);
-            animation: revealText 1.5s 1.5s steps(62, end) forwards;
+            animation: revealText 1.5s var(--t-type) steps(62, end) forwards;
         }
         
         #line2 .typing-cursor {
             opacity: 0;
-            animation: showCursor 0.1s 1.5s forwards, blink 0.8s 1.5s infinite, hideCursor 0.1s 3.0s forwards;
+            animation: showCursor 0.1s var(--t-type) forwards, blink 0.8s var(--t-type) infinite, hideCursor 0.1s var(--t-cursor-off) forwards;
         }
 
         @keyframes revealText {
@@ -151,22 +170,22 @@
         /* 3.0-5.8s: Terminal cascade */
         #line3 {
             opacity: 0;
-            animation: glitchIn 0.7s 3.0s forwards;
+            animation: glitchIn 0.7s var(--t-line3) forwards;
         }
 
         #line4 {
             opacity: 0;
-            animation: fadeIn 0.5s 3.7s forwards;
+            animation: fadeIn 0.5s var(--t-line4) forwards;
         }
 
         #line5 {
             opacity: 0;
-            animation: fadeIn 0.5s 4.25s forwards;
+            animation: fadeIn 0.5s var(--t-line5) forwards;
         }
 
         #line6 {
             opacity: 0;
-            animation: fadeIn 0.5s 4.8s forwards;
+            animation: fadeIn 0.5s var(--t-line6) forwards;
         }
 
         #line7 {
@@ -177,12 +196,12 @@
             min-height: 0;
             margin-bottom: 0;
             transform: translate(-50%, -50%);
-            animation: fadeIn 0.4s 5.35s forwards;
+            animation: fadeIn 0.4s var(--t-line7) forwards;
         }
 
         /* 7.0-9.4s: Terminal fade out */
         #terminal {
-            animation: fadeOutSlow 2.4s 7.0s forwards;
+            animation: fadeOutSlow var(--d-fadeout) var(--t-fadeout) forwards;
         }
 
         @keyframes glitchIn {
@@ -210,7 +229,7 @@
             left: 0;
             z-index: 20;
             opacity: 0;
-            animation: fadeInMatrix 2.4s 7.0s forwards;
+            animation: fadeInMatrix var(--d-fadeout) var(--t-fadeout) forwards;
             filter: brightness(1.2) contrast(1.1);
         }
 
@@ -231,41 +250,86 @@
             justify-content: center;
             z-index: 40;
             opacity: 0;
-            animation: fadeIn 0.6s 9.4s forwards;
+            animation: fadeIn var(--d-sf) var(--t-sf) forwards;
             background: rgba(0, 20, 0, 0.3);
             padding: 20px;
         }
 
-        /* Audio controls */
+        /* Audio controls: real 1.21x size (it was a 1.1x transform on top of the browser-default
+           button size; +10% over what was visible). No transform, so text stays crisp.
+           Always one row: nowrap + flexible slider + status hint hidden on narrow screens. */
         #audioControls{
             position: absolute;
-            top: 14px;
-            right: 14px;
+            top: max(14px, env(safe-area-inset-top));
+            right: max(14px, env(safe-area-inset-right));
+            left: auto;
+            max-width: calc(100% - max(14px, env(safe-area-inset-left)) - max(14px, env(safe-area-inset-right)));
             z-index: 120;
             display: flex;
-            gap: 8px;
+            flex-wrap: nowrap;
+            gap: 10px;
             align-items: center;
-            padding: 8px 10px;
+            padding: 10px 12px;
             border: 1px solid rgba(0,255,0,.35);
             background: rgba(0,0,0,.55);
             backdrop-filter: blur(4px);
-            font-size: 12px;
+            font-size: 14.5px;
+            white-space: nowrap;
             color: #0f0;
-            transform: scale(1.10);
-            transform-origin: top right;
+            pointer-events: auto;
         }
         #audioControls button{
+            flex: 0 0 auto;
             background: transparent;
             color: #0f0;
             border: 1px solid rgba(0,255,0,.35);
-            padding: 4px 8px;
+            padding: 5px 10px;
+            font-size: 16px;
+            line-height: 1.2;
             cursor: pointer;
             font-family: inherit;
             font-weight: bold;
+            touch-action: manipulation;
         }
         #audioControls button:hover{ background: rgba(0,255,0,.10); }
-        #audioControls input[type="range"]{ width: 88px; }
-        #audioHint{ opacity: .75; }
+        #audioControls button:focus-visible,
+        #audioControls input[type="range"]:focus-visible{ outline: 2px solid #0f0; outline-offset: 2px; }
+        #audioControls input[type="range"]{
+            flex: 0 1 106px;
+            width: 106px;
+            min-width: 36px;
+            height: 24px;
+            margin: 0;
+            background: transparent;
+            accent-color: #0f0;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+        #audioControls input[type="range"]::-webkit-slider-runnable-track{
+            height: 5px; background: rgba(0,255,0,.35); border-radius: 3px;
+        }
+        #audioControls input[type="range"]::-webkit-slider-thumb{
+            -webkit-appearance: none; appearance: none;
+            width: 19px; height: 19px; margin-top: -7px;
+            border-radius: 50%; background: #0f0; border: 0; box-shadow: 0 0 6px #0f0;
+        }
+        #audioControls input[type="range"]::-moz-range-track{
+            height: 5px; background: rgba(0,255,0,.35); border-radius: 3px;
+        }
+        #audioControls input[type="range"]::-moz-range-thumb{
+            width: 19px; height: 19px;
+            border-radius: 50%; background: #0f0; border: 0; box-shadow: 0 0 6px #0f0;
+        }
+        #audioHint{ flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; opacity: .75; }
+        @media (max-width: 640px) {
+            #audioHint{ display: none; }
+        }
+        @media (max-width: 380px) {
+            #audioControls{ gap: 5px; padding: 6px 6px; }
+            #audioControls button{ padding: 5px 6px; }
+            #audioControls input[type="range"]{ flex-basis: 60px; width: 60px; }
+        }
 
         #system-failure {
             border: 3px solid #0f0;
@@ -280,7 +344,7 @@
             letter-spacing: 3px;
             transform: scale(1);
             max-width: 90vw;
-            animation: zoomTunnel 3.6s 10.0s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            animation: zoomTunnel 3.6s var(--t-zoom) cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
         }
 
         @keyframes zoomTunnel {
@@ -300,7 +364,7 @@
             opacity: 0;
             z-index: 60;
             pointer-events: none;
-            animation: flash 0.2s 13s forwards;
+            animation: flash 0.2s var(--t-flash) forwards;
         }
 
         @keyframes flash {
@@ -323,7 +387,7 @@
             color: #0f0;
             opacity: 0;
             transform: scale(0.95);
-            animation: fadeInContent 0.8s 13.2s forwards;
+            animation: fadeInContent 0.8s var(--t-content) forwards;
             z-index: 20;
             background: #000;
             text-shadow: 0 0 20px #0f0;
@@ -443,6 +507,46 @@
         <span id="audioHint">AUDIO: LOADING</span>
     </div>
 
+    <script>
+        /* SKIP + auto-redirect. Deliberately its own classic <script> placed right after the controls:
+           the listener exists from the first parsed frame and cannot be blocked by an error in the
+           matrix/MIDI script below (an uncaught error in one script does not stop other scripts).
+           Independent of audio. */
+        (function () {
+            const REDIRECT_AT_MS = 12400; // was 13850. Content fade-in ends at 12.55s; redirect 150ms before.
+            const skipBtn = document.getElementById('introSkip');
+            let done = false;
+
+            // Destination comes from the URL hash set by middleware.ts: /intro.html#%2Fwork%2Fai-experiments
+            function resolveNext() {
+                let next = '/';
+                try {
+                    const raw = window.location.hash ? window.location.hash.slice(1) : '';
+                    next = raw ? decodeURIComponent(raw) : '/';
+                } catch (e) {
+                    next = '/';
+                }
+                // Same-site absolute paths only (blocks //host, /\host, javascript: ...) and never loop back to the intro.
+                if (typeof next !== 'string' || next.charAt(0) !== '/' || next.charAt(1) === '/' || next.charAt(1) === '\\') return '/';
+                if (/^\/intro(\.html)?([?#]|$)/.test(next)) return '/';
+                return next;
+            }
+
+            function completeIntro() {
+                if (done) return;
+                done = true;
+                try { localStorage.setItem('tp_intro_seen', '1'); } catch (e) {}
+                try { document.cookie = 'tp_intro=1; path=/; max-age=' + (60 * 60 * 24 * 30) + '; SameSite=Lax'; } catch (e) {}
+                window.location.replace(resolveNext());
+            }
+
+            if (skipBtn) {
+                skipBtn.addEventListener('click', completeIntro); // mouse, touch and keyboard (Enter/Space on a <button>)
+            }
+            window.setTimeout(completeIntro, REDIRECT_AT_MS);
+        })();
+    </script>
+
     <div id="terminal">
         <div class="line-wrapper" id="line1">
             <span class="cursor-block"></span>
@@ -516,10 +620,16 @@
         initDrops();
 
         let speed = 0.6;
-        setTimeout(() => { speed = 1.2; }, 6000);
-        setTimeout(() => { speed = 2.0; }, 9000);
+        // Timeline in ms (mirrors the :root variables in the CSS).
+        const MATRIX_SPEED2_AT_MS = 5050;   // was 6000 (1s before the terminal fade-out starts)
+        const MATRIX_SPEED3_AT_MS = 7650;   // was 9000 (0.4s before ACCESS GRANTED)
+        const GLITCH_END_MS = 4200;         // was 4500 (line3 appears at 2.7s, was 3.0s)
+        const CLEANUP_AT_MS = 12550;        // was 14000 (150ms after the redirect, as before)
+        setTimeout(() => { speed = 1.2; }, MATRIX_SPEED2_AT_MS);
+        setTimeout(() => { speed = 2.0; }, MATRIX_SPEED3_AT_MS);
 
         function draw() {
+            if (!ctx) return;
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -567,7 +677,7 @@
             }
         }, 150);
 
-        setTimeout(() => clearInterval(glitchInterval), 4500);
+        setTimeout(() => clearInterval(glitchInterval), GLITCH_END_MS);
 
         // Responsive resize handler
         let resizeTimeout;
@@ -589,7 +699,7 @@
             document.getElementById('terminal').style.display = 'none';
             document.getElementById('matrix').style.display = 'none';
             document.getElementById('sf-container').style.display = 'none';
-        }, 14000);
+        }, CLEANUP_AT_MS);
 
         /* MIDI playback (WebAudio synth) */
         (function initMidiPlayer() {
@@ -864,7 +974,9 @@
             }
 
             // Fallback: if autoplay is blocked, a user gesture will allow playback.
-            window.addEventListener('pointerdown', () => {
+            window.addEventListener('pointerdown', (e) => {
+                // Presses on the control bar have their own click handlers (avoids PLAY starting and pausing in one tap).
+                if (e.target && e.target.closest && e.target.closest('#audioControls')) return;
                 if (isReady && !isPlaying) play();
             });
 
@@ -887,34 +999,6 @@
                 muteBtn.textContent = 'MUTE';
                 setVolume(parseFloat(e.target.value));
             });
-        })();
-
-        // Auto-redirect to the site (first-load intro).
-        // The destination path is provided via URL hash: /intro.html#%2Fwork%2Fai-experiments
-        (function () {
-            const skipBtn = document.getElementById('introSkip');
-            let next = '/';
-            try {
-                const raw = window.location.hash ? window.location.hash.slice(1) : '';
-                next = raw ? decodeURIComponent(raw) : '/';
-            } catch (e) {
-                next = '/';
-            }
-
-            function completeIntro() {
-                try { localStorage.setItem('tp_intro_seen', '1'); } catch (e) {}
-                try { document.cookie = 'tp_intro=1; path=/; max-age=' + (60 * 60 * 24 * 30) + '; SameSite=Lax'; } catch (e) {}
-                window.location.replace(next);
-            }
-
-            if (skipBtn) {
-                skipBtn.addEventListener('click', completeIntro);
-            }
-
-            // Redirect right after the animation completes (no extra wait).
-            // Timeline ends ~13.2s; we redirect slightly after for safety.
-            const REDIRECT_AT_MS = 13850;
-            window.setTimeout(completeIntro, REDIRECT_AT_MS);
         })();
     </script>
 </body>
