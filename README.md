@@ -2,16 +2,16 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r18 (2026-10-13) — One video window for the whole site
+## Current version: r19 (2026-10-13) — The same window for work pages, About, Contact and MAGAIBA
 
 What changed in this version:
 
-- **One video window.** Every video on the site now sits in the same window, taken from design lab proposal 6.2 AUDIT FIX v2: title bar with the three lights, the video centred on a black frame, title and description, arrows with a segment bar, thumbnail cards and a status foot.
-- **Where.** The showcases in `/work/independent-consultant`, `/work/air-new-zealand` and `/work/agency-experience`; the reel, 2026, 2025 and 2022-2024 blocks of `/work/ai-experiments`; the video dialog of `/timeline`; and the two videos of `/magaiba`.
-- **Behaviour.** A video loads when the visitor presses play. Arrows, thumbnails and the left and right keys change video. LIGHT mode has its own palette.
-- **Content.** No text, video or order changes; `/agents.md` is unchanged.
+- **One window for text too.** The text panels of the four work pages, About, Contact and MAGAIBA use the same window as the videos.
+- **Width.** On the work pages, text and video windows share one width; text keeps a readable line length.
+- **Links.** Video links in AI experiments are cyan instead of magenta.
+- **Still to come (step 2).** Home project cards, the remaining AI experiments panels.
 
-Previous version: r17 (2026-10-13) — Design lab, round 2.
+Previous version: r18 (2026-10-13) — One video window for the whole site. It put every video of the site in one window taken from design lab proposal 6.2.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -22,7 +22,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r18-video-containers`, tag `r18` | This version |
+| `release/r19-video-links`, tag `r19` | This version |
+| `release/r18-video-containers`, tag `r18` | One video window |
 | `release/r17-design-lab-v2`, tag `r17` | Design lab, round 2 |
 | `release/r16-intro-timeline`, tag `r16` | Intro, timeline planets, 2026 works |
 | `release/r15-design-lab`, tag `r15` | Design lab, timeline links |

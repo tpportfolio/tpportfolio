@@ -1,5 +1,15 @@
 # Changelog
 
+## r19 (2026-10-13) — The same window for work pages, About, Contact and MAGAIBA
+Branch `release/r19-video-links`. Builds on r18. Step 1 of 2 of taking the r18 window to the whole site. No text changes.
+
+- Text panels now use the same window as the videos (title bar with the three lights, rounded corners, one outer glow, status foot) in `/work/walt-disney-company`, `/work/air-new-zealand`, `/work/independent-consultant`, `/work/agency-experience`, `/about`, `/contact` and `/magaiba`.
+- On the work pages the text windows are as wide as the video window; running text keeps a readable line length (78 characters).
+- Links inside the windows of `/work/ai-experiments` (Watch on YouTube, Open popup, Video: YouTube) are cyan instead of magenta.
+- `components/video-window.tsx` also exports the frame as `WindowFrame`, with an optional `id` for anchors.
+- Not in this step: the home project cards (`RetroBrowser`), the AI experiments panels that still use `RetroPanel` (Music Lab, the8bureau, webapps) and the timeline.
+- `/agents.md` and the assistant's knowledge base are unchanged.
+
 ## r18 (2026-10-13) — One video window for the whole site
 Branch `release/r18-video-containers`. Builds on r17. Brings the video container of design lab proposal 6.2 AUDIT FIX v2 to the real pages. No text, video or order changes.
 
