@@ -20,8 +20,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
+        {/* Set the visual mode before the first paint: the visitor's choice, or else the system setting. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var m=localStorage.getItem("tp.visual-mode.choice");if(m!=="dark"&&m!=="light"){m=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.dataset.visualMode=m;document.documentElement.style.colorScheme=m}catch(e){}`,
+          }}
+        />
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-G0MMW8J0LY"

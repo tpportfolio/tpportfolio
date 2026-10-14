@@ -2,15 +2,14 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r22 (2026-10-14) — LIGHT mode in the amber range
+## Current version: r23 (2026-10-14) — The default mode follows the system
 
 What changed in this version:
 
-- **Timeline.** In LIGHT mode the falling characters are amber on cream.
-- **Accents.** Window lights, the AI card glow and the home card text follow the amber palette in LIGHT mode.
-- **Music Lab.** Track title and tag are readable in LIGHT mode.
+- **Default mode.** The site opens in LIGHT or terminal mode according to the visitor's system setting.
+- **Switch.** Using the LIGHT / DARK switch overrides it and is remembered.
 
-Previous version: r21 (2026-10-13) — Copy tweaks (in production).
+Previous version: r22 (2026-10-14) — LIGHT mode in the amber range.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -21,7 +20,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r22-light-mode`, tag `r22` | This version |
+| `release/r23-system-mode`, tag `r23` | This version |
+| `release/r22-light-mode`, tag `r22` | LIGHT mode in the amber range |
 | `release/r21-copy-tweaks`, tag `r21` | Copy tweaks (in production) |
 | `release/r20-window-everywhere`, tag `r20` | Window on home cards and AI panels |
 | `release/r19-video-links`, tag `r19` | Window on work pages, About, Contact, MAGAIBA |

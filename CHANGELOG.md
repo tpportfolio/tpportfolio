@@ -1,5 +1,13 @@
 # Changelog
 
+## r23 (2026-10-14) — The default mode follows the system
+Branch `release/r23-system-mode`. Builds on r22. No text changes.
+
+- First visit: the site opens in LIGHT or in terminal (dark) mode according to the visitor's system or browser setting. It used to open always in terminal mode.
+- The LIGHT / DARK switch still wins: once used, that choice is remembered on that browser. Until then the site also follows a change of the system setting while it is open.
+- The mode is set before the first paint, so there is no flash of the other mode.
+- Earlier visitors start again from their system setting once (the old stored value could not tell a choice from a plain visit).
+
 ## r22 (2026-10-14) — LIGHT mode in the amber range
 Branch `release/r22-light-mode`. Builds on r21. Only LIGHT mode changes; terminal mode is untouched. No text changes.
 

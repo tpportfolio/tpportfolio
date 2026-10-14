@@ -1,10 +1,12 @@
 "use client"
 
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react"
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 
 export type VisualMode = "dark" | "light"
 
-const STORAGE_KEY = "tp.visual-mode"
+// Written only when the visitor uses the switch. Without it, the site follows the system setting.
+// (The older "tp.visual-mode" key was written on every visit, so it does not tell a choice apart.)
+const STORAGE_KEY = "tp.visual-mode.choice"
 
 type VisualModeContextValue = {
   mode: VisualMode
@@ -25,39 +27,50 @@ function applyVisualMode(mode: VisualMode) {
 
 export function VisualModeProvider({ children }: { children: ReactNode }) {
   const [mode, setModeState] = useState<VisualMode>("dark")
+  const chosenRef = useRef(false)
 
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY)
       if (stored === "dark" || stored === "light") {
+        chosenRef.current = true
         setModeState(stored)
-        applyVisualMode(stored)
         return
       }
     } catch {
       // noop
     }
 
-    applyVisualMode("dark")
+    // No choice yet: follow the system (light or dark), also if it changes while the page is open.
+    const system = window.matchMedia("(prefers-color-scheme: light)")
+    const followSystem = () => {
+      if (!chosenRef.current) setModeState(system.matches ? "light" : "dark")
+    }
+    followSystem()
+    system.addEventListener("change", followSystem)
+    return () => system.removeEventListener("change", followSystem)
   }, [])
 
   useEffect(() => {
     applyVisualMode(mode)
-    try {
-      window.localStorage.setItem(STORAGE_KEY, mode)
-    } catch {
-      // noop
-    }
   }, [mode])
 
-  const value = useMemo<VisualModeContextValue>(
-    () => ({
+  const value = useMemo<VisualModeContextValue>(() => {
+    const choose = (next: VisualMode) => {
+      chosenRef.current = true
+      try {
+        window.localStorage.setItem(STORAGE_KEY, next)
+      } catch {
+        // noop
+      }
+      setModeState(next)
+    }
+    return {
       mode,
-      setMode: setModeState,
-      toggleMode: () => setModeState((current) => (current === "dark" ? "light" : "dark")),
-    }),
-    [mode],
-  )
+      setMode: choose,
+      toggleMode: () => choose(mode === "dark" ? "light" : "dark"),
+    }
+  }, [mode])
 
   return <VisualModeContext.Provider value={value}>{children}</VisualModeContext.Provider>
 }
