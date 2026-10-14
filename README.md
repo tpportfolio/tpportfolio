@@ -2,15 +2,15 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r21 (2026-10-13) — Copy tweaks
+## Current version: r22 (2026-10-14) — LIGHT mode in the amber range
 
 What changed in this version:
 
-- **AI experiments.** New intro paragraph (ES and EN) with years and key names in bold.
-- **About.** Spanish title without the accent: "ACERCA DE MI".
-- **Home.** Shorter intro line: Brand Strategist and Marketing Leader, 18+ years.
+- **Timeline.** In LIGHT mode the falling characters are amber on cream.
+- **Accents.** Window lights, the AI card glow and the home card text follow the amber palette in LIGHT mode.
+- **Music Lab.** Track title and tag are readable in LIGHT mode.
 
-Previous version: r20 (2026-10-13) — The window on the home cards and the AI panels. It completed the move of every panel of the site to one window.
+Previous version: r21 (2026-10-13) — Copy tweaks (in production).
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -21,7 +21,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r21-copy-tweaks`, tag `r21` | This version |
+| `release/r22-light-mode`, tag `r22` | This version |
+| `release/r21-copy-tweaks`, tag `r21` | Copy tweaks (in production) |
 | `release/r20-window-everywhere`, tag `r20` | Window on home cards and AI panels |
 | `release/r19-video-links`, tag `r19` | Window on work pages, About, Contact, MAGAIBA |
 | `release/r18-video-containers`, tag `r18` | One video window |

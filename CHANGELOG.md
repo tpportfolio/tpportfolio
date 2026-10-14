@@ -1,5 +1,15 @@
 # Changelog
 
+## r22 (2026-10-14) — LIGHT mode in the amber range
+Branch `release/r22-light-mode`. Builds on r21. Only LIGHT mode changes; terminal mode is untouched. No text changes.
+
+- Timeline: the falling characters are amber on the cream page (they were green on a grey veil).
+- Window lights are amber tones instead of red, yellow and green (or cyan).
+- Home: the glow of the AI card is amber instead of cyan, and the card text uses the amber-brown ink instead of dark green.
+- Music Lab: track title and tag are readable again on the dark stage.
+- The mode switch glow is amber.
+- `/agents.md` and the assistant's knowledge base are unchanged.
+
 ## r21 (2026-10-13) — Copy tweaks
 Branch `release/r21-copy-tweaks`. Builds on r20.
 

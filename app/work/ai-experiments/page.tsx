@@ -2120,7 +2120,7 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
                       style={{ "--card-glow": trackGlowColor(track.gradient, accent) } as CSSProperties}
                     >
                       <p
-                        className={`font-cyber text-[12px] font-bold leading-snug [overflow-wrap:anywhere] sm:text-[13px] ${
+                        className={`on-dark-stage font-cyber text-[12px] font-bold leading-snug [overflow-wrap:anywhere] sm:text-[13px] ${
                           isLight ? "text-[#fff4e8]" : "text-white"
                         }`}
                         style={{
@@ -2132,7 +2132,7 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
                         {track.title}
                       </p>
                       <p
-                        className={`mt-0.5 font-cyber text-[10px] uppercase tracking-[0.18em] sm:text-[11px] ${
+                        className={`on-dark-stage mt-0.5 font-cyber text-[10px] uppercase tracking-[0.18em] sm:text-[11px] ${
                           isLight ? "text-[#f5b942]" : "text-neon-cyan"
                         }`}
                         style={isLight ? { textShadow: "0 0 8px rgba(245,158,11,0.65)" } : undefined}

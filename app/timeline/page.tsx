@@ -247,13 +247,22 @@ export default function Timeline() {
       drops[i] = Math.random() * -100
     }
 
+    let wasLight: boolean | null = null
+
     // Draw matrix rain
     const drawMatrix = () => {
-      // Semi-transparent black to create fade effect
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)"
+      // LIGHT mode: amber characters fading into the cream page; terminal mode: green on black
+      const light = document.documentElement.dataset.visualMode === "light"
+      if (light !== wasLight) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        wasLight = light
+      }
+
+      // Semi-transparent page colour to create the fade effect
+      ctx.fillStyle = light ? "rgba(244, 234, 220, 0.09)" : "rgba(0, 0, 0, 0.05)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      ctx.fillStyle = "#0f0" // Green text
+      ctx.fillStyle = light ? "#b85a17" : "#0f0"
       ctx.font = `${fontSize}px monospace`
 
       for (let i = 0; i < drops.length; i++) {
@@ -366,7 +375,7 @@ export default function Timeline() {
 
   return (
     <main className="py-8 px-4 md:px-12 relative">
-      <canvas id="matrix-canvas" className="fixed top-0 left-0 w-full h-full z-0 opacity-20"></canvas>
+      <canvas id="matrix-canvas" className="matrix-rain fixed top-0 left-0 w-full h-full z-0 opacity-20"></canvas>
 
       <div className="marquee-container mb-6 relative z-10">
         <div className="marquee">

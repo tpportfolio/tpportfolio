@@ -1533,7 +1533,7 @@ html[data-visual-mode="light"] .ai-page [class*="text-neon-magenta/"] {
   text-shadow: 0 0 8px rgba(217, 120, 29, 0.08) !important;
 }
 
-html[data-visual-mode="light"] .ai-page p,
+html[data-visual-mode="light"] .ai-page p:not(.on-dark-stage),
 html[data-visual-mode="light"] .ai-page li {
   color: #4e240c;
   text-shadow: none;
@@ -1645,6 +1645,36 @@ html[data-visual-mode="light"] .ai-page .shadow-\[3px_3px_0_\#000\] {
   }
 }
 
+/* LIGHT MODE ACCENTS: everything that glows turns amber */
+html[data-visual-mode="light"] .ai-molecule-aura,
+.home-variant-page--light .ai-molecule-aura {
+  filter: blur(8px) hue-rotate(205deg) saturate(1.5) contrast(1.1);
+}
+
+html[data-visual-mode="light"] .sidebar-mode-switch__thumb {
+  box-shadow: 0 0 10px rgba(217, 120, 29, 0.3);
+}
+
+html[data-visual-mode="light"] .matrix-rain {
+  opacity: 0.3;
+}
+
+/* home in LIGHT mode: card text in the amber-brown ink instead of the old dark green */
+.home-variant-page--light .text-neon-green,
+.home-variant-page--light .year,
+.home-variant-page--light .client,
+.home-variant-page--light .client-line2,
+.home-variant-page--light .client-line3,
+.home-variant-page--light .access-data {
+  color: #4e240c !important;
+  text-shadow: none !important;
+}
+
+.home-variant-page--light .text-neon-cyan {
+  color: #b85a17 !important;
+  text-shadow: none !important;
+}
+
 /* VIDEO WINDOW START
    The one container for video (components/video-window.tsx). Ported from the design lab
    proposal 6.2 AUDIT FIX v2. Every colour is a token, redefined below for LIGHT mode. */
@@ -1719,6 +1749,11 @@ html[data-visual-mode="light"] .vw,
   --vw-shadow: 0 0 0 1px rgba(139, 67, 21, 0.08), 0 10px 24px -10px rgba(83, 38, 12, 0.3);
   --vw-shadow-current: inset 0 0 0 1px var(--vw-accent-2), 0 0 16px -6px rgba(184, 90, 23, 0.5);
   --vw-shadow-play: 0 0 18px -4px rgba(139, 67, 21, 0.6);
+  --vw-shadow-lift: 0 0 0 1px rgba(139, 67, 21, 0.16), 0 14px 30px -10px rgba(83, 38, 12, 0.42);
+  /* the window lights join the amber range */
+  --vw-dot-1: #f6c453;
+  --vw-dot-2: #e08a1e;
+  --vw-dot-3: #9a4a12;
 }
 
 .vw button {
