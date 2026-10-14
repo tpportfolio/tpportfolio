@@ -1,5 +1,15 @@
 # Changelog
 
+## r25 (2026-10-14) — Intro: tighter pace, lower volume ceiling
+Branch `release/r25-intro-pace-2`. Builds on r24. No text changes.
+
+- First part (up to the rabbit) 5% faster.
+- From the terminal fade-out on, 25% faster than the original pace (r24 was 20%).
+- Shorter wait before OPENING PORTFOLIO: the ACCESS GRANTED zoom lasts 2 s and the flash comes 1.5 s into it.
+- The intro now lasts 9.9 s in total (r24: 11.3 s; before: 12.4 s).
+- Volume: the slider's 100% is what used to be 50%, so it can never get loud. It still starts at 10% of the slider.
+- The music itself is unchanged.
+
 ## r24 (2026-10-14) — Intro: faster second half, quieter start
 Branch `release/r24-intro-pace`. Builds on r23. No text changes.
 

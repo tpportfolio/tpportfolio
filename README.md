@@ -2,14 +2,14 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r24 (2026-10-14) — Intro: faster second half, quieter start
+## Current version: r25 (2026-10-14) — Intro: tighter pace, lower volume ceiling
 
 What changed in this version:
 
-- **Intro pace.** 20% faster from the terminal fade-out to the end (11.3 s in total).
-- **Intro volume.** Starts at 10%, with a finer and smoother slider.
+- **Intro pace.** First part 5% faster, the rest 25% faster, and a shorter wait before OPENING PORTFOLIO: 9.9 s in total.
+- **Intro volume.** The slider's maximum is half of what it was.
 
-Previous version: r23 (2026-10-14) — The default mode follows the system.
+Previous version: r24 (2026-10-14) — Intro: faster second half, quieter start.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -20,7 +20,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r24-intro-pace`, tag `r24` | This version |
+| `release/r25-intro-pace-2`, tag `r25` | This version |
+| `release/r24-intro-pace`, tag `r24` | Intro: faster second half, quieter start |
 | `release/r23-system-mode`, tag `r23` | Default mode follows the system |
 | `release/r22-light-mode`, tag `r22` | LIGHT mode in the amber range |
 | `release/r21-copy-tweaks`, tag `r21` | Copy tweaks (in production) |
