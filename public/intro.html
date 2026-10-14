@@ -6,7 +6,7 @@
     <title>Portfolio Boot</title>
     <style>
         /* TIMELINE (seconds). Keep in sync with the *_MS constants in the scripts below.
-           Previous values in comments. Total to redirect: 13.85s -> 12.40s (-10.5%). */
+           Previous values in comments. Total to redirect: 13.85s -> 12.40s -> 11.34s (r24: 20% faster from the terminal fade-out on). */
         :root {
             --t-type:      1.2s;   /* was 1.5s  cursor block hold, then typing starts */
             --t-cursor-off:2.7s;   /* was 3.0s  typing ends (typing duration 1.5s unchanged) */
@@ -16,12 +16,12 @@
             --t-line6:     4.5s;   /* was 4.8s */
             --t-line7:     5.05s;  /* was 5.35s */
             --t-fadeout:   6.05s;  /* was 7.0s  hold after last line 1.25s -> 0.6s */
-            --d-fadeout:   2s;     /* was 2.4s  terminal fade-out / matrix fade-in */
-            --t-sf:        8.05s;  /* was 9.4s  ACCESS GRANTED fades in right after the fade-out */
-            --d-sf:        0.5s;   /* was 0.6s */
-            --t-zoom:      8.55s;  /* was 10.0s */
-            --t-flash:     11.55s; /* was 13.0s */
-            --t-content:   11.75s; /* was 13.2s */
+            --d-fadeout:   1.67s;  /* was 2s     from here on, everything runs 20% faster */
+            --t-sf:        7.72s;  /* was 8.05s */
+            --d-sf:        0.42s;  /* was 0.5s */
+            --t-zoom:      8.13s;  /* was 8.55s */
+            --t-flash:     10.63s; /* was 11.55s */
+            --t-content:   10.8s;  /* was 11.75s */
         }
 
         * {
@@ -344,7 +344,7 @@
             letter-spacing: 3px;
             transform: scale(1);
             max-width: 90vw;
-            animation: zoomTunnel 3.6s var(--t-zoom) cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            animation: zoomTunnel 3s var(--t-zoom) cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
         }
 
         @keyframes zoomTunnel {
@@ -364,7 +364,7 @@
             opacity: 0;
             z-index: 60;
             pointer-events: none;
-            animation: flash 0.2s var(--t-flash) forwards;
+            animation: flash 0.17s var(--t-flash) forwards;
         }
 
         @keyframes flash {
@@ -387,7 +387,7 @@
             color: #0f0;
             opacity: 0;
             transform: scale(0.95);
-            animation: fadeInContent 0.8s var(--t-content) forwards;
+            animation: fadeInContent 0.67s var(--t-content) forwards;
             z-index: 20;
             background: #000;
             text-shadow: 0 0 20px #0f0;
@@ -503,7 +503,7 @@
         <button id="introSkip" type="button">SKIP</button>
         <button id="audioPlay" type="button">PLAY</button>
         <button id="audioMute" type="button">MUTE</button>
-        <input id="audioVol" type="range" min="0" max="1" step="0.05" value="0.2" />
+        <input id="audioVol" type="range" min="0" max="1" step="0.01" value="0.1" />
         <span id="audioHint">AUDIO: LOADING</span>
     </div>
 
@@ -513,7 +513,7 @@
            matrix/MIDI script below (an uncaught error in one script does not stop other scripts).
            Independent of audio. */
         (function () {
-            const REDIRECT_AT_MS = 12400; // was 13850. Content fade-in ends at 12.55s; redirect 150ms before.
+            const REDIRECT_AT_MS = 11340; // was 12400. Content fade-in ends at 11.47s; redirect just before.
             const skipBtn = document.getElementById('introSkip');
             let done = false;
 
@@ -622,9 +622,9 @@
         let speed = 0.6;
         // Timeline in ms (mirrors the :root variables in the CSS).
         const MATRIX_SPEED2_AT_MS = 5050;   // was 6000 (1s before the terminal fade-out starts)
-        const MATRIX_SPEED3_AT_MS = 7650;   // was 9000 (0.4s before ACCESS GRANTED)
+        const MATRIX_SPEED3_AT_MS = 7380;   // was 7650 (just before ACCESS GRANTED)
         const GLITCH_END_MS = 4200;         // was 4500 (line3 appears at 2.7s, was 3.0s)
-        const CLEANUP_AT_MS = 12550;        // was 14000 (150ms after the redirect, as before)
+        const CLEANUP_AT_MS = 11490;        // was 12550 (150ms after the redirect, as before)
         setTimeout(() => { speed = 1.2; }, MATRIX_SPEED2_AT_MS);
         setTimeout(() => { speed = 2.0; }, MATRIX_SPEED3_AT_MS);
 
@@ -768,7 +768,7 @@
                 if (!audioCtx) {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                     masterGain = audioCtx.createGain();
-                    masterGain.gain.value = parseFloat(volSlider.value || '0.6');
+                    masterGain.gain.value = parseFloat(volSlider.value || '0.1');
                     masterGain.connect(audioCtx.destination);
                 }
                 const resumePromise = (audioCtx.state === 'suspended') ? audioCtx.resume() : Promise.resolve();
@@ -802,11 +802,13 @@
             }
 
             function setVolume(v) {
-                if (masterGain) masterGain.gain.value = v;
+                if (!masterGain) return;
+                // glide to the new level (about 0.1s) so the slider never jumps
+                masterGain.gain.setTargetAtTime(v, audioCtx.currentTime, 0.03);
             }
 
             function toggleMute() {
-                const v = parseFloat(volSlider.value || '0.6');
+                const v = parseFloat(volSlider.value || '0.1');
                 if (volSlider.dataset.muted === '1') {
                     volSlider.dataset.muted = '0';
                     setVolume(v);

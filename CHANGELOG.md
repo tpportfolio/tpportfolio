@@ -1,5 +1,11 @@
 # Changelog
 
+## r24 (2026-10-14) — Intro: faster second half, quieter start
+Branch `release/r24-intro-pace`. Builds on r23. No text changes.
+
+- From the moment the terminal (and the rabbit) fades out until the end, the intro runs 20% faster: 11.3 s in total instead of 12.4 s. The first part is unchanged.
+- The volume starts at 10% (it was 20%). The slider moves in steps of 1% instead of 5%, and the level glides to the new value instead of jumping.
+
 ## r23 (2026-10-14) — The default mode follows the system
 Branch `release/r23-system-mode`. Builds on r22. No text changes.
 

@@ -2,14 +2,14 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r23 (2026-10-14) — The default mode follows the system
+## Current version: r24 (2026-10-14) — Intro: faster second half, quieter start
 
 What changed in this version:
 
-- **Default mode.** The site opens in LIGHT or terminal mode according to the visitor's system setting.
-- **Switch.** Using the LIGHT / DARK switch overrides it and is remembered.
+- **Intro pace.** 20% faster from the terminal fade-out to the end (11.3 s in total).
+- **Intro volume.** Starts at 10%, with a finer and smoother slider.
 
-Previous version: r22 (2026-10-14) — LIGHT mode in the amber range.
+Previous version: r23 (2026-10-14) — The default mode follows the system.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -20,7 +20,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r23-system-mode`, tag `r23` | This version |
+| `release/r24-intro-pace`, tag `r24` | This version |
+| `release/r23-system-mode`, tag `r23` | Default mode follows the system |
 | `release/r22-light-mode`, tag `r22` | LIGHT mode in the amber range |
 | `release/r21-copy-tweaks`, tag `r21` | Copy tweaks (in production) |
 | `release/r20-window-everywhere`, tag `r20` | Window on home cards and AI panels |
