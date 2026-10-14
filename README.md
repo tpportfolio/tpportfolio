@@ -2,14 +2,18 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r25 (2026-10-14) — Intro: tighter pace, lower volume ceiling
+## Current version: r26 (2026-10-14) — "Acento", an alternative design (draft)
 
 What changed in this version:
 
-- **Intro pace.** First part 5% faster, the rest 25% faster, and a shorter wait before OPENING PORTFOLIO: 9.9 s in total.
-- **Intro volume.** The slider's maximum is half of what it was.
+- **New draft: `/drafts/acento`.** A complete alternative design of the portfolio, built with the `awwwards` skill. Spanish at `/drafts/acento/es`, English at `/drafts/acento/en`.
+- **Idea.** Tomás Peró carries the accent on the last syllable of both words, and a brand is a decision about where the accent goes. One typeface (Archivo) with two voices: light and narrow at rest, heavy and wide under stress. The acute accent is a drawn red mark that lands on whatever takes the stress.
+- **Pages.** Home, five case pages, profile and a 404, with the real content of the site in both languages.
+- **The current site is unchanged.** Same pages, same texts, same `/agents.md`. The draft is not indexed and not in the sidebar.
 
-Previous version: r24 (2026-10-14) — Intro: faster second half, quieter start.
+Design notes: [`app/drafts/acento/DESIGN.md`](app/drafts/acento/DESIGN.md).
+
+Previous version: r25 (2026-10-14) — Intro: tighter pace, lower volume ceiling.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -20,7 +24,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r25-intro-pace-2`, tag `r25` | This version |
+| `release/r26-acento-alt`, tag `r26` | This version |
+| `release/r25-intro-pace-2`, tag `r25` | Intro: tighter pace, lower volume ceiling |
 | `release/r24-intro-pace`, tag `r24` | Intro: faster second half, quieter start |
 | `release/r23-system-mode`, tag `r23` | Default mode follows the system |
 | `release/r22-light-mode`, tag `r22` | LIGHT mode in the amber range |
@@ -62,6 +67,7 @@ The assistant needs `GROQ_API_KEY` in `.env.local`. Without it the site works an
 - Agent mode: `/agents.md`, `/agents.txt`
 - Assistant API: `POST /api/chat`
 - Design lab (draft, not indexed): `/drafts/design-lab`
+- Alternative design "Acento" (draft, not indexed): `/drafts/acento/es`, `/drafts/acento/en`
 
 ## Where the content lives
 

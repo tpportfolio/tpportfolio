@@ -1,5 +1,34 @@
 # Changelog
 
+## r26 (2026-10-14) — "Acento", an alternative design (draft)
+Branch `release/r26-acento-alt`. Builds on r25. Adds a draft; no existing page, text or video changes.
+
+The draft
+- New route `/drafts/acento`, with its own pages in Spanish (`/drafts/acento/es`) and English (`/drafts/acento/en`): home, five case pages (`/work/<slug>`), profile (`/about`) and a 404.
+- Built with the `awwwards` skill. Not indexed, not in the sidebar and not in `/agents.md`, like the other `/drafts` pages.
+- Same facts as the main site, in both languages. Videos come from `lib/work-videos.ts`. No invented projects, clients or figures.
+
+The design
+- Idea: Tomás Peró carries the accent on the last syllable of both words, and a brand is a decision about where the accent goes.
+- One typeface, Archivo, with two voices: light and narrow at rest, heavy and wide under stress. The name is set by syllable: "To" and "Pe" at rest, "más" and "ró" stressed.
+- The acute accent is drawn as a red mark. It lands over the vowels of the name, in front of the stressed line of a list, in front of the current page in the navigation, and crosses the screen as a red stroke between pages.
+- In each group only one item is stressed: the name, the three pillars, the work index, the figures, the video list.
+- Home: the name across the screen (the visitor can move the stress to the wrong syllable and it goes back), a statement, three pillars on a fixed stage where the stress moves with the scroll and the proof changes with it, the work index, four figures, a profile teaser and the contact footer.
+- Palette: paper, ballpoint blue ink and the red of a correcting pen. Stills are printed in the ink and turn to colour when their row takes the stress.
+- Desktop: a short loader where the accents land on the name. Phones: no loader, the page is there at first paint.
+- Keyboard focus, reduced motion and no-JavaScript paths keep all content visible.
+
+How it is built
+- `app/drafts/acento/`: `layout.tsx`, `acento.css` (every rule scoped to `.aw`), `DESIGN.md`, the pages under `[lang]/` and the private folders `_content` (all copy), `_components`, `_engine` (page lifecycle, smooth scroll, reveals, loader, transition) and `_motion` (the stress driver and the global motion).
+- New dependencies: `gsap` and `lenis`.
+- New `components/site-chrome.tsx`: the root layout uses it to leave out the sidebar, the menu button and the assistant on `/drafts/acento`. Every other route renders as before.
+- `middleware.ts`: `/drafts/acento` skips the first-visit intro (it has its own loader), and `/_vercel` paths are no longer redirected to the intro.
+- To remove the draft: delete `app/drafts/acento`, and optionally the two dependencies.
+
+Agent mode
+- No content of the site changed, so `/agents.md`, `/agents.txt` and the assistant's knowledge base stay as they were.
+
+
 ## r25 (2026-10-14) — Intro: tighter pace, lower volume ceiling
 Branch `release/r25-intro-pace-2`. Builds on r24. No text changes.
 

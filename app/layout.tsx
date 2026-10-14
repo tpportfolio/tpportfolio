@@ -7,6 +7,7 @@ import { FloatingAssistant } from "@/components/floating-assistant";
 import { Providers } from "./providers";
 import { MobileMenuButton } from "@/components/mobile-menu-button";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { SiteChrome } from "@/components/site-chrome";
 
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -45,15 +46,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <Providers>
-          <div className="flex min-h-screen">
-            <Sidebar />
-            <MobileMenuButton />
-            <div className="flex-1 min-w-0 lg:ml-64 w-full">
-              <ScrollToTop />
-              {children}
-            </div>
-          </div>
-          <FloatingAssistant />
+          <SiteChrome
+            sidebar={<Sidebar />}
+            menuButton={<MobileMenuButton />}
+            scrollToTop={<ScrollToTop />}
+            assistant={<FloatingAssistant />}
+          >
+            {children}
+          </SiteChrome>
         </Providers>
 
         <Analytics />

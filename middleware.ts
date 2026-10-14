@@ -6,12 +6,15 @@ export function middleware(req: NextRequest) {
 
   if (
     pathname.startsWith("/_next") ||
+    pathname.startsWith("/_vercel") ||
     pathname.startsWith("/api") ||
     pathname.startsWith("/audio") ||
     pathname === "/intro" ||
     pathname === "/intro.html" ||
     pathname === "/agents.txt" ||
     pathname === "/agents.md" ||
+    // The "acento" draft has its own loader.
+    pathname.startsWith("/drafts/acento") ||
     pathname.startsWith("/favicon") ||
     pathname.startsWith("/robots") ||
     pathname.startsWith("/sitemap")
