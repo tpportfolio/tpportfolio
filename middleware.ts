@@ -13,7 +13,9 @@ export function middleware(req: NextRequest) {
     pathname === "/intro.html" ||
     pathname === "/agents.txt" ||
     pathname === "/agents.md" ||
-    // The "acento" draft has its own loader.
+    // The "acento" alternative home has its own loader.
+    pathname === "/acento" ||
+    pathname.startsWith("/acento/") ||
     pathname.startsWith("/drafts/acento") ||
     pathname.startsWith("/favicon") ||
     pathname.startsWith("/robots") ||

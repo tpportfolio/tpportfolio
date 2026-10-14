@@ -9,7 +9,7 @@ import "./acento.css"
 // One family, two voices: light and narrow at rest, heavy and wide under stress.
 const archivo = Archivo({ subsets: ["latin"], axes: ["wdth"], display: "swap", variable: "--font-archivo" })
 
-// Draft: like the other /drafts pages, it is not indexed and not in /agents.md.
+// Alternative home of the portfolio. Not indexed, so search engines keep the main home as the canonical one.
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   robots: { index: false, follow: false },

@@ -4,7 +4,7 @@ import type { ReactNode } from "react"
 import { usePathname } from "next/navigation"
 
 // Routes that bring their own page frame: no sidebar, menu button or assistant.
-const BARE_ROUTES = ["/drafts/acento"]
+const BARE_ROUTES = ["/acento"]
 
 type Props = {
   children: ReactNode

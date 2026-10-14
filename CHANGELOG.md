@@ -1,5 +1,16 @@
 # Changelog
 
+## r27 (2026-10-14) — "Acento" at /acento
+Branch `release/r27-acento-route`. Builds on r26.
+
+- The "Acento" design moves from `/drafts/acento` to `/acento`, as an alternative home of the portfolio. `/acento` opens the Spanish version (`/acento/es`); the English one is at `/acento/en`. Case pages at `/acento/<lang>/work/<slug>`, profile at `/acento/<lang>/about`.
+- The main home (`/`) and every other page are unchanged. `/acento` is not in the sidebar and stays out of search results (`noindex`), so `/` remains the canonical home.
+- `/drafts/acento` and everything under it redirect permanently to the same page under `/acento` (`next.config.mjs`).
+- Footer of `/acento`: "Ir a la home principal" / "Go to the main home", and the note now says it is an alternative version of the portfolio (it no longer says draft).
+- Code: the folder is now `app/acento`; `components/site-chrome.tsx` and `middleware.ts` point to `/acento` (no sidebar, menu button or assistant there, and no first-visit intro, since it has its own loader).
+- Agent mode of this version: new `/acento/agents.md` and `/acento/agents.txt` (bilingual), built only from the content of `/acento` (`app/acento/_content/agents.ts`): routes, idea, pillars, figures, the five work stages, profile and contact. Linked from the footer of `/acento` ("Modo agente" / "Agent mode").
+- Nothing of the current version changes: the main site's `/agents.md`, `/agents.txt`, `lib/site-content.ts`, `lib/agents.ts` and the assistant's knowledge base are as they were.
+
 ## r26 (2026-10-14) — "Acento", an alternative design (draft)
 Branch `release/r26-acento-alt`. Builds on r25. Adds a draft; no existing page, text or video changes.
 

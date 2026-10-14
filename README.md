@@ -2,18 +2,18 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r26 (2026-10-14) — "Acento", an alternative design (draft)
+## Current version: r27 (2026-10-14) — "Acento" at /acento
 
 What changed in this version:
 
-- **New draft: `/drafts/acento`.** A complete alternative design of the portfolio, built with the `awwwards` skill. Spanish at `/drafts/acento/es`, English at `/drafts/acento/en`.
-- **Idea.** Tomás Peró carries the accent on the last syllable of both words, and a brand is a decision about where the accent goes. One typeface (Archivo) with two voices: light and narrow at rest, heavy and wide under stress. The acute accent is a drawn red mark that lands on whatever takes the stress.
-- **Pages.** Home, five case pages, profile and a 404, with the real content of the site in both languages.
-- **The current site is unchanged.** Same pages, same texts, same `/agents.md`. The draft is not indexed and not in the sidebar.
+- **`/acento`.** The alternative design "Acento" (r26) leaves `/drafts` and becomes an alternative home of the portfolio: `tomaspero.vercel.app/acento` (it opens in Spanish at `/acento/es`; English at `/acento/en`).
+- **The main home is unchanged.** `/` and every other page stay as they were. `/acento` is not in the sidebar and is not indexed.
+- The old address `/drafts/acento` redirects to `/acento`.
+- **Its own agent mode.** `/acento/agents.md` and `/acento/agents.txt`, built only from the content of this version. The main site's `/agents.md`, `/agents.txt` and the assistant's knowledge base are unchanged.
 
-Design notes: [`app/drafts/acento/DESIGN.md`](app/drafts/acento/DESIGN.md).
+Design notes: [`app/acento/DESIGN.md`](app/acento/DESIGN.md).
 
-Previous version: r25 (2026-10-14) — Intro: tighter pace, lower volume ceiling.
+Previous version: r26 (2026-10-14) — "Acento", the alternative design, as a draft at `/drafts/acento`.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -24,7 +24,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r26-acento-alt`, tag `r26` | This version |
+| `release/r27-acento-route`, tag `r27` | This version |
+| `release/r26-acento-alt`, tag `r26` | "Acento" design as a draft |
 | `release/r25-intro-pace-2`, tag `r25` | Intro: tighter pace, lower volume ceiling |
 | `release/r24-intro-pace`, tag `r24` | Intro: faster second half, quieter start |
 | `release/r23-system-mode`, tag `r23` | Default mode follows the system |
@@ -67,7 +68,7 @@ The assistant needs `GROQ_API_KEY` in `.env.local`. Without it the site works an
 - Agent mode: `/agents.md`, `/agents.txt`
 - Assistant API: `POST /api/chat`
 - Design lab (draft, not indexed): `/drafts/design-lab`
-- Alternative design "Acento" (draft, not indexed): `/drafts/acento/es`, `/drafts/acento/en`
+- Alternative home "Acento" (not in the sidebar, not indexed): `/acento` (`/acento/es`, `/acento/en`); its agent mode: `/acento/agents.md`, `/acento/agents.txt`
 
 ## Where the content lives
 

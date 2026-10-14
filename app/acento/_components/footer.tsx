@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { footer, site, type Lang } from "../_content/site"
+import { BASE, footer, site, type Lang } from "../_content/site"
 import { Mark } from "./name"
 
 export function Footer({ lang }: { lang: Lang }) {
@@ -39,7 +39,12 @@ export function Footer({ lang }: { lang: Lang }) {
       </dl>
       <p className="aw-footer__base">
         <span>{`© ${new Date().getFullYear()} ${site.name}`}</span>
-        <span>{footer.colophon[lang]}</span>
+        <span>
+          {footer.colophon[lang]}{" "}
+          <a className="link" href={`${BASE}/agents.md`} target="_blank" rel="noopener noreferrer">
+            {footer.agentMode[lang]}
+          </a>
+        </span>
       </p>
     </footer>
   )

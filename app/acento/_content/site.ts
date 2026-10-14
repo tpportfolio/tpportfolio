@@ -13,7 +13,7 @@ import thumbMessi from "@/app/work/ai-experiments/thumb_2026_messi_bk.jpg"
 export type L = LocalizedText
 export type Lang = "es" | "en"
 
-export const BASE = "/drafts/acento"
+export const BASE = "/acento"
 export const langs: Lang[] = ["es", "en"]
 export const isLang = (value: string): value is Lang => value === "es" || value === "en"
 export const href = (lang: Lang, path = "") => `${BASE}/${lang}${path}`
@@ -229,11 +229,12 @@ export const footer = {
   emailLabel: { es: "Escribime", en: "Email me" } as L,
   linkedinLabel: { es: "LinkedIn", en: "LinkedIn" } as L,
   basedLabel: { es: "Base", en: "Based in" } as L,
-  mainSite: { es: "Ir al sitio actual", en: "Go to the current site" } as L,
+  mainSite: { es: "Ir a la home principal", en: "Go to the main home" } as L,
   mainSiteNote: {
-    es: "Esta es una versión alternativa de diseño, en borrador.",
-    en: "This is an alternative design version, in draft.",
+    es: "Esta es una versión alternativa del portfolio.",
+    en: "This is an alternative version of the portfolio.",
   } as L,
+  agentMode: { es: "Modo agente", en: "Agent mode" } as L,
   colophon: {
     es: "Tipografía Archivo. Hecho con Next.js y GSAP.",
     en: "Set in Archivo. Built with Next.js and GSAP.",

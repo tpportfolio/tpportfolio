@@ -32,6 +32,7 @@ This is a personal portfolio with a "Matrix + 90s web" look (terminal + neon + r
 - Sidebar order: Home, Timeline, Work, AI Experiments, About, Contact.
 - /contact is a landing with links (LinkedIn, email, location) and a message form that opens the visitor's mail app.
 - /magaiba is not in the sidebar: it is reached from the timeline, from the AI section and from the assistant.
+- /acento is an alternative home with its own design ("Acento"): home, case pages, profile and a 404, in Spanish (`/acento/es`) and English (`/acento/en`). It has its own header, footer and loader: the sidebar, the assistant and the first-visit intro are not shown there. Its language is part of the address, not the site's language switch. It is not in the sidebar and not indexed. Its own agent mode is `/acento/agents.md` and `/acento/agents.txt`; the main `/agents.md` does not list it. Design notes in `app/acento/DESIGN.md`.
 
 ## Mini tools
 
@@ -45,5 +46,5 @@ This is a personal portfolio with a "Matrix + 90s web" look (terminal + neon + r
 - `/drafts/*` pages are working pages. They are not indexable and are kept out of the sidebar and `/agents.md`.
 - `/drafts/design-lab` shows a model page with thirteen interchangeable styles: 0 is the current site, 1-8 are the first-round proposals and 3.2, 4.2, 6.2 and 8.2 are second-round variants.
 - No proposal is applied to the site yet.
-- `/drafts/acento` is a complete alternative design (home, case pages, profile, 404) in Spanish (`/drafts/acento/es`) and English (`/drafts/acento/en`). It has its own header, footer and loader: the sidebar, the assistant and the first-visit intro are not shown there. Its language is part of the address, not the site's language switch. Design notes in `app/drafts/acento/DESIGN.md`.
+- `/drafts/acento` redirects to `/acento`.
 - Navigate with tabs 0-8 and 3.2, 4.2, 6.2 and 8.2, with the left and right arrows (they go through all thirteen), or with the URL hash (for example `#p3` or `#p6b`).

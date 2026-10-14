@@ -1,8 +1,8 @@
 # Acento: alternative design (draft)
 
 An alternative design for the portfolio, built with the `awwwards` skill. It lives at
-`/drafts/acento` (Spanish at `/drafts/acento/es`, English at `/drafts/acento/en`). It is a draft:
-not indexed, not in the sidebar, not in `/agents.md`. The current site is untouched.
+`/acento` (Spanish at `/acento/es`, English at `/acento/en`) as an alternative home: not in
+the sidebar and not indexed, so `/` stays the canonical home. The main site is untouched.
 
 ## Brief
 
@@ -125,7 +125,7 @@ PROFILE statement, sticky portrait + biography, four lists, career path
 - On phones and short windows the pillars are stacked and the pillar at mid-screen takes the
   stress. Under reduced motion the three are stressed and nothing moves.
 - No WebGL: the concept is typographic.
-- The draft is not indexed (`robots: noindex`), like the other `/drafts` pages.
+- `/acento` is not indexed (`robots: noindex`): `/` stays the canonical home.
 - The email and LinkedIn are the ones already published on the contact page.
 
 ## Genericness test
