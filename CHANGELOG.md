@@ -1,5 +1,11 @@
 # Changelog
 
+## r28 (2026-10-14) — New reel link
+Branch `release/r28-reel-link`. Builds on r27 (current `main`).
+
+- The REEL 2025/2026 video is now https://youtu.be/bC8TGT4mD3Q (it was https://youtu.be/5T6cRU6AdNs). Changed in the AI experiments page, in `/agents.md` and `/agents.txt` (Spanish and English) and in the reel of the Acento version.
+- No other change.
+
 ## r27 (2026-10-14) — "Acento" at /acento
 Branch `release/r27-acento-route`. Builds on r26.
 

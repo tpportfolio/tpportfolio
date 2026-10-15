@@ -125,8 +125,8 @@ type The8BureauV2Tool = {
   description: Record<SupportedLanguage, string>
 }
 
-const REEL_VIDEO_ID = "5T6cRU6AdNs"
-const REEL_URL = "https://youtu.be/5T6cRU6AdNs"
+const REEL_VIDEO_ID = "bC8TGT4mD3Q"
+const REEL_URL = "https://youtu.be/bC8TGT4mD3Q"
 
 const modaGallery: GalleryImage[] = Array.from({ length: 16 }, (_, index) => {
   const hue = 18 + index * 7

@@ -2,18 +2,13 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r27 (2026-10-14) — "Acento" at /acento
+## Current version: r28 (2026-10-14) — New reel link
 
 What changed in this version:
 
-- **`/acento`.** The alternative design "Acento" (r26) leaves `/drafts` and becomes an alternative home of the portfolio: `tomaspero.vercel.app/acento` (it opens in Spanish at `/acento/es`; English at `/acento/en`).
-- **The main home is unchanged.** `/` and every other page stay as they were. `/acento` is not in the sidebar and is not indexed.
-- The old address `/drafts/acento` redirects to `/acento`.
-- **Its own agent mode.** `/acento/agents.md` and `/acento/agents.txt`, built only from the content of this version. The main site's `/agents.md`, `/agents.txt` and the assistant's knowledge base are unchanged.
+- **Reel.** The REEL 2025/2026 video is now https://youtu.be/bC8TGT4mD3Q, in the AI experiments page, in `/agents.md` and in the Acento version.
 
-Design notes: [`app/acento/DESIGN.md`](app/acento/DESIGN.md).
-
-Previous version: r26 (2026-10-14) — "Acento", the alternative design, as a draft at `/drafts/acento`.
+Previous version: r27 (2026-10-14) — "Acento" at /acento.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -24,7 +19,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r27-acento-route`, tag `r27` | This version |
+| `release/r28-reel-link`, tag `r28` | This version |
+| `release/r27-acento-route`, tag `r27` | "Acento" at /acento (in production) |
 | `release/r26-acento-alt`, tag `r26` | "Acento" design as a draft |
 | `release/r25-intro-pace-2`, tag `r25` | Intro: tighter pace, lower volume ceiling |
 | `release/r24-intro-pace`, tag `r24` | Intro: faster second half, quieter start |

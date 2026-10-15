@@ -286,7 +286,7 @@ const fromLib = (items: { videoId?: string; title: L; description?: L }[]): Vide
   items.filter((v) => v.videoId).map((v) => ({ videoId: v.videoId as string, title: v.title, note: v.description }))
 
 const reel: Video = {
-  videoId: "5T6cRU6AdNs",
+  videoId: "bC8TGT4mD3Q",
   title: { es: "Reel 2025/2026", en: "Reel 2025/2026" },
   note: {
     es: "Selección de trabajos y experimentos con IA de 2025 y 2026.",

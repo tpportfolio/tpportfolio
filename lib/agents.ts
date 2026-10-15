@@ -225,7 +225,7 @@ const aiExperiments2026 = {
 const aiExperimentsStructure = {
   en: [
     "Block order: REEL 2025/2026, 2026 Works and Experiments, AUDIO IA - MUSIC LAB (with a RADIO MAGAIBA shortcut to `/magaiba` right below it), 2025 Works and Experiments, the8bureau, vibe-coding webapps and the 2022-2024 archive.",
-    "REEL 2025/2026: video reel with a selection of AI works and experiments (https://youtu.be/5T6cRU6AdNs).",
+    "REEL 2025/2026: video reel with a selection of AI works and experiments (https://youtu.be/bC8TGT4mD3Q).",
     "AUDIO IA - MUSIC LAB: cover-flow player with 10 AI-generated music tracks (drag, click, or arrow keys when the player has focus).",
     "the8bureau: Tomás's personal AI brand and his sandbox for testing tools, skills and workflows; he shares a set of tools that runs locally on his computer, privately and offline.",
     "the8bureau tools: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare, Maps Lead Extractor and Autonomous Ad Agency (status: deprecated).",
@@ -233,7 +233,7 @@ const aiExperimentsStructure = {
   ],
   es: [
     "Orden de bloques: REEL 2025/2026, 2026 Trabajos y Experimentos, AUDIO IA - MUSIC LAB (con un atajo RADIO MAGAIBA a `/magaiba` justo debajo), 2025 Trabajos y Experimentos, the8bureau, webapps de vibe-coding y el archivo 2022-2024.",
-    "REEL 2025/2026: reel en video con una selección de trabajos y experimentos con IA (https://youtu.be/5T6cRU6AdNs).",
+    "REEL 2025/2026: reel en video con una selección de trabajos y experimentos con IA (https://youtu.be/bC8TGT4mD3Q).",
     "AUDIO IA - MUSIC LAB: reproductor tipo cover flow con 10 tracks de música generados con IA (arrastrar, click, o flechas con el reproductor en foco).",
     "the8bureau: la marca personal de IA de Tomás y su sandbox para testear herramientas, skills y workflows; comparte un set de herramientas que corre de manera local en su computadora, de manera privada y offline.",
     "Herramientas de the8bureau: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare, Maps Lead Extractor y Autonomous Ad Agency (estado: deprecated).",
