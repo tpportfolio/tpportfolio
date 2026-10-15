@@ -1675,6 +1675,272 @@ html[data-visual-mode="light"] .matrix-rain {
   text-shadow: none !important;
 }
 
+/* V2 (WORK FIRST) START: /v2, cases first. Uses the window tokens (.vw) so LIGHT mode follows. */
+.v2-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  pointer-events: none;
+  background:
+    linear-gradient(transparent 50%, rgba(0, 255, 65, 0.04) 50%) 0 0 / 100% 4px,
+    rgba(0, 0, 0, 0.92);
+  color: #00ff41;
+  font-family: monospace;
+  animation: v2-boot-out 0.3s ease 1.35s forwards;
+}
+
+.v2-boot[data-leaving] {
+  animation: v2-boot-out 0.2s ease forwards;
+}
+
+.v2-boot-seen .v2-boot {
+  display: none;
+}
+
+.v2-boot-lines {
+  width: min(40rem, 100%);
+}
+
+.v2-boot-lines p {
+  margin: 0 0 0.5rem;
+  font-size: max(0.875rem, 13px);
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 6px rgba(0, 255, 65, 0.6);
+  opacity: 0;
+  animation: v2-line-in 0.16s steps(2, end) forwards;
+}
+
+.v2-boot-lines p[data-last] {
+  margin-top: 1rem;
+  font-size: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+html[data-visual-mode="light"] .v2-boot {
+  background:
+    linear-gradient(transparent 50%, rgba(198, 108, 26, 0.05) 50%) 0 0 / 100% 4px,
+    rgba(244, 234, 220, 0.94);
+  color: #8b4315;
+}
+
+html[data-visual-mode="light"] .v2-boot-lines p {
+  text-shadow: none;
+}
+
+@keyframes v2-line-in {
+  to { opacity: 1; }
+}
+
+@keyframes v2-boot-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-boot { display: none; }
+}
+
+.v2-head {
+  margin-bottom: 1.75rem;
+  /* clear the fixed menu button on phones and tablets */
+  padding-left: 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .v2-head {
+    padding-left: 0;
+  }
+}
+
+.v2-name {
+  margin: 0 0 0.35rem;
+  color: var(--neon-green);
+  font-family: monospace;
+  font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 6px rgba(0, 255, 65, 0.5);
+}
+
+.v2-tagline {
+  margin: 0;
+  color: var(--neon-cyan);
+  font-size: max(0.9375rem, 14px);
+  letter-spacing: 0.02em;
+}
+
+html[data-visual-mode="light"] .v2-name {
+  text-shadow: none;
+}
+
+.v2-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1rem;
+  color: var(--neon-green);
+  font-family: monospace;
+  font-size: max(0.75rem, 12px);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+}
+
+.v2-section::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--neon-green), transparent);
+  opacity: 0.6;
+}
+
+.v2-case,
+.v2-results,
+.v2-body {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.v2-results {
+  gap: 0.75rem;
+}
+
+.v2-kicker {
+  margin: 0;
+  color: var(--vw-ink-3);
+  font-size: max(0.6875rem, 11px);
+  letter-spacing: 0.18em;
+}
+
+.v2-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-figures li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid var(--vw-line-soft);
+  border-radius: 6px;
+  background: var(--vw-tint);
+}
+
+.v2-figure {
+  color: var(--vw-accent);
+  font-size: clamp(2rem, 1.2rem + 3vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-shadow: var(--vw-glow-text);
+}
+
+.v2-figure-label {
+  color: var(--vw-ink-2);
+  font-size: max(0.875rem, 13px);
+  line-height: 1.45;
+}
+
+.v2-outcome {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--vw-accent);
+  font-size: clamp(1.05rem, 0.9rem + 0.6vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.35;
+  text-shadow: var(--vw-glow-text);
+  text-wrap: balance;
+}
+
+.v2-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-facts li {
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--vw-line-soft);
+  border-radius: 999px;
+  color: var(--vw-ink-2);
+  font-size: max(0.75rem, 12px);
+}
+
+@container (min-width: 52rem) {
+  .v2-body[data-media] {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.v2-context {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.v2-role {
+  margin: 0;
+  color: var(--vw-accent-2);
+  font-size: max(0.8125rem, 12px);
+  letter-spacing: 0.06em;
+}
+
+.v2-text {
+  max-width: 65ch;
+  margin: 0;
+  color: var(--vw-ink-2);
+  font-size: max(0.9375rem, 14px);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.v2-cta {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
+.v2-other {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-other span {
+  color: var(--vw-ink-3);
+  font-size: max(0.8125rem, 12px);
+}
+
+.v2-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+.vw-btn.v2-link-btn {
+  width: auto;
+  height: auto;
+  padding: 0.55rem 0.95rem;
+  font-size: max(0.75rem, 12px);
+  letter-spacing: 0.14em;
+  text-decoration: none;
+}
+/* V2 (WORK FIRST) END */
+
 /* VIDEO WINDOW START
    The one container for video (components/video-window.tsx). Ported from the design lab
    proposal 6.2 AUDIT FIX v2. Every colour is a token, redefined below for LIGHT mode. */
@@ -2309,8 +2575,16 @@ html[data-visual-mode="light"] .vw--modal {
 }
 
 @container (max-width: 36rem) {
+  /* long meta (dates, duration) moves under the title instead of squeezing it */
   .vw-bar {
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
     padding: 0.6rem 1rem;
+  }
+
+  .vw-meta {
+    flex-basis: 100%;
+    order: 3;
   }
 
   .vw-body {

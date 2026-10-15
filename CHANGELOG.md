@@ -1,5 +1,17 @@
 # Changelog
 
+## r29 (2026-10-15) — Work-first version at /v2
+Branch `release/r29-v2-work-first`. Builds on r28. The current home (`/`) and every other page are unchanged.
+
+- New route `/v2`: an alternative home where the work comes first. Eight cases (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, AI experiments, $MAGAIBA, agencies), each opening with its result, then a video and the text as context, and a link to the full case.
+- Air New Zealand opens with 3x visitors from Argentina in 2 years (+225% in the first year) and "distance is a barrier" dropping from 50% to 24%.
+- Every case shows its dates and duration in the title bar; AI experiments reads "late 2022 – ongoing".
+- The career story stays at the end as a short thread, with links to the timeline, About and Contact.
+- Boot as texture, not as a gate: `/v2` skips the intro page; a short boot screen (same lines and look) shows over the page for about 1.5 s, lets clicks and scroll through, and goes away with any key, scroll or touch. Once per browser session; off with reduced motion.
+- `/v2` is not indexed.
+- `/agents.md` and the assistant's knowledge base: new Air New Zealand results (Spanish and English), and a note about `/v2`.
+- Windows: on narrow screens, long title-bar text (dates, duration) moves under the title.
+
 ## r28 (2026-10-14) — New reel link
 Branch `release/r28-reel-link`. Builds on r27 (current `main`).
 

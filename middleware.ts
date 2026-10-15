@@ -13,6 +13,9 @@ export function middleware(req: NextRequest) {
     pathname === "/intro.html" ||
     pathname === "/agents.txt" ||
     pathname === "/agents.md" ||
+    // The work-first version shows the boot as a short texture instead of the intro page.
+    pathname === "/v2" ||
+    pathname.startsWith("/v2/") ||
     // The "acento" alternative home has its own loader.
     pathname === "/acento" ||
     pathname.startsWith("/acento/") ||

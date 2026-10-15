@@ -2,13 +2,16 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r28 (2026-10-14) — New reel link
+## Current version: r29 (2026-10-15) — Work-first version at /v2
 
 What changed in this version:
 
-- **Reel.** The REEL 2025/2026 video is now https://youtu.be/bC8TGT4mD3Q, in the AI experiments page, in `/agents.md` and in the Acento version.
+- **`/v2`.** An alternative home: eight cases first, each opening with its result, and the career story at the end as a thread.
+- **Boot as texture.** On `/v2` the boot lasts about 1.5 s, never blocks and any key or scroll skips it.
+- **Air New Zealand results.** 3x visitors from Argentina in 2 years; "distance is a barrier" from 50% to 24%. Also in `/agents.md`.
+- The current home and the other pages are unchanged.
 
-Previous version: r27 (2026-10-14) — "Acento" at /acento.
+Previous version: r28 (2026-10-14) — New reel link.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -19,7 +22,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r28-reel-link`, tag `r28` | This version |
+| `release/r29-v2-work-first`, tag `r29` | This version |
+| `release/r28-reel-link`, tag `r28` | New reel link (in production) |
 | `release/r27-acento-route`, tag `r27` | "Acento" at /acento (in production) |
 | `release/r26-acento-alt`, tag `r26` | "Acento" design as a draft |
 | `release/r25-intro-pace-2`, tag `r25` | Intro: tighter pace, lower volume ceiling |
