@@ -1675,7 +1675,7 @@ html[data-visual-mode="light"] .matrix-rain {
   text-shadow: none !important;
 }
 
-/* V2 (WORK FIRST) START: /v2, cases first. Uses the window tokens (.vw) so LIGHT mode follows. */
+/* V2 (WORK FIRST) START: /highlights (class names keep the v2- prefix), cases first. Uses the window tokens (.vw) so LIGHT mode follows. */
 .v2-boot {
   position: fixed;
   inset: 0;

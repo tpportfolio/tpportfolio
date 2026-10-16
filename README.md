@@ -2,13 +2,13 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r31 (2026-10-15) — Home title
+## Current version: r32 (2026-10-15) — /v2 becomes /highlights
 
 What changed in this version:
 
-- **Home title.** "Tomás Peró | Brand Strategist y líder de marketing" instead of "GEN_MARKETER.exe", for search engines and AI.
+- **Route.** The work-first version is now at `/highlights`; `/v2` redirects there.
 
-Previous version: r30 (2026-10-15) — Visibility for search engines and AI: crawlers see the real pages, robots.txt, sitemap.xml, llms.txt, metadata, structured data and security headers.
+Previous version: r31 (2026-10-15) — Home title (in production).
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -19,9 +19,10 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r31-home-title`, tag `r31` | This version |
+| `release/r32-highlights`, tag `r32` | This version |
+| `release/r31-home-title`, tag `r31` | Home title (in production) |
 | `release/r30-ai-visibility`, tag `r30` | Visibility for search engines and AI |
-| `release/r29-v2-work-first`, tag `r29` | Work-first version at /v2 |
+| `release/r29-v2-work-first`, tag `r29` | Work-first version (now /highlights) |
 | `release/r28-reel-link`, tag `r28` | New reel link (in production) |
 | `release/r27-acento-route`, tag `r27` | "Acento" at /acento (in production) |
 | `release/r26-acento-alt`, tag `r26` | "Acento" design as a draft |

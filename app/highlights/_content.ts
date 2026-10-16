@@ -1,6 +1,6 @@
 import { airNewZealandVideos, airtmVideos, jwtVideos, magaibaVideos, paradiseVideos, stoneMovistarVideos } from "@/lib/work-videos"
 
-// Content of the work-first version (/v2). Every case opens with its result; the text comes after as context.
+// Content of the work-first version (/highlights). Every case opens with its result; the text comes after as context.
 // Facts come from the work pages, lib/site-content.ts and the About page. The Air New Zealand figures
 // (3x visitors from Argentina, "distance is a barrier" 50% -> 24%) were provided by Tomás for this version.
 

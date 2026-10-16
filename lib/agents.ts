@@ -244,7 +244,7 @@ const aiExperimentsStructure = {
 const notesLocalized = {
   en: [
     "The canonical public home is `/`.",
-    "`/v2` is an alternative work-first version of the home (not indexed): eight cases, each opening with its result (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, AI experiments, $MAGAIBA and agencies), with the career story at the end as a thread. Its boot screen lasts about 1.5 seconds and any key or scroll skips it.",
+    "`/highlights` is an alternative work-first version of the home (not indexed): eight cases, each opening with its result (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, AI experiments, $MAGAIBA and agencies), with the career story at the end as a thread. Its boot screen lasts about 1.5 seconds and any key or scroll skips it.",
     "`/home-variant` remains available as an alias that redirects to `/`.",
     "The most detailed project content lives under `/work/*`.",
     "`/agents.md` and `/agents.txt` are bilingual and intended for agent-friendly crawling. `/llms.txt` serves the same summary.",
@@ -253,7 +253,7 @@ const notesLocalized = {
   ],
   es: [
     "La home pública canónica es `/`.",
-    "`/v2` es una versión alternativa de la home con el trabajo primero (no indexada): ocho casos que abren con su resultado (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, experimentos IA, $MAGAIBA y agencias), y la historia de la carrera al final como hilo. Su pantalla de arranque dura alrededor de 1,5 segundos y cualquier tecla o scroll la saltea.",
+    "`/highlights` es una versión alternativa de la home con el trabajo primero (no indexada): ocho casos que abren con su resultado (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, experimentos IA, $MAGAIBA y agencias), y la historia de la carrera al final como hilo. Su pantalla de arranque dura alrededor de 1,5 segundos y cualquier tecla o scroll la saltea.",
     "`/home-variant` sigue disponible como alias que redirige a `/`.",
     "El contenido más detallado de proyectos vive en `/work/*`.",
     "`/agents.md` y `/agents.txt` son bilingües y están pensados para crawling amigable para agentes. `/llms.txt` sirve el mismo resumen.",

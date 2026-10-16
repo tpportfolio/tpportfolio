@@ -1,5 +1,12 @@
 # Changelog
 
+## r32 (2026-10-15) — /v2 becomes /highlights
+Branch `release/r32-highlights`. Builds on r31. No content changes.
+
+- The work-first version now lives at `/highlights` (it was `/v2`). `/v2` redirects to `/highlights` permanently.
+- Canonical URL, intro exclusion and the note in `/agents.md` (Spanish and English) follow the new name.
+- Still not indexed, still outside the sitemap.
+
 ## r31 (2026-10-15) — Home title
 Branch `release/r31-home-title`. Builds on r30.
 

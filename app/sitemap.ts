@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next"
 
 const SITE = "https://tomaspero.vercel.app"
 
-// Public, indexable pages. Drafts, /home-variant (alias), /v2 and /acento (noindex versions) are left out.
+// Public, indexable pages. Drafts, /home-variant (alias), /highlights and /acento (noindex versions) are left out.
 const ROUTES: { path: string; priority: number }[] = [
   { path: "/", priority: 1 },
   { path: "/about", priority: 0.9 },

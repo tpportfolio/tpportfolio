@@ -26,6 +26,9 @@ export function middleware(req: NextRequest) {
     pathname.startsWith("/icon") ||
     pathname.startsWith("/apple-icon") ||
     // The work-first version shows the boot as a short texture instead of the intro page.
+    pathname === "/highlights" ||
+    pathname.startsWith("/highlights/") ||
+    // Old name of /highlights: redirected by next.config.mjs.
     pathname === "/v2" ||
     pathname.startsWith("/v2/") ||
     // The "acento" alternative home has its own loader.

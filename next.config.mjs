@@ -25,6 +25,9 @@ const nextConfig = {
   // The "acento" design was first published as a draft under /drafts.
   async redirects() {
     return [
+      // The work-first version was first published as /v2.
+      { source: "/v2", destination: "/highlights", permanent: true },
+      { source: "/v2/:path*", destination: "/highlights/:path*", permanent: true },
       { source: "/drafts/acento", destination: "/acento", permanent: true },
       { source: "/drafts/acento/:path*", destination: "/acento/:path*", permanent: true },
     ]
