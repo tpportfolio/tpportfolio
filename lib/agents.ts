@@ -247,7 +247,8 @@ const notesLocalized = {
     "`/v2` is an alternative work-first version of the home (not indexed): eight cases, each opening with its result (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, AI experiments, $MAGAIBA and agencies), with the career story at the end as a thread. Its boot screen lasts about 1.5 seconds and any key or scroll skips it.",
     "`/home-variant` remains available as an alias that redirects to `/`.",
     "The most detailed project content lives under `/work/*`.",
-    "`/agents.md` and `/agents.txt` are bilingual and intended for agent-friendly crawling.",
+    "`/agents.md` and `/agents.txt` are bilingual and intended for agent-friendly crawling. `/llms.txt` serves the same summary.",
+    "Search engines and AI crawlers are allowed (`/robots.txt`, `/sitemap.xml`) and always get the real pages, never the intro screen.",
     "Canonical positioning: Brand Strategist and Brand Marketing Leader. The handle GEN_MARKETER.exe is the site's brand handle, not a job title.",
   ],
   es: [
@@ -255,7 +256,8 @@ const notesLocalized = {
     "`/v2` es una versión alternativa de la home con el trabajo primero (no indexada): ocho casos que abren con su resultado (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, experimentos IA, $MAGAIBA y agencias), y la historia de la carrera al final como hilo. Su pantalla de arranque dura alrededor de 1,5 segundos y cualquier tecla o scroll la saltea.",
     "`/home-variant` sigue disponible como alias que redirige a `/`.",
     "El contenido más detallado de proyectos vive en `/work/*`.",
-    "`/agents.md` y `/agents.txt` son bilingües y están pensados para crawling amigable para agentes.",
+    "`/agents.md` y `/agents.txt` son bilingües y están pensados para crawling amigable para agentes. `/llms.txt` sirve el mismo resumen.",
+    "Los buscadores y los crawlers de IA están permitidos (`/robots.txt`, `/sitemap.xml`) y siempre reciben las páginas reales, nunca la pantalla de intro.",
     "Posicionamiento canónico: Brand Strategist y líder de marketing de marca. El handle GEN_MARKETER.exe es la marca del sitio, no un cargo.",
   ],
 } satisfies Record<Lang, string[]>

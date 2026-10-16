@@ -1,6 +1,11 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
+// Search engines, AI crawlers and link previews get the real page: the intro is a human-only
+// interstitial, and serving it to bots hid the whole portfolio from them.
+const BOT_UA =
+  /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|whatsapp|telegram|discord|slack|linkedin|twitter|skype|quora|pinterest|vkshare|googleother|google-extended|google-inspectiontool|chatgpt|gptbot|oai-searchbot|claude|anthropic|perplexity|bytespider|ccbot|cohere|amazonbot|applebot|duckassist|meta-externalagent|mistral|youbot|diffbot|lighthouse|headless/i
+
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl
 
@@ -13,6 +18,13 @@ export function middleware(req: NextRequest) {
     pathname === "/intro.html" ||
     pathname === "/agents.txt" ||
     pathname === "/agents.md" ||
+    pathname === "/llms.txt" ||
+    pathname === "/robots.txt" ||
+    pathname === "/sitemap.xml" ||
+    pathname.startsWith("/.well-known") ||
+    pathname.startsWith("/opengraph-image") ||
+    pathname.startsWith("/icon") ||
+    pathname.startsWith("/apple-icon") ||
     // The work-first version shows the boot as a short texture instead of the intro page.
     pathname === "/v2" ||
     pathname.startsWith("/v2/") ||
@@ -26,6 +38,8 @@ export function middleware(req: NextRequest) {
   ) {
     return NextResponse.next()
   }
+
+  if (BOT_UA.test(req.headers.get("user-agent") ?? "")) return NextResponse.next()
 
   const cookie = req.cookies.get("tp_intro")?.value
   if (cookie === "1") return NextResponse.next()

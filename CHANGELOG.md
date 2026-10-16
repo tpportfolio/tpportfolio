@@ -1,5 +1,18 @@
 # Changelog
 
+## r30 (2026-10-15) — Visibility for search engines and AI
+Branch `release/r30-ai-visibility`. Builds on r29. No visible change for visitors.
+
+- Crawlers get the real pages: search engines, AI crawlers and link previews (GPTBot, ClaudeBot, PerplexityBot, Googlebot, LinkedIn, WhatsApp...) are no longer sent to the intro. Until now every bot only saw `/intro.html` ("Portfolio Boot", no text), which is what external audits measured. People still get the intro.
+- `/robots.txt`: open to everyone, with explicit rules for AI crawlers; only `/api/`, `/drafts/` and `/home-variant` are closed. Points to the sitemap.
+- `/sitemap.xml`: the ten public pages plus `/agents.md` and `/llms.txt`.
+- `/llms.txt`: the same bilingual summary as `/agents.md`.
+- Metadata: a title (30–60 characters), description (120–160), canonical URL, Open Graph and large Twitter card on every public page; shared preview image (`/opengraph-image`) and a favicon (`/icon.svg`).
+- Structured data (JSON-LD): Person and WebSite on every page, ProfilePage on About. Only facts already on the site; LinkedIn as the external profile.
+- Security headers: nosniff, referrer policy, frame options, permissions policy and HSTS.
+- `/v2` keeps noindex, with a Spanish title and description and its own canonical. `/acento` is unchanged (it keeps its own metadata and noindex).
+- `/agents.md`: notes about `/llms.txt` and crawler access (Spanish and English).
+
 ## r29 (2026-10-15) — Work-first version at /v2
 Branch `release/r29-v2-work-first`. Builds on r28. The current home (`/`) and every other page are unchanged.
 

@@ -12,17 +12,103 @@ import { SiteChrome } from "@/components/site-chrome";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+const SITE_URL = "https://tomaspero.vercel.app";
+const SITE_DESCRIPTION =
+  "Tomás Peró, Brand Strategist y líder de marketing en Buenos Aires: más de 18 años en estrategia de marca, marketing cultural y tecnología creativa con IA.";
+
 export const metadata: Metadata = {
-  title: "Tom\u00e1s Per\u00f3 | GEN_MARKETER.exe",
-  description:
-    "Tomás Peró: Brand Strategist & Brand Marketing Leader. Brand strategy, cultural marketing and creative technology. 18+ years building, launching and scaling brands.",
-  generator: "v0.dev",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Tomás Peró | Brand Strategist y líder de marketing",
+    template: "%s | Tomás Peró",
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: "Tomás Peró",
+  authors: [{ name: "Tomás Peró", url: SITE_URL }],
+  creator: "Tomás Peró",
+  keywords: [
+    "Tomás Peró",
+    "Brand Strategist",
+    "Brand Manager",
+    "Head of Brand",
+    "Brand Marketing Manager",
+    "marketing cultural",
+    "creative technologist",
+    "IA generativa",
+    "Buenos Aires",
+  ],
+  alternates: {
+    canonical: "/",
+    // The same content as Markdown, for agents and AI tools.
+    types: { "text/markdown": [{ url: "/agents.md", title: "agents.md" }, { url: "/llms.txt", title: "llms.txt" }] },
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Tomás Peró",
+    locale: "es_AR",
+    alternateLocale: ["en_US"],
+    url: SITE_URL,
+    title: "Tomás Peró | Brand Strategist y líder de marketing",
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tomás Peró | Brand Strategist y líder de marketing",
+    description: SITE_DESCRIPTION,
+  },
+  robots: { index: true, follow: true },
+};
+
+// Who the site is about, for search engines and AI answers. Only facts already published on the site.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: "Tomás Peró",
+      url: SITE_URL,
+      image: `${SITE_URL}/opengraph-image`,
+      jobTitle: "Brand Strategist & Brand Marketing Leader",
+      description: SITE_DESCRIPTION,
+      address: { "@type": "PostalAddress", addressLocality: "Buenos Aires", addressCountry: "AR" },
+      sameAs: ["https://www.linkedin.com/in/tomaspero"],
+      knowsLanguage: ["es", "en"],
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Universidad de Ciencias Empresariales y Sociales (UCES)",
+      },
+      knowsAbout: [
+        "Brand strategy",
+        "Brand positioning",
+        "Integrated go-to-market",
+        "Cultural marketing",
+        "Partnerships and sponsorships",
+        "Creative technology",
+        "Generative AI production workflows",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Tomás Peró",
+      description: SITE_DESCRIPTION,
+      inLanguage: ["es", "en"],
+      publisher: { "@id": `${SITE_URL}/#person` },
+      about: { "@id": `${SITE_URL}/#person` },
+    },
+  ],
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+        />
         {/* Set the visual mode before the first paint: the visitor's choice, or else the system setting. */}
         <script
           dangerouslySetInnerHTML={{
