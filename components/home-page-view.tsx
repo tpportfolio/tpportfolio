@@ -5,6 +5,7 @@ import { useVisualMode } from "@/components/visual-mode-context"
 import { useLanguage } from "@/components/language-context"
 import { RetroBrowser } from "@/components/retro-browser"
 import Typewriter from "@/components/typewriter"
+import { HomeFaq, HomeSummary } from "@/components/home-answers"
 import VisitorCounter from "@/components/visitor-counter"
 import { homeProjects, siteIdentity } from "@/lib/site-content"
 
@@ -90,6 +91,10 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
         </div>
       </section>
 
+      <div className="mx-auto mb-10 max-w-5xl">
+        <HomeSummary />
+      </div>
+
       <section id="trabajos" className="mt-2 scroll-mt-4">
         <div className="section-header">
           <h2 className="text-2xl font-bold mb-4 text-center font-cyber text-neon-green" style={accentStyle}>
@@ -125,6 +130,8 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
           </div>
         </div>
       </section>
+
+      <HomeFaq />
 
       <section className="mt-12 text-center">
         <div className="mb-6 h-px bg-gradient-to-r from-transparent via-neon-green to-transparent opacity-90"></div>

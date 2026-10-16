@@ -1675,6 +1675,49 @@ html[data-visual-mode="light"] .matrix-rain {
   text-shadow: none !important;
 }
 
+/* HOME ANSWERS START: summary and FAQ on the home (components/home-answers.tsx) */
+.home-summary {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-summary li {
+  max-width: 78ch;
+  color: var(--vw-ink-2);
+  font-size: max(0.9375rem, 14px);
+  line-height: 1.6;
+}
+
+.home-summary strong {
+  color: var(--vw-accent-2);
+  font-weight: 700;
+}
+
+.home-faq {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.home-faq h3 {
+  margin: 0 0 0.35rem;
+  color: var(--vw-accent-2);
+  font-size: max(1rem, 15px);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.home-faq p {
+  max-width: 78ch;
+  margin: 0;
+  color: var(--vw-ink-2);
+  font-size: max(0.9375rem, 14px);
+  line-height: 1.65;
+}
+/* HOME ANSWERS END */
+
 /* V2 (WORK FIRST) START: /highlights (class names keep the v2- prefix), cases first. Uses the window tokens (.vw) so LIGHT mode follows. */
 .v2-boot {
   position: fixed;

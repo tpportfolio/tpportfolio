@@ -1,10 +1,13 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
-// Search engines, AI crawlers and link previews get the real page: the intro is a human-only
-// interstitial, and serving it to bots hid the whole portfolio from them.
+// The intro is a human-only interstitial. Search engines, AI crawlers, link previews and audit tools
+// get the real page. Two checks, so no tool is left out because its name is not on a list:
+//  - BOT_UA: known crawlers and previewers;
+//  - Sec-Fetch-Dest: every real browser sends "document" when it opens a page; scripts and
+//    crawlers (curl, node-fetch, custom auditors) do not, so they never see the intro.
 const BOT_UA =
-  /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|whatsapp|telegram|discord|slack|linkedin|twitter|skype|quora|pinterest|vkshare|googleother|google-extended|google-inspectiontool|chatgpt|gptbot|oai-searchbot|claude|anthropic|perplexity|bytespider|ccbot|cohere|amazonbot|applebot|duckassist|meta-externalagent|mistral|youbot|diffbot|lighthouse|headless/i
+  /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|whatsapp|telegram|discord|slack|linkedin|twitter|skype|quora|pinterest|vkshare|googleother|google-extended|google-inspectiontool|chatgpt|gptbot|oai-searchbot|claudebot|claude-user|claude-searchbot|anthropic-ai|perplexity|bytespider|ccbot|cohere|amazonbot|applebot|duckassist|meta-externalagent|mistral|youbot|diffbot|lighthouse|headless/i
 
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl
@@ -42,7 +45,14 @@ export function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
+  // Agents that ask for Markdown get the bilingual summary at the home address.
+  const accept = req.headers.get("accept") ?? ""
+  if (pathname === "/" && /text\/markdown/i.test(accept) && !/text\/html/i.test(accept)) {
+    return NextResponse.rewrite(new URL("/agents.md", req.url))
+  }
+
   if (BOT_UA.test(req.headers.get("user-agent") ?? "")) return NextResponse.next()
+  if (req.headers.get("sec-fetch-dest") !== "document") return NextResponse.next()
 
   const cookie = req.cookies.get("tp_intro")?.value
   if (cookie === "1") return NextResponse.next()

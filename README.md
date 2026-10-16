@@ -2,13 +2,15 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r32 (2026-10-15) — /v2 becomes /highlights
+## Current version: r33 (2026-10-15) — Audit tools can read the site; summary and FAQ on the home
 
 What changed in this version:
 
-- **Route.** The work-first version is now at `/highlights`; `/v2` redirects there.
+- **Intro only for browsers.** Tools and crawlers get the real page, so audits see the portfolio and not the intro.
+- **Home.** A TL;DR under the title and a FAQ at the end, in Spanish and English, with FAQPage structured data.
+- **Markdown for agents.** `Accept: text/markdown` on the home returns the `/agents.md` summary.
 
-Previous version: r31 (2026-10-15) — Home title (in production).
+Previous version: r32 (2026-10-15) — /v2 becomes /highlights (in production).
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -19,7 +21,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r32-highlights`, tag `r32` | This version |
+| `release/r33-crawler-access`, tag `r33` | This version |
+| `release/r32-highlights`, tag `r32` | /v2 becomes /highlights (in production) |
 | `release/r31-home-title`, tag `r31` | Home title (in production) |
 | `release/r30-ai-visibility`, tag `r30` | Visibility for search engines and AI |
 | `release/r29-v2-work-first`, tag `r29` | Work-first version (now /highlights) |

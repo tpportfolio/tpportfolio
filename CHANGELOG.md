@@ -1,5 +1,14 @@
 # Changelog
 
+## r33 (2026-10-15) — Audit tools can read the site; summary and FAQ on the home
+Branch `release/r33-crawler-access`. Builds on r32.
+
+- The intro screen is now shown only to real browsers (they send `Sec-Fetch-Dest: document`). Scripts and audit tools such as curl, node-fetch or the8bureau got the intro (a page with no text) before, which is why the re-run analysis still read "Portfolio Boot". Known crawlers still get the real page by name.
+- The pattern that recognises crawlers no longer matches the Claude desktop app's browser (it contained "Claude"); it now lists ClaudeBot, Claude-User and Claude-SearchBot.
+- Agents that ask the home for `Accept: text/markdown` get the bilingual summary (`/agents.md`).
+- Home: a short summary (TL;DR) under the title, and a FAQ at the end with six questions and short answers (Spanish and English), with FAQPage structured data and an "updated" date. Facts only from the site.
+- `/agents.md`: unchanged. No new content beyond what the site already said.
+
 ## r32 (2026-10-15) — /v2 becomes /highlights
 Branch `release/r32-highlights`. Builds on r31. No content changes.
 
