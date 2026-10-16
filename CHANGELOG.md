@@ -1,5 +1,10 @@
 # Changelog
 
+## r31 (2026-10-15) — Home title
+Branch `release/r31-home-title`. Builds on r30.
+
+- The home kept its old title ("Tomás Peró | GEN_MARKETER.exe") because the page set its own. It now reads "Tomás Peró | Brand Strategist y líder de marketing", with its canonical URL.
+
 ## r30 (2026-10-15) — Visibility for search engines and AI
 Branch `release/r30-ai-visibility`. Builds on r29. No visible change for visitors.
 

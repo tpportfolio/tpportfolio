@@ -2,16 +2,13 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r30 (2026-10-15) — Visibility for search engines and AI
+## Current version: r31 (2026-10-15) — Home title
 
 What changed in this version:
 
-- **Crawlers see the portfolio.** Bots no longer get the intro page; people still do.
-- **Discovery files.** `/robots.txt`, `/sitemap.xml` and `/llms.txt`.
-- **Metadata and structured data.** Titles, descriptions, canonical URLs, preview image, favicon and Person / WebSite / ProfilePage JSON-LD.
-- **Security headers.**
+- **Home title.** "Tomás Peró | Brand Strategist y líder de marketing" instead of "GEN_MARKETER.exe", for search engines and AI.
 
-Previous version: r29 (2026-10-15) — Work-first version at /v2.
+Previous version: r30 (2026-10-15) — Visibility for search engines and AI: crawlers see the real pages, robots.txt, sitemap.xml, llms.txt, metadata, structured data and security headers.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -22,7 +19,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r30-ai-visibility`, tag `r30` | This version |
+| `release/r31-home-title`, tag `r31` | This version |
+| `release/r30-ai-visibility`, tag `r30` | Visibility for search engines and AI |
 | `release/r29-v2-work-first`, tag `r29` | Work-first version at /v2 |
 | `release/r28-reel-link`, tag `r28` | New reel link (in production) |
 | `release/r27-acento-route`, tag `r27` | "Acento" at /acento (in production) |
