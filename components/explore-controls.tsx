@@ -8,7 +8,7 @@ import { usePathname, useSearchParams } from "next/navigation"
 
 const FONT_KEY = "tp_explore_font"
 
-const fonts = ["system", "plex", "jetbrains", "spacemono", "sharetech", "sometype", "martian", "vt323", "pair"]
+const fonts = ["system", "geist", "jetbrains", "martian", "kode", "azeret", "spline", "redhat", "chivo", "fira", "doto"]
 const summaries = ["none", "terminal", "strip", "cards", "typed", "details"]
 
 export function ExploreControls() {

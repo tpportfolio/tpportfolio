@@ -13,14 +13,16 @@ const SAMPLE_TEXT =
 
 const fontVar: Record<string, string> = {
   system: "monospace",
-  plex: "var(--fx-plex)",
+  geist: "var(--fx-geist)",
   jetbrains: "var(--fx-jetbrains)",
-  spacemono: "var(--fx-spacemono)",
-  sharetech: "var(--fx-sharetech)",
-  sometype: "var(--fx-sometype)",
   martian: "var(--fx-martian)",
-  vt323: "var(--fx-vt323)",
-  pair: "var(--fx-grotesk)",
+  kode: "var(--fx-kode)",
+  azeret: "var(--fx-azeret)",
+  spline: "var(--fx-spline)",
+  redhat: "var(--fx-redhat)",
+  chivo: "var(--fx-chivo)",
+  fira: "var(--fx-fira)",
+  doto: "var(--fx-geist)",
 }
 
 // EXPLORATION (fork explore/r35): index of the summary variants and the font candidates.
@@ -56,7 +58,7 @@ export default function ExplorePage() {
           {fontOptions.map((f) => (
             <a key={f.id} href={`/?font=${f.id}`} className="explore-font">
               <span className="explore-font-name">{f.name}</span>
-              <span className="explore-font-title" style={{ fontFamily: f.id === "pair" ? "var(--fx-jetbrains)" : fontVar[f.id] }}>
+              <span className="explore-font-title" style={{ fontFamily: f.id === "doto" ? "var(--fx-doto)" : fontVar[f.id], fontWeight: f.id === "doto" ? 800 : undefined }}>
                 {SAMPLE_TITLE}
               </span>
               <span className="explore-font-text" style={{ fontFamily: fontVar[f.id] }}>

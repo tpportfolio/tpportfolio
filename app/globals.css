@@ -2886,46 +2886,29 @@ html[data-visual-mode="light"] .hs-details .hs-hint {
 }
 
 /* ---- font preview: html[data-font] swaps the whole site's face ---- */
-html[data-font="plex"] { --fx-font: var(--fx-plex); }
+html[data-font="geist"] { --fx-font: var(--fx-geist); }
 html[data-font="jetbrains"] { --fx-font: var(--fx-jetbrains); }
-html[data-font="spacemono"] { --fx-font: var(--fx-spacemono); }
-html[data-font="sharetech"] { --fx-font: var(--fx-sharetech); }
-html[data-font="sometype"] { --fx-font: var(--fx-sometype); }
 html[data-font="martian"] { --fx-font: var(--fx-martian); }
-html[data-font="vt323"] { --fx-font: var(--fx-vt323); }
+html[data-font="kode"] { --fx-font: var(--fx-kode); }
+html[data-font="azeret"] { --fx-font: var(--fx-azeret); }
+html[data-font="spline"] { --fx-font: var(--fx-spline); }
+html[data-font="redhat"] { --fx-font: var(--fx-redhat); }
+html[data-font="chivo"] { --fx-font: var(--fx-chivo); }
+html[data-font="fira"] { --fx-font: var(--fx-fira); }
+html[data-font="doto"] { --fx-font: var(--fx-geist); }
 
-html[data-font]:not([data-font="pair"]) body,
-html[data-font]:not([data-font="pair"]) body * {
+html[data-font] body,
+html[data-font] body * {
   font-family: var(--fx-font), ui-monospace, monospace !important;
 }
 
-/* VT323 is drawn small: bring it up to the others */
-html[data-font="vt323"] body * {
-  font-size-adjust: 0.62;
-}
-
-/* pairing: readable sans for text, mono for titles, labels and data */
-html[data-font="pair"] body,
-html[data-font="pair"] body * {
-  font-family: var(--fx-grotesk), system-ui, sans-serif !important;
-}
-
-html[data-font="pair"] h1,
-html[data-font="pair"] h2,
-html[data-font="pair"] .font-cyber,
-html[data-font="pair"] .font-mono,
-html[data-font="pair"] .font-mono *,
-html[data-font="pair"] .vw-title,
-html[data-font="pair"] .vw-meta,
-html[data-font="pair"] .vw-foot *,
-html[data-font="pair"] .vw-thumb-ix,
-html[data-font="pair"] .v2-figure,
-html[data-font="pair"] .sidebar-link,
-html[data-font="pair"] .marquee *,
-html[data-font="pair"] .hs-title,
-html[data-font="pair"] .hs-key,
-html[data-font="pair"] .explore-bar * {
-  font-family: var(--fx-jetbrains), ui-monospace, monospace !important;
+/* Doto (LED dot matrix) only on the big titles */
+html[data-font="doto"] h1,
+html[data-font="doto"] .v2-name,
+html[data-font="doto"] .v2-figure,
+html[data-font="doto"] .section-header h2 {
+  font-family: var(--fx-doto), ui-monospace, monospace !important;
+  font-weight: 800;
 }
 
 /* ---- switcher bar ---- */
@@ -3046,5 +3029,20 @@ html[data-font="pair"] .explore-bar * {
   color: rgba(242, 246, 243, 0.6);
   font-family: monospace;
   font-size: 12px;
+}
+
+/* round 2: strip and cards as wide as the project grid (<BASE_DE_DATOS_PROYECTOS>) */
+.hs.hs-strip,
+.hs.hs-cards {
+  max-width: none;
+  margin-top: 2rem;
+}
+
+.hs-cards li {
+  padding: 1rem 1.15rem 1.15rem;
+}
+
+.hs-strip ul {
+  gap: 2rem;
 }
 /* EXPLORE END */

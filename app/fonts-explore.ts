@@ -1,39 +1,46 @@
 import {
-  IBM_Plex_Mono,
+  Azeret_Mono,
+  Chivo_Mono,
+  Doto,
+  Fira_Code,
+  Geist_Mono,
   JetBrains_Mono,
+  Kode_Mono,
   Martian_Mono,
-  Share_Tech_Mono,
-  Sometype_Mono,
-  Space_Grotesk,
-  Space_Mono,
-  VT323,
+  Red_Hat_Mono,
+  Spline_Sans_Mono,
 } from "next/font/google"
 
-// EXPLORATION (fork explore/r35): candidate fonts for the site, self-hosted by next/font.
+// EXPLORATION (fork explore/r35), round 2: ten monospace faces in the matrix / terminal spirit but
+// more modern than the system monospace. All variable fonts, self-hosted by next/font.
 // Nothing uses them unless a preview is switched on (?font=...), see components/explore-controls.tsx.
 
 // next/font needs literal options in each call (no shared object).
-const plex = IBM_Plex_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, weight: ["400", "600", "700"], variable: "--fx-plex" })
+const geist = Geist_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-geist" })
 const jetbrains = JetBrains_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-jetbrains" })
-const spaceMono = Space_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, weight: ["400", "700"], variable: "--fx-spacemono" })
-const vt323 = VT323({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, weight: "400", variable: "--fx-vt323" })
-const shareTech = Share_Tech_Mono({ subsets: ["latin"], display: "swap", preload: false, weight: "400", variable: "--fx-sharetech" })
-const sometype = Sometype_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-sometype" })
 const martian = Martian_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-martian" })
-const grotesk = Space_Grotesk({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-grotesk" })
+const kode = Kode_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-kode" })
+const azeret = Azeret_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-azeret" })
+const spline = Spline_Sans_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-spline" })
+const redhat = Red_Hat_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-redhat" })
+const chivo = Chivo_Mono({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-chivo" })
+const fira = Fira_Code({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-fira" })
+const doto = Doto({ subsets: ["latin", "latin-ext"], display: "swap", preload: false, variable: "--fx-doto" })
 
-export const exploreFontVariables = [plex, jetbrains, spaceMono, vt323, shareTech, sometype, martian, grotesk]
+export const exploreFontVariables = [geist, jetbrains, martian, kode, azeret, spline, redhat, chivo, fira, doto]
   .map((font) => font.variable)
   .join(" ")
 
 export const fontOptions: { id: string; name: string; note: string }[] = [
   { id: "system", name: "Actual · monospace del sistema", note: "Lo que se ve hoy: Consolas en Windows, Menlo en Mac. Cambia según la computadora." },
-  { id: "plex", name: "IBM Plex Mono", note: "Sobria y corporativa-tech. Muy legible en párrafos largos." },
-  { id: "jetbrains", name: "JetBrains Mono", note: "Moderna, de código. Letras abiertas, ideal para textos y datos." },
-  { id: "spacemono", name: "Space Mono", note: "Retro-futurista, con personalidad. Mejor para títulos que para párrafos." },
-  { id: "sharetech", name: "Share Tech Mono", note: "HUD de ciencia ficción, angulosa. Muy de la estética matrix." },
-  { id: "sometype", name: "Sometype Mono", note: "La del Design Lab: suave y editorial." },
-  { id: "martian", name: "Martian Mono", note: "Ancha y contemporánea, con presencia." },
-  { id: "vt323", name: "VT323", note: "Pantalla CRT pixelada. Solo para títulos o detalles: cansa en párrafos." },
-  { id: "pair", name: "Space Grotesk + JetBrains Mono", note: "Textos en una sans legible y títulos, etiquetas y datos en mono." },
+  { id: "geist", name: "1 · Geist Mono", note: "La de Vercel. Limpia, precisa, muy actual: terminal de producto tech." },
+  { id: "jetbrains", name: "2 · JetBrains Mono", note: "Código moderno, letras abiertas. La más legible en párrafos largos." },
+  { id: "martian", name: "3 · Martian Mono", note: "Ancha y con presencia, aire de interfaz espacial. Fuerte en títulos." },
+  { id: "kode", name: "4 · Kode Mono", note: "Angulosa y técnica: la más 'matrix' de las modernas, sin ser retro." },
+  { id: "azeret", name: "5 · Azeret Mono", note: "Geométrica y editorial: terminal con estética de diseño." },
+  { id: "spline", name: "6 · Spline Sans Mono", note: "Redondeada y cálida; terminal amable, muy cómoda de leer." },
+  { id: "redhat", name: "7 · Red Hat Mono", note: "Sobria y corporativa, con carácter. Segura para un perfil profesional." },
+  { id: "chivo", name: "8 · Chivo Mono", note: "Grotesca y contundente; buen contraste entre títulos y texto." },
+  { id: "fira", name: "9 · Fira Code", note: "Clásica de programadores: técnica y neutra." },
+  { id: "doto", name: "10 · Doto + Geist Mono", note: "Doto, de puntos tipo matriz LED, solo en títulos; textos en Geist Mono." },
 ]
