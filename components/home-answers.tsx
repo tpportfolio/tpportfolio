@@ -5,38 +5,14 @@ import Link from "next/link"
 import { useLanguage } from "./language-context"
 import { WindowFrame } from "./video-window"
 
-// Short, extractable answers for people and for search / AI answer engines: a summary on top and
-// frequently asked questions at the end of the home. Facts come from the work pages and /agents.md.
+// Short, extractable answers for people and for search / AI answer engines: frequently asked
+// questions at the end of the home. Facts come from the work pages and /agents.md.
 
 type L = { es: string; en: string }
 
 const LAST_UPDATED = "2026-10-15"
 const LINKEDIN = "https://www.linkedin.com/in/tomaspero"
 const REEL = "https://youtu.be/bC8TGT4mD3Q"
-
-const summary: { label: L; text: L }[] = [
-  {
-    label: { es: "Quién", en: "Who" },
-    text: {
-      es: "Brand Strategist y líder de marketing en Buenos Aires, con más de 18 años construyendo, lanzando y escalando marcas.",
-      en: "Brand Strategist and Marketing Leader based in Buenos Aires, with 18+ years building, launching and scaling brands.",
-    },
-  },
-  {
-    label: { es: "Trayectoria", en: "Track record" },
-    text: {
-      es: "Agencias, The Walt Disney Company, Air New Zealand (lanzamiento de marca en Sudamérica) y consultor independiente desde 2020.",
-      en: "Agencies, The Walt Disney Company, Air New Zealand (brand launch in South America) and independent consultant since 2020.",
-    },
-  },
-  {
-    label: { es: "Hoy", en: "Today" },
-    text: {
-      es: "Creative technologist: usa IA todos los días para producir más rápido (en Paradise.la, de más de 2 semanas a 3–4 días por pieza piloto).",
-      en: "Creative technologist: uses AI every day to produce faster (at Paradise.la, from 2+ weeks to 3–4 days on pilot productions).",
-    },
-  },
-]
 
 const faqs: { q: L; a: (lang: "es" | "en") => ReactNode; text: L }[] = [
   {
@@ -146,22 +122,6 @@ function faqJsonLd(lang: "es" | "en") {
       acceptedAnswer: { "@type": "Answer", text: item.text[lang] },
     })),
   }
-}
-
-export function HomeSummary() {
-  const { language } = useLanguage()
-  const lang = language === "en" ? "en" : "es"
-  return (
-    <WindowFrame title={lang === "es" ? "EN_RESUMEN" : "TL;DR"} footLeft="OK" footRight="Tomás Peró">
-      <ul className="home-summary">
-        {summary.map((item) => (
-          <li key={item.label.en}>
-            <strong>{item.label[lang]}:</strong> {item.text[lang]}
-          </li>
-        ))}
-      </ul>
-    </WindowFrame>
-  )
 }
 
 export function HomeFaq() {
