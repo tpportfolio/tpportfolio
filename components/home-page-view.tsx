@@ -5,7 +5,7 @@ import { useVisualMode } from "@/components/visual-mode-context"
 import { useLanguage } from "@/components/language-context"
 import { RetroBrowser } from "@/components/retro-browser"
 import Typewriter from "@/components/typewriter"
-import { HomeFaq, HomeSummary } from "@/components/home-answers"
+import { HomeFaq } from "@/components/home-answers"
 import VisitorCounter from "@/components/visitor-counter"
 import { homeProjects, siteIdentity } from "@/lib/site-content"
 
@@ -34,8 +34,8 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
   const typewriterColor = isLight ? "#b85a17" : "#00ff00"
   const statusStyle = isLight ? { color: "#7a3913" } : undefined
 
-  const heroCopyEs = `Soy Tomás, Brand Strategist y líder de marketing. Trabajo en el cruce entre estrategia de marca, marketing cultural y tecnología creativa para construir, lanzar y escalar marcas, con más de 18 años de trayectoria.`
-  const heroCopyEn = `I'm Tomás, a Brand Strategist and Marketing Leader. I work at the intersection of brand strategy, cultural marketing and creative technology to build, launch and scale brands, with 18+ years of experience.`
+  const heroCopyEs = `Soy Tomás, Brand Strategist y líder de marketing. Hace +18 años construyo, lanzo y escalo marcas, operando en el cruce entre estrategia de marca, marketing cultural y tecnología creativa: The Walt Disney Company, lanzamiento de Air New Zealand en Sudamérica y consultoría independiente desde 2020. Hoy soy creative technologist: la IA atraviesa todo lo que hago, desde producir imagen y video hasta construir mis propias herramientas.`
+  const heroCopyEn = `I'm Tomás, a Brand Strategist and Marketing Leader. For 18+ years I've built, launched and scaled brands, working where brand strategy, cultural marketing and creative technology meet: The Walt Disney Company, the launch of Air New Zealand in South America, and independent consulting since 2020. Today I'm a creative technologist: AI runs through everything I do, from producing images and video to building my own tools.`
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -90,10 +90,6 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
           </div>
         </div>
       </section>
-
-      <div className="mx-auto mb-10 max-w-5xl">
-        <HomeSummary />
-      </div>
 
       <section id="trabajos" className="mt-2 scroll-mt-4">
         <div className="section-header">
