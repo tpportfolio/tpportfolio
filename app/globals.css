@@ -2655,3 +2655,396 @@ html[data-visual-mode="light"] .vw--modal {
   }
 }
 /* VIDEO WINDOW END */
+
+/* EXPLORE (fork explore/r35) START: summary variants, font preview and the switcher bar. */
+
+/* ---- summary variants (home, under the typewriter) ---- */
+.hs {
+  max-width: 64rem;
+  margin: 1.75rem auto 0;
+  text-align: left;
+  font-size: max(0.9375rem, 14px);
+  line-height: 1.6;
+}
+
+.hs-title {
+  margin: 0 0 0.6rem;
+  color: var(--neon-cyan);
+  font-size: max(0.75rem, 12px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.hs ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A1 terminal: console answer, no frame */
+.hs-terminal li {
+  display: grid;
+  grid-template-columns: 7.5rem auto minmax(0, 1fr);
+  gap: 0 0.6rem;
+  padding: 0.2rem 0;
+  color: rgba(242, 246, 243, 0.86);
+}
+
+.hs-terminal .hs-key {
+  color: var(--neon-green);
+  letter-spacing: 0.08em;
+}
+
+.hs-terminal .hs-sep {
+  color: rgba(0, 255, 65, 0.45);
+}
+
+@media (max-width: 640px) {
+  .hs-terminal li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hs-terminal .hs-sep {
+    display: none;
+  }
+}
+
+/* A2 strip: one horizontal band of three short columns */
+.hs-strip {
+  padding: 0.9rem 0;
+  border-top: 1px solid rgba(57, 255, 20, 0.35);
+  border-bottom: 1px solid rgba(57, 255, 20, 0.35);
+}
+
+.hs-strip ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 0;
+}
+
+.hs-strip strong {
+  display: block;
+  color: var(--neon-green);
+  font-size: max(0.75rem, 12px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.hs-strip li span {
+  display: block;
+  margin: 0.2rem 0 0;
+  color: rgba(242, 246, 243, 0.86);
+  font-size: max(0.875rem, 13px);
+}
+
+@media (max-width: 768px) {
+  .hs-strip ul {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* A3 cards: three small tiles */
+.hs-cards ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.hs-cards li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.85rem 1rem 1rem;
+  border: 1px solid rgba(57, 255, 20, 0.3);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  color: rgba(242, 246, 243, 0.86);
+  font-size: max(0.875rem, 13px);
+}
+
+.hs-cards .hs-index {
+  color: rgba(0, 255, 65, 0.6);
+  font-size: max(0.6875rem, 11px);
+}
+
+.hs-cards strong {
+  color: var(--neon-cyan);
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 768px) {
+  .hs-cards ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* A4 typed: appears line by line when the typewriter ends */
+.hs-typed .hs-title,
+.hs-typed li {
+  opacity: 0;
+}
+
+.hs-typed[data-revealed] .hs-title,
+.hs-typed[data-revealed] li {
+  animation: hs-type-in 0.32s steps(6, end) forwards;
+}
+
+.hs-typed li {
+  padding: 0.15rem 0;
+  color: rgba(242, 246, 243, 0.86);
+}
+
+.hs-typed .hs-key {
+  color: var(--neon-green);
+}
+
+@keyframes hs-type-in {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-typed .hs-title,
+  .hs-typed li {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* A5 details: one line that opens */
+.hs-details summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.25rem 0.75rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.hs-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.hs-details summary .hs-title {
+  margin: 0;
+}
+
+.hs-details summary .hs-title::before {
+  content: "▸ ";
+}
+
+.hs-details details[open] summary .hs-title::before {
+  content: "▾ ";
+}
+
+.hs-details .hs-hint {
+  color: rgba(242, 246, 243, 0.55);
+  font-size: max(0.8125rem, 12px);
+}
+
+.hs-details summary:hover .hs-title,
+.hs-details summary:focus-visible .hs-title {
+  color: var(--neon-green);
+}
+
+.hs-details ul {
+  margin-top: 0.75rem;
+}
+
+.hs-details li {
+  padding: 0.2rem 0;
+  color: rgba(242, 246, 243, 0.86);
+}
+
+.hs-details strong {
+  color: var(--neon-cyan);
+}
+
+/* LIGHT mode for every variant */
+html[data-visual-mode="light"] .hs-terminal li,
+html[data-visual-mode="light"] .hs-strip li span,
+html[data-visual-mode="light"] .hs-cards li,
+html[data-visual-mode="light"] .hs-typed li,
+html[data-visual-mode="light"] .hs-details li {
+  color: #4e240c;
+}
+
+html[data-visual-mode="light"] .hs-cards li {
+  border-color: rgba(139, 67, 21, 0.25);
+  background: rgba(252, 246, 238, 0.85);
+}
+
+html[data-visual-mode="light"] .hs-strip {
+  border-color: rgba(139, 67, 21, 0.3);
+}
+
+html[data-visual-mode="light"] .hs-details .hs-hint {
+  color: #806049;
+}
+
+/* ---- font preview: html[data-font] swaps the whole site's face ---- */
+html[data-font="plex"] { --fx-font: var(--fx-plex); }
+html[data-font="jetbrains"] { --fx-font: var(--fx-jetbrains); }
+html[data-font="spacemono"] { --fx-font: var(--fx-spacemono); }
+html[data-font="sharetech"] { --fx-font: var(--fx-sharetech); }
+html[data-font="sometype"] { --fx-font: var(--fx-sometype); }
+html[data-font="martian"] { --fx-font: var(--fx-martian); }
+html[data-font="vt323"] { --fx-font: var(--fx-vt323); }
+
+html[data-font]:not([data-font="pair"]) body,
+html[data-font]:not([data-font="pair"]) body * {
+  font-family: var(--fx-font), ui-monospace, monospace !important;
+}
+
+/* VT323 is drawn small: bring it up to the others */
+html[data-font="vt323"] body * {
+  font-size-adjust: 0.62;
+}
+
+/* pairing: readable sans for text, mono for titles, labels and data */
+html[data-font="pair"] body,
+html[data-font="pair"] body * {
+  font-family: var(--fx-grotesk), system-ui, sans-serif !important;
+}
+
+html[data-font="pair"] h1,
+html[data-font="pair"] h2,
+html[data-font="pair"] .font-cyber,
+html[data-font="pair"] .font-mono,
+html[data-font="pair"] .font-mono *,
+html[data-font="pair"] .vw-title,
+html[data-font="pair"] .vw-meta,
+html[data-font="pair"] .vw-foot *,
+html[data-font="pair"] .vw-thumb-ix,
+html[data-font="pair"] .v2-figure,
+html[data-font="pair"] .sidebar-link,
+html[data-font="pair"] .marquee *,
+html[data-font="pair"] .hs-title,
+html[data-font="pair"] .hs-key,
+html[data-font="pair"] .explore-bar * {
+  font-family: var(--fx-jetbrains), ui-monospace, monospace !important;
+}
+
+/* ---- switcher bar ---- */
+.explore-bar {
+  position: fixed;
+  top: 0.5rem;
+  left: 50%;
+  z-index: 95;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.9rem;
+  max-width: calc(100vw - 1rem);
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(255, 0, 255, 0.6);
+  border-radius: 6px;
+  background: rgba(10, 0, 12, 0.92);
+  color: #f0f;
+  font-family: monospace;
+  font-size: 11px;
+  transform: translateX(-50%);
+}
+
+.explore-bar a {
+  margin-left: 0.45rem;
+  color: rgba(255, 210, 255, 0.85);
+  text-decoration: none;
+}
+
+.explore-bar a:hover,
+.explore-bar a[aria-current="true"] {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.explore-bar-home {
+  font-weight: 700;
+}
+
+/* ---- index page /drafts/explore ---- */
+.explore-index h1 {
+  margin: 0 0 0.5rem;
+  color: var(--neon-green);
+  font-size: 1.75rem;
+}
+
+.explore-index h2 {
+  margin: 2rem 0 0.75rem;
+  color: var(--neon-cyan);
+  font-size: 1.15rem;
+}
+
+.explore-lead {
+  max-width: 70ch;
+  color: rgba(242, 246, 243, 0.8);
+  font-size: 15px;
+}
+
+.explore-list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.explore-list a {
+  margin-right: 0.75rem;
+  color: var(--neon-green);
+}
+
+.explore-list span {
+  color: rgba(242, 246, 243, 0.7);
+  font-size: 14px;
+}
+
+.explore-fonts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(22rem, 100%), 1fr));
+  gap: 1rem;
+}
+
+.explore-font {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem 1.2rem;
+  border: 1px solid rgba(57, 255, 20, 0.35);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  color: inherit;
+  text-decoration: none;
+}
+
+.explore-font:hover {
+  border-color: #00ff41;
+}
+
+.explore-font-name {
+  color: var(--neon-cyan);
+  font-family: monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
+.explore-font-title {
+  color: #00ff41;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.explore-font-text {
+  color: rgba(242, 246, 243, 0.9);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.explore-font-note {
+  color: rgba(242, 246, 243, 0.6);
+  font-family: monospace;
+  font-size: 12px;
+}
+/* EXPLORE END */

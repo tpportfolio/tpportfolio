@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import "./globals.css";
 
 import Sidebar from "@/components/sidebar";
@@ -8,6 +8,8 @@ import { Providers } from "./providers";
 import { MobileMenuButton } from "@/components/mobile-menu-button";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteChrome } from "@/components/site-chrome";
+import { ExploreControls } from "@/components/explore-controls";
+import { exploreFontVariables } from "./fonts-explore";
 
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -103,7 +105,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" className={exploreFontVariables} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -132,6 +134,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <Providers>
+          {/* EXPLORATION (fork explore/r35): font and summary switcher, off unless chosen. */}
+          <Suspense fallback={null}>
+            <ExploreControls />
+          </Suspense>
           <SiteChrome
             sidebar={<Sidebar />}
             menuButton={<MobileMenuButton />}

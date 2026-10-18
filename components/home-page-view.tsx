@@ -6,6 +6,7 @@ import { useLanguage } from "@/components/language-context"
 import { RetroBrowser } from "@/components/retro-browser"
 import Typewriter from "@/components/typewriter"
 import { HomeFaq } from "@/components/home-answers"
+import { HomeSummaryVariant, type SummaryVariant } from "@/components/home-summary-variants"
 import VisitorCounter from "@/components/visitor-counter"
 import { homeProjects, siteIdentity } from "@/lib/site-content"
 
@@ -14,14 +15,16 @@ type VariantMode = "default" | "dark" | "light"
 interface HomePageViewProps {
   className?: string
   variantMode?: VariantMode
+  summary?: SummaryVariant
 }
 
-export function HomePageView({ className, variantMode = "default" }: HomePageViewProps) {
+export function HomePageView({ className, variantMode = "default", summary }: HomePageViewProps) {
   const { t, language } = useLanguage()
   const { mode } = useVisualMode()
   const effectiveMode = variantMode === "default" ? mode : variantMode
   const isLight = effectiveMode === "light"
   const [skipTypewriter, setSkipTypewriter] = useState(false)
+  const [typed, setTyped] = useState(false)
 
   const accentStyle = isLight
     ? { color: "#2f1607", textShadow: "0 0 18px rgba(205, 108, 27, 0.18)" }
@@ -85,10 +88,12 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
               cursorColor={typewriterColor}
               align="center"
               forceReveal={skipTypewriter}
+              onDone={() => setTyped(true)}
               className="mx-auto max-w-[23rem] text-center sm:max-w-3xl md:max-w-5xl"
             />
           </div>
         </div>
+        {summary ? <HomeSummaryVariant variant={summary} revealed={typed || skipTypewriter} /> : null}
       </section>
 
       <section id="trabajos" className="mt-2 scroll-mt-4">

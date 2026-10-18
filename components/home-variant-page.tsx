@@ -3,8 +3,9 @@
 import { HomePageView } from "@/components/home-page-view"
 import { HomeVariantShader } from "@/components/home-variant-shader"
 import { useVisualMode } from "@/components/visual-mode-context"
+import type { SummaryVariant } from "@/components/home-summary-variants"
 
-export function HomeVariantPage() {
+export function HomeVariantPage({ summary }: { summary?: SummaryVariant }) {
   const { mode } = useVisualMode()
 
   return (
@@ -13,7 +14,7 @@ export function HomeVariantPage() {
         <HomeVariantShader mode={mode} />
       </div>
       <div className="home-variant-page__content">
-        <HomePageView className="relative z-10" variantMode={mode} />
+        <HomePageView className="relative z-10" variantMode={mode} summary={summary} />
       </div>
     </div>
   )
