@@ -9,7 +9,7 @@ type L = { es: string; en: string }
 
 const items: { key: L; text: L }[] = [
   {
-    key: { es: "Quién", en: "Who" },
+    key: { es: "Qué hago", en: "What I do" },
     text: {
       es: "Brand Strategist y líder de marketing en Buenos Aires, con más de 18 años construyendo, lanzando y escalando marcas.",
       en: "Brand Strategist and Marketing Leader based in Buenos Aires, with 18+ years building, launching and scaling brands.",
