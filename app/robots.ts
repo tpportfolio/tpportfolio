@@ -18,6 +18,9 @@ const AI_BOTS = [
   "Applebot-Extended",
   "CCBot",
   "Meta-ExternalAgent",
+  // Meta AI / Muse indexer
+  "meta-webindexer",
+  "Meta-ExternalFetcher",
 ]
 
 export default function robots(): MetadataRoute.Robots {

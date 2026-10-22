@@ -1,5 +1,11 @@
 # Changelog
 
+## r36 (2026-10-22) — Meta's indexer allowed; descriptive alt text on video images
+Branch `release/r36-agents-a11y`. Builds on r33 (production). No visible change.
+
+- `/robots.txt` now also names `meta-webindexer` and `Meta-ExternalFetcher` (Meta AI / Muse).
+- Video thumbnails and stills (timeline satellites, video windows) have descriptive alt text in Spanish and English ("Miniatura del video: <título>"), instead of empty alt text.
+
 ## r33 (2026-10-15) — Audit tools can read the site; summary and FAQ on the home
 Branch `release/r33-crawler-access`. Builds on r32.
 

@@ -2,15 +2,14 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r33 (2026-10-15) — Audit tools can read the site; summary and FAQ on the home
+## Current version: r36 (2026-10-22) — Meta's indexer allowed; descriptive alt text on video images
 
 What changed in this version:
 
-- **Intro only for browsers.** Tools and crawlers get the real page, so audits see the portfolio and not the intro.
-- **Home.** A TL;DR under the title and a FAQ at the end, in Spanish and English, with FAQPage structured data.
-- **Markdown for agents.** `Accept: text/markdown` on the home returns the `/agents.md` summary.
+- **robots.txt.** Meta AI's indexer (`meta-webindexer`) is allowed.
+- **Alt text.** Video thumbnails and stills describe what they are, in Spanish and English.
 
-Previous version: r32 (2026-10-15) — /v2 becomes /highlights (in production).
+Previous version: r33 (2026-10-15) — Audit tools can read the site; summary and FAQ on the home (in production). r34 and the r35 exploration fork are drafts, not included.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -21,7 +20,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r33-crawler-access`, tag `r33` | This version |
+| `release/r36-agents-a11y`, tag `r36` | This version |
+| `release/r33-crawler-access`, tag `r33` | Audit tools read the site; FAQ on the home (in production) |
 | `release/r32-highlights`, tag `r32` | /v2 becomes /highlights (in production) |
 | `release/r31-home-title`, tag `r31` | Home title (in production) |
 | `release/r30-ai-visibility`, tag `r30` | Visibility for search engines and AI |

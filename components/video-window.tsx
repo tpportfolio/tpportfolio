@@ -160,7 +160,7 @@ export function VideoScreen({ video, title, autoPlay = false }: VideoScreenProps
         ) : (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={poster} alt="" />
+            <img src={poster} alt={`${language === "es" ? "Imagen del video" : "Video still"}: ${title}`} />
             <button
               type="button"
               className="vw-play"
@@ -284,7 +284,9 @@ export function VideoWindow({
                 <span className="vw-thumb-pic">
                   {hasPoster(item) ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={`https://img.youtube.com/vi/${item.videoId}/mqdefault.jpg`} alt="" loading="lazy" />
+                    <img src={`https://img.youtube.com/vi/${item.videoId}/mqdefault.jpg`} alt={`${language === "es" ? "Miniatura del video" : "Video thumbnail"}: ${item.title[language]}`}
+                      loading="lazy"
+                    />
                   ) : (
                     <Play size={20} aria-hidden="true" />
                   )}

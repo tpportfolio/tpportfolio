@@ -162,7 +162,13 @@ export function TimelineOrbit({
                     onClick={(e) => open(index, e.currentTarget)}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={thumbSrc(video)} alt="" loading="lazy" decoding="async" draggable={false} />
+                    <img
+                      src={thumbSrc(video)}
+                      alt={`${lang === "es" ? "Miniatura del video" : "Video thumbnail"}: ${video.title[lang]}`}
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                    />
                     <span className={styles.play} aria-hidden="true" />
                   </button>
                   <span className={styles.label} data-label="" aria-hidden="true">
