@@ -38,8 +38,9 @@ import thumbSubway from "./thumb_2026_subway.jpg"
 import thumbAyNotDead from "./thumb_2026_ay_not_dead.jpg"
 import thumbAND1 from "./thumb_AND_1.png"
 import thumbUGCMODEL1 from "./thumb_UGCMODEL_1.png"
-import the8bureauPopupThumb from "./thumb_the8bureau_v2_popup.png"
-import the8bureauThumb from "./thumb_the8bureau_v2_card.png"
+// the8bureau control dashboard (v3 screenshot, 2026-10-22). The v2 images stay in the folder.
+import the8bureauThumb from "./thumb_the8bureau_v3.png"
+const the8bureauPopupThumb = the8bureauThumb
 import andRefe1 from "./and_refe1.png"
 import andRefe2 from "./and_refe2.png"
 import andRefe3 from "./and_refe3.png"
@@ -96,6 +97,8 @@ type GalleryImage = {
   label: string
   gradient: string
   imageSrc?: StaticImageData
+  /** A YouTube video in the gallery: shown with its still and a play mark, plays in the viewer. */
+  videoId?: string
 }
 
 type Work2026Item = {
@@ -153,6 +156,14 @@ const modaGallery: GalleryImage[] = Array.from({ length: 16 }, (_, index) => {
   }
 })
 
+// The campaign video goes first among the gallery thumbnails.
+modaGallery.unshift({
+  id: "moda-video",
+  label: "Video",
+  gradient: "linear-gradient(135deg, #111, #222)",
+  videoId: "44ri50qIiFw",
+})
+
 function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
   return [
     {
@@ -168,7 +179,7 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       youtubeUrl: "https://youtu.be/pAdrOyzmmZs",
       thumbnail: thumbMessiBK,
       locked: false,
-      opensPopup: true,
+      opensPopup: false,
     },
     {
       id: "demo-producto",
@@ -184,7 +195,7 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
         "https://www.youtube.com/watch?v=zW8DP4fr7xA&list=PLTai-gQI1os01OvFV9Xid5OXWWgoM9FCP&index=2",
       thumbnail: thumbSubway,
       locked: false,
-      opensPopup: true,
+      opensPopup: false,
     },
     {
       id: "campana-moda",
@@ -206,10 +217,9 @@ function getWorks2026Items(language: SupportedLanguage): Work2026Item[] {
       mediaTag: "video",
       title: { es: "UGC content", en: "UGC content" },
       description: {
-        es: "Placeholder de video. El popup deja el CTA para abrir YouTube hasta definir el link final.",
-        en: "Video placeholder. The popup keeps a YouTube CTA until the final URL is defined.",
+        es: "Contenido UGC generado con IA. El video final se suma más adelante.",
+        en: "AI-generated UGC content. The final video will be added later.",
       },
-      youtubeUrl: "https://www.youtube.com/results?search_query=UGC+content",
       thumbnail: thumbUGCMODEL1,
       locked: false,
       opensPopup: true,
@@ -368,11 +378,11 @@ function The8BureauScreenshotThumb({ isLight, onOpen }: { isLight: boolean; onOp
       type="button"
       onClick={onOpen}
       aria-label={language === "es" ? "Abrir la imagen del dashboard v2 de the8bureau" : "Open the8bureau v2 dashboard image"}
-      className={`block h-full w-full max-w-[300px] overflow-hidden rounded-sm border text-left shadow-[0_0_24px_rgba(0,0,0,0.22)] transition-transform hover:scale-[1.01] ${
+      className={`block w-full max-w-[300px] overflow-hidden rounded-sm border text-left shadow-[0_0_24px_rgba(0,0,0,0.22)] transition-transform hover:scale-[1.01] ${
         isLight ? "border-[#c57b45] bg-[#fff5e8]" : "border-neon-green/30 bg-[#03190f]"
       }`}
     >
-      <div className={`relative h-full min-h-[220px] w-full ${isLight ? "bg-[#f7ead8]" : "bg-[#04150d]"}`}>
+      <div className={`relative aspect-[477/827] w-full ${isLight ? "bg-[#f7ead8]" : "bg-[#04150d]"}`}>
         <Image
           src={the8bureauThumb}
           alt={
@@ -496,9 +506,22 @@ function PreviewStage({
               <div
                 key={image.id}
                 className="relative overflow-hidden rounded-sm"
-                style={{ background: image.imageSrc ? undefined : image.gradient }}
+                style={{ background: image.imageSrc || image.videoId ? undefined : image.gradient }}
               >
-                {image.imageSrc ? (
+                {image.videoId ? (
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`https://img.youtube.com/vi/${image.videoId}/hqdefault.jpg`}
+                      alt={language === "es" ? "Video de la campaña" : "Campaign video"}
+                      className="absolute inset-0 h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                    <span className="absolute inset-0 grid place-items-center">
+                      <Play className="h-6 w-6 fill-current text-white drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]" aria-hidden="true" />
+                    </span>
+                  </>
+                ) : image.imageSrc ? (
                   <Image
                     src={image.imageSrc}
                     alt={image.label}
@@ -596,6 +619,41 @@ function UpdatesPendingBadge({
         </span>
       </div>
     </div>
+  )
+}
+
+// Videos of the 2026 block play right where the preview is: the custom still first, then YouTube.
+function InlineVideoStage({ item, isLight }: { item: Work2026Item; isLight: boolean }) {
+  const { language } = useLanguage()
+  const [playing, setPlaying] = useState(false)
+  if (playing && item.videoId) {
+    return (
+      <div className="relative aspect-[16/8] overflow-hidden rounded-sm bg-black md:aspect-[16/6.2]">
+        <iframe
+          src={`https://www.youtube.com/embed/${item.videoId}?rel=0&autoplay=1`}
+          title={item.title[language]}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          referrerPolicy="strict-origin-when-cross-origin"
+          className="absolute inset-0 h-full w-full border-0"
+        />
+      </div>
+    )
+  }
+  return (
+    <button
+      type="button"
+      onClick={() => setPlaying(true)}
+      aria-label={`${language === "es" ? "Reproducir" : "Play"}: ${item.title[language]}`}
+      className="group relative block w-full rounded-sm bg-transparent p-0 text-left"
+    >
+      <PreviewStage item={item} isLight={isLight} />
+      <span className="pointer-events-none absolute inset-0 grid place-items-center">
+        <span className="vw-play-mark grid h-14 w-20 place-items-center rounded-2xl transition-transform group-hover:scale-105">
+          <Play className="ml-0.5 h-6 w-6 fill-current" aria-hidden="true" />
+        </span>
+      </span>
+    </button>
   )
 }
 
@@ -708,7 +766,7 @@ function Work2026Modal({
                   key={image.id}
                   type="button"
                   onClick={() => {
-                    if (image.imageSrc) setSelectedGalleryImage(image)
+                    if (image.imageSrc || image.videoId) setSelectedGalleryImage(image)
                   }}
                   className={`aspect-square overflow-hidden rounded-sm border p-3 ${
                     isLight ? "border-[#c57b45]" : "border-neon-green/30"
@@ -716,7 +774,20 @@ function Work2026Modal({
                   style={{ background: image.gradient }}
                 >
                   <div className="relative flex h-full items-end overflow-hidden rounded-sm border border-white/20 bg-black/10 p-3">
-                    {image.imageSrc ? (
+                    {image.videoId ? (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={`https://img.youtube.com/vi/${image.videoId}/hqdefault.jpg`}
+                          alt={language === "es" ? "Video de la campaña" : "Campaign video"}
+                          className="absolute inset-0 h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                        <span className="absolute inset-0 grid place-items-center">
+                          <Play className="h-8 w-8 fill-current text-white drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]" aria-hidden="true" />
+                        </span>
+                      </>
+                    ) : image.imageSrc ? (
                       <Image
                         src={image.imageSrc}
                         alt={image.label}
@@ -735,7 +806,7 @@ function Work2026Modal({
           ) : null}
         </div>
 
-        {selectedGalleryImage?.imageSrc ? (
+        {selectedGalleryImage?.imageSrc || selectedGalleryImage?.videoId ? (
           <div className="absolute inset-0 z-[20] flex items-center justify-center bg-black/88 p-2 sm:p-4">
             <button className="absolute inset-0" onClick={() => setSelectedGalleryImage(null)} aria-label={language === "es" ? "Cerrar vista previa de la imagen" : "Close image preview"} />
             <div
@@ -755,15 +826,28 @@ function Work2026Modal({
               >
                 <X className="h-4 w-4" />
               </button>
-              <div className="relative h-[min(64vh,960px)] w-full sm:h-[min(78vh,960px)]">
-                <Image
-                  src={selectedGalleryImage.imageSrc}
-                  alt={selectedGalleryImage.label}
-                  fill
-                  sizes="90vw"
-                  className="object-contain"
-                />
-              </div>
+              {selectedGalleryImage.videoId ? (
+                <div className="relative mx-auto aspect-video w-full max-w-[min(92vw,1120px,calc((78vh)*16/9))] bg-black">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${selectedGalleryImage.videoId}?rel=0&autoplay=1`}
+                    title={language === "es" ? "Campaña Moda AY NOT DEAD: video" : "Fashion Campaign AY NOT DEAD: video"}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    className="absolute inset-0 h-full w-full border-0"
+                  />
+                </div>
+              ) : selectedGalleryImage.imageSrc ? (
+                <div className="relative h-[min(64vh,960px)] w-full sm:h-[min(78vh,960px)]">
+                  <Image
+                    src={selectedGalleryImage.imageSrc}
+                    alt={selectedGalleryImage.label}
+                    fill
+                    sizes="90vw"
+                    className="object-contain"
+                  />
+                </div>
+              ) : null}
             </div>
           </div>
         ) : null}
@@ -2280,7 +2364,9 @@ function Works2026Carousel({
       >
         <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_212px] xl:items-stretch">
-              {activeItem.opensPopup ? (
+              {activeItem.kind === "embed" && activeItem.videoId ? (
+                <InlineVideoStage key={activeItem.id} item={activeItem} isLight={isLight} />
+              ) : activeItem.opensPopup ? (
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
@@ -2345,7 +2431,17 @@ function Works2026Carousel({
 
             <div>
               <div className="font-cyber text-lg text-neon-cyan">{activeItem.title[language]}</div>
-              {activeItem.opensPopup ? (
+              {activeItem.kind === "embed" && activeItem.youtubeUrl ? (
+                <a
+                  href={activeItem.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="vw-link mt-2 inline-flex items-center gap-2"
+                >
+                  {language === "es" ? "Ver en YouTube" : "Watch on YouTube"}
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                </a>
+              ) : activeItem.opensPopup ? (
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
@@ -2767,7 +2863,7 @@ export default function AIExperimentsPage() {
           {showSystemSections ? (
             <RetroPanel title="the8bureau" statusRight="PRIVATE / OFFLINE" highlight>
               <div className="grid grid-cols-1 gap-6 xl:grid-cols-[300px_minmax(0,1fr)] xl:items-start">
-                <div className="xl:pt-10">
+                <div>
                   <The8BureauScreenshotThumb isLight={isLight} onOpen={() => setIsThe8BureauModalOpen(true)} />
                 </div>
 

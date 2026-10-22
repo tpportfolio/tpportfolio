@@ -1,5 +1,14 @@
 # Changelog
 
+## r38 (2026-10-22) — Results first on each case; AI experiments tweaks; new the8bureau screenshot
+Branch `release/r38-cases-ai-tweaks`. Builds on r37.
+
+- Case pages (`/work/air-new-zealand`, `/work/walt-disney-company`, `/work/independent-consultant`, `/work/agency-experience`): a RESULTS band at the top, before the videos, with the key figures (Air New Zealand: 3x visitors from Argentina in 2 years, "distance is a barrier" 50% → 24%, USD 500K+).
+- AI experiments, 2026 block: the Messi Ad BURGER KING (WIP) and Product Demo SUBWAY videos play in place when clicked (no popup), with a "Watch on YouTube" link under them.
+- Fashion Campaign AY NOT DEAD: the campaign video (https://www.youtube.com/watch?v=44ri50qIiFw) is the first item of the gallery and plays in its viewer.
+- UGC content: the generic YouTube search link is gone.
+- the8bureau: new control-dashboard screenshot, shown at its full height and top-aligned with the text.
+
 ## r37 (2026-10-22) — Geist Mono, "In short" band, new intro text; FAQ moved to agents.md (draft)
 Branch `release/r37-home-geist-strip`. Builds on r36. Not promoted yet.
 

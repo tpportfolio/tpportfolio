@@ -8,6 +8,7 @@ import { useLanguage } from "@/components/language-context"
 import { useVisualMode } from "@/components/visual-mode-context"
 import { consultantVideos } from "@/lib/work-videos"
 import { WindowFrame } from "@/components/video-window"
+import { CaseResults, type CaseResult } from "@/components/case-results"
 
 type L = { es: string; en: string }
 
@@ -253,6 +254,13 @@ const copy = {
   },
 }
 
+// Outcome first: shown at the top of the page.
+const caseResults: CaseResult[] = [
+  { value: { es: "3–4 días", en: "3–4 days" }, label: { es: "de concepto a entrega con IA en Paradise.la (antes, más de 2 semanas)", en: "from concept to delivery with AI at Paradise.la (before, over 2 weeks)" } },
+  { value: { es: "6 marcas", en: "6 brands" }, label: { es: "en lanzamiento o transición en LATAM desde 2020", en: "at launch or in transition across LATAM since 2020" } },
+  { value: { es: "Airtalks", en: "Airtalks" }, label: { es: "podcast de marca creado y lanzado para Airtm", en: "branded podcast created and launched for Airtm" } },
+]
+
 export default function IndependentConsultantPage() {
   const { t, language } = useLanguage()
   const { mode } = useVisualMode()
@@ -279,6 +287,8 @@ export default function IndependentConsultantPage() {
         <div className="text-xl text-neon-cyan mb-2 font-cyber">JUL 2020-PRESENT // Brand, Marketing &amp; AI Consultant</div>
         <div className="h-px bg-gradient-to-r from-transparent via-neon-green to-transparent mb-6"></div>
       </div>
+
+      <CaseResults items={caseResults} />
 
       {/* Consulting Videos Carousel */}
       <VideoCarousel items={consultantVideos} title="CONSULTING_SHOWCASE" />

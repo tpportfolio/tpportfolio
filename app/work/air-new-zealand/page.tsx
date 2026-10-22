@@ -7,6 +7,7 @@ import { VideoCarousel } from "@/components/video-carousel"
 import { useLanguage } from "@/components/language-context"
 import { airNewZealandVideos } from "@/lib/work-videos"
 import { WindowFrame } from "@/components/video-window"
+import { CaseResults, type CaseResult } from "@/components/case-results"
 
 type L = { es: string; en: string }
 
@@ -94,6 +95,13 @@ const results: L[] = [
   },
 ]
 
+// Outcome first: shown at the top of the page.
+const caseResults: CaseResult[] = [
+  { value: { es: "3x", en: "3x" }, label: { es: "visitantes desde Argentina en 2 años (+225% el primer año)", en: "visitors from Argentina in 2 years (+225% in the first year)" } },
+  { value: { es: "50% → 24%", en: "50% → 24%" }, label: { es: "personas que veían la distancia como una barrera, antes y después", en: "people who saw distance as a barrier, before and after" } },
+  { value: { es: "USD 500K+", en: "USD 500K+" }, label: { es: "presupuesto anual, 4 mercados y 5 agencias bajo una sola voz de marca", en: "annual budget, 4 markets and 5 agencies under one brand voice" } },
+]
+
 export default function AirNewZealandPage() {
   const { t, language } = useLanguage()
   const lang = language === "es" ? "es" : "en"
@@ -121,6 +129,8 @@ export default function AirNewZealandPage() {
         </div>
         <div className="h-px bg-gradient-to-r from-transparent via-neon-green to-transparent mb-6"></div>
       </div>
+
+      <CaseResults items={caseResults} />
 
       {/* Air NZ Videos Carousel */}
       <VideoCarousel items={airNewZealandVideos} title="AIR_NZ_SHOWCASE" />

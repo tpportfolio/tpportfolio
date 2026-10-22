@@ -1737,6 +1737,26 @@ html[data-visual-mode="light"] .home-summary ul {
 html[data-visual-mode="light"] .home-summary li span {
   color: #4e240c;
 }
+
+/* case pages: results band (components/case-results.tsx) — the figure is the headline */
+.home-summary--results {
+  margin: 0 0 2rem;
+}
+
+.home-summary--results strong {
+  margin-bottom: 0.15rem;
+  color: var(--neon-green);
+  font-size: clamp(1.4rem, 1rem + 1.6vw, 2rem);
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+/* play mark over the 2026 video stills */
+.vw-play-mark {
+  background: var(--vw-accent);
+  box-shadow: var(--vw-shadow-play);
+  color: var(--vw-on-accent);
+}
 /* HOME SUMMARY END */
 
 /* V2 (WORK FIRST) START: /highlights (class names keep the v2- prefix), cases first. Uses the window tokens (.vw) so LIGHT mode follows. */

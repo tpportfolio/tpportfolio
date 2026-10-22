@@ -7,6 +7,7 @@ import { VideoCarousel } from "@/components/video-carousel"
 import { useLanguage } from "@/components/language-context"
 import { agencyVideos } from "@/lib/work-videos"
 import { WindowFrame } from "@/components/video-window"
+import { CaseResults, type CaseResult } from "@/components/case-results"
 
 type L = { es: string; en: string }
 
@@ -65,6 +66,13 @@ const roles: { anchor: string; header: string; intro: L; bullets: L[] }[] = [
   },
 ]
 
+// Outcome first: shown at the top of the page.
+const caseResults: CaseResult[] = [
+  { value: { es: "6 marcas", en: "6 brands" }, label: { es: "Claro, Ford, Johnson & Johnson, Nokia, Cerveza Imperial y Beldent", en: "Claro, Ford, Johnson & Johnson, Nokia, Cerveza Imperial and Beldent" } },
+  { value: { es: "ATL · BTL · 360°", en: "ATL · BTL · 360°" }, label: { es: "campañas, activaciones y eventos", en: "campaigns, activations and events" } },
+  { value: { es: "3 años y 9 meses", en: "3 years, 9 months" }, label: { es: "en J. Walter Thompson y Altheim", en: "at J. Walter Thompson and Altheim" } },
+]
+
 export default function AgencyExperiencePage() {
   const { t, language } = useLanguage()
   const lang = language === "es" ? "es" : "en"
@@ -90,6 +98,8 @@ export default function AgencyExperiencePage() {
         <div className="text-xl text-neon-cyan mb-2 font-cyber">JUN 2007-MAR 2011</div>
         <div className="h-px bg-gradient-to-r from-transparent via-neon-green to-transparent mb-6"></div>
       </div>
+
+      <CaseResults items={caseResults} />
 
       {/* Agency Videos Carousel */}
       <VideoCarousel items={agencyVideos} title="AGENCY_SHOWCASE" />

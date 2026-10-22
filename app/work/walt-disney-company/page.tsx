@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { useLanguage } from "@/components/language-context"
 import { WindowFrame } from "@/components/video-window"
+import { CaseResults, type CaseResult } from "@/components/case-results"
 
 type L = { es: string; en: string }
 
@@ -153,6 +154,13 @@ const takeawayClosing: L = {
   en: "Brand discipline and product thinking from day one: the foundation of how I work today.",
 }
 
+// Outcome first: shown at the top of the page.
+const caseResults: CaseResult[] = [
+  { value: { es: "70.000", en: "70,000" }, label: { es: "unidades de DVD en una sola promoción", en: "DVD units in a single promotion" } },
+  { value: { es: "3 roles", en: "3 roles" }, label: { es: "promociones, distribución digital y Disney Labs en casi 5 años", en: "promotions, digital distribution and Disney Labs in almost 5 years" } },
+  { value: { es: "20%", en: "20%" }, label: { es: "de mi tiempo en Disney Labs, el programa de intraemprendimiento", en: "of my time at Disney Labs, the intrapreneurship program" } },
+]
+
 export default function WaltDisneyCompanyPage() {
   const { t, language } = useLanguage()
   const lang = language === "es" ? "es" : "en"
@@ -180,6 +188,8 @@ export default function WaltDisneyCompanyPage() {
         </div>
         <div className="h-px bg-gradient-to-r from-transparent via-neon-green to-transparent mb-6"></div>
       </div>
+
+      <CaseResults items={caseResults} />
 
       <div className="space-y-8">
         <WindowFrame title="PROJECT_OVERVIEW">

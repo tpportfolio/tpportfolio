@@ -2,15 +2,14 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r37 (2026-10-22) — Geist Mono, "In short" band, new intro text (draft)
+## Current version: r38 (2026-10-22) — Results first on each case; AI experiments tweaks
 
 What changed in this version:
 
-- **Type.** Geist Mono across the site.
-- **Home.** New intro text and an "EN RESUMEN" band as wide as the project grid.
-- **FAQ.** Out of the home, into `/agents.md` and `/llms.txt`.
+- **Cases.** Each work page opens with its results.
+- **AI experiments.** 2026 videos play in place; AY NOT DEAD gallery opens with its video; UGC content without the generic link; new the8bureau screenshot.
 
-Previous version: r36 (2026-10-22) — Meta's indexer allowed; descriptive alt text on video images.
+Previous version: r37 (2026-10-22) — Geist Mono, "In short" band, new intro text (draft).
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -21,7 +20,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r37-home-geist-strip`, tag `r37` | This version (draft) |
+| `release/r38-cases-ai-tweaks`, tag `r38` | This version |
+| `release/r37-home-geist-strip`, tag `r37` | Geist Mono, In short band, FAQ to agents.md |
 | `release/r36-agents-a11y`, tag `r36` | Meta indexer, alt text |
 | `release/r33-crawler-access`, tag `r33` | Audit tools read the site; FAQ on the home (in production) |
 | `release/r32-highlights`, tag `r32` | /v2 becomes /highlights (in production) |
