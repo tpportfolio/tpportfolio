@@ -241,6 +241,26 @@ const aiExperimentsStructure = {
   ],
 } satisfies Record<Lang, string[]>
 
+// Frequently asked questions, for agents and AI answers (until r36 they were a block on the home).
+const faqLocalized: Record<Lang, { q: string; a: string }[]> = {
+  en: [
+    { q: "Who is Tomás Peró?", a: "Tomás Peró is a Brand Strategist and Marketing Leader based in Buenos Aires with 18+ years of experience. He has worked at agencies, The Walt Disney Company and Air New Zealand, and since 2020 he has supported brands as an independent consultant. Today he combines brand strategy with AI-assisted production." },
+    { q: "What does a Brand Strategist like Tomás do?", a: "He defines a brand's positioning and story and takes it into integrated 360° campaigns: launches and go-to-market, cultural marketing, partnerships and sponsorships, and AI workflows to produce content. He leads agencies and teams so everything speaks with one brand voice." },
+    { q: "Which brands has he worked with?", a: "The Walt Disney Company (Disney, Marvel, Pixar, Lucasfilm), Air New Zealand, Paradise.la, Airtm, Stone Movistar, DrGea.com, Sinerlogic and Go Broadway!, plus J. Walter Thompson and Altheim at agencies, for clients such as Claro, Ford, Johnson & Johnson and Nokia." },
+    { q: "What results did he achieve at Air New Zealand?", a: "As regional marketing lead for South America (2015–2020), he launched the brand and a new long-haul route. Visitors from Argentina tripled in 2 years (+225% in the first year) and the share of people who saw distance as a barrier fell from 50% to 24%. He led five agencies and over USD 500K a year." },
+    { q: "How does he use artificial intelligence in his work?", a: "He has worked as a creative technologist since 2022: he uses an AI stack (image, video, voice, music and LLMs) to prototype ideas and speed up content production. At Paradise.la he cut concept-to-delivery cycles from 2+ weeks to 3–4 days. His reel brings together works from 2025 and 2026." },
+    { q: "How can I contact Tomás?", a: "You can reach him on LinkedIn (linkedin.com/in/tomaspero) or from the site's contact page, for brand strategy, launches, cultural marketing or AI production projects. He works in Spanish and English." },
+  ],
+  es: [
+    { q: "¿Quién es Tomás Peró?", a: "Tomás Peró es Brand Strategist y líder de marketing basado en Buenos Aires, con más de 18 años de experiencia. Trabajó en agencias, en The Walt Disney Company y en Air New Zealand, y desde 2020 acompaña a marcas como consultor independiente. Hoy combina estrategia de marca con producción asistida por IA." },
+    { q: "¿Qué hace un Brand Strategist como Tomás?", a: "Define el posicionamiento y el relato de una marca y lo lleva a campañas 360° integradas: lanzamientos y go-to-market, marketing cultural, alianzas y sponsorships, y workflows de IA para producir contenido. Lidera agencias y equipos para que todo hable con una sola voz de marca." },
+    { q: "¿Con qué marcas trabajó?", a: "The Walt Disney Company (Disney, Marvel, Pixar, Lucasfilm), Air New Zealand, Paradise.la, Airtm, Stone Movistar, DrGea.com, Sinerlogic y Go Broadway!, además de J. Walter Thompson y Altheim en agencias, para clientes como Claro, Ford, Johnson & Johnson y Nokia." },
+    { q: "¿Qué resultados logró en Air New Zealand?", a: "Como líder de marketing regional para Sudamérica (2015–2020), lanzó la marca y una nueva ruta de larga distancia. Los visitantes desde Argentina se triplicaron en 2 años (+225% el primer año) y quienes veían la distancia como una barrera bajaron del 50% al 24%. Lideró cinco agencias y más de USD 500K al año." },
+    { q: "¿Cómo usa la inteligencia artificial en su trabajo?", a: "Trabaja como creative technologist desde 2022: usa un stack de IA (imagen, video, voz, música y LLMs) para prototipar ideas y acelerar la producción de contenido. En Paradise.la pasó los ciclos de concepto a entrega de más de 2 semanas a 3–4 días. Su reel reúne trabajos de 2025 y 2026." },
+    { q: "¿Cómo contactar a Tomás?", a: "Se lo puede contactar por LinkedIn (linkedin.com/in/tomaspero) o desde la página de contacto del sitio, para proyectos de estrategia de marca, lanzamientos, marketing cultural o producción con IA. Responde en español e inglés." },
+  ],
+}
+
 const notesLocalized = {
   en: [
     "The canonical public home is `/`.",
@@ -421,6 +441,9 @@ function buildMarkdownSection(lang: Lang) {
     crawlHeading,
     ...crawlHintsLocalized[lang].map((hint) => `- ${hint}`),
     "",
+    isEn ? "### FAQ" : "### Preguntas frecuentes",
+    ...faqLocalized[lang].map((item) => `- **${item.q}** ${item.a}`),
+    "",
     notesHeading,
     ...notesLocalized[lang].map((note) => `- ${note}`),
   ]
@@ -512,6 +535,7 @@ function buildTextSection(lang: Lang) {
     ...crawlHintsLocalized[lang].map((hint) => `- ${hint}`),
     "",
     isEn ? "NOTES :" : "NOTAS :",
+    ...faqLocalized[lang].map((item) => `- FAQ :: ${item.q} :: ${item.a}`),
     ...notesLocalized[lang].map((note) => `- ${note}`),
   ]
 

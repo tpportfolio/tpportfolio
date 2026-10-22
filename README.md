@@ -2,14 +2,15 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r36 (2026-10-22) — Meta's indexer allowed; descriptive alt text on video images
+## Current version: r37 (2026-10-22) — Geist Mono, "In short" band, new intro text (draft)
 
 What changed in this version:
 
-- **robots.txt.** Meta AI's indexer (`meta-webindexer`) is allowed.
-- **Alt text.** Video thumbnails and stills describe what they are, in Spanish and English.
+- **Type.** Geist Mono across the site.
+- **Home.** New intro text and an "EN RESUMEN" band as wide as the project grid.
+- **FAQ.** Out of the home, into `/agents.md` and `/llms.txt`.
 
-Previous version: r33 (2026-10-15) — Audit tools can read the site; summary and FAQ on the home (in production). r34 and the r35 exploration fork are drafts, not included.
+Previous version: r36 (2026-10-22) — Meta's indexer allowed; descriptive alt text on video images.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -20,7 +21,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r36-agents-a11y`, tag `r36` | This version |
+| `release/r37-home-geist-strip`, tag `r37` | This version (draft) |
+| `release/r36-agents-a11y`, tag `r36` | Meta indexer, alt text |
 | `release/r33-crawler-access`, tag `r33` | Audit tools read the site; FAQ on the home (in production) |
 | `release/r32-highlights`, tag `r32` | /v2 becomes /highlights (in production) |
 | `release/r31-home-title`, tag `r31` | Home title (in production) |

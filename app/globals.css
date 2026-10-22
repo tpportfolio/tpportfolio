@@ -1675,48 +1675,69 @@ html[data-visual-mode="light"] .matrix-rain {
   text-shadow: none !important;
 }
 
-/* HOME ANSWERS START: summary and FAQ on the home (components/home-answers.tsx) */
+/* SITE TYPE (r37): Geist Mono everywhere except /acento (.aw), which has its own type. */
+body,
+body *:not(.aw, .aw *) {
+  font-family: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+/* HOME SUMMARY START: "EN RESUMEN" band under the intro (components/home-summary.tsx).
+   As wide as the project grid; the label sits above the line, left-aligned. */
 .home-summary {
+  margin: 2rem 0 2.5rem;
+  text-align: left;
+}
+
+.home-summary-title {
+  margin: 0 0 0.55rem;
+  color: var(--neon-cyan);
+  font-size: max(0.75rem, 12px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.home-summary ul {
   display: grid;
-  gap: 0.6rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
   margin: 0;
-  padding: 0;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(57, 255, 20, 0.35);
+  border-bottom: 1px solid rgba(57, 255, 20, 0.35);
   list-style: none;
 }
 
-.home-summary li {
-  max-width: 78ch;
-  color: var(--vw-ink-2);
-  font-size: max(0.9375rem, 14px);
+.home-summary strong {
+  display: block;
+  color: var(--neon-green);
+  font-size: max(0.75rem, 12px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.home-summary li span {
+  display: block;
+  margin-top: 0.25rem;
+  color: rgba(242, 246, 243, 0.86);
+  font-size: max(0.875rem, 13px);
   line-height: 1.6;
 }
 
-.home-summary strong {
-  color: var(--vw-accent-2);
-  font-weight: 700;
+@media (max-width: 768px) {
+  .home-summary ul {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.9rem;
+  }
 }
 
-.home-faq {
-  display: grid;
-  gap: 1.25rem;
+html[data-visual-mode="light"] .home-summary ul {
+  border-color: rgba(139, 67, 21, 0.3);
 }
 
-.home-faq h3 {
-  margin: 0 0 0.35rem;
-  color: var(--vw-accent-2);
-  font-size: max(1rem, 15px);
-  font-weight: 600;
-  line-height: 1.3;
+html[data-visual-mode="light"] .home-summary li span {
+  color: #4e240c;
 }
-
-.home-faq p {
-  max-width: 78ch;
-  margin: 0;
-  color: var(--vw-ink-2);
-  font-size: max(0.9375rem, 14px);
-  line-height: 1.65;
-}
-/* HOME ANSWERS END */
+/* HOME SUMMARY END */
 
 /* V2 (WORK FIRST) START: /highlights (class names keep the v2- prefix), cases first. Uses the window tokens (.vw) so LIGHT mode follows. */
 .v2-boot {

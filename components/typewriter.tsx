@@ -165,10 +165,11 @@ export default function Typewriter({
           textShadow: "none",
         }}
       >
+        <span className="sr-only">{fullText}</span>
         <div aria-hidden className={`invisible pointer-events-none select-none ${alignmentClass}`.trim()}>
           {reserveRendered}
         </div>
-        <div className={`absolute inset-0 ${alignmentClass}`.trim()}>
+        <div aria-hidden className={`absolute inset-0 ${alignmentClass}`.trim()}>
           {rendered}
           <span
             aria-hidden

@@ -1,5 +1,14 @@
 # Changelog
 
+## r37 (2026-10-22) — Geist Mono, "In short" band, new intro text; FAQ moved to agents.md (draft)
+Branch `release/r37-home-geist-strip`. Builds on r36. Not promoted yet.
+
+- Typeface: Geist Mono across the site (self-hosted). `/acento` keeps its own type.
+- Home: the new intro text (r34) and, under it, an "EN RESUMEN / IN SHORT" band as wide as the project grid, with the label above the line.
+- The FAQ block leaves the home; its six questions and answers now live in `/agents.md`, `/agents.txt` and `/llms.txt` (Spanish and English).
+- The intro text is now read in full by screen readers (it was hidden from them while typing).
+- Measured with AEO_GEO_V2 on the home: Overall 57 (production with the FAQ block: 77).
+
 ## r36 (2026-10-22) — Meta's indexer allowed; descriptive alt text on video images
 Branch `release/r36-agents-a11y`. Builds on r33 (production). No visible change.
 

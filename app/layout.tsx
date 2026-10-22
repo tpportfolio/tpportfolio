@@ -8,6 +8,10 @@ import { Providers } from "./providers";
 import { MobileMenuButton } from "@/components/mobile-menu-button";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteChrome } from "@/components/site-chrome";
+import { Geist_Mono } from "next/font/google";
+
+// The site's typeface (r37). /acento keeps its own.
+const geistMono = Geist_Mono({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-geist-mono" });
 
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -103,7 +107,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" className={geistMono.variable} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
