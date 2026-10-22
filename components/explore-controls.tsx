@@ -8,8 +8,9 @@ import { usePathname, useSearchParams } from "next/navigation"
 
 const FONT_KEY = "tp_explore_font"
 
-const fonts = ["system", "geist", "jetbrains", "martian", "kode", "azeret", "spline", "redhat", "chivo", "fira", "doto"]
+const fonts = ["system", "geist", "jetbrains", "martian", "kode", "azeret", "spline", "redhat", "chivo", "fira", "doto", "b-netflix", "b-spotify", "b-airbnb", "b-apple", "b-google", "b-uber", "b-nike", "b-nikecond", "b-adidas", "b-amazon", "b-microsoft", "b-samsung", "b-cocacola", "b-burgerking", "b-meli", "b-bbc", "b-ibm", "b-github", "b-redhatdisplay", "b-mozilla"]
 const summaries = ["none", "terminal", "strip", "cards", "typed", "details"]
+const faqs = ["list", "accordion", "grid"]
 
 export function ExploreControls() {
   const params = useSearchParams()
@@ -30,7 +31,7 @@ export function ExploreControls() {
   }, [params])
 
   const summary = params.get("resumen")
-  if (!font && !summary) return null
+  if (!font && !summary && !params.get("faq")) return null
 
   const link = (key: string, value: string) => {
     const q = new URLSearchParams(params.toString())
@@ -49,6 +50,16 @@ export function ExploreControls() {
           {summaries.map((s) => (
             <a key={s} href={link("resumen", s)} aria-current={(summary ?? "none") === s ? "true" : undefined}>
               {s}
+            </a>
+          ))}
+        </span>
+      ) : null}
+      {pathname === "/" ? (
+        <span>
+          faq:
+          {faqs.map((f) => (
+            <a key={f} href={link("faq", f)} aria-current={(params.get("faq") ?? "list") === f ? "true" : undefined}>
+              {f}
             </a>
           ))}
         </span>

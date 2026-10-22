@@ -10,6 +10,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteChrome } from "@/components/site-chrome";
 import { ExploreControls } from "@/components/explore-controls";
 import { exploreFontVariables } from "./fonts-explore";
+import { brandFontVariables } from "./fonts-brands";
 
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -105,7 +106,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es" className={exploreFontVariables} suppressHydrationWarning>
+    <html lang="es" className={`${exploreFontVariables} ${brandFontVariables}`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

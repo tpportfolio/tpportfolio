@@ -5,7 +5,7 @@ import { useVisualMode } from "@/components/visual-mode-context"
 import { useLanguage } from "@/components/language-context"
 import { RetroBrowser } from "@/components/retro-browser"
 import Typewriter from "@/components/typewriter"
-import { HomeFaq } from "@/components/home-answers"
+import { HomeFaq, type FaqVariant } from "@/components/home-answers"
 import { HomeSummaryVariant, type SummaryVariant } from "@/components/home-summary-variants"
 import VisitorCounter from "@/components/visitor-counter"
 import { homeProjects, siteIdentity } from "@/lib/site-content"
@@ -16,9 +16,10 @@ interface HomePageViewProps {
   className?: string
   variantMode?: VariantMode
   summary?: SummaryVariant
+  faq?: FaqVariant
 }
 
-export function HomePageView({ className, variantMode = "default", summary }: HomePageViewProps) {
+export function HomePageView({ className, variantMode = "default", summary, faq }: HomePageViewProps) {
   const { t, language } = useLanguage()
   const { mode } = useVisualMode()
   const effectiveMode = variantMode === "default" ? mode : variantMode
@@ -132,7 +133,7 @@ export function HomePageView({ className, variantMode = "default", summary }: Ho
         </div>
       </section>
 
-      <HomeFaq />
+      <HomeFaq variant={faq} />
 
       <section className="mt-12 text-center">
         <div className="mb-6 h-px bg-gradient-to-r from-transparent via-neon-green to-transparent opacity-90"></div>

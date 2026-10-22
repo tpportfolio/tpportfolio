@@ -124,7 +124,11 @@ function faqJsonLd(lang: "es" | "en") {
   }
 }
 
-export function HomeFaq() {
+// EXPLORATION (fork explore/r35): "list" is production; "accordion" and "grid" start collapsed.
+// Collapsed answers stay in the HTML (and in the FAQPage data), so engines still read them.
+export type FaqVariant = "list" | "accordion" | "grid"
+
+export function HomeFaq({ variant = "list" }: { variant?: FaqVariant }) {
   const { language } = useLanguage()
   const lang = language === "en" ? "en" : "es"
   return (
@@ -145,14 +149,31 @@ export function HomeFaq() {
         <h2 id="home-faq" className="sr-only">
           {lang === "es" ? "Preguntas frecuentes sobre Tomás Peró" : "Frequently asked questions about Tomás Peró"}
         </h2>
-        <div className="home-faq">
-          {faqs.map((item) => (
-            <div key={item.q.en}>
-              <h3>{item.q[lang]}</h3>
-              <p>{item.a(lang)}</p>
-            </div>
-          ))}
-        </div>
+        {variant === "list" ? (
+          <div className="home-faq">
+            {faqs.map((item) => (
+              <div key={item.q.en}>
+                <h3>{item.q[lang]}</h3>
+                <p>{item.a(lang)}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={variant === "grid" ? "home-faq-acc home-faq-acc--grid" : "home-faq-acc"}>
+            {faqs.map((item, i) => (
+              <details key={item.q.en}>
+                <summary>
+                  <span className="home-faq-ix" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{item.q[lang]}</h3>
+                  <span className="home-faq-sign" aria-hidden="true" />
+                </summary>
+                <p>{item.a(lang)}</p>
+              </details>
+            ))}
+          </div>
+        )}
       </WindowFrame>
     </section>
   )

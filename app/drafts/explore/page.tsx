@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { summaryVariants } from "@/lib/explore-summary"
 import { fontOptions } from "@/app/fonts-explore"
+import { brandFontOptions } from "@/app/fonts-brands"
 
 export const metadata: Metadata = {
   title: "Exploración: resumen y tipografías",
@@ -52,6 +53,24 @@ export default function ExplorePage() {
       </section>
 
       <section>
+        <h2>(A2) Bloque de preguntas frecuentes</h2>
+        <ul className="explore-list">
+          <li>
+            <a href="/?faq=list#home-faq">Lista abierta (producción)</a>
+            <span>Las seis preguntas con su respuesta a la vista.</span>
+          </li>
+          <li>
+            <a href="/?faq=accordion#home-faq">Acordeón colapsado</a>
+            <span>Una línea por pregunta, numerada; se abre al tocarla.</span>
+          </li>
+          <li>
+            <a href="/?faq=grid#home-faq">Grilla colapsada</a>
+            <span>Igual, en dos columnas: el bloque ocupa la mitad de alto.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section>
         <h2>(B) Tipografías</h2>
         <p className="explore-lead">Cada opción se aplica a todo el sitio mientras navegás (hasta cerrar la pestaña).</p>
         <div className="explore-fonts">
@@ -65,6 +84,29 @@ export default function ExplorePage() {
                 {SAMPLE_TEXT}
               </span>
               <span className="explore-font-note">{f.note}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+      <section>
+        <h2>(B2) Tipografías de marcas a las que podrías aplicar</h2>
+        <p className="explore-lead">
+          Casi todas son propietarias: se muestra la alternativa libre más parecida. Cuando la marca liberó la suya
+          (Google, IBM, GitHub, Red Hat, Mozilla), es la real.
+        </p>
+        <div className="explore-fonts">
+          {brandFontOptions.map((f) => (
+            <a key={f.id} href={`/?font=${f.id}`} className="explore-font">
+              <span className="explore-font-name">
+                {f.brand} · {f.font}
+              </span>
+              <span className="explore-font-title" style={{ fontFamily: `var(--fb-${f.id.slice(2)})` }}>
+                {SAMPLE_TITLE}
+              </span>
+              <span className="explore-font-text" style={{ fontFamily: `var(--fb-${f.id.slice(2)})` }}>
+                {SAMPLE_TEXT}
+              </span>
+              <span className="explore-font-note">Tipografía de la marca: {f.real}</span>
             </a>
           ))}
         </div>
