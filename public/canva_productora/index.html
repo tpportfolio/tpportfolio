@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="es">
 <head>
@@ -202,8 +202,8 @@ option{color:var(--fg);background:var(--bg);}
 .footerCredit{margin-top:10px;text-align:center;font-size:10px;letter-spacing:.12em;color:var(--muted);opacity:.9}
 </style>
 
-<link rel="icon" href="/icon"/>
-<link rel="stylesheet" href="/tool-suite/the8bureau-bridge.css"/>
+<link rel="icon" href="/t8b/8ball.png"/>
+<link rel="stylesheet" href="/t8b/the8bureau-bridge.css?v=v2"/>
 </head>
 <body data-t8b-tool="canva" data-t8b-theme-engine="class-light" data-t8b-theme-storage="t8b_theme_mode">
 <div class="t8b-bridge-wrap">
@@ -212,22 +212,36 @@ option{color:var(--fg);background:var(--bg);}
       <div class="t8b-bridge-logo">8</div>
       <div class="t8b-bridge-lockup">
         <h1>the8bureau</h1>
-        <p class="t8b-bridge-title">CANVA <em>PRODUCTORA</em> Studio</p>
-        <p class="t8b-bridge-tagline">Paradise post canvas to reconstruct the first frame of the Instagram grid.</p>
+        <p class="t8b-bridge-title">CANVA <em>PRODUCTORA</em></p>
+        <p class="t8b-bridge-tagline">Production house post canvas to reconstruct the first frame of the Instagram grid.</p>
       </div>
     </div>
     <div class="t8b-bridge-side">
       <div class="t8b-bridge-links">
-        <a href="/">Dashboard</a>
+        <a href="/work/ai-experiments">&larr; the8bureau</a>
+        <a href="/comparador_videos">Compare</a>
+        <a href="/unyellower">Unyellow</a>
+        <a href="/comparador_imagenes">Images</a>
+        <a href="/pdf_toolkit">PDF</a>
       </div>
-      <div class="t8b-bridge-switch" role="group" aria-label="Theme mode">
-        <button type="button" class="t8b-bridge-mode-btn" data-mode="terminal">Terminal</button>
-        <button type="button" class="t8b-bridge-mode-btn" data-mode="light">Light</button>
+      <div class="t8b-bridge-slider" role="group" aria-label="Visual mode">
+        <span class="t8b-bridge-slider-label" data-side="dark">Dark</span>
+        <button type="button" class="t8b-bridge-slider-btn" data-state="terminal" aria-label="Toggle visual mode">
+          <span class="t8b-bridge-slider-track"><span class="t8b-bridge-slider-thumb"></span></span>
+        </button>
+        <span class="t8b-bridge-slider-label" data-side="light">Light</span>
       </div>
     </div>
   </div>
-  <div class="t8b-bridge-chips"><span class="t8b-bridge-chip">Paradise Tool</span><span class="t8b-bridge-chip">Static HTML</span><span class="t8b-bridge-chip">1080x1350 Canvas</span></div>
+  <div class="t8b-bridge-chips"><span class="t8b-bridge-chip">Production House Tool</span><span class="t8b-bridge-chip">Static HTML</span><span class="t8b-bridge-chip">1080x1350 Canvas</span></div>
 </div>
+<section class="vw" aria-label="CANVA PRODUCTORA">
+  <header class="vw-bar">
+    <span class="vw-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="vw-title-box"><span class="vw-title-in"><span class="vw-title">CANVA PRODUCTORA</span></span></span>
+    <span class="vw-meta">STATIC</span>
+  </header>
+  <div class="vw-body">
 <header class="hdr">
 <div class="toprow">
 <div></div>
@@ -268,8 +282,8 @@ option{color:var(--fg);background:var(--bg);}
 <aside class="col">
 <div class="card">
 <h3>Lienzo</h3>
-<div class="one-line"><span>Color fondo</span><input id="bgColor" type="color" value="#f0f0f0"/></div>
-<div class="one-line"><span>Zoom foto</span><input id="photoZoom" max="3" min="0.5" step="0.01" type="range" value="1"/></div>
+<div class="one-line"><span>Color fondo</span><input id="bgColor" aria-label="Color fondo" type="color" value="#f0f0f0"/></div>
+<div class="one-line"><span>Zoom foto</span><input id="photoZoom" aria-label="Zoom foto" max="3" min="0.5" step="0.01" type="range" value="1"/></div>
 <div class="one-line"><span>Tip</span><span class="tipText" style="color:var(--muted)">Claro/oscuro: solo UI · Arrastra la foto · Ruedita = zoom</span></div>
 </div>
 <div class="card">
@@ -277,15 +291,15 @@ option{color:var(--fg);background:var(--bg);}
 <label class="one-line">Titulo 1 <input id="titleA" type="text" value="BEHIND"/></label>
 <div class="one-line">
 <span>Size</span>
-<input id="sizeA" max="600" min="0" step="1" type="range" value="148"/><span id="sizeAVal" style="min-width:34px;text-align:right;color:var(--muted)">148</span>
+<input id="sizeA" aria-label="Titulo 1 size" max="600" min="0" step="1" type="range" value="148"/><span id="sizeAVal" style="min-width:34px;text-align:right;color:var(--muted)">148</span>
 </div>
 <div class="one-line">
 <span>Kerning</span>
-<input id="trackA" max="400" min="-200" step="1" type="range" value="0"/><span id="trackAVal" style="min-width:34px;text-align:right;color:var(--muted)">0</span>
+<input id="trackA" aria-label="Titulo 1 kerning" max="400" min="-200" step="1" type="range" value="0"/><span id="trackAVal" style="min-width:34px;text-align:right;color:var(--muted)">0</span>
 </div>
 <div class="one-line fontLine">
 <span>Font</span>
-<select class="fontSel" id="fontA">
+<select class="fontSel" id="fontA" aria-label="Titulo 1 font">
 <option selected="">Helvetica</option>
 <option>Helvetica Neue</option>
 <option>Futura</option>
@@ -307,7 +321,7 @@ option{color:var(--fg);background:var(--bg);}
 <button class="btn sm" data-act="openFontUrl" data-k="A" type="button">cargar url</button>
 </div>
 </div>
-<div class="one-line colorStyleRow"><div class="left"><span>Color</span><input id="colorA" style="width:44px;height:28px;padding:0;border:none;background:transparent" type="color" value="#ffffff"/></div><div class="iconbar inline" data-k="A">
+<div class="one-line colorStyleRow"><div class="left"><span>Color</span><input id="colorA" aria-label="Titulo 1 color" style="width:44px;height:28px;padding:0;border:none;background:transparent" type="color" value="#ffffff"/></div><div class="iconbar inline" data-k="A">
 <div class="iconbtn" data-act="bold"><b>B</b></div>
 <div class="iconbtn" data-act="italic"><i>I</i></div>
 <div class="iconbtn" data-act="underline"><u>U</u></div>
@@ -318,15 +332,15 @@ option{color:var(--fg);background:var(--bg);}
 <label class="one-line">Titulo 2 <input id="titleB" type="text" value="the"/></label>
 <div class="one-line">
 <span>Size</span>
-<input id="sizeB" max="600" min="0" step="1" type="range" value="148"/><span id="sizeBVal" style="min-width:34px;text-align:right;color:var(--muted)">148</span>
+<input id="sizeB" aria-label="Titulo 2 size" max="600" min="0" step="1" type="range" value="148"/><span id="sizeBVal" style="min-width:34px;text-align:right;color:var(--muted)">148</span>
 </div>
 <div class="one-line">
 <span>Kerning</span>
-<input id="trackB" max="400" min="-200" step="1" type="range" value="0"/><span id="trackBVal" style="min-width:34px;text-align:right;color:var(--muted)">0</span>
+<input id="trackB" aria-label="Titulo 2 kerning" max="400" min="-200" step="1" type="range" value="0"/><span id="trackBVal" style="min-width:34px;text-align:right;color:var(--muted)">0</span>
 </div>
 <div class="one-line fontLine">
 <span>Font</span>
-<select class="fontSel" id="fontB">
+<select class="fontSel" id="fontB" aria-label="Titulo 2 font">
 <option selected="">Helvetica</option>
 <option>Helvetica Neue</option>
 <option>Futura</option>
@@ -348,7 +362,7 @@ option{color:var(--fg);background:var(--bg);}
 <button class="btn sm" data-act="openFontUrl" data-k="B" type="button">cargar url</button>
 </div>
 </div>
-<div class="one-line colorStyleRow"><div class="left"><span>Color</span><input id="colorB" style="width:44px;height:28px;padding:0;border:none;background:transparent" type="color" value="#ffffff"/></div><div class="iconbar inline" data-k="B">
+<div class="one-line colorStyleRow"><div class="left"><span>Color</span><input id="colorB" aria-label="Titulo 2 color" style="width:44px;height:28px;padding:0;border:none;background:transparent" type="color" value="#ffffff"/></div><div class="iconbar inline" data-k="B">
 <div class="iconbtn" data-act="bold"><b>B</b></div>
 <div class="iconbtn" data-act="italic"><i>I</i></div>
 <div class="iconbtn" data-act="underline"><u>U</u></div>
@@ -359,15 +373,15 @@ option{color:var(--fg);background:var(--bg);}
 <label class="one-line">Titulo 3 <input id="titleC" type="text" value="SCENES"/></label>
 <div class="one-line">
 <span>Size</span>
-<input id="sizeC" max="600" min="0" step="1" type="range" value="148"/><span id="sizeCVal" style="min-width:34px;text-align:right;color:var(--muted)">148</span>
+<input id="sizeC" aria-label="Titulo 3 size" max="600" min="0" step="1" type="range" value="148"/><span id="sizeCVal" style="min-width:34px;text-align:right;color:var(--muted)">148</span>
 </div>
 <div class="one-line">
 <span>Kerning</span>
-<input id="trackC" max="400" min="-200" step="1" type="range" value="0"/><span id="trackCVal" style="min-width:34px;text-align:right;color:var(--muted)">0</span>
+<input id="trackC" aria-label="Titulo 3 kerning" max="400" min="-200" step="1" type="range" value="0"/><span id="trackCVal" style="min-width:34px;text-align:right;color:var(--muted)">0</span>
 </div>
 <div class="one-line fontLine">
 <span>Font</span>
-<select class="fontSel" id="fontC">
+<select class="fontSel" id="fontC" aria-label="Titulo 3 font">
 <option selected="">Helvetica</option>
 <option>Helvetica Neue</option>
 <option>Futura</option>
@@ -389,7 +403,7 @@ option{color:var(--fg);background:var(--bg);}
 <button class="btn sm" data-act="openFontUrl" data-k="C" type="button">cargar url</button>
 </div>
 </div>
-<div class="one-line colorStyleRow"><div class="left"><span>Color</span><input id="colorC" style="width:44px;height:28px;padding:0;border:none;background:transparent" type="color" value="#ffffff"/></div><div class="iconbar inline" data-k="C">
+<div class="one-line colorStyleRow"><div class="left"><span>Color</span><input id="colorC" aria-label="Titulo 3 color" style="width:44px;height:28px;padding:0;border:none;background:transparent" type="color" value="#ffffff"/></div><div class="iconbar inline" data-k="C">
 <div class="iconbtn" data-act="bold"><b>B</b></div>
 <div class="iconbtn" data-act="italic"><i>I</i></div>
 <div class="iconbtn" data-act="underline"><u>U</u></div>
@@ -405,12 +419,12 @@ option{color:var(--fg);background:var(--bg);}
 </div>
 <div class="card">
 <h3>Barcode (Gradient)</h3>
-<div class="one-line"><span>Paleta: 7 colores</span><input checked="" name="palette" type="radio" value="top7"/></div>
-<div class="one-line"><span>Paleta: N colores</span><input name="palette" type="radio" value="topN"/><input disabled="" id="krange" max="256" min="3" step="1" type="range" value="7"/><span id="kval">7</span></div>
-<div class="one-line"><span>Paleta: Todos</span><input name="palette" type="radio" value="all"/></div>
-<div class="one-line"><span>Orden: Hue</span><input checked="" name="sort" type="radio" value="hue"/></div>
-<div class="one-line"><span>Orden: Frecuencia</span><input name="sort" type="radio" value="frequency"/></div>
-<div class="one-line"><span>Calidad (downscale)</span><input id="downscale" max="1024" min="64" step="32" type="number" value="360"/></div>
+<div class="one-line"><span>Paleta: 7 colores</span><input checked="" name="palette" type="radio" value="top7" aria-label="Paleta: 7 colores"/></div>
+<div class="one-line"><span>Paleta: N colores</span><input name="palette" type="radio" value="topN" aria-label="Paleta: N colores"/><input disabled="" id="krange" aria-label="Paleta: N colores" max="256" min="3" step="1" type="range" value="7"/><span id="kval">7</span></div>
+<div class="one-line"><span>Paleta: Todos</span><input name="palette" type="radio" value="all" aria-label="Paleta: todos"/></div>
+<div class="one-line"><span>Orden: Hue</span><input checked="" name="sort" type="radio" value="hue" aria-label="Orden: hue"/></div>
+<div class="one-line"><span>Orden: Frecuencia</span><input name="sort" type="radio" value="frequency" aria-label="Orden: frecuencia"/></div>
+<div class="one-line"><span>Calidad (downscale)</span><input id="downscale" aria-label="Calidad (downscale)" max="1024" min="64" step="32" type="number" value="360"/></div>
 <p style="font-size:12px;color:var(--muted)">El gradiente se calcula sobre la foto en la mascara 400x500.</p>
 </div>
 </aside>
@@ -425,7 +439,7 @@ option{color:var(--fg);background:var(--bg);}
 <div class="card t8b-reference-card">
   <h3>Referencia Paradise</h3>
   <figure>
-    <img src="/tool-suite/references/paradise-canva-reference.jpeg" alt="Referencia de grilla Paradise para replicar la primera pieza del carrusel" loading="lazy" />
+    <img src="/t8b/references/paradise-canva-reference.jpeg" alt="Referencia de grilla Paradise para replicar la primera pieza del carrusel" loading="lazy" />
   </figure>
   <p>Este canvas fue creado para replicar la estructura de la primera pieza de la grilla: bloque tipografico editorial a la izquierda, hero crop central, panel oscuro a la derecha y cierre de marca Paradise.</p>
   <figcaption>Usalo como guia compositiva para el primer asset del carrusel.</figcaption>
@@ -435,10 +449,10 @@ option{color:var(--fg);background:var(--bg);}
 
 <div class="badgeRow">
   <span class="lbl">up badge</span>
-  <input id="badge" class="txt" type="text" value="(2025)"/>
+  <input id="badge" aria-label="Badge" class="txt" type="text" value="(2025)"/>
   <div class="ctl">
     <span class="mini">size</span>
-    <input id="badgeSize" class="rng" type="range" min="10" max="80" step="1" value="28"/>
+    <input id="badgeSize" aria-label="Badge size" class="rng" type="range" min="10" max="80" step="1" value="28"/>
     <span class="val" id="badgeSizeVal">28</span>
   </div>
 </div>
@@ -447,45 +461,45 @@ option{color:var(--fg);background:var(--bg);}
   <span class="lbl">circle</span>
   <div class="ctl">
     <span class="mini">size</span>
-    <input id="badgeRing" class="rng" type="range" min="0.60" max="1.30" step="0.01" value="1.00"/>
+    <input id="badgeRing" aria-label="Circle size" class="rng" type="range" min="0.60" max="1.30" step="0.01" value="1.00"/>
     <span class="val" id="badgeRingVal">1.00</span>
   </div>
 </div>
 
 <div class="badgeRow">
   <span class="lbl">left badge</span>
-  <textarea id="leftText" class="txt" rows="2">(BRAND
+  <textarea id="leftText" aria-label="Left badge" class="txt" rows="2">(BRAND
 ACTIVATION)</textarea>
   <div class="ctl">
     <span class="mini">size</span>
-    <input id="leftSize" class="rng" type="range" min="10" max="80" step="1" value="22"/>
+    <input id="leftSize" aria-label="Left badge size" class="rng" type="range" min="10" max="80" step="1" value="22"/>
     <span class="val" id="leftSizeVal">22</span>
   </div>
 </div>
 
 <div class="badgeRow">
   <span class="lbl">right badge</span>
-  <input id="rightText" class="txt" type="text" value="(CONVERSE)"/>
+  <input id="rightText" aria-label="Right badge" class="txt" type="text" value="(CONVERSE)"/>
   <div class="ctl">
     <span class="mini">size</span>
-    <input id="rightSize" class="rng" type="range" min="10" max="80" step="1" value="22"/>
+    <input id="rightSize" aria-label="Right badge size" class="rng" type="range" min="10" max="80" step="1" value="22"/>
     <span class="val" id="rightSizeVal">22</span>
   </div>
 </div>
 
 <div class="badgeRow">
   <span class="lbl">arrow</span>
-  <select id="arrowChar" class="sel">
+  <select id="arrowChar" aria-label="Arrow" class="sel">
     <option>&rarr;</option><option selected>&#x27F6;</option><option>&#x279C;</option><option>&#x27A4;</option>
   </select>
   <div class="ctl">
     <span class="mini">size</span>
-    <input id="arrowSize" class="rng" type="range" min="10" max="220" step="1" value="48"/>
+    <input id="arrowSize" aria-label="Arrow size" class="rng" type="range" min="10" max="220" step="1" value="48"/>
     <span class="val" id="arrowSizeVal">48</span>
   </div>
   <div class="ctl">
     <span class="mini">stretch</span>
-    <input id="arrowStretch" class="rng" type="range" min="0.5" max="10" step="0.1" value="2"/>
+    <input id="arrowStretch" aria-label="Arrow stretch" class="rng" type="range" min="0.5" max="10" step="0.1" value="2"/>
     <span class="val" id="arrowStretchVal">2</span>
   </div>
 </div>
@@ -500,6 +514,9 @@ ACTIVATION)</textarea>
 </div>
 </aside>
 </main>
+  </div>
+  <footer class="vw-foot"><span>BROWSER</span><span>HTML</span></footer>
+</section>
 <script>
 (() => {
   const DPR = Math.max(1, window.devicePixelRatio||1);
@@ -1406,7 +1423,7 @@ function resetPreset(){
     </div>
     <div class="modalBody">
       <div class="modalHint">Pega una URL directa a un archivo .woff2 / .woff / .ttf / .otf</div>
-      <input id="fontUrlInput" type="url" placeholder="https://.../font.woff2" />
+      <input id="fontUrlInput" aria-label="URL de la fuente (.woff2, .woff, .ttf, .otf)" type="url" placeholder="https://.../font.woff2" />
       <div class="modalActions">
         <button id="fontUrlLoad" class="btn sm" type="button">Cargar</button>
       </div>
@@ -1424,12 +1441,12 @@ function resetPreset(){
       <button id="referenceParadiseClose" class="btn t8b-reference-modal__close" type="button" aria-label="Cerrar referencia">&times;</button>
     </div>
     <figure class="t8b-reference-modal__figure">
-      <img src="/tool-suite/references/paradise-canva-reference.jpeg" alt="Referencia de grilla Paradise para replicar la primera pieza del carrusel" loading="lazy" />
+      <img src="/t8b/references/paradise-canva-reference.jpeg" alt="Referencia de grilla Paradise para replicar la primera pieza del carrusel" loading="lazy" />
       <figcaption class="t8b-reference-modal__caption">Usala como guia compositiva para revisar el bloque editorial izquierdo, el hero crop central, el panel oscuro lateral y el cierre de marca Paradise antes de construir la primera pieza.</figcaption>
     </figure>
   </div>
 </div>
 
-<script src="/tool-suite/the8bureau-bridge.js"></script>
+<script src="/t8b/the8bureau-bridge.js?v=v2"></script>
 </body>
 </html>

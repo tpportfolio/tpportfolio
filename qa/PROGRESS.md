@@ -1,6 +1,6 @@
 # PROGRESS — QA antes de promover r36–r41
 Última actualización: 2026-10-22
-Etapa actual: 3 de 4 — esperando review de Tomás (checkpoint)
+Etapa actual: 4 de 4 — r43 lista; falta el OK de Tomás para subir a `main`
 
 ## Hecho
 - [Etapa 1] Nivel 0 sobre r41 — rama `release/r42-qa`.
@@ -21,6 +21,10 @@ Etapa actual: 3 de 4 — esperando review de Tomás (checkpoint)
 - Barrido responsive (6 viewports × claro/oscuro × ES/EN), interacciones, axe, comparación visual contra producción.
 - Safari iOS real: lo prueba Tomás en su teléfono.
 
+- [Etapa 4] r43 (`release/r43-webapps-v2-fixes`): webapps v2, Escape en popups, botón de menú mobile, nombres de campos, sin scroll lateral en /timeline y Canva.
+- `node run.mjs --label r43` → 0 errores de consola, 22/22 interacciones, 0 superposiciones, axe de las webapps en 0 tras el ajuste de radios de Canva (2026-10-22)
+- `MSYS_NO_PATHCONV=1 node run.mjs --label r43b --routes /timeline,/canva_productora` → sin desborde horizontal (2026-10-22). Ojo: en Git Bash, `--routes` necesita MSYS_NO_PATHCONV=1.
+
 ## Decisiones tomadas en el camino
 - `qa/` como paquete aparte con su propio Playwright — no toca el lockfile que usa Vercel ni el `node_modules` compartido con Acento — descartado: devDependency en el `package.json` del sitio.
 - axe-core desde el lockfile existente — sin dependencia nueva — descartado: `@axe-core/playwright`.
@@ -38,4 +42,4 @@ Etapa actual: 3 de 4 — esperando review de Tomás (checkpoint)
 - Ninguno.
 
 ## Próximo paso
-Esperar el OK de Tomás sobre qué corregir; después r43 = webapps v2 + correcciones, y volver a correr `qa/run.mjs` sobre r43.
+Con el OK de Tomás: backup de `main` y fast-forward a r43. Pendiente aparte: pasada de diseño (letra < 12px, botones < 44px, contraste) y Safari iOS real.

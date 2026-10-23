@@ -373,8 +373,9 @@ export default function Timeline() {
     )
   }
 
+  // overflow-x-clip on <main>: the orbiting video labels pass the right edge at some angles; no sideways scroll
   return (
-    <main className="py-8 px-4 md:px-12 relative">
+    <main className="py-8 px-4 md:px-12 relative overflow-x-clip">
       <canvas id="matrix-canvas" className="matrix-rain fixed top-0 left-0 w-full h-full z-0 opacity-20"></canvas>
 
       <div className="marquee-container mb-6 relative z-10">

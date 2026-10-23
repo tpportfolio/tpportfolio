@@ -1,5 +1,17 @@
 # Changelog
 
+## r43 (2026-10-22) — the8bureau webapps on v2; fixes from the pre-release QA
+Branch `release/r43-webapps-v2-fixes`. Builds on r42 (QA tooling in `qa/`).
+
+- Webapps on the8bureau v2: Canva Productora, Comparador de videos and Unyellower come from the v2 tool suite (2026-10-14); the PDF Toolkit is rebuilt with its v2 skin; Side-by-Side Image Compare gets the v2 header and window (it had the old one). Shared skin in `public/t8b/` (the old `public/tool-suite/` stays as a backup).
+- Webapp headers link only to the tools that exist on the site (no Prompt Studio, Shrink, YT-DLP or Brand); "← the8bureau" goes back to AI experiments.
+- Header text of the React webapps is readable in dark mode (it came out almost black).
+- Accessibility: every field of the five webapps has a name; the PDF drop area is a label around its file input (no input inside a button); the image comparer's sliders and tabs are named correctly.
+- AI experiments: Escape closes the popups (the image viewer first, then the gallery).
+- Mobile: the menu button hides while scrolling down and comes back when scrolling up, so it no longer covers links; keyboard focus always shows it.
+- No sideways scroll: `/timeline` (an orbiting video label passed the right edge at 1024px) and Canva Productora (its 1080px preview scaled to 50% kept its full layout width).
+- QA on r43 (`qa/run.mjs`, 408 loads): 0 console errors, 0 failed requests, 22/22 interactions, no overlaps, no sideways scroll; remaining axe items are the existing design ones (contrast, small labels).
+
 ## r41 (2026-10-22) — Paradise.la pitch animatics back on the consultant page
 Branch `release/r41-paradise-animatics`. Builds on r40.
 

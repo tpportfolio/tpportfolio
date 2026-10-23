@@ -228,7 +228,7 @@ const aiExperimentsStructure = {
     "REEL 2025/2026: video reel with a selection of AI works and experiments (https://youtu.be/bC8TGT4mD3Q).",
     "AUDIO IA - MUSIC LAB: cover-flow player with 10 AI-generated music tracks (drag, click, or arrow keys when the player has focus).",
     "the8bureau: Tomás's personal AI brand and his sandbox for testing tools, skills and workflows; he shares a set of tools that runs locally on his computer, privately and offline.",
-    "the8bureau tools: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare (usable on the site at `/comparador_imagenes`), Maps Lead Extractor (open source: https://github.com/tpportfolio/maps-lead-extractor) and Autonomous Ad Agency (status: deprecated). From the v2 set, the PDF Toolkit is usable on the site at `/pdf_toolkit`.",
+    "the8bureau tools: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare (usable on the site at `/comparador_imagenes`), Maps Lead Extractor (open source: https://github.com/tpportfolio/maps-lead-extractor) and Autonomous Ad Agency (status: deprecated). From the v2 set, the PDF Toolkit is usable on the site at `/pdf_toolkit`. The five webapps on the site (`/canva_productora`, `/comparador_videos`, `/unyellower`, `/comparador_imagenes`, `/pdf_toolkit`) use the the8bureau v2 interface and link to each other.",
     "New in the8bureau v2: Prompt Studio, PDF Toolkit, Cost Calculator and Brand Analyzer.",
   ],
   es: [
@@ -236,7 +236,7 @@ const aiExperimentsStructure = {
     "REEL 2025/2026: reel en video con una selección de trabajos y experimentos con IA (https://youtu.be/bC8TGT4mD3Q).",
     "AUDIO IA - MUSIC LAB: reproductor tipo cover flow con 10 tracks de música generados con IA (arrastrar, click, o flechas con el reproductor en foco).",
     "the8bureau: la marca personal de IA de Tomás y su sandbox para testear herramientas, skills y workflows; comparte un set de herramientas que corre de manera local en su computadora, de manera privada y offline.",
-    "Herramientas de the8bureau: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare (se usa en el sitio en `/comparador_imagenes`), Maps Lead Extractor (código abierto: https://github.com/tpportfolio/maps-lead-extractor) y Autonomous Ad Agency (estado: deprecated). Del set v2, el PDF Toolkit se usa en el sitio en `/pdf_toolkit`.",
+    "Herramientas de the8bureau: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare (se usa en el sitio en `/comparador_imagenes`), Maps Lead Extractor (código abierto: https://github.com/tpportfolio/maps-lead-extractor) y Autonomous Ad Agency (estado: deprecated). Del set v2, el PDF Toolkit se usa en el sitio en `/pdf_toolkit`. Las cinco webapps del sitio (`/canva_productora`, `/comparador_videos`, `/unyellower`, `/comparador_imagenes`, `/pdf_toolkit`) usan la interfaz v2 de the8bureau y se linkean entre sí.",
     "Nuevo en la v2 de the8bureau: Prompt Studio, PDF Toolkit, Calculadora de Costos y Brand Analyzer.",
   ],
 } satisfies Record<Lang, string[]>

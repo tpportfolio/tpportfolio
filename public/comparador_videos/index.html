@@ -219,8 +219,8 @@
   }
 </style>
 
-<link rel="icon" href="/icon"/>
-<link rel="stylesheet" href="/tool-suite/the8bureau-bridge.css"/>
+<link rel="icon" href="/t8b/8ball.png"/>
+<link rel="stylesheet" href="/t8b/the8bureau-bridge.css?v=v2"/>
 </head>
 
 <body data-t8b-tool="video-comparator" data-t8b-theme-engine="data-theme" data-t8b-theme-storage="t8b_theme_mode">
@@ -230,23 +230,37 @@
       <div class="t8b-bridge-logo">8</div>
       <div class="t8b-bridge-lockup">
         <h1>the8bureau</h1>
-        <p class="t8b-bridge-title">VIDEO <em>COMPARATOR</em> Suite</p>
+        <p class="t8b-bridge-title">VIDEO <em>COMPARATOR</em></p>
         <p class="t8b-bridge-tagline">Dual video comparison workspace with wipe, sync, offset and A/B review controls.</p>
       </div>
     </div>
     <div class="t8b-bridge-side">
       <div class="t8b-bridge-links">
-        <a href="/">Dashboard</a>
+        <a href="/work/ai-experiments">&larr; the8bureau</a>
+        <a href="/canva_productora">Canva</a>
+        <a href="/unyellower">Unyellow</a>
+        <a href="/comparador_imagenes">Images</a>
+        <a href="/pdf_toolkit">PDF</a>
       </div>
-      <div class="t8b-bridge-switch" role="group" aria-label="Theme mode">
-        <button type="button" class="t8b-bridge-mode-btn" data-mode="terminal">Terminal</button>
-        <button type="button" class="t8b-bridge-mode-btn" data-mode="light">Light</button>
+      <div class="t8b-bridge-slider" role="group" aria-label="Visual mode">
+        <span class="t8b-bridge-slider-label" data-side="dark">Dark</span>
+        <button type="button" class="t8b-bridge-slider-btn" data-state="terminal" aria-label="Toggle visual mode">
+          <span class="t8b-bridge-slider-track"><span class="t8b-bridge-slider-thumb"></span></span>
+        </button>
+        <span class="t8b-bridge-slider-label" data-side="light">Light</span>
       </div>
     </div>
   </div>
-  <div class="t8b-bridge-chips"><span class="t8b-bridge-chip">Paradise Tool</span><span class="t8b-bridge-chip">Native Page</span><span class="t8b-bridge-chip">Side-by-Side + Wipe</span></div>
+  <div class="t8b-bridge-chips"><span class="t8b-bridge-chip">Production House Tool</span><span class="t8b-bridge-chip">Native Page</span><span class="t8b-bridge-chip">Side-by-Side + Wipe</span></div>
 </div>
 <div class="wrap" id="root">
+<section class="vw" aria-label="VIDEO COMPARATOR">
+  <header class="vw-bar">
+    <span class="vw-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="vw-title-box"><span class="vw-title-in"><span class="vw-title">VIDEO COMPARATOR</span></span></span>
+    <span class="vw-meta">STATIC</span>
+  </header>
+  <div class="vw-body">
   <header>
     <div class="barCard">
       <div class="toolbar">
@@ -255,10 +269,10 @@
           <div class="brand">VIDEO COMPARATOR</div>
 
           <button id="leftBtn" class="ghost">LOAD LEFT</button>
-          <input id="leftFile" type="file" accept="video/*">
+          <input id="leftFile" aria-label="Load left video" type="file" accept="video/*">
 
           <button id="rightBtn" class="ghost">LOAD RIGHT</button>
-          <input id="rightFile" type="file" accept="video/*">
+          <input id="rightFile" aria-label="Load right video" type="file" accept="video/*">
 
           <button id="playBtn" class="primary">PLAY</button>
           <button id="stopBtn">STOP</button>
@@ -291,7 +305,7 @@
         <div class="row">
           <div class="range">
             <span class="muted">SEEK</span>
-            <input id="seekRange" type="range" min="0" max="1000" value="0">
+            <input id="seekRange" aria-label="Seek" type="range" min="0" max="1000" value="0">
             <span id="timeLbl" class="muted" style="letter-spacing:.08em">00:00 / 00:00</span>
           </div>
         </div>
@@ -300,7 +314,7 @@
         <div class="row">
           <div class="range">
             <span class="muted">ZOOM</span>
-            <input id="zoomRange" type="range" min="25" max="200" value="100" step="5">
+            <input id="zoomRange" aria-label="Zoom" type="range" min="25" max="200" value="100" step="5">
             <span id="zoomPct" class="muted">100%</span>
           </div>
 
@@ -309,17 +323,17 @@
 
           <div class="range">
             <span class="muted">WIPE</span>
-            <input id="wipeRange" type="range" min="0" max="100" value="50" style="width:220px">
+            <input id="wipeRange" aria-label="Wipe" type="range" min="0" max="100" value="50" style="width:220px">
           </div>
 
           <div class="range">
             <span class="muted">LEFT VOL</span>
-            <input id="leftVol" class="vol" type="range" min="0" max="1" step="0.01" value="0.8" style="width:180px">
+            <input id="leftVol" aria-label="Left volume" class="vol" type="range" min="0" max="1" step="0.01" value="0.8" style="width:180px">
           </div>
 
           <div class="range">
             <span class="muted">RIGHT VOL</span>
-            <input id="rightVol" class="vol" type="range" min="0" max="1" step="0.01" value="0.8" style="width:180px">
+            <input id="rightVol" aria-label="Right volume" class="vol" type="range" min="0" max="1" step="0.01" value="0.8" style="width:180px">
           </div>
 
           <label> SPEED
@@ -354,9 +368,12 @@
       <div class="drop-hint">Drop a video file here</div>
     </div></section>
   </main>
+  </div>
+  <footer class="vw-foot"><span>BROWSER</span><span>HTML</span></footer>
+</section>
 </div>
 
-<footer class="footerCredit">HECHO POR TOMÁS P.</footer>
+<footer class="footerCredit">HECHO POR TOMAS P.</footer>
 
 <script>
 (function(){
@@ -610,6 +627,6 @@
   requestAnimationFrame(syncLoop);
 })();
 </script>
-<script src="/tool-suite/the8bureau-bridge.js"></script>
+<script src="/t8b/the8bureau-bridge.js?v=v2"></script>
 </body>
 </html>

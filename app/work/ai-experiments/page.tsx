@@ -409,8 +409,21 @@ function The8BureauScreenshotThumb({ isLight, onOpen }: { isLight: boolean; onOp
   )
 }
 
+// Close the open popup on Escape; the listener only exists while `open` is true
+function useEscapeToClose(open: boolean, onClose: () => void) {
+  useEffect(() => {
+    if (!open) return
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose()
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [open, onClose])
+}
+
 function The8BureauImageModal({ isLight, onClose }: { isLight: boolean; onClose: () => void }) {
   const { language } = useLanguage()
+  useEscapeToClose(true, onClose)
   const closePreviewLabel = language === "es" ? "Cerrar vista previa de la imagen" : "Close image preview"
   const dashboardLabel = language === "es" ? "Dashboard v2 de the8bureau" : "the8bureau v2 dashboard"
   return (
@@ -678,6 +691,10 @@ function Work2026Modal({
   onClose: () => void
 }) {
   const [selectedGalleryImage, setSelectedGalleryImage] = useState<GalleryImage | null>(null)
+  const isViewerOpen = Boolean(selectedGalleryImage?.imageSrc || selectedGalleryImage?.videoId)
+  // Only the top-most layer reacts: the popup ignores Escape while the image viewer is open on top of it
+  useEscapeToClose(!isViewerOpen, onClose)
+  useEscapeToClose(isViewerOpen, () => setSelectedGalleryImage(null))
   const shellClass =
     item.kind === "gallery"
       ? `relative mx-auto flex max-h-[90vh] w-full md:w-[82%] max-w-none flex-col overflow-hidden rounded-sm border-2 ${

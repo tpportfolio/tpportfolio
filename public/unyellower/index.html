@@ -297,8 +297,8 @@
 
   </style>
 
-<link rel="icon" href="/icon"/>
-<link rel="stylesheet" href="/tool-suite/the8bureau-bridge.css"/>
+<link rel="icon" href="/t8b/8ball.png"/>
+<link rel="stylesheet" href="/t8b/the8bureau-bridge.css?v=v2"/>
 </head>
 
 <body data-t8b-tool="unyellower" data-t8b-theme-engine="data-theme" data-t8b-theme-storage="t8b_theme_mode">
@@ -308,22 +308,36 @@
       <div class="t8b-bridge-logo">8</div>
       <div class="t8b-bridge-lockup">
         <h1>the8bureau</h1>
-        <p class="t8b-bridge-title">UNYELLOWER <em>IMAGE</em> Cleaner</p>
+        <p class="t8b-bridge-title">UNYELLOWER</p>
         <p class="t8b-bridge-tagline">Batch image correction tool to neutralize yellow cast and compare before versus after.</p>
       </div>
     </div>
     <div class="t8b-bridge-side">
       <div class="t8b-bridge-links">
-        <a href="/">Dashboard</a>
+        <a href="/work/ai-experiments">&larr; the8bureau</a>
+        <a href="/canva_productora">Canva</a>
+        <a href="/comparador_videos">Compare</a>
+        <a href="/comparador_imagenes">Images</a>
+        <a href="/pdf_toolkit">PDF</a>
       </div>
-      <div class="t8b-bridge-switch" role="group" aria-label="Theme mode">
-        <button type="button" class="t8b-bridge-mode-btn" data-mode="terminal">Terminal</button>
-        <button type="button" class="t8b-bridge-mode-btn" data-mode="light">Light</button>
+      <div class="t8b-bridge-slider" role="group" aria-label="Visual mode">
+        <span class="t8b-bridge-slider-label" data-side="dark">Dark</span>
+        <button type="button" class="t8b-bridge-slider-btn" data-state="terminal" aria-label="Toggle visual mode">
+          <span class="t8b-bridge-slider-track"><span class="t8b-bridge-slider-thumb"></span></span>
+        </button>
+        <span class="t8b-bridge-slider-label" data-side="light">Light</span>
       </div>
     </div>
   </div>
-  <div class="t8b-bridge-chips"><span class="t8b-bridge-chip">Paradise Tool</span><span class="t8b-bridge-chip">Batch Image Fix</span><span class="t8b-bridge-chip">Before / After</span></div>
+  <div class="t8b-bridge-chips"><span class="t8b-bridge-chip">Production House Tool</span><span class="t8b-bridge-chip">Batch Image Fix</span><span class="t8b-bridge-chip">Before / After</span></div>
 </div>
+<section class="vw" aria-label="UNYELLOWER">
+  <header class="vw-bar">
+    <span class="vw-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="vw-title-box"><span class="vw-title-in"><span class="vw-title">UNYELLOWER</span></span></span>
+    <span class="vw-meta">STATIC</span>
+  </header>
+  <div class="vw-body">
   <div class="app">
     <div class="header">
       <div></div>
@@ -351,7 +365,7 @@
     <div class="content">
       <div class="card controls">
         <div class="fileRow">
-          <input id="files" type="file" accept="image/*" multiple />
+          <input id="files" aria-label="Imágenes a corregir" type="file" accept="image/*" multiple />
           <span class="pill" id="countPill">0 images</span>
         </div>
         <div id="drop" class="drop">Arrastrá imágenes acá (batch)</div>
@@ -397,7 +411,7 @@
         </label>
 
         <div class="btns">
-          <button class="btnPrimary" id="toggleAB">Antes/Después</button>
+          <button class="btnPrimary" id="toggleAB">Antes/DespuÉs</button>
           <button id="reset">Reset</button>
           <button id="downloadOne">Download (selected)</button>
           <button id="downloadAll">Download (batch)</button>
@@ -415,7 +429,7 @@
         <div class="card">
           <div class="gridBar">
             <strong>BATCH GRID</strong>
-            <span class="pill" id="selectedPill">Selected: —</span>
+            <span class="pill" id="selectedPill">Selected: …</span>
             <span class="sp"></span>
             <span class="editPill" id="overridePill" style="display:none;">Override active</span>
           </div>
@@ -426,6 +440,9 @@
       </div>
     </div>
   </div>
+  </div>
+  <footer class="vw-foot"><span>BROWSER</span><span>HTML</span></footer>
+</section>
 
 <script>
 (() => {
@@ -620,7 +637,7 @@
       tag.style.display = 'none';
       mainCanvas.width = 1; mainCanvas.height = 1;
       mctx.clearRect(0,0,1,1);
-      selectedPill.textContent = `Selected: —`;
+      selectedPill.textContent = `Selected: …`;
       updateEditUI();
       return;
     }
@@ -870,7 +887,7 @@
   downloadOneBtn.addEventListener('click', downloadSelected);
   downloadAllBtn.addEventListener('click', downloadBatch);
 
-  // Ctrl/⌘ + wheel zoom on main
+  // Ctrl/âŒ˜ + wheel zoom on main
   viewport.addEventListener('wheel', (e) => {
     if (!e.ctrlKey && !e.metaKey) return;
     e.preventDefault();
@@ -906,7 +923,7 @@
   updateEditUI();
 })();
 </script>
-<footer class="footerCredit">🄯 2025 - HECHO POR TOMÁS P.</footer>
-<script src="/tool-suite/the8bureau-bridge.js"></script>
+<footer class="footerCredit">© 2025 - HECHO POR TOMÁS P.</footer>
+<script src="/t8b/the8bureau-bridge.js?v=v2"></script>
 </body>
 </html>

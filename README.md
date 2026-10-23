@@ -2,13 +2,15 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r41 (2026-10-22) — Paradise.la pitch animatics back on the consultant page
+## Current version: r43 (2026-10-22) — the8bureau webapps on v2; fixes from the pre-release QA
 
 What changed in this version:
 
-- **Paradise.la.** The Juice and Sandwich pitch animatics (Mexico) are back inside its block on `/work/independent-consultant`.
+- **Webapps.** The five tools on the site use the8bureau v2 and link only to each other.
+- **QA fixes.** Escape closes the AI experiments popups; the mobile menu button no longer covers links; named fields in the webapps.
+- **QA tooling (r42).** `qa/` runs the pre-release checks: `cd qa && npm install && node run.mjs --base <url> --label <name>`.
 
-Previous version: r40 (2026-10-22) — Text uses the full width of each window.
+Previous version: r41 (2026-10-22) — Paradise.la pitch animatics back on the consultant page.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -19,7 +21,9 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r41-paradise-animatics`, tag `r41` | This version |
+| `release/r43-webapps-v2-fixes`, tag `r43` | This version |
+| `release/r42-qa`, tag `r42` | QA tooling (`qa/`) |
+| `release/r41-paradise-animatics`, tag `r41` | Paradise.la pitch animatics |
 | `release/r40-full-width-text`, tag `r40` | Text uses the full width of each window |
 | `release/r39-webapps-contact`, tag `r39` | PDF Toolkit, Image Compare, Maps code link, contact block |
 | `release/r38-cases-ai-tweaks`, tag `r38` | Results first on cases, AI experiments tweaks |
