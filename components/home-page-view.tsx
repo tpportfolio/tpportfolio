@@ -53,14 +53,14 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
   }, [])
 
   return (
-    <main className={["px-4 pb-8 pt-8 md:px-12", className].filter(Boolean).join(" ")}>
+    <main className={["home-calm px-4 pb-8 pt-8 md:px-12", className].filter(Boolean).join(" ")}>
       <div className="marquee-container mb-6 pl-16 pr-3 lg:px-2">
         <div className="marquee">
           <span>{siteIdentity.marquee}</span>
         </div>
       </div>
 
-      <section className="relative mb-8 px-2 text-center sm:px-0">
+      <section className="relative mb-12 px-2 text-center sm:px-0 md:mb-16">
         <h1
           className="mb-3 text-[2.2rem] font-bold leading-none text-neon-green font-cyber glitch sm:text-4xl md:mb-4 md:text-7xl"
           data-text={siteIdentity.name.toUpperCase()}
@@ -78,7 +78,7 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
               textEn={heroCopyEn}
               speedMs={10.3}
               startDelayMs={180}
-              fontSizePx={24}
+              fontSizePx={22}
               mobileFontSizePx={15}
               cursorSizePx={12}
               color={typewriterColor}
@@ -90,8 +90,6 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
           </div>
         </div>
       </section>
-
-      <HomeSummary />
 
       <section id="trabajos" className="mt-2 scroll-mt-4">
         <div className="section-header">
@@ -128,6 +126,9 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
           </div>
         </div>
       </section>
+
+      {/* After the work, not before it: the cases come first, the summary stays visible for search and AI engines. */}
+      <HomeSummary />
 
       <section className="mt-12 text-center">
         <div className="mb-6 h-px bg-gradient-to-r from-transparent via-neon-green to-transparent opacity-90"></div>

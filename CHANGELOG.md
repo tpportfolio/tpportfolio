@@ -1,5 +1,17 @@
 # Changelog
 
+## r44 (2026-10-23) — A calmer home
+Branch `release/r44-home-calma`. Builds on r43.
+
+Feedback from someone outside the field: the home felt overwhelming on arrival. Same terminal look, lower volume (ES and EN, same components):
+
+- One strong effect up top: the intro text keeps typing itself; the name glitches once on arrival and then settles; the marquee stands still.
+- Softer neon glow on the home titles, softer scanlines, and the status line at the bottom blinks three times and stops.
+- Intro text 2px smaller on desktop (24px → 22px); more space before the work.
+- The work comes right after the intro; the "In short" band moves below the projects (still visible text for search and AI engines).
+- CLIPPY.EXE appears on the home once the visitor scrolls or after 12 seconds; on every other page it is there from the start.
+- `agents.md` / `llms.txt`: no content change.
+
 ## r43 (2026-10-22) — the8bureau webapps on v2; fixes from the pre-release QA
 Branch `release/r43-webapps-v2-fixes`. Builds on r42 (QA tooling in `qa/`).
 

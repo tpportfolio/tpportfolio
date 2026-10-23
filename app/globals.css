@@ -2697,3 +2697,64 @@ html[data-visual-mode="light"] .vw--modal {
   }
 }
 /* VIDEO WINDOW END */
+
+/* HOME CALM START (r44): a quieter home for people outside the field.
+   One strong effect up top (the typewriter): the name glitches once on arrival and settles,
+   the marquee stands still, glow and scanlines go softer, the status line blinks a few times and stops. */
+.home-calm .glitch {
+  animation: glitch-skew 1s linear 2 alternate-reverse;
+}
+
+.home-calm .glitch::before {
+  animation: glitch-anim 5s linear 1 alternate-reverse, home-calm-fade 2.4s ease-out forwards;
+}
+
+.home-calm .glitch::after {
+  animation: glitch-anim2 5s linear 1 alternate-reverse, home-calm-fade 2.4s ease-out forwards;
+}
+
+@keyframes home-calm-fade {
+  0%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.home-calm .marquee-container {
+  justify-content: center;
+  box-shadow: 0 0 4px rgba(0, 255, 65, 0.35);
+}
+
+.home-calm .marquee {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  animation: none;
+  transform: none;
+}
+
+.home-calm .text-neon-green {
+  text-shadow: 0 0 4px rgba(0, 255, 65, 0.35);
+}
+
+.home-calm .text-neon-cyan {
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.3);
+}
+
+.home-calm .blink {
+  animation: blink 1s step-end 3;
+}
+
+body:has(.home-calm)::before {
+  opacity: 0.5;
+}
+
+body:has(.home-calm)::after {
+  opacity: 0.35;
+}
+/* HOME CALM END */
