@@ -35,7 +35,7 @@ export function RetroBrowser({
   children,
   highlight,
 }: RetroBrowserProps) {
-  const { t, language } = useLanguage()
+  const { language } = useLanguage()
 
   const resolvedTitle = resolveLocalized(title, language) ?? ""
   const resolvedYear = resolveLocalized(year, language) ?? ""
@@ -72,7 +72,6 @@ export function RetroBrowser({
                   </div>
                 )}
               </div>
-              <div className={`access-data mt-3 text-center text-base font-bold sm:mt-4 sm:text-lg ${highlight ? "text-cyan-400" : ""}`}>{t("access_data")}</div>
             </div>
           </Link>
         )}

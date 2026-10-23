@@ -2769,24 +2769,24 @@ body:has(.home-calm)::after {
   }
 }
 /* r46-r47: the home project windows, centered in their column: 95% of the column wide; minimum height
-   13.28 / 14.14 / 17.14rem (r46 -5%, r47 another -3%), so a card grows if its text needs it.
+   12.35 / 13.15 / 15.94rem (r46 -5%, r47 -3%, r48 -7%), so a card grows if its text needs it.
    r47 also makes the card text 2px smaller, never under 12px. */
 .home-calm #trabajos .vw--card {
   width: 95%;
   height: auto;
-  min-height: 13.28rem;
+  min-height: 12.35rem;
   margin-inline: auto;
 }
 
 @media (min-width: 640px) {
   .home-calm #trabajos .vw--card {
-    min-height: 14.14rem;
+    min-height: 13.15rem;
   }
 }
 
 @media (min-width: 768px) {
   .home-calm #trabajos .vw--card {
-    min-height: 17.14rem;
+    min-height: 15.94rem;
   }
 }
 .home-calm #trabajos .vw--card .vw-title {
@@ -2799,7 +2799,6 @@ body:has(.home-calm)::after {
 }
 
 .home-calm #trabajos .vw--card .client-line2,
-.home-calm #trabajos .vw--card .access-data,
 .home-calm #trabajos .vw--card .client-line3.text-lg {
   font-size: calc(1.125rem - 2px);
 }
@@ -2813,12 +2812,6 @@ body:has(.home-calm)::after {
   .home-calm #trabajos .vw--card .year,
   .home-calm #trabajos .vw--card .client,
   .home-calm #trabajos .vw--card .client-line2 {
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 639px) {
-  .home-calm #trabajos .vw--card .access-data {
     font-size: 12px;
   }
 }

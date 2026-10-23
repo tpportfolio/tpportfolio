@@ -4,7 +4,7 @@ import { CAREER_YEARS } from "@/lib/career"
 export const alt = "Tomás Peró — Brand Strategist y líder de marketing"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
-export const revalidate = 86400
+export const revalidate = 604800
 
 // Shared preview image for every page that does not define its own.
 export default function OpengraphImage() {

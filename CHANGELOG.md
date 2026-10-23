@@ -1,5 +1,11 @@
 # Changelog
 
+## r48 (2026-10-23) — Shorter home project windows without "[ACCESS DATA]"; weekly regeneration
+Branch `release/r48-cards-weekly`. Builds on r47.
+
+- Home: the project windows are 7% shorter (minimum height 12.35 / 13.15 / 15.94rem on mobile / tablet / desktop) and no longer show the "[ACCEDER A DATOS]" / "[ACCESS DATA]" line; the whole window is still the link to the case.
+- Pages, `agents.md`, `llms.txt` and the share image regenerate once a week instead of once a day (`revalidate = 604800`): enough for a number that changes every August.
+
 ## r47 (2026-10-23) — Home project windows: shorter, smaller text
 Branch `release/r47-cards-tweak`. Builds on r46.
 

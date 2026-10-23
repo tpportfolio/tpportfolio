@@ -21,8 +21,8 @@ const SITE_URL = "https://tomaspero.vercel.app";
 const SITE_DESCRIPTION =
   `Tomás Peró, Brand Strategist y líder de marketing en Buenos Aires: más de ${CAREER_YEARS} años en estrategia de marca, marketing cultural y tecnología creativa con IA.`;
 
-// Regenerate pages once a day (the years of experience change every August).
-export const revalidate = 86400
+// Regenerate pages once a week (the years of experience change every August).
+export const revalidate = 604800
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
