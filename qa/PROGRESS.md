@@ -50,3 +50,4 @@ Con el OK de Tomás: backup de `main` y fast-forward a r43. Pendiente aparte: pa
 - r48 (`release/r48-cards-weekly`): tarjetas de la home -7% de alto y sin "[ACCEDER A DATOS]"; revalidación semanal (2026-10-23).
 - r49 (`release/r49-spacing-cards`): menos espacio antes de PROJECT DATABASE y tarjetas -7% de alto (2026-10-23).
 - r50 (`release/r50-compact-home`): espacios más compactos alrededor de PROJECT DATABASE, tarjetas +2% ancho y -5% alto (2026-10-23).
+- r51 (`release/r51-no-role-home`): sin "GEN_MARKETER.exe" debajo del nombre en la home (2026-10-23).

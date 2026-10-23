@@ -2,13 +2,13 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r50 (2026-10-23) — A more compact project list on the home
+## Current version: r51 (2026-10-23) — "GEN_MARKETER.exe" only in the sidebar
 
 What changed in this version:
 
-- **Home.** Tighter spacing around the project list title; project windows 2% wider and 5% shorter.
+- **Home.** No "GEN_MARKETER.exe" under the name; it stays in the sidebar.
 
-Previous version: r49 (2026-10-23) — Tighter gap above the project list; shorter project windows.
+Previous version: r50 (2026-10-23) — A more compact project list on the home.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -19,7 +19,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r50-compact-home`, tag `r50` | This version |
+| `release/r51-no-role-home`, tag `r51` | This version |
+| `release/r50-compact-home`, tag `r50` | A more compact project list |
 | `release/r49-spacing-cards`, tag `r49` | Tighter gap, shorter project windows |
 | `release/r48-cards-weekly`, tag `r48` | No "[ACCESS DATA]", weekly regeneration |
 | `release/r47-cards-tweak`, tag `r47` | Home project windows: shorter, smaller text |

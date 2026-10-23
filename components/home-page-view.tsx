@@ -28,10 +28,6 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
     ? { color: "#2f1607", textShadow: "0 0 18px rgba(205, 108, 27, 0.18)" }
     : undefined
 
-  const secondaryStyle = isLight
-    ? { color: "#8b4315", textShadow: "0 0 10px rgba(188, 104, 28, 0.14)" }
-    : undefined
-
   const typewriterColor = isLight ? "#b85a17" : "#00ff00"
   const statusStyle = isLight ? { color: "#7a3913" } : undefined
 
@@ -63,9 +59,6 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
         >
           {siteIdentity.name.toUpperCase()}
         </h1>
-        <h2 className="mb-0 text-base text-neon-cyan font-cyber sm:text-xl md:text-2xl" style={secondaryStyle}>
-          {siteIdentity.role}
-        </h2>
         <div className="mt-4 w-full md:mt-5">
           <div className="mx-auto flex w-full max-w-6xl justify-center text-center">
             <Typewriter

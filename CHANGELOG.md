@@ -1,5 +1,10 @@
 # Changelog
 
+## r51 (2026-10-23) — "GEN_MARKETER.exe" only in the sidebar
+Branch `release/r51-no-role-home`. Builds on r50.
+
+- Home: the "GEN_MARKETER.exe" line under the name is gone; it stays only in the sidebar brand, top left (on mobile, inside the menu).
+
 ## r50 (2026-10-23) — A more compact project list on the home
 Branch `release/r50-compact-home`. Builds on r49.
 
