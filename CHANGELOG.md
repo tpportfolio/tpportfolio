@@ -1,5 +1,11 @@
 # Changelog
 
+## r47 (2026-10-23) — Home project windows: shorter, smaller text
+Branch `release/r47-cards-tweak`. Builds on r46.
+
+- Home: the project windows keep the r46 width (95% of the column) and are 3% shorter: minimum height 13.28 / 14.14 / 17.14rem on mobile / tablet / desktop. The height is a minimum, so a card with more text grows instead of squeezing "ACCESS DATA" against the bottom edge (it happened on mobile).
+- Home: the text inside the project windows is 2px smaller (title bar, year, client, lines, ACCESS DATA), never under 12px. On mobile it was 13px, so it goes to 12px.
+
 ## r46 (2026-10-23) — Years of experience count themselves; smaller project windows on the home
 Branch `release/r46-years-auto`. Builds on r45.
 

@@ -2768,22 +2768,58 @@ body:has(.home-calm)::after {
     visibility: hidden;
   }
 }
-/* r46: the project windows of the home are 5% smaller (width and height), centered in their column. */
+/* r46-r47: the home project windows, centered in their column: 95% of the column wide; minimum height
+   13.28 / 14.14 / 17.14rem (r46 -5%, r47 another -3%), so a card grows if its text needs it.
+   r47 also makes the card text 2px smaller, never under 12px. */
 .home-calm #trabajos .vw--card {
   width: 95%;
-  height: 14.725rem;
+  height: auto;
+  min-height: 13.28rem;
   margin-inline: auto;
 }
 
 @media (min-width: 640px) {
   .home-calm #trabajos .vw--card {
-    height: 15.675rem;
+    min-height: 14.14rem;
   }
 }
 
 @media (min-width: 768px) {
   .home-calm #trabajos .vw--card {
-    height: 19rem;
+    min-height: 17.14rem;
+  }
+}
+.home-calm #trabajos .vw--card .vw-title {
+  font-size: 12px;
+}
+
+.home-calm #trabajos .vw--card .year,
+.home-calm #trabajos .vw--card .client {
+  font-size: calc(1.5rem - 2px);
+}
+
+.home-calm #trabajos .vw--card .client-line2,
+.home-calm #trabajos .vw--card .access-data,
+.home-calm #trabajos .vw--card .client-line3.text-lg {
+  font-size: calc(1.125rem - 2px);
+}
+
+.home-calm #trabajos .vw--card .client-line3.text-base {
+  font-size: 12px;
+}
+
+/* Up to 768px the card text is 13px (1rem): 2px less would be 11px, so it stays at the 12px floor. */
+@media (max-width: 768px) {
+  .home-calm #trabajos .vw--card .year,
+  .home-calm #trabajos .vw--card .client,
+  .home-calm #trabajos .vw--card .client-line2 {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 639px) {
+  .home-calm #trabajos .vw--card .access-data {
+    font-size: 12px;
   }
 }
 /* HOME CALM END */

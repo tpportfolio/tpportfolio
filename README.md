@@ -2,14 +2,13 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r46 (2026-10-23) — Years of experience count themselves; smaller project windows on the home
+## Current version: r47 (2026-10-23) — Home project windows: shorter, smaller text
 
 What changed in this version:
 
-- **Years of experience.** Calculated from August 2007 everywhere (site, agents.md, llms.txt, Clippy, intro); pages regenerate daily.
-- **Home.** Project windows 5% smaller.
+- **Home.** Project windows 3% shorter than in r46, text inside them 2px smaller (12px minimum).
 
-Previous version: r45 (2026-10-23) — Home adjustments; 3 s boot with the white rabbit on /highlights.
+Previous version: r46 (2026-10-23) — Years of experience count themselves; smaller project windows on the home.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -20,7 +19,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r46-years-auto`, tag `r46` | This version |
+| `release/r47-cards-tweak`, tag `r47` | This version |
+| `release/r46-years-auto`, tag `r46` | Years of experience from August 2007 |
 | `release/r45-home-ajustes`, tag `r45` | Home adjustments, /highlights boot |
 | `release/r44-home-calma`, tag `r44` | A calmer home |
 | `release/r43-webapps-v2-fixes`, tag `r43` | the8bureau webapps on v2, QA fixes |

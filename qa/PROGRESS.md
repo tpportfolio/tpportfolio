@@ -46,3 +46,4 @@ Con el OK de Tomás: backup de `main` y fast-forward a r43. Pendiente aparte: pa
 - r44 (`release/r44-home-calma`, home más calma): `node run.mjs --label r44b --quick` → 0 errores, 22/22 interacciones (2026-10-23). En r45 Clippy vuelve a estar desde el arranque y la prueba de Clippy vuelve a la de r43.
 - r45 (`release/r45-home-ajustes`): `node run.mjs --label r45 --quick` → 0 errores, 22/22 interacciones, sin scroll lateral (2026-10-23).
 - r46 (`release/r46-years-auto`): años desde agosto 2007 en todo el sitio, tarjetas de la home 5% más chicas. `node run.mjs --label r46 --quick` → 0 errores, 22/22 (2026-10-23).
+- r47 (`release/r47-cards-tweak`): tarjetas de la home -3% de alto (alto mínimo) y letra -2 px con piso de 12 px (2026-10-23).
