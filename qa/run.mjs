@@ -707,9 +707,6 @@ async function runInteractions(browser, base) {
       try {
         const btn = page.locator('button[aria-label="Abrir assistant"]').first()
         if ((await btn.count()) === 0) return { pass: false, detail: 'no "Abrir assistant" button' }
-        // Since r44 Clippy waits on the home until the visitor scrolls: scroll first.
-        await page.mouse.wheel(0, 700)
-        await sleep(900)
         await btn.click({ timeout: 6000 })
         await sleep(800)
         const close = page.locator('button[aria-label="Cerrar assistant"]').locator('visible=true')

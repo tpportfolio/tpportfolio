@@ -54,12 +54,6 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
 
   return (
     <main className={["home-calm px-4 pb-8 pt-8 md:px-12", className].filter(Boolean).join(" ")}>
-      <div className="marquee-container mb-6 pl-16 pr-3 lg:px-2">
-        <div className="marquee">
-          <span>{siteIdentity.marquee}</span>
-        </div>
-      </div>
-
       <section className="relative mb-12 px-2 text-center sm:px-0 md:mb-16">
         <h1
           className="mb-3 text-[2.2rem] font-bold leading-none text-neon-green font-cyber glitch sm:text-4xl md:mb-4 md:text-7xl"
@@ -72,7 +66,7 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
           {siteIdentity.role}
         </h2>
         <div className="mt-4 w-full md:mt-5">
-          <div className="mx-auto flex w-full max-w-5xl justify-center text-center">
+          <div className="mx-auto flex w-full max-w-6xl justify-center text-center">
             <Typewriter
               textEs={heroCopyEs}
               textEn={heroCopyEn}
@@ -85,7 +79,7 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
               cursorColor={typewriterColor}
               align="center"
               forceReveal={skipTypewriter}
-              className="mx-auto max-w-[23rem] text-center sm:max-w-3xl md:max-w-5xl"
+              className="mx-auto w-full text-center sm:max-w-4xl md:max-w-6xl"
             />
           </div>
         </div>

@@ -1,5 +1,15 @@
 # Changelog
 
+## r45 (2026-10-23) — Home adjustments; 3 s boot with the white rabbit on /highlights
+Branch `release/r45-home-ajustes`. Builds on r44.
+
+- Home: the name keeps glitching, at a slower pace (3 s skew, 12 s slices); the marquee is gone.
+- Home: the moving scanline is fainter and waits 4 s between passes (10 s cycle: 6 s pass + 4 s pause).
+- Home: the intro text is wider (up to `max-w-6xl` on desktop, full width on mobile).
+- CLIPPY.EXE is on screen from the start again on every page (r44 delay on the home removed).
+- `/highlights`: the boot lasts about 3 s (it was ~1.5 s) and signs off with the white rabbit (same glyph as the long intro) at the bottom. Any key, scroll or touch still skips it.
+- `agents.md` / `llms.txt`: no content change.
+
 ## r44 (2026-10-23) — A calmer home
 Branch `release/r44-home-calma`. Builds on r43.
 

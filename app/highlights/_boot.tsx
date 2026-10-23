@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 
 // The boot as texture, not as a gate: the page is already rendered underneath, the overlay lets
-// every click and scroll through, it leaves by itself in about 1.5 s (CSS, so it also leaves
+// every click and scroll through, it leaves by itself in about 3 s (CSS, so it also leaves
 // without JavaScript), and any key, scroll, wheel or touch makes it go at once.
 // Shown once per browser session.
 
@@ -34,7 +34,7 @@ export function BootTexture() {
     const leave = () => setLeaving(true)
     const events = ["keydown", "wheel", "touchstart", "pointerdown", "scroll"] as const
     events.forEach((name) => window.addEventListener(name, leave, { passive: true, once: true }))
-    const done = window.setTimeout(() => setGone(true), 1700)
+    const done = window.setTimeout(() => setGone(true), 3100)
     return () => {
       events.forEach((name) => window.removeEventListener(name, leave))
       window.clearTimeout(done)
@@ -60,11 +60,12 @@ export function BootTexture() {
       <div className="v2-boot" data-leaving={leaving ? "" : undefined} aria-hidden="true">
         <div className="v2-boot-lines">
           {lines.map((line, i) => (
-            <p key={line} style={{ animationDelay: `${120 + i * 230}ms` }} data-last={i === lines.length - 1 ? "" : undefined}>
+            <p key={line} style={{ animationDelay: `${150 + i * 420}ms` }} data-last={i === lines.length - 1 ? "" : undefined}>
               {i === lines.length - 1 ? line : `> ${line}`}
             </p>
           ))}
         </div>
+        <p className="v2-boot-rabbit">{"\u{1F407}\uFE0E"}</p>
       </div>
     </>
   )

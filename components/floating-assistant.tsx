@@ -164,28 +164,6 @@ export function FloatingAssistant() {
     return () => window.clearTimeout(id)
   }, [open])
 
-  // On the home, Clippy waits until the visitor scrolls or stays a while, so the first screen stays calm.
-  const isHome = pathname === "/"
-  const [revealed, setRevealed] = useState(!isHome)
-
-  useEffect(() => {
-    if (!isHome) {
-      setRevealed(true)
-      return
-    }
-    if (revealed) return
-    const reveal = () => setRevealed(true)
-    const onScroll = () => {
-      if (window.scrollY > 320) reveal()
-    }
-    const timer = window.setTimeout(reveal, 12000)
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => {
-      window.clearTimeout(timer)
-      window.removeEventListener("scroll", onScroll)
-    }
-  }, [isHome, revealed])
-
   useEffect(() => {
     if (open) return
     const id = window.setInterval(() => setPulse((current) => !current), 2200)
@@ -480,9 +458,7 @@ export function FloatingAssistant() {
           type="button"
           onClick={() => setOpen((current) => !current)}
           aria-label={copy.open}
-          aria-hidden={revealed ? undefined : true}
-          tabIndex={revealed ? undefined : -1}
-          className={`relative inline-flex transition-[opacity,transform] duration-500 ${revealed ? "pointer-events-auto opacity-100" : "pointer-events-none translate-y-4 opacity-0"} h-[84px] w-[84px] items-center justify-center md:h-[106px] md:w-[106px] ${styles.launcher}`}
+          className={`pointer-events-auto relative inline-flex h-[84px] w-[84px] items-center justify-center md:h-[106px] md:w-[106px] ${styles.launcher}`}
         >
           <span
             className={`absolute inset-0 rounded-full blur-xl ${

@@ -2,15 +2,14 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r44 (2026-10-23) — A calmer home
+## Current version: r45 (2026-10-23) — Home adjustments; 3 s boot with the white rabbit on /highlights
 
 What changed in this version:
 
-- **Calmer home.** The name glitches once and settles, the marquee stands still, softer glow and scanlines, smaller intro text.
-- **Work first.** The projects come right after the intro; "In short" moves below them.
-- **Clippy waits.** On the home it appears after scrolling or 12 seconds.
+- **Home.** Slower glitch on the name, no marquee, fainter scanline with a 4 s pause, wider intro text, Clippy from the start.
+- **/highlights.** The boot lasts about 3 s and ends with the white rabbit.
 
-Previous version: r43 (2026-10-22) — the8bureau webapps on v2; fixes from the pre-release QA.
+Previous version: r44 (2026-10-23) — A calmer home.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -21,7 +20,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r44-home-calma`, tag `r44` | This version |
+| `release/r45-home-ajustes`, tag `r45` | This version |
+| `release/r44-home-calma`, tag `r44` | A calmer home |
 | `release/r43-webapps-v2-fixes`, tag `r43` | the8bureau webapps on v2, QA fixes |
 | `release/r42-qa`, tag `r42` | QA tooling (`qa/`) |
 | `release/r41-paradise-animatics`, tag `r41` | Paradise.la pitch animatics |

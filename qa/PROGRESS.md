@@ -43,4 +43,5 @@ Etapa actual: 4 de 4 — r43 lista; falta el OK de Tomás para subir a `main`
 
 ## Próximo paso
 Con el OK de Tomás: backup de `main` y fast-forward a r43. Pendiente aparte: pasada de diseño (letra < 12px, botones < 44px, contraste) y Safari iOS real.
-- r44 (`release/r44-home-calma`, home más calma): `node run.mjs --label r44b --quick` → 0 errores, 22/22 interacciones. La prueba de Clippy ahora baja la home antes de clickear, porque en la home aparece al bajar o a los 12 s (2026-10-23).
+- r44 (`release/r44-home-calma`, home más calma): `node run.mjs --label r44b --quick` → 0 errores, 22/22 interacciones (2026-10-23). En r45 Clippy vuelve a estar desde el arranque y la prueba de Clippy vuelve a la de r43.
+- r45 (`release/r45-home-ajustes`): `node run.mjs --label r45 --quick` → 0 errores, 22/22 interacciones, sin scroll lateral (2026-10-23).
