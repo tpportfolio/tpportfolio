@@ -2,14 +2,13 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r48 (2026-10-23) — Shorter home project windows without "[ACCESS DATA]"; weekly regeneration
+## Current version: r49 (2026-10-23) — Tighter gap above the project list; shorter project windows
 
 What changed in this version:
 
-- **Home.** Project windows 7% shorter, without the "[ACCESS DATA]" line.
-- **Regeneration.** Pages and text routes regenerate weekly (the years of experience change every August).
+- **Home.** Less space between the intro text and the project list; project windows 7% shorter.
 
-Previous version: r47 (2026-10-23) — Home project windows: shorter, smaller text.
+Previous version: r48 (2026-10-23) — Shorter home project windows without "[ACCESS DATA]"; weekly regeneration.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -20,7 +19,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r48-cards-weekly`, tag `r48` | This version |
+| `release/r49-spacing-cards`, tag `r49` | This version |
+| `release/r48-cards-weekly`, tag `r48` | No "[ACCESS DATA]", weekly regeneration |
 | `release/r47-cards-tweak`, tag `r47` | Home project windows: shorter, smaller text |
 | `release/r46-years-auto`, tag `r46` | Years of experience from August 2007 |
 | `release/r45-home-ajustes`, tag `r45` | Home adjustments, /highlights boot |

@@ -55,7 +55,7 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
 
   return (
     <main className={["home-calm px-4 pb-8 pt-8 md:px-12", className].filter(Boolean).join(" ")}>
-      <section className="relative mb-12 px-2 text-center sm:px-0 md:mb-16">
+      <section className="relative mb-8 px-2 text-center sm:px-0 md:mb-10">
         <h1
           className="mb-3 text-[2.2rem] font-bold leading-none text-neon-green font-cyber glitch sm:text-4xl md:mb-4 md:text-7xl"
           data-text={siteIdentity.name.toUpperCase()}

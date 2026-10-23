@@ -48,3 +48,4 @@ Con el OK de Tomás: backup de `main` y fast-forward a r43. Pendiente aparte: pa
 - r46 (`release/r46-years-auto`): años desde agosto 2007 en todo el sitio, tarjetas de la home 5% más chicas. `node run.mjs --label r46 --quick` → 0 errores, 22/22 (2026-10-23).
 - r47 (`release/r47-cards-tweak`): tarjetas de la home -3% de alto (alto mínimo) y letra -2 px con piso de 12 px (2026-10-23).
 - r48 (`release/r48-cards-weekly`): tarjetas de la home -7% de alto y sin "[ACCEDER A DATOS]"; revalidación semanal (2026-10-23).
+- r49 (`release/r49-spacing-cards`): menos espacio antes de PROJECT DATABASE y tarjetas -7% de alto (2026-10-23).

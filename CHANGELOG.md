@@ -1,5 +1,11 @@
 # Changelog
 
+## r49 (2026-10-23) — Tighter gap above the project list; shorter project windows
+Branch `release/r49-spacing-cards`. Builds on r48.
+
+- Home: less space between the end of the intro text and the PROJECT DATABASE title (desktop 58px → about 39px; mobile about 45px → 32px).
+- Home: the project windows are another 7% shorter (minimum height 11.49 / 12.23 / 14.82rem on mobile / tablet / desktop).
+
 ## r48 (2026-10-23) — Shorter home project windows without "[ACCESS DATA]"; weekly regeneration
 Branch `release/r48-cards-weekly`. Builds on r47.
 

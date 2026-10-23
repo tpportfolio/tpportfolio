@@ -2769,24 +2769,24 @@ body:has(.home-calm)::after {
   }
 }
 /* r46-r47: the home project windows, centered in their column: 95% of the column wide; minimum height
-   12.35 / 13.15 / 15.94rem (r46 -5%, r47 -3%, r48 -7%), so a card grows if its text needs it.
+   11.49 / 12.23 / 14.82rem (r46 -5%, r47 -3%, r48 -7%, r49 -7%), so a card grows if its text needs it.
    r47 also makes the card text 2px smaller, never under 12px. */
 .home-calm #trabajos .vw--card {
   width: 95%;
   height: auto;
-  min-height: 12.35rem;
+  min-height: 11.49rem;
   margin-inline: auto;
 }
 
 @media (min-width: 640px) {
   .home-calm #trabajos .vw--card {
-    min-height: 13.15rem;
+    min-height: 12.23rem;
   }
 }
 
 @media (min-width: 768px) {
   .home-calm #trabajos .vw--card {
-    min-height: 15.94rem;
+    min-height: 14.82rem;
   }
 }
 .home-calm #trabajos .vw--card .vw-title {
