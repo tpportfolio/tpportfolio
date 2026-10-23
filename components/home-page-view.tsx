@@ -55,7 +55,7 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
 
   return (
     <main className={["home-calm px-4 pb-8 pt-8 md:px-12", className].filter(Boolean).join(" ")}>
-      <section className="relative mb-8 px-2 text-center sm:px-0 md:mb-10">
+      <section className="relative mb-5 px-2 text-center sm:px-0 md:mb-6">
         <h1
           className="mb-3 text-[2.2rem] font-bold leading-none text-neon-green font-cyber glitch sm:text-4xl md:mb-4 md:text-7xl"
           data-text={siteIdentity.name.toUpperCase()}
@@ -88,7 +88,7 @@ export function HomePageView({ className, variantMode = "default" }: HomePageVie
 
       <section id="trabajos" className="mt-2 scroll-mt-4">
         <div className="section-header">
-          <h2 className="text-2xl font-bold mb-4 text-center font-cyber text-neon-green" style={accentStyle}>
+          <h2 className="text-2xl font-bold mb-2 text-center font-cyber text-neon-green" style={accentStyle}>
             {t("project_database")}
           </h2>
         </div>

@@ -2768,25 +2768,25 @@ body:has(.home-calm)::after {
     visibility: hidden;
   }
 }
-/* r46-r47: the home project windows, centered in their column: 95% of the column wide; minimum height
-   11.49 / 12.23 / 14.82rem (r46 -5%, r47 -3%, r48 -7%, r49 -7%), so a card grows if its text needs it.
+/* r46-r47: the home project windows, centered in their column: 97% of the column wide (r50); minimum height
+   10.92 / 11.62 / 14.08rem (r46 -5%, r47 -3%, r48 -7%, r49 -7%, r50 -5%), so a card grows if its text needs it.
    r47 also makes the card text 2px smaller, never under 12px. */
 .home-calm #trabajos .vw--card {
-  width: 95%;
+  width: 97%;
   height: auto;
-  min-height: 11.49rem;
+  min-height: 10.92rem;
   margin-inline: auto;
 }
 
 @media (min-width: 640px) {
   .home-calm #trabajos .vw--card {
-    min-height: 12.23rem;
+    min-height: 11.62rem;
   }
 }
 
 @media (min-width: 768px) {
   .home-calm #trabajos .vw--card {
-    min-height: 14.82rem;
+    min-height: 14.08rem;
   }
 }
 .home-calm #trabajos .vw--card .vw-title {
@@ -2815,4 +2815,9 @@ body:has(.home-calm)::after {
     font-size: 12px;
   }
 }
+/* r50: the project list title sits closer to the windows. */
+.home-calm #trabajos .section-header {
+  margin-bottom: 8px;
+}
+
 /* HOME CALM END */

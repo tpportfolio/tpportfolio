@@ -1,5 +1,11 @@
 # Changelog
 
+## r50 (2026-10-23) — A more compact project list on the home
+Branch `release/r50-compact-home`. Builds on r49.
+
+- Home: less space between the intro text and the PROJECT DATABASE title, and between that title and the project windows.
+- Home: the project windows are 2% wider (97% of the column) and 5% shorter (minimum height 10.92 / 11.62 / 14.08rem on mobile / tablet / desktop).
+
 ## r49 (2026-10-23) — Tighter gap above the project list; shorter project windows
 Branch `release/r49-spacing-cards`. Builds on r48.
 
