@@ -31,6 +31,36 @@ export const paradiseVideos: VideoItem[] = [
   },
 ]
 
+// The two pitch animatics shown inside the Paradise.la block of /work/independent-consultant.
+export const paradisePitchVideos: VideoItem[] = [
+  {
+    id: "pitch-jugos-mexico-animatic",
+    type: "youtube",
+    videoId: "U6_3OB7ljvY",
+    title: {
+      es: "Pitch Jugos México - Animatic",
+      en: "Mexico Juice Pitch - Animatic",
+    },
+    description: {
+      es: "Animatic de técnica mixta: footage + contenido generado con IA (a mi cargo). Pipeline end-to-end: imágenes, video y voz.",
+      en: "Mixed-technique animatic: footage + AI-generated content (my part). End-to-end pipeline: images, video and voice.",
+    },
+  },
+  {
+    id: "pitch-sandwiches-mexico-animatic",
+    type: "youtube",
+    videoId: "zW8DP4fr7xA",
+    title: {
+      es: "Pitch Sandwiches México - Animatic",
+      en: "Mexico Sandwich Pitch - Animatic",
+    },
+    description: {
+      es: "Animatic de técnica mixta: footage + contenido generado con IA (a mi cargo). Pipeline end-to-end: imágenes y video.",
+      en: "Mixed-technique animatic: footage + AI-generated content (my part). End-to-end pipeline: images and video.",
+    },
+  },
+]
+
 export const magaibaVideos: VideoItem[] = [
   {
     id: "magaiba-recap",

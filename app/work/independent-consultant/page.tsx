@@ -6,8 +6,8 @@ import { ArrowLeft } from "lucide-react"
 import { VideoCarousel } from "@/components/video-carousel"
 import { useLanguage } from "@/components/language-context"
 import { useVisualMode } from "@/components/visual-mode-context"
-import { consultantVideos } from "@/lib/work-videos"
-import { WindowFrame } from "@/components/video-window"
+import { consultantVideos, paradisePitchVideos } from "@/lib/work-videos"
+import { VideoWindow, WindowFrame, type VideoItem } from "@/components/video-window"
 import { CaseResults, type CaseResult } from "@/components/case-results"
 
 type L = { es: string; en: string }
@@ -23,6 +23,8 @@ type Engagement = {
   // Optional internal link wrapped around the company name.
   companyHref?: string
   links?: { href: string; label: L }[]
+  // Videos shown under the bullets, in the site's video window.
+  videos?: VideoItem[]
 }
 
 const overviewScope: L[] = [
@@ -105,6 +107,7 @@ const engagements: Engagement[] = [
         en: "Also worked on the brand refresh, roadmap and talent structure.",
       },
     ],
+    videos: paradisePitchVideos,
   },
   {
     anchor: "drgea",
@@ -354,6 +357,11 @@ export default function IndependentConsultantPage() {
                     ))}
                   </ul>
                 )}
+                {eng.videos ? (
+                  <div className="pt-4">
+                    <VideoWindow items={eng.videos} title="PARADISE_PITCHES" />
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

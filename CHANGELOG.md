@@ -1,5 +1,11 @@
 # Changelog
 
+## r41 (2026-10-22) — Paradise.la pitch animatics back on the consultant page
+Branch `release/r41-paradise-animatics`. Builds on r40.
+
+- `/work/independent-consultant#paradise-la`: the Paradise.la block shows again "Pitch Jugos México - Animatic" (U6_3OB7ljvY) and "Pitch Sandwiches México - Animatic" (zW8DP4fr7xA), in a PARADISE_PITCHES video window with thumbnails.
+- `agents.md` / `llms.txt`: the Paradise.la entry mentions both animatics with their links (ES/EN).
+
 ## r40 (2026-10-22) — Text uses the full width of each window
 Branch `release/r40-full-width-text`. Builds on r39.
 

@@ -2,13 +2,13 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r40 (2026-10-22) — Text uses the full width of each window
+## Current version: r41 (2026-10-22) — Paradise.la pitch animatics back on the consultant page
 
 What changed in this version:
 
-- **Reading.** Text in the work pages, About and Contact windows fills the window instead of breaking at 78 characters.
+- **Paradise.la.** The Juice and Sandwich pitch animatics (Mexico) are back inside its block on `/work/independent-consultant`.
 
-Previous version: r39 (2026-10-22) — the8bureau webapps on the site; "when it makes sense to talk".
+Previous version: r40 (2026-10-22) — Text uses the full width of each window.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -19,7 +19,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r40-full-width-text`, tag `r40` | This version |
+| `release/r41-paradise-animatics`, tag `r41` | This version |
+| `release/r40-full-width-text`, tag `r40` | Text uses the full width of each window |
 | `release/r39-webapps-contact`, tag `r39` | PDF Toolkit, Image Compare, Maps code link, contact block |
 | `release/r38-cases-ai-tweaks`, tag `r38` | Results first on cases, AI experiments tweaks |
 | `release/r37-home-geist-strip`, tag `r37` | Geist Mono, In short band, FAQ to agents.md |
