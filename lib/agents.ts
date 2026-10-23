@@ -1,3 +1,4 @@
+import { CAREER_YEARS } from "@/lib/career"
 import {
   aiExperimentsAgentSummary,
   crawlHints,
@@ -91,7 +92,7 @@ const specialtiesLocalized = {
 const aboutSnapshot = {
   en: [
     "Positioning: Brand Strategist and Brand Marketing Leader, working at the intersection of brand strategy, cultural marketing and creative technology.",
-    "Background: 18+ years building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production, from agencies and global brands to startups and independent consulting.",
+    `Background: ${CAREER_YEARS}+ years building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production, from agencies and global brands to startups and independent consulting.`,
     "Location: Buenos Aires, Argentina.",
     "Availability: open to brand leadership roles and to consulting projects with brands, agencies and lean teams.",
     "Working model: plugs into brand and marketing teams, brands and agencies to turn positioning into integrated go-to-market campaigns and to speed up execution with AI-powered creative workflows.",
@@ -99,7 +100,7 @@ const aboutSnapshot = {
   ],
   es: [
     "Posicionamiento: Brand Strategist y líder de marketing de marca, que trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa.",
-    "Trayectoria: más de 18 años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual, entre agencias, marcas globales, startups y consultoría independiente.",
+    `Trayectoria: más de ${CAREER_YEARS} años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual, entre agencias, marcas globales, startups y consultoría independiente.`,
     "Ubicación: Buenos Aires, Argentina.",
     "Disponibilidad: abierto a roles de liderazgo de marca y a proyectos de consultoría con marcas, agencias y equipos lean.",
     "Modelo de trabajo: se integra a equipos de marca y marketing, marcas y agencias para convertir el posicionamiento en campañas integradas de go-to-market y acelerar la ejecución con workflows creativos potenciados por IA.",
@@ -186,7 +187,7 @@ const careerFactsLocalized = {
 
 const independentConsultantSnapshot = {
   en: [
-    "Brand, Marketing & AI Consultant (JUL 2020-PRESENT) for fintech, healthtech, esports and media companies across LATAM, with 18+ years of overall experience.",
+    `Brand, Marketing & AI Consultant (JUL 2020-PRESENT) for fintech, healthtech, esports and media companies across LATAM, with ${CAREER_YEARS}+ years of overall experience.`,
     "What he does: brand positioning and messaging frameworks for multi-market expansion; integrated go-to-market strategies aligning content, PR and partnerships; influencer ecosystems and brand collaborations; narrative frameworks for founders and executive teams; cross-functional execution across Product, Growth, Brand and external agencies.",
     "Paradise.la (JUL 2024-JAN 2026), AI & Content Consultant & Producer: strategic consulting for the studio's transition to AI-enabled creative production; AI-assisted pipelines (image, video, audio) applied to real client projects; concept-to-delivery cycles cut from 2+ weeks to 3–4 days on pilot productions. Its block in `/work/independent-consultant#paradise-la` shows two pitch animatics (mixed technique, the AI part by Tomás): Mexico Juice Pitch (https://www.youtube.com/watch?v=U6_3OB7ljvY) and Mexico Sandwich Pitch (https://www.youtube.com/watch?v=zW8DP4fr7xA).",
     "$MAGAIBA (2024, side project), Community, Comms & AI Content: community communications for the first Argentine memecoin to go globally viral, and the RADIO MAGAIBA YouTube channel running 24/7 with AI-generated songs. Detail in `/magaiba`.",
@@ -197,7 +198,7 @@ const independentConsultantSnapshot = {
     "Go Broadway! (AUG 2020-NOV 2020), Marketing Consultant: marketing, brand and PR strategy for the LATAM launch of Backstage, an online casting platform for performing artists.",
   ],
   es: [
-    "Brand, Marketing & AI Consultant (JUL 2020-PRESENT) para empresas de fintech, healthtech, esports y medios en LATAM, con más de 18 años de experiencia total.",
+    `Brand, Marketing & AI Consultant (JUL 2020-PRESENT) para empresas de fintech, healthtech, esports y medios en LATAM, con más de ${CAREER_YEARS} años de experiencia total.`,
     "Qué hace: marcos de posicionamiento y mensajes de marca para expansión multi-mercado; estrategias de go-to-market integradas que alinean contenido, PR y alianzas; ecosistemas de influencers y colaboraciones de marca; marcos narrativos para fundadores y equipos ejecutivos; ejecución cross-funcional entre Producto, Growth, Marca y agencias externas.",
     "Paradise.la (JUL 2024-JAN 2026), AI & Content Consultant & Producer: consultoría estratégica para la transición de la productora hacia la producción creativa con IA; pipelines asistidos por IA (imagen, video, audio) aplicados a proyectos reales de clientes; ciclos de concepto a entrega que pasaron de más de 2 semanas a 3–4 días en producciones piloto. Su bloque en `/work/independent-consultant#paradise-la` muestra dos animatics de pitch (técnica mixta, la parte IA a cargo de Tomás): Pitch Jugos México (https://www.youtube.com/watch?v=U6_3OB7ljvY) y Pitch Sandwiches México (https://www.youtube.com/watch?v=zW8DP4fr7xA).",
     "$MAGAIBA (2024, proyecto paralelo), Community, Comms & AI Content: comunicación de comunidad de la primera memecoin argentina en volverse viral a nivel global y el canal de YouTube RADIO MAGAIBA, 24/7 con canciones generadas con IA. Detalle en `/magaiba`.",
@@ -244,7 +245,7 @@ const aiExperimentsStructure = {
 // Frequently asked questions, for agents and AI answers (until r36 they were a block on the home).
 const faqLocalized: Record<Lang, { q: string; a: string }[]> = {
   en: [
-    { q: "Who is Tomás Peró?", a: "Tomás Peró is a Brand Strategist and Marketing Leader based in Buenos Aires with 18+ years of experience. He has worked at agencies, The Walt Disney Company and Air New Zealand, and since 2020 he has supported brands as an independent consultant. Today he combines brand strategy with AI-assisted production." },
+    { q: "Who is Tomás Peró?", a: `Tomás Peró is a Brand Strategist and Marketing Leader based in Buenos Aires with ${CAREER_YEARS}+ years of experience. He has worked at agencies, The Walt Disney Company and Air New Zealand, and since 2020 he has supported brands as an independent consultant. Today he combines brand strategy with AI-assisted production.` },
     { q: "What does a Brand Strategist like Tomás do?", a: "He defines a brand's positioning and story and takes it into integrated 360° campaigns: launches and go-to-market, cultural marketing, partnerships and sponsorships, and AI workflows to produce content. He leads agencies and teams so everything speaks with one brand voice." },
     { q: "Which brands has he worked with?", a: "The Walt Disney Company (Disney, Marvel, Pixar, Lucasfilm), Air New Zealand, Paradise.la, Airtm, Stone Movistar, DrGea.com, Sinerlogic and Go Broadway!, plus J. Walter Thompson and Altheim at agencies, for clients such as Claro, Ford, Johnson & Johnson and Nokia." },
     { q: "What results did he achieve at Air New Zealand?", a: "As regional marketing lead for South America (2015–2020), he launched the brand and a new long-haul route. Visitors from Argentina tripled in 2 years (+225% in the first year) and the share of people who saw distance as a barrier fell from 50% to 24%. He led five agencies and over USD 500K a year." },
@@ -252,7 +253,7 @@ const faqLocalized: Record<Lang, { q: string; a: string }[]> = {
     { q: "How can I contact Tomás?", a: "You can reach him on LinkedIn (linkedin.com/in/tomaspero) or from the site's contact page, for brand strategy, launches, cultural marketing or AI production projects. He works in Spanish and English." },
   ],
   es: [
-    { q: "¿Quién es Tomás Peró?", a: "Tomás Peró es Brand Strategist y líder de marketing basado en Buenos Aires, con más de 18 años de experiencia. Trabajó en agencias, en The Walt Disney Company y en Air New Zealand, y desde 2020 acompaña a marcas como consultor independiente. Hoy combina estrategia de marca con producción asistida por IA." },
+    { q: "¿Quién es Tomás Peró?", a: `Tomás Peró es Brand Strategist y líder de marketing basado en Buenos Aires, con más de ${CAREER_YEARS} años de experiencia. Trabajó en agencias, en The Walt Disney Company y en Air New Zealand, y desde 2020 acompaña a marcas como consultor independiente. Hoy combina estrategia de marca con producción asistida por IA.` },
     { q: "¿Qué hace un Brand Strategist como Tomás?", a: "Define el posicionamiento y el relato de una marca y lo lleva a campañas 360° integradas: lanzamientos y go-to-market, marketing cultural, alianzas y sponsorships, y workflows de IA para producir contenido. Lidera agencias y equipos para que todo hable con una sola voz de marca." },
     { q: "¿Con qué marcas trabajó?", a: "The Walt Disney Company (Disney, Marvel, Pixar, Lucasfilm), Air New Zealand, Paradise.la, Airtm, Stone Movistar, DrGea.com, Sinerlogic y Go Broadway!, además de J. Walter Thompson y Altheim en agencias, para clientes como Claro, Ford, Johnson & Johnson y Nokia." },
     { q: "¿Qué resultados logró en Air New Zealand?", a: "Como líder de marketing regional para Sudamérica (2015–2020), lanzó la marca y una nueva ruta de larga distancia. Los visitantes desde Argentina se triplicaron en 2 años (+225% el primer año) y quienes veían la distancia como una barrera bajaron del 50% al 24%. Lideró cinco agencias y más de USD 500K al año." },
@@ -354,8 +355,8 @@ function buildMarkdownSection(lang: Lang) {
 
   const summary =
     lang === "en"
-      ? `${siteIdentity.name} is a Brand Strategist and Brand Marketing Leader based in Buenos Aires, with 18+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. He works at the intersection of brand strategy, cultural marketing and creative technology. The website functions as a portfolio, strategic profile and project archive.`
-      : `${siteIdentity.name} es Brand Strategist y líder de marketing de marca, basado en Buenos Aires, con más de 18 años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa. El sitio funciona como portfolio, perfil estratégico y archivo de proyectos.`
+      ? `${siteIdentity.name} is a Brand Strategist and Brand Marketing Leader based in Buenos Aires, with ${CAREER_YEARS}+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. He works at the intersection of brand strategy, cultural marketing and creative technology. The website functions as a portfolio, strategic profile and project archive.`
+      : `${siteIdentity.name} es Brand Strategist y líder de marketing de marca, basado en Buenos Aires, con más de ${CAREER_YEARS} años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa. El sitio funciona como portfolio, perfil estratégico y archivo de proyectos.`
 
   const homeLines =
     lang === "en"
@@ -455,8 +456,8 @@ function buildTextSection(lang: Lang) {
   const isEn = lang === "en"
   const summary =
     lang === "en"
-      ? `${siteIdentity.name} is a Brand Strategist and Brand Marketing Leader based in Buenos Aires, with 18+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. He works at the intersection of brand strategy, cultural marketing and creative technology. The website functions as a portfolio, strategic profile and project archive.`
-      : `${siteIdentity.name} es Brand Strategist y líder de marketing de marca, basado en Buenos Aires, con más de 18 años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa. El sitio funciona como portfolio, perfil estratégico y archivo de proyectos.`
+      ? `${siteIdentity.name} is a Brand Strategist and Brand Marketing Leader based in Buenos Aires, with ${CAREER_YEARS}+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. He works at the intersection of brand strategy, cultural marketing and creative technology. The website functions as a portfolio, strategic profile and project archive.`
+      : `${siteIdentity.name} es Brand Strategist y líder de marketing de marca, basado en Buenos Aires, con más de ${CAREER_YEARS} años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa. El sitio funciona como portfolio, perfil estratégico y archivo de proyectos.`
 
   const homeLines =
     lang === "en"

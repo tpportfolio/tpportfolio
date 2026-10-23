@@ -1,6 +1,6 @@
 # Perfil y posicionamiento
 
-Tomás Peró es Brand Strategist y líder de marketing de marca, basado en Buenos Aires, Argentina, con más de 18 años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa.
+Tomás Peró es Brand Strategist y líder de marketing de marca, basado en Buenos Aires, Argentina, con más de {{CAREER_YEARS}} años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa.
 
 Los roles que busca y con los que se identifica son Head of Brand, Brand Lead, Brand Manager, Brand Marketing Manager, Brand Strategist, Cultural Marketing y Creative Technologist. También toma proyectos de consultoría con marcas, agencias y equipos lean.
 

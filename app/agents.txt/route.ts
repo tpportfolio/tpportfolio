@@ -1,6 +1,7 @@
 import { buildAgentsText } from "@/lib/agents"
 
 export const dynamic = "force-static"
+export const revalidate = 86400
 
 export async function GET() {
   return new Response(buildAgentsText(), {

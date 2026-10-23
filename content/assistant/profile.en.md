@@ -1,6 +1,6 @@
 # Profile and positioning
 
-Tomás Peró is a Brand Strategist and Brand Marketing Leader based in Buenos Aires, Argentina, with 18+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. He works at the intersection of brand strategy, cultural marketing and creative technology.
+Tomás Peró is a Brand Strategist and Brand Marketing Leader based in Buenos Aires, Argentina, with {{CAREER_YEARS}}+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. He works at the intersection of brand strategy, cultural marketing and creative technology.
 
 The roles he is looking for and identifies with are Head of Brand, Brand Lead, Brand Manager, Brand Marketing Manager, Brand Strategist, Cultural Marketing and Creative Technologist. He also takes consulting projects with brands, agencies and lean teams.
 

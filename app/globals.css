@@ -2768,4 +2768,22 @@ body:has(.home-calm)::after {
     visibility: hidden;
   }
 }
+/* r46: the project windows of the home are 5% smaller (width and height), centered in their column. */
+.home-calm #trabajos .vw--card {
+  width: 95%;
+  height: 14.725rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 640px) {
+  .home-calm #trabajos .vw--card {
+    height: 15.675rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .home-calm #trabajos .vw--card {
+    height: 19rem;
+  }
+}
 /* HOME CALM END */

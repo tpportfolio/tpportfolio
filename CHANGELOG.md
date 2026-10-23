@@ -1,5 +1,12 @@
 # Changelog
 
+## r46 (2026-10-23) — Years of experience count themselves; smaller project windows on the home
+Branch `release/r46-years-auto`. Builds on r45.
+
+- Years of experience are calculated from August 2007 (`lib/career.ts`) instead of a fixed "18": today it says 19, and it goes up by itself every August. Everywhere it appeared: home intro and "In short", About (text and metadata), site description, share image, Acento version, `agents.md` / `llms.txt` (also `/acento`), CLIPPY.EXE knowledge base (`{{CAREER_YEARS}}` in `content/assistant/*.md`, filled in when it is read) and the long intro (small script).
+- Pages, `agents.md`, `llms.txt` and the share image regenerate once a day (`revalidate = 86400`), so the change shows up without a new deploy.
+- Home: the project windows are 5% smaller (width and height), centered in their column.
+
 ## r45 (2026-10-23) — Home adjustments; 3 s boot with the white rabbit on /highlights
 Branch `release/r45-home-ajustes`. Builds on r44.
 

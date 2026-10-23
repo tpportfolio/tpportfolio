@@ -1,6 +1,7 @@
 // Content of the "acento" alternative design. Every visible string lives here, in Spanish and
 // English, with the same facts as the main site (lib/site-content.ts and the work pages).
 // Nothing here is invented: no placeholder projects, figures or clients.
+import { CAREER_YEARS } from "@/lib/career"
 import type { StaticImageData } from "next/image"
 import type { LocalizedText } from "@/lib/site-content"
 import {
@@ -30,8 +31,8 @@ export const site = {
     en: "Brand Strategist and Brand Marketing Leader",
   } as L,
   description: {
-    es: "Tomás Peró, Brand Strategist y líder de marketing de marca en Buenos Aires. Más de 18 años construyendo, lanzando y escalando marcas en Latinoamérica.",
-    en: "Tomás Peró, Brand Strategist and Brand Marketing Leader in Buenos Aires. 18+ years building, launching and scaling brands across Latin America.",
+    es: `Tomás Peró, Brand Strategist y líder de marketing de marca en Buenos Aires. Más de ${CAREER_YEARS} años construyendo, lanzando y escalando marcas en Latinoamérica.`,
+    en: `Tomás Peró, Brand Strategist and Brand Marketing Leader in Buenos Aires. ${CAREER_YEARS}+ years building, launching and scaling brands across Latin America.`,
   } as L,
 }
 
@@ -67,8 +68,8 @@ export const home = {
     en: "Tomás Peró | Brand Strategist and Brand Marketing Leader",
   } as L,
   heroRole: {
-    es: "Brand Strategist y líder de marketing de marca en Buenos Aires. Más de 18 años construyendo, lanzando y escalando marcas.",
-    en: "Brand Strategist and Brand Marketing Leader in Buenos Aires. 18+ years building, launching and scaling brands.",
+    es: `Brand Strategist y líder de marketing de marca en Buenos Aires. Más de ${CAREER_YEARS} años construyendo, lanzando y escalando marcas.`,
+    en: `Brand Strategist and Brand Marketing Leader in Buenos Aires. ${CAREER_YEARS}+ years building, launching and scaling brands.`,
   } as L,
   heroSay: {
     es: "Se pronuncia con el acento al final:",
@@ -82,8 +83,8 @@ export const home = {
   heroScroll: { es: "Trabajo seleccionado", en: "Selected work" } as L,
 
   idea: {
-    es: "Una marca es una decisión sobre dónde va el acento. Hace más de 18 años que tomo esa decisión con equipos de Disney, Air New Zealand, fintechs, clubes de esports y productoras.",
-    en: "A brand is a decision about where the accent goes. I have been making that decision for 18+ years with teams at Disney, Air New Zealand, fintechs, esports clubs and production studios.",
+    es: `Una marca es una decisión sobre dónde va el acento. Hace más de ${CAREER_YEARS} años que tomo esa decisión con equipos de Disney, Air New Zealand, fintechs, clubes de esports y productoras.`,
+    en: `A brand is a decision about where the accent goes. I have been making that decision for ${CAREER_YEARS}+ years with teams at Disney, Air New Zealand, fintechs, esports clubs and production studios.`,
   } as L,
 
   pillarsHeading: { es: "Dónde pongo el acento", en: "Where I put the accent" } as L,
@@ -195,7 +196,7 @@ export const home = {
   factsHeading: { es: "En números", en: "In numbers" } as L,
   facts: [
     {
-      value: { es: "18+", en: "18+" },
+      value: { es: `${CAREER_YEARS}+`, en: `${CAREER_YEARS}+` },
       label: { es: "años trabajando con marcas, desde 2007", en: "years working with brands, since 2007" },
     },
     {
@@ -827,8 +828,8 @@ export const profile = {
   } as L,
   bio: [
     {
-      es: "Soy Brand Strategist y líder de marketing de marca, con más de 18 años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual.",
-      en: "I'm a Brand Strategist and Brand Marketing Leader with 18+ years building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production.",
+      es: `Soy Brand Strategist y líder de marketing de marca, con más de ${CAREER_YEARS} años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual.`,
+      en: `I'm a Brand Strategist and Brand Marketing Leader with ${CAREER_YEARS}+ years building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production.`,
     },
     {
       es: "Me formé en agencias (Altheim y J. Walter Thompson) y mi carrera de marca empezó en The Walt Disney Company: promociones y alianzas de marca para toda Latinoamérica, después distribución digital y Disney Labs, su programa de innovación.",

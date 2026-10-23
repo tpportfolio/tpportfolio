@@ -1,3 +1,4 @@
+import { CAREER_YEARS } from "@/lib/career"
 export type LocalizedText = {
   es: string
   en: string
@@ -57,8 +58,8 @@ export const siteIdentity = {
   location: 'Buenos Aires, Argentina',
   marquee: 'SYSTEM ONLINE: TOMÁS PERÓ // BRAND STRATEGY // BRAND MARKETING // CULTURAL MARKETING // CREATIVE TECHNOLOGY // ACCESS GRANTED // \u26a0 WORK IN PROGRESS',
   heroCopy: {
-    es: 'Tomás Peró es Brand Strategist y líder de marketing de marca, basado en Buenos Aires, con más de 18 años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa.',
-    en: "Tomás Peró is a Brand Strategist and Brand Marketing Leader based in Buenos Aires, with 18+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. He works at the intersection of brand strategy, cultural marketing and creative technology.",
+    es: `Tomás Peró es Brand Strategist y líder de marketing de marca, basado en Buenos Aires, con más de ${CAREER_YEARS} años construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabaja en el cruce entre estrategia de marca, marketing cultural y tecnología creativa.`,
+    en: `Tomás Peró is a Brand Strategist and Brand Marketing Leader based in Buenos Aires, with ${CAREER_YEARS}+ years of experience building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. He works at the intersection of brand strategy, cultural marketing and creative technology.`,
   },
   introReplayLabel: {
     es: 'VOLVER A VER LA INTRODUCCI\u00d3N',

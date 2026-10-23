@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises"
 import path from "node:path"
+import { careerYears } from "@/lib/career"
 
 import {
   aiExperimentsAgentSummary,
@@ -354,7 +355,8 @@ async function loadExtraDocs(): Promise<AssistantChunk[]> {
   return Promise.all(
     EXTRA_DOCS.map(async (doc) => {
       const fullPath = path.join(baseDir, doc.file)
-      const text = await readFile(fullPath, "utf8")
+      // {{CAREER_YEARS}} in the .md files becomes the years since August 2007.
+      const text = (await readFile(fullPath, "utf8")).split("{{CAREER_YEARS}}").join(String(careerYears()))
 
       if (doc.file === "assistant-qa.es-en.md") {
         const sectionHeading = doc.lang === "es" ? "### Sección de Preguntas y Respuestas" : "### Section: Q"

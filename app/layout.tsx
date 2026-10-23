@@ -1,3 +1,4 @@
+import { CAREER_YEARS } from "@/lib/career"
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
@@ -18,7 +19,10 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const SITE_URL = "https://tomaspero.vercel.app";
 const SITE_DESCRIPTION =
-  "Tomás Peró, Brand Strategist y líder de marketing en Buenos Aires: más de 18 años en estrategia de marca, marketing cultural y tecnología creativa con IA.";
+  `Tomás Peró, Brand Strategist y líder de marketing en Buenos Aires: más de ${CAREER_YEARS} años en estrategia de marca, marketing cultural y tecnología creativa con IA.`;
+
+// Regenerate pages once a day (the years of experience change every August).
+export const revalidate = 86400
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

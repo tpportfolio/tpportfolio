@@ -1,8 +1,10 @@
 import { ImageResponse } from "next/og"
+import { CAREER_YEARS } from "@/lib/career"
 
 export const alt = "Tomás Peró — Brand Strategist y líder de marketing"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
+export const revalidate = 86400
 
 // Shared preview image for every page that does not define its own.
 export default function OpengraphImage() {
@@ -31,7 +33,7 @@ export default function OpengraphImage() {
           <div style={{ fontSize: 96, fontWeight: 700, letterSpacing: 6 }}>TOMÁS PERÓ</div>
           <div style={{ fontSize: 40, color: "#22f0ff" }}>Brand Strategist &amp; Marketing Leader</div>
           <div style={{ fontSize: 30, color: "#c4cdc7" }}>
-            Estrategia de marca · marketing cultural · IA · 18+ años
+            {`Estrategia de marca · marketing cultural · IA · ${CAREER_YEARS}+ años`}
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 26, color: "#9aa79e" }}>

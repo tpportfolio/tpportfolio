@@ -1,5 +1,6 @@
 "use client"
 
+import { CAREER_YEARS } from "@/lib/career"
 import { useLanguage } from "@/components/language-context"
 import { useVisualMode } from "@/components/visual-mode-context"
 import Image from "next/image"
@@ -53,11 +54,11 @@ const copyEs: AboutCopy = {
   contextHeader: "SELECTED_CONTEXT",
   name: "TOMÁS PERÓ",
   positioning: "Brand Strategist & Brand Marketing Leader",
-  subline: "Estrategia de marca · marketing cultural · tecnología creativa. Más de 18 años construyendo, lanzando y escalando marcas.",
+  subline: `Estrategia de marca · marketing cultural · tecnología creativa. Más de ${CAREER_YEARS} años construyendo, lanzando y escalando marcas.`,
   signals: ["Brand Strategy", "Brand Marketing", "Cultural Marketing", "Go-To-Market", "Creative Technology", "AI Workflows"],
   overview: [
     [
-      "Soy ", B("Brand Strategist"), " y líder de ", B("marketing de marca"), ", con más de ", B("18 años"),
+      "Soy ", B("Brand Strategist"), " y líder de ", B("marketing de marca"), ", con más de ", B(`${CAREER_YEARS} años`),
       " construyendo, lanzando y escalando marcas en entretenimiento, aviación, esports, fintech, healthtech y producción audiovisual. Trabajo en el cruce entre ",
       B("estrategia de marca"), ", ", B("marketing cultural"), " y ", B("tecnología creativa"), ".",
     ],
@@ -112,7 +113,7 @@ const copyEs: AboutCopy = {
   contextItems: [
     {
       label: "TRAJECTORY",
-      value: "Ex Disney, Air New Zealand, Airtm, DrGea y JWT. Más de 18 años entre agencias, marcas globales, startups y consultoría.",
+      value: `Ex Disney, Air New Zealand, Airtm, DrGea y JWT. Más de ${CAREER_YEARS} años entre agencias, marcas globales, startups y consultoría.`,
     },
     {
       label: "INDUSTRIES",
@@ -142,11 +143,11 @@ const copyEn: AboutCopy = {
   contextHeader: "SELECTED_CONTEXT",
   name: "TOMÁS PERÓ",
   positioning: "Brand Strategist & Brand Marketing Leader",
-  subline: "Brand strategy · cultural marketing · creative technology. 18+ years building, launching and scaling brands.",
+  subline: `Brand strategy · cultural marketing · creative technology. ${CAREER_YEARS}+ years building, launching and scaling brands.`,
   signals: ["Brand Strategy", "Brand Marketing", "Cultural Marketing", "Go-To-Market", "Creative Technology", "AI Workflows"],
   overview: [
     [
-      "I'm a ", B("Brand Strategist"), " and ", B("Brand Marketing Leader"), " with ", B("18+ years"),
+      "I'm a ", B("Brand Strategist"), " and ", B("Brand Marketing Leader"), " with ", B(`${CAREER_YEARS}+ years`),
       " building, launching and scaling brands across entertainment, aviation, esports, fintech, healthtech and audiovisual production. I work at the intersection of ",
       B("brand strategy"), ", ", B("cultural marketing"), " and ", B("creative technology"), ".",
     ],
@@ -201,7 +202,7 @@ const copyEn: AboutCopy = {
   contextItems: [
     {
       label: "TRAJECTORY",
-      value: "Ex Disney, Air New Zealand, Airtm, DrGea and JWT. 18+ years across agencies, global brands, startups and consulting.",
+      value: `Ex Disney, Air New Zealand, Airtm, DrGea and JWT. ${CAREER_YEARS}+ years across agencies, global brands, startups and consulting.`,
     },
     {
       label: "INDUSTRIES",

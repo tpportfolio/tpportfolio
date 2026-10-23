@@ -1,5 +1,6 @@
 "use client"
 
+import { CAREER_YEARS } from "@/lib/career"
 import { useLanguage } from "./language-context"
 
 // "In short" band under the home intro: three short facts as wide as the project grid,
@@ -11,8 +12,8 @@ const items: { key: L; text: L }[] = [
   {
     key: { es: "Qué hago", en: "What I do" },
     text: {
-      es: "Brand Strategist y líder de marketing en Buenos Aires, con más de 18 años construyendo, lanzando y escalando marcas.",
-      en: "Brand Strategist and Marketing Leader based in Buenos Aires, with 18+ years building, launching and scaling brands.",
+      es: `Brand Strategist y líder de marketing en Buenos Aires, con más de ${CAREER_YEARS} años construyendo, lanzando y escalando marcas.`,
+      en: `Brand Strategist and Marketing Leader based in Buenos Aires, with ${CAREER_YEARS}+ years building, launching and scaling brands.`,
     },
   },
   {

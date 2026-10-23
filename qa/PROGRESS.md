@@ -45,3 +45,4 @@ Etapa actual: 4 de 4 — r43 lista; falta el OK de Tomás para subir a `main`
 Con el OK de Tomás: backup de `main` y fast-forward a r43. Pendiente aparte: pasada de diseño (letra < 12px, botones < 44px, contraste) y Safari iOS real.
 - r44 (`release/r44-home-calma`, home más calma): `node run.mjs --label r44b --quick` → 0 errores, 22/22 interacciones (2026-10-23). En r45 Clippy vuelve a estar desde el arranque y la prueba de Clippy vuelve a la de r43.
 - r45 (`release/r45-home-ajustes`): `node run.mjs --label r45 --quick` → 0 errores, 22/22 interacciones, sin scroll lateral (2026-10-23).
+- r46 (`release/r46-years-auto`): años desde agosto 2007 en todo el sitio, tarjetas de la home 5% más chicas. `node run.mjs --label r46 --quick` → 0 errores, 22/22 (2026-10-23).
