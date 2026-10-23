@@ -1,0 +1,12 @@
+{
+  "name": "portfolio-qa",
+  "private": true,
+  "description": "Pre-release checks for the portfolio: responsive sweep, visual comparison with production, interactions and accessibility. Separate from the site's package.json so Vercel never installs it.",
+  "type": "module",
+  "scripts": {
+    "qa": "node run.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.64.0"
+  }
+}

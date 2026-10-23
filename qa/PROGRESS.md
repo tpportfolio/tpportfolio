@@ -1,0 +1,41 @@
+# PROGRESS — QA antes de promover r36–r41
+Última actualización: 2026-10-22
+Etapa actual: 3 de 4 — esperando review de Tomás (checkpoint)
+
+## Hecho
+- [Etapa 1] Nivel 0 sobre r41 — rama `release/r42-qa`.
+
+- [Etapa 2] `qa/run.mjs` (Sonnet): barrido 17 rutas × 6 viewports × 4 variantes, interacciones, axe, comparación visual. Corridas completas sobre r41 (:3242) y producción.
+
+## Pruebas ejecutadas
+- `node run.mjs --base http://localhost:3242 --label r41` → 408 cargas, 0 errores de consola, 0 pedidos fallidos, 20/22 interacciones OK (2026-10-22)
+- `node run.mjs --base https://tomaspero.vercel.app --label prod` → 1 error de hidratación React #418 en /work/agency-experience 390 (2026-10-22)
+- `node run.mjs --compare r41 prod` → 312 pares de capturas (2026-10-22)
+- Verificado a mano: Escape no cierra los popups de AI experiments (no hay handler); el desborde de /timeline a 360 no se reproduce sin emulación móvil (con isMobile la página queda a 370px de ancho: diferencia de 5px, confirmar en teléfono)
+- `npm run lint` → 0 errores, 8 warnings (`<img>` en vez de `next/image` en magaiba y ai-experiments; script de Analytics inline en `app/layout.tsx` y `app/layoutv1.tsx`) (2026-10-22)
+- `npm run typecheck` → OK (2026-10-22)
+- `npm run build` → OK, 57 páginas (2026-10-22)
+- Build servido con `next start -p 3242` (config `portfolio-r42-qa-prod` en `.claude/launch.json`)
+
+## Pendiente de probar
+- Barrido responsive (6 viewports × claro/oscuro × ES/EN), interacciones, axe, comparación visual contra producción.
+- Safari iOS real: lo prueba Tomás en su teléfono.
+
+## Decisiones tomadas en el camino
+- `qa/` como paquete aparte con su propio Playwright — no toca el lockfile que usa Vercel ni el `node_modules` compartido con Acento — descartado: devDependency en el `package.json` del sitio.
+- axe-core desde el lockfile existente — sin dependencia nueva — descartado: `@axe-core/playwright`.
+- PLAN/PROGRESS en `qa/` y no en la raíz — el repo es público y la raíz ya tiene README/CHANGELOG.
+
+- Webapps the8bureau a v2 (pedido de Tomás 2026-10-22) — se arman en el scratch y entran en r43 recién cuando termine la corrida del QA, para no cambiar el build que se está midiendo:
+  - PDF Toolkit reconstruido con la piel v2 adentro de `/pdf_toolkit/` (`scratchpad/build_pdf/out`).
+  - Canva Productora, Comparador de videos y Unyellower desde `the8bureau/public/tool-suite` (v2, 14/10) con la piel compartida en `/t8b/` (`scratchpad/t8b_v2`, script `scratchpad/t8b_v2.py`). `/tool-suite/` viejo queda intacto como respaldo.
+  - Image Compare: no tenía versión v2 (el dashboard abre `fork_app`, de marzo, con la cabecera vieja). Se le hizo la misma adaptación que al PDF Toolkit: cabecera v2 (`components/bridge-chrome.tsx`) y ventana `.vw`; `body[data-t8b-tool="image-compare"]` (`scratchpad/build_cmp`).
+  - Los dos React apps (PDF, Image Compare) usan la piel compartida `/t8b/`; se agregó una regla para el texto de la cabecera en oscuro, porque el `--muted` de shadcn es un color de fondo y dejaba los links casi negros.
+  - Vista previa de las 5 en `scratchpad/t8b_v2` (servidor `t8b-v2-webapps-preview`, :3244).
+  - Cabeceras: solo links a herramientas que existen en el portfolio (sin Prompt Studio, Shrink, YT-DLP ni Brand); "← the8bureau" va a `/work/ai-experiments`.
+
+## Bloqueos / dudas abiertas
+- Ninguno.
+
+## Próximo paso
+Esperar el OK de Tomás sobre qué corregir; después r43 = webapps v2 + correcciones, y volver a correr `qa/run.mjs` sobre r43.
