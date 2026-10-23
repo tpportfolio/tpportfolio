@@ -342,6 +342,22 @@ export const aiExperimentsAgentSummary = {
         en: 'Side-by-side comparison of two video versions for production review.',
       },
     },
+    {
+      route: '/comparador_imagenes',
+      title: 'COMPARADOR_IMAGENES',
+      summary: {
+        es: 'Side-by-Side Image Compare de the8bureau: dos im\u00e1genes con zoom y pan sincronizados, lado a lado o con slider. Todo local en el navegador.',
+        en: 'the8bureau Side-by-Side Image Compare: two images with synced zoom and pan, side by side or with a slider. Fully local in the browser.',
+      },
+    },
+    {
+      route: '/pdf_toolkit',
+      title: 'PDF_TOOLKIT',
+      summary: {
+        es: 'PDF Toolkit de the8bureau: convertir PDF a imagen, combinar 2 PDF en 1 imagen y unir varios PDF en uno, en el navegador y sin subir archivos.',
+        en: 'the8bureau PDF Toolkit: convert PDF to images, combine 2 PDFs into 1 image and merge several PDFs into one, in the browser with no uploads.',
+      },
+    },
   ] satisfies AiAgentTool[],
   archiveHighlights: [
     {

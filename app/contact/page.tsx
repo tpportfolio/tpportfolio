@@ -23,6 +23,8 @@ type ContactCopy = {
   locationNodes: string[]
   noteLabel: string
   note: string
+  whenLabel: string
+  when: string[]
   formIntro: string
   nameLabel: string
   formEmailLabel: string
@@ -45,6 +47,12 @@ const copyEs: ContactCopy = {
   locationNodes: ["ARG", "BA", "CABA"],
   noteLabel: "PROFILE_NOTE",
   note: "Disponible para roles de liderazgo de marca y para proyectos de consultoría con marcas, agencias y equipos lean.",
+  whenLabel: "Cuándo tiene sentido hablar",
+  when: [
+    "Si estás lanzando una marca o una línea nueva en Latinoamérica.",
+    "Si tu marca está en transición y necesita reposicionarse.",
+    "Si tu equipo quiere producir más rápido con IA sin perder criterio de marca.",
+  ],
   formIntro: "Escribime un mensaje",
   nameLabel: "Nombre",
   formEmailLabel: "Correo electrónico",
@@ -68,6 +76,12 @@ const copyEn: ContactCopy = {
   locationNodes: ["ARG", "BA", "CABA"],
   noteLabel: "PROFILE_NOTE",
   note: "Available for brand leadership roles and for consulting projects with brands, agencies and lean teams.",
+  whenLabel: "When it makes sense to talk",
+  when: [
+    "You are launching a brand or a new line in Latin America.",
+    "Your brand is in transition and needs to be repositioned.",
+    "Your team wants to produce faster with AI without losing brand judgment.",
+  ],
   formIntro: "Send me a message",
   nameLabel: "Name",
   formEmailLabel: "Email",
@@ -200,6 +214,20 @@ export default function Contact() {
                     <p className="text-sm leading-relaxed text-neon-green/90 md:text-[15px]">{copy.note}</p>
                   </div>
                 </div>
+
+                <section aria-labelledby="contact-when" className="rounded-sm border border-neon-green/20 bg-black/20 p-5">
+                  <h3 id="contact-when" className="mb-3 font-cyber text-[11px] uppercase tracking-[0.18em] text-neon-cyan">
+                    {copy.whenLabel}
+                  </h3>
+                  <ul className="space-y-2">
+                    {copy.when.map((line) => (
+                      <li key={line} className="flex gap-2 text-sm leading-relaxed text-neon-green/90 md:text-[15px]">
+                        <span aria-hidden="true" className="text-neon-cyan">&gt;</span>
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
               </div>
             </div>
           </WindowFrame>

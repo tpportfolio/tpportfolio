@@ -1,5 +1,15 @@
 # Changelog
 
+## r39 (2026-10-22) — Two the8bureau webapps on the site; Maps Lead Extractor code; "when it makes sense to talk"
+Branch `release/r39-webapps-contact`. Builds on r38.
+
+- New webapp `/pdf_toolkit` (the8bureau PDF Toolkit): convert PDF pages to PNG/JPG with adjustable quality, combine 2 PDFs into 1 image, merge several PDFs into one. Static export served from `public/pdf_toolkit/`; everything runs in the visitor's browser.
+- New webapp `/comparador_imagenes` (the8bureau Side-by-Side Image Compare): two images with synced zoom and pan, side by side or with a slider. Static export served from `public/comparador_imagenes/`; images never leave the browser. Its service worker and install banner were left out so nothing registers on the portfolio's scope.
+- AI experiments: both apps get a card with live preview in VIBE-CODING: WEBAPPS, and a "Try it on this site" link in the the8bureau block (PDF TOOLKIT in "new in v2", SIDE-BY-SIDE IMAGE COMPARE in the tools list).
+- MAPS LEAD EXTRACTOR card: link "Open source on GitHub" to https://github.com/tpportfolio/maps-lead-extractor.
+- Contact: new block "Cuándo tiene sentido hablar / When it makes sense to talk" with three situations (launch in Latin America, brand in transition, producing faster with AI without losing brand judgment).
+- `agents.md`, `agents.txt`, `llms.txt` and Clippy's knowledge: the two new webapps, the Maps repo and the contact block, in Spanish and English.
+
 ## r38 (2026-10-22) — Results first on each case; AI experiments tweaks; new the8bureau screenshot
 Branch `release/r38-cases-ai-tweaks`. Builds on r37.
 

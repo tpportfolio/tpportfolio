@@ -121,11 +121,14 @@ type The8BureauFeature = {
   title: string
   description: Record<SupportedLanguage, string>
   deprecated?: boolean
+  /** Where to try it or see its code. */
+  link?: { href: string; label: Record<SupportedLanguage, string> }
 }
 
 type The8BureauV2Tool = {
   title: Record<SupportedLanguage, string>
   description: Record<SupportedLanguage, string>
+  href?: string
 }
 
 const REEL_VIDEO_ID = "bC8TGT4mD3Q"
@@ -260,12 +263,17 @@ const the8BureauFeatures: The8BureauFeature[] = [
       es: "Comparador de dos imágenes para ver el antes y después de cambios, side by side o con slider.",
       en: "Compare two images to review before/after changes, side by side or with a slider.",
     },
+    link: { href: "/comparador_imagenes", label: { es: "Probalo en esta web", en: "Try it on this site" } },
   },
   {
     title: "MAPS LEAD EXTRACTOR",
     description: {
       es: "Determiná un punto en un mapa, un radio en km, una categoría, y extraé LEADS.",
       en: "Set a point on a map, a radius in km and a category, and extract LEADS.",
+    },
+    link: {
+      href: "https://github.com/tpportfolio/maps-lead-extractor",
+      label: { es: "Código abierto en GitHub", en: "Open source on GitHub" },
     },
   },
   {
@@ -292,6 +300,7 @@ const the8BureauV2Tools: The8BureauV2Tool[] = [
       es: "Kit de herramientas para PDF que corre en local.",
       en: "Local PDF toolkit.",
     },
+    href: "/pdf_toolkit",
   },
   {
     title: { es: "CALCULADORA DE COSTOS", en: "COST CALCULATOR" },
@@ -2899,6 +2908,16 @@ export default function AIExperimentsPage() {
                           ) : null}
                         </div>
                         <p className="text-sm leading-relaxed text-neon-green/85">{feature.description[currentLanguage]}</p>
+                        {feature.link ? (
+                          <a
+                            href={feature.link.href}
+                            {...(feature.link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                            className="vw-link mt-2 inline-flex items-center gap-1.5 text-sm"
+                          >
+                            {feature.link.label[currentLanguage]}
+                            {feature.link.href.startsWith("http") ? <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" /> : null}
+                          </a>
+                        ) : null}
                       </div>
                     ))}
                   </div>
@@ -2922,6 +2941,11 @@ export default function AIExperimentsPage() {
                             {tool.title[currentLanguage]}
                           </div>
                           <p className="text-xs leading-relaxed text-neon-green/85">{tool.description[currentLanguage]}</p>
+                          {tool.href ? (
+                            <a href={tool.href} className="vw-link mt-1.5 inline-block text-xs">
+                              {currentLanguage === "es" ? "Probalo en esta web" : "Try it on this site"}
+                            </a>
+                          ) : null}
                         </div>
                       ))}
                     </div>
@@ -3023,6 +3047,64 @@ export default function AIExperimentsPage() {
                   {currentLanguage === "es"
                     ? "Comparador lado a lado de 2 versiones de un video. Feature no disponible en Dropbox Replay ni en Frame.io, herramientas pagas de productora."
                     : "Side-by-side comparison of 2 video versions. Not available in Dropbox Replay or Frame.io (paid production-company tools)."}
+                </p>
+              </div>
+
+              <div>
+                <a
+                  href="/comparador_imagenes"
+                  className="block rounded-sm border border-neon-cyan/60 px-3 py-2 text-center font-cyber text-sm text-neon-cyan hover:bg-neon-cyan/10"
+                >
+                  COMPARADOR_IMAGENES
+                </a>
+                <a
+                  href="/comparador_imagenes"
+                  className="mt-3 block overflow-hidden rounded border border-neon-green/40 bg-black/20 transition-colors hover:border-neon-cyan/60"
+                >
+                  <div className="border-b border-neon-green/30 px-3 py-2 text-xs text-neon-green/80">{currentLanguage === "es" ? "vista previa" : "preview"}</div>
+                  <div className="relative aspect-video w-full overflow-hidden bg-black">
+                    <iframe
+                      src="/comparador_imagenes/index.html"
+                      title={`COMPARADOR_IMAGENES ${currentLanguage === "es" ? "vista previa" : "preview"}`}
+                      loading="lazy"
+                      className="absolute left-0 top-0 h-[400%] w-[400%] origin-top-left scale-[0.25] border-0 pointer-events-none"
+                      sandbox="allow-scripts allow-same-origin allow-forms allow-downloads"
+                    />
+                  </div>
+                </a>
+                <p className="mt-3 text-base leading-relaxed text-neon-green/90">
+                  {currentLanguage === "es"
+                    ? "Comparador de 2 imágenes con zoom y pan sincronizados, lado a lado o con slider. Las imágenes no salen de tu navegador."
+                    : "Compare 2 images with synced zoom and pan, side by side or with a slider. Your images never leave the browser."}
+                </p>
+              </div>
+
+              <div>
+                <a
+                  href="/pdf_toolkit"
+                  className="block rounded-sm border border-neon-cyan/60 px-3 py-2 text-center font-cyber text-sm text-neon-cyan hover:bg-neon-cyan/10"
+                >
+                  PDF_TOOLKIT
+                </a>
+                <a
+                  href="/pdf_toolkit"
+                  className="mt-3 block overflow-hidden rounded border border-neon-green/40 bg-black/20 transition-colors hover:border-neon-cyan/60"
+                >
+                  <div className="border-b border-neon-green/30 px-3 py-2 text-xs text-neon-green/80">{currentLanguage === "es" ? "vista previa" : "preview"}</div>
+                  <div className="relative aspect-video w-full overflow-hidden bg-black">
+                    <iframe
+                      src="/pdf_toolkit/index.html"
+                      title={`PDF_TOOLKIT ${currentLanguage === "es" ? "vista previa" : "preview"}`}
+                      loading="lazy"
+                      className="absolute left-0 top-0 h-[400%] w-[400%] origin-top-left scale-[0.25] border-0 pointer-events-none"
+                      sandbox="allow-scripts allow-same-origin allow-forms allow-downloads"
+                    />
+                  </div>
+                </a>
+                <p className="mt-3 text-base leading-relaxed text-neon-green/90">
+                  {currentLanguage === "es"
+                    ? "Kit para PDF: convertir páginas a imagen con calidad ajustable, combinar 2 PDF en 1 imagen y unir varios PDF en uno. Corre en tu navegador, sin subir archivos."
+                    : "PDF kit: convert pages to images with adjustable quality, combine 2 PDFs into 1 image and merge several PDFs into one. Runs in your browser, with no uploads."}
                 </p>
               </div>
             </div>

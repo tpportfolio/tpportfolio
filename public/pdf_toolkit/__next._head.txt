@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[7223,[],"ViewportBoundary"]
+3:I[7223,[],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[7254,[],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"white","media":"(prefers-color-scheme: light)"}],["$","meta","3",{"name":"theme-color","content":"black","media":"(prefers-color-scheme: dark)"}],["$","meta","4",{"name":"color-scheme","content":"light dark"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"PDF a PNG/JPG · Conversor y Editor"}],["$","meta","1",{"name":"description","content":"Convertí PDF a PNG o JPG con selector de calidad, descarga individual o en ZIP, y combiná 2 PDF en 1 imagen con zoom y recorte. Todo en tu navegador."}],["$","meta","2",{"name":"generator","content":"v0.app"}],["$","link","3",{"rel":"icon","href":"/pdf_toolkit/8ball.png"}],["$","link","4",{"rel":"apple-touch-icon","href":"/pdf_toolkit/apple-icon.png"}],["$","$L5","5",{}]]}]}]}],null]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"AtP18HWi9urwjkoHUuDF5"}

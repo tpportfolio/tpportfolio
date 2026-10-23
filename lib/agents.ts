@@ -50,8 +50,8 @@ const navigationNotes: Record<string, Record<Lang, string>> = {
     es: "Perfil, posicionamiento, skills, roles objetivo y formación.",
   },
   "/contact": {
-    en: "Contact landing: LinkedIn, email, location and a message form.",
-    es: "Landing de contacto: LinkedIn, email, ubicación y formulario de mensaje.",
+    en: "Contact landing: LinkedIn, email, location, when it makes sense to talk, and a message form.",
+    es: "Landing de contacto: LinkedIn, email, ubicación, cuándo tiene sentido hablar y formulario de mensaje.",
   },
   "/magaiba": {
     en: "Web3 + AI side project (2024). Not in the sidebar: reached from the timeline, from the RADIO MAGAIBA shortcut below the music lab in AI Experiments, and from the assistant.",
@@ -228,7 +228,7 @@ const aiExperimentsStructure = {
     "REEL 2025/2026: video reel with a selection of AI works and experiments (https://youtu.be/bC8TGT4mD3Q).",
     "AUDIO IA - MUSIC LAB: cover-flow player with 10 AI-generated music tracks (drag, click, or arrow keys when the player has focus).",
     "the8bureau: Tomás's personal AI brand and his sandbox for testing tools, skills and workflows; he shares a set of tools that runs locally on his computer, privately and offline.",
-    "the8bureau tools: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare, Maps Lead Extractor and Autonomous Ad Agency (status: deprecated).",
+    "the8bureau tools: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare (usable on the site at `/comparador_imagenes`), Maps Lead Extractor (open source: https://github.com/tpportfolio/maps-lead-extractor) and Autonomous Ad Agency (status: deprecated). From the v2 set, the PDF Toolkit is usable on the site at `/pdf_toolkit`.",
     "New in the8bureau v2: Prompt Studio, PDF Toolkit, Cost Calculator and Brand Analyzer.",
   ],
   es: [
@@ -236,7 +236,7 @@ const aiExperimentsStructure = {
     "REEL 2025/2026: reel en video con una selección de trabajos y experimentos con IA (https://youtu.be/bC8TGT4mD3Q).",
     "AUDIO IA - MUSIC LAB: reproductor tipo cover flow con 10 tracks de música generados con IA (arrastrar, click, o flechas con el reproductor en foco).",
     "the8bureau: la marca personal de IA de Tomás y su sandbox para testear herramientas, skills y workflows; comparte un set de herramientas que corre de manera local en su computadora, de manera privada y offline.",
-    "Herramientas de the8bureau: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare, Maps Lead Extractor y Autonomous Ad Agency (estado: deprecated).",
+    "Herramientas de the8bureau: Neural Optimization Suite (SEO/AEO/GEO), Video Subtitle Suite, Transcribe Anything Now, Side-by-side Image Compare (se usa en el sitio en `/comparador_imagenes`), Maps Lead Extractor (código abierto: https://github.com/tpportfolio/maps-lead-extractor) y Autonomous Ad Agency (estado: deprecated). Del set v2, el PDF Toolkit se usa en el sitio en `/pdf_toolkit`.",
     "Nuevo en la v2 de the8bureau: Prompt Studio, PDF Toolkit, Calculadora de Costos y Brand Analyzer.",
   ],
 } satisfies Record<Lang, string[]>
@@ -287,7 +287,7 @@ const crawlHintsLocalized = {
     "Prefer `/work/*` routes for detailed case studies and project-level content.",
     "Use `/about` for profile, positioning, target roles and education.",
     "Use `/timeline` for chronological work history, most recent first: Paradise.la, $MAGAIBA, DrGea.com, Airtm, Stone Movistar, Go Broadway!, Air New Zealand, The Walt Disney Company, J. Walter Thompson, Altheim Comunicaciones. Each block is a planet with its videos orbiting it and its role and description beside it; $MAGAIBA (2024 side project) has its own block linking to `/magaiba`.",
-    "Use `/contact` for LinkedIn, email, location and a message form.",
+    "Use `/contact` for LinkedIn, email, location and a message form. It also says when it makes sense to talk: launching a brand or a new line in Latin America; a brand in transition that needs repositioning; a team that wants to produce faster with AI without losing brand judgment.",
     "Sidebar order: Home, Timeline, Work, AI Experiments, About, Contact. `/magaiba` is not in the sidebar.",
     "Use `/agents.md` or `/agents.txt` for a compact bilingual summary of the portfolio.",
     "The AI Experiments route opens with a 2025/2026 reel, followed by 2026 works, the music lab, 2025 work examples, the8bureau tools, lightweight webapps and a 2022-2024 archive.",
@@ -297,7 +297,7 @@ const crawlHintsLocalized = {
     "Preferir rutas `/work/*` para casos detallados y contenido a nivel proyecto.",
     "Usar `/about` para perfil, posicionamiento, roles objetivo y formación.",
     "Usar `/timeline` para trayectoria cronológica, de lo más reciente a lo más antiguo: Paradise.la, $MAGAIBA, DrGea.com, Airtm, Stone Movistar, Go Broadway!, Air New Zealand, The Walt Disney Company, J. Walter Thompson, Altheim Comunicaciones. Cada bloque es un planeta con sus videos orbitando y su rol y descripción al lado; $MAGAIBA (proyecto paralelo de 2024) tiene su propio bloque con link a `/magaiba`.",
-    "Usar `/contact` para LinkedIn, email, ubicación y formulario de mensaje.",
+    "Usar `/contact` para LinkedIn, email, ubicación y formulario de mensaje. También dice cuándo tiene sentido hablar: lanzar una marca o una línea nueva en Latinoamérica; una marca en transición que necesita reposicionarse; un equipo que quiere producir más rápido con IA sin perder criterio de marca.",
     "Orden del menú lateral: Home, Timeline, Trabajos, Experimentos IA, About, Contacto. `/magaiba` no está en el menú lateral.",
     "Usar `/agents.md` o `/agents.txt` para un resumen bilingüe compacto del portfolio.",
     "La ruta de AI Experiments abre con un reel 2025/2026, seguido de trabajos 2026, el music lab, ejemplos 2025, herramientas de the8bureau, webapps livianas y un archivo 2022-2024.",
