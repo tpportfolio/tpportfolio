@@ -1,5 +1,11 @@
 # Changelog
 
+## r40 (2026-10-22) — Text uses the full width of each window
+Branch `release/r40-full-width-text`. Builds on r39.
+
+- Text inside the site windows (PROJECT_OVERVIEW, STRATEGY_AND_LAUNCH and the rest of the work pages, About, Contact) no longer stops at 78 characters per line: it fills the window. With Geist Mono that limit cut every line at about 70% of the window on desktop.
+- The description under each video also uses the full width next to the previous / next buttons (it stopped at 65 characters).
+
 ## r39 (2026-10-22) — Two the8bureau webapps on the site; Maps Lead Extractor code; "when it makes sense to talk"
 Branch `release/r39-webapps-contact`. Builds on r38.
 

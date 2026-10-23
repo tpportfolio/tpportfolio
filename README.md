@@ -2,15 +2,13 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r39 (2026-10-22) — the8bureau webapps on the site; "when it makes sense to talk"
+## Current version: r40 (2026-10-22) — Text uses the full width of each window
 
 What changed in this version:
 
-- **Webapps.** PDF Toolkit (`/pdf_toolkit`) and Side-by-Side Image Compare (`/comparador_imagenes`) run on the site, in the browser.
-- **the8bureau.** Maps Lead Extractor links to its open-source code on GitHub.
-- **Contact.** A short block on when it makes sense to talk.
+- **Reading.** Text in the work pages, About and Contact windows fills the window instead of breaking at 78 characters.
 
-Previous version: r38 (2026-10-22) — Results first on each case; AI experiments tweaks.
+Previous version: r39 (2026-10-22) — the8bureau webapps on the site; "when it makes sense to talk".
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -21,7 +19,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r39-webapps-contact`, tag `r39` | This version |
+| `release/r40-full-width-text`, tag `r40` | This version |
+| `release/r39-webapps-contact`, tag `r39` | PDF Toolkit, Image Compare, Maps code link, contact block |
 | `release/r38-cases-ai-tweaks`, tag `r38` | Results first on cases, AI experiments tweaks |
 | `release/r37-home-geist-strip`, tag `r37` | Geist Mono, In short band, FAQ to agents.md |
 | `release/r36-agents-a11y`, tag `r36` | Meta indexer, alt text |

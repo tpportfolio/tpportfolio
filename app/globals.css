@@ -2403,7 +2403,7 @@ html[data-visual-mode="light"] .vw,
 
 .vw-video-desc {
   grid-column: 1;
-  max-width: 65ch;
+  max-width: none;
   margin: 0;
   color: var(--vw-ink-2);
   font-size: max(0.9375rem, 13px);
@@ -2581,8 +2581,9 @@ html[data-visual-mode="light"] .vw,
 }
 
 /* running text inside a full-width window keeps a readable line length */
+/* text in the windows uses the full width of the window (the 78ch measure cut lines at ~70% in Geist Mono) */
 .vw-text :where(p, ul, ol, h3, h4) {
-  max-width: 78ch;
+  max-width: none;
 }
 
 /* links inside the window: the same cyan as the video title */
