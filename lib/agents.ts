@@ -55,17 +55,14 @@ const navigationNotes: Record<string, Record<Lang, string>> = {
     es: "Landing de contacto: LinkedIn, email, ubicación, cuándo tiene sentido hablar y formulario de mensaje.",
   },
   "/magaiba": {
-    en: "Web3 + AI side project (2024). Not in the sidebar: reached from the timeline, from the RADIO MAGAIBA shortcut below the music lab in AI Experiments, and from the assistant.",
-    es: "Proyecto paralelo de web3 + IA (2024). No está en el menú lateral: se llega desde el timeline, desde el atajo RADIO MAGAIBA debajo del music lab en Experimentos IA, y desde el assistant.",
-  },
-  "/home-variant": {
-    en: "Legacy alias that redirects to the current home.",
-    es: "Alias legacy que redirige a la home actual.",
+    en: "Web3 + AI side project (2024). Reached from the timeline, from the RADIO MAGAIBA shortcut below the music lab in AI Experiments, and from the assistant.",
+    es: "Proyecto paralelo de web3 + IA (2024). Se llega desde el timeline, desde el atajo RADIO MAGAIBA debajo del music lab en Experimentos IA, y desde el assistant.",
   },
 }
 
 function buildNavigationLines(lang: Lang) {
-  return primaryNavigation.map((item) => ({
+  // Agents get the pages worth visiting; the old /home-variant alias is left out.
+  return primaryNavigation.filter((item) => item.href !== "/home-variant").map((item) => ({
     route: item.href,
     label: item.label[lang],
     note: navigationNotes[item.href]?.[lang] ?? item.note ?? "",
@@ -265,9 +262,8 @@ const faqLocalized: Record<Lang, { q: string; a: string }[]> = {
 const notesLocalized = {
   en: [
     "The canonical public home is `/`.",
-    "State in the address: add `?lang=en` (or `?lang=es`) to any page to open it in that language; `/work/ai-experiments?filter=imagen|video|audio` opens that filtered view. The HTML served is Spanish and English is applied on load; for both languages without running JavaScript, read `/agents.md`.",
-    "`/highlights` is an alternative work-first version of the home (not indexed): eight cases, each opening with its result (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, AI experiments, $MAGAIBA and agencies), with the career story at the end as a thread. Its boot screen lasts about 1.5 seconds and any key or scroll skips it.",
-    "`/home-variant` remains available as an alias that redirects to `/`.",
+    "To choose the language, add `?lang=en` (or `?lang=es`) to any page to open it in that language; `/work/ai-experiments?filter=imagen|video|audio` opens that filtered view. `/agents.md` has both languages in one file.",
+    "`/highlights` is an alternative work-first version of the home: eight cases, each opening with its result (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, AI experiments, $MAGAIBA and agencies), with the career story at the end as a thread.",
     "The most detailed project content lives under `/work/*`.",
     "`/agents.md` and `/agents.txt` are bilingual and intended for agent-friendly crawling. `/llms.txt` serves the same summary.",
     "Search engines and AI crawlers are allowed (`/robots.txt`, `/sitemap.xml`) and always get the real pages, never the intro screen.",
@@ -275,9 +271,8 @@ const notesLocalized = {
   ],
   es: [
     "La home pública canónica es `/`.",
-    "Estado en la dirección: sumar `?lang=en` (o `?lang=es`) a cualquier página la abre en ese idioma; `/work/ai-experiments?filter=imagen|video|audio` abre esa vista filtrada. El HTML que se sirve está en español y el inglés se aplica al cargar; para leer ambos idiomas sin ejecutar JavaScript, usar `/agents.md`.",
-    "`/highlights` es una versión alternativa de la home con el trabajo primero (no indexada): ocho casos que abren con su resultado (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, experimentos IA, $MAGAIBA y agencias), y la historia de la carrera al final como hilo. Su pantalla de arranque dura alrededor de 1,5 segundos y cualquier tecla o scroll la saltea.",
-    "`/home-variant` sigue disponible como alias que redirige a `/`.",
+    "Para elegir el idioma, sumar `?lang=en` (o `?lang=es`) a cualquier página la abre en ese idioma; `/work/ai-experiments?filter=imagen|video|audio` abre esa vista filtrada. `/agents.md` tiene los dos idiomas en un solo archivo.",
+    "`/highlights` es una versión alternativa de la home con el trabajo primero: ocho casos que abren con su resultado (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, experimentos IA, $MAGAIBA y agencias), y la historia de la carrera al final como hilo.",
     "El contenido más detallado de proyectos vive en `/work/*`.",
     "`/agents.md` y `/agents.txt` son bilingües y están pensados para crawling amigable para agentes. `/llms.txt` sirve el mismo resumen.",
     "Los buscadores y los crawlers de IA están permitidos (`/robots.txt`, `/sitemap.xml`) y siempre reciben las páginas reales, nunca la pantalla de intro.",
@@ -291,20 +286,18 @@ const crawlHintsLocalized = {
     "Use `/about` for profile, positioning, target roles and education.",
     "Use `/timeline` for chronological work history, most recent first: Paradise.la, $MAGAIBA, DrGea.com, Airtm, Stone Movistar, Go Broadway!, Air New Zealand, The Walt Disney Company, J. Walter Thompson, Altheim Comunicaciones. Each block is a planet with its videos orbiting it and its role and description beside it; $MAGAIBA (2024 side project) has its own block linking to `/magaiba`.",
     "Use `/contact` for LinkedIn, email, location and a message form. It also says when it makes sense to talk: launching a brand or a new line in Latin America; a brand in transition that needs repositioning; a team that wants to produce faster with AI without losing brand judgment.",
-    "Sidebar order: Home, Timeline, Work, AI Experiments, About, Contact. `/magaiba` is not in the sidebar.",
     "Use `/agents.md` or `/agents.txt` for a compact bilingual summary of the portfolio.",
     "The AI Experiments route opens with a 2025/2026 reel, followed by 2026 works, the music lab, 2025 work examples, the8bureau tools, lightweight webapps and a 2022-2024 archive.",
-    "The agents routes bypass the intro middleware and can be fetched directly.",
+    "`/agents.md`, `/agents.txt` and `/llms.txt` can be fetched directly.",
   ],
   es: [
     "Preferir rutas `/work/*` para casos detallados y contenido a nivel proyecto.",
     "Usar `/about` para perfil, posicionamiento, roles objetivo y formación.",
     "Usar `/timeline` para trayectoria cronológica, de lo más reciente a lo más antiguo: Paradise.la, $MAGAIBA, DrGea.com, Airtm, Stone Movistar, Go Broadway!, Air New Zealand, The Walt Disney Company, J. Walter Thompson, Altheim Comunicaciones. Cada bloque es un planeta con sus videos orbitando y su rol y descripción al lado; $MAGAIBA (proyecto paralelo de 2024) tiene su propio bloque con link a `/magaiba`.",
     "Usar `/contact` para LinkedIn, email, ubicación y formulario de mensaje. También dice cuándo tiene sentido hablar: lanzar una marca o una línea nueva en Latinoamérica; una marca en transición que necesita reposicionarse; un equipo que quiere producir más rápido con IA sin perder criterio de marca.",
-    "Orden del menú lateral: Home, Timeline, Trabajos, Experimentos IA, About, Contacto. `/magaiba` no está en el menú lateral.",
     "Usar `/agents.md` o `/agents.txt` para un resumen bilingüe compacto del portfolio.",
     "La ruta de AI Experiments abre con un reel 2025/2026, seguido de trabajos 2026, el music lab, ejemplos 2025, herramientas de the8bureau, webapps livianas y un archivo 2022-2024.",
-    "Las rutas `agents` saltean el middleware de intro y se pueden pedir directo.",
+    "`/agents.md`, `/agents.txt` y `/llms.txt` se pueden pedir directo.",
   ],
 } satisfies Record<Lang, string[]>
 

@@ -1921,13 +1921,20 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
     return () => observer.disconnect()
   }, [])
 
-  const statusText = buffering
-    ? language === "es" ? "CARGANDO" : "LOADING"
+  // The player's state, derived in one place from the audio flags.
+  const playerState: "loading" | "playing" | "paused" | "ready" = buffering
+    ? "loading"
     : isPlaying
-      ? language === "es" ? "SONANDO" : "PLAYING"
+      ? "playing"
       : progress > 0
-        ? language === "es" ? "PAUSA" : "PAUSED"
-        : language === "es" ? "LISTO" : "READY"
+        ? "paused"
+        : "ready"
+  const statusText = {
+    loading: language === "es" ? "CARGANDO" : "LOADING",
+    playing: language === "es" ? "SONANDO" : "PLAYING",
+    paused: language === "es" ? "PAUSA" : "PAUSED",
+    ready: language === "es" ? "LISTO" : "READY",
+  }[playerState]
 
   const currentTag = localizeTrackTag(currentTrack.tag, language)
   const liveText =
@@ -1936,7 +1943,7 @@ function SpotifyGallery({ language, isLight }: { language: SupportedLanguage; is
       : `Track ${currentIndex + 1} of ${total}: ${currentTrack.title} (${currentTag})`
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" data-player-state={playerState}>
       <style>{`
         .coverflow-stage { touch-action: pan-y; overflow: hidden; overflow: clip; outline: none; }
         .coverflow-stage:focus-visible { outline: 2px solid var(--flow-accent, #39ff14); outline-offset: 3px; }

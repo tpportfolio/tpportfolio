@@ -8,7 +8,11 @@ Branch `release/r52-site-state`. Builds on r51. No change to content, copy or lo
 - New `lib/site-state.ts`: the one place for the names of the site's state (URL parameters, storage keys, intro cookie, mobile menu events). The layout, the contexts, the sidebar and the middleware read them from there.
 - `public/intro.html` no longer writes `tp_intro_seen` (nothing read it).
 - QA (`qa/run.mjs`): test loads never add to the public visit counter.
-- `agents.md` / `llms.txt`: a note on the address parameters (ES/EN).
+- The webapps (`/canva_productora`, `/comparador_videos`, `/unyellower`, `/comparador_imagenes`, `/pdf_toolkit`) open in the visual mode the visitor is browsing the site in: the site keeps their theme keys in step.
+- The assistant (`components/floating-assistant.tsx`) is an explicit state machine (panel closed/open; request idle/pending/answered) instead of three booleans and an effect; its state is readable from the DOM. Same behaviour.
+- Music Lab: the player's state (loading/playing/paused/ready) is derived in one place and readable from the DOM (`data-player-state`).
+- Removed three components nothing used: `video-player.tsx`, `media-gallery.tsx`, `content-carousel.tsx` (still in the r51 tag).
+- `agents.md` / `llms.txt`: how to choose the language and the AI filter by address (ES/EN); notes about the site's inner workings (menu order, the old `/home-variant` alias, the intro mechanism) are gone, so the file only carries what helps a visiting agent.
 - Known limit: the HTML served is still Spanish; English is applied on load.
 
 ## r51 (2026-10-23) — "GEN_MARKETER.exe" only in the sidebar

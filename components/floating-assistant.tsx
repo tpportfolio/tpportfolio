@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useReducer, useRef, useState } from "react"
 import { Check, Database, Loader2, MessageSquareText, SendHorizontal, Sparkles, X } from "lucide-react"
 
 import { useLanguage } from "@/components/language-context"
@@ -81,6 +81,33 @@ function makeId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
 }
 
+// The assistant as a state machine. Two things move on their own: the panel and the request.
+//   panel:    closed <-> open
+//   request:  idle -> pending -> answered -> idle
+// "answered" is the short celebration after a reply and only exists with the panel open:
+// a reply that lands while the panel is closed goes straight back to idle.
+type AssistantState = { panel: "closed" | "open"; request: "idle" | "pending" | "answered" }
+type AssistantEvent = "open" | "close" | "toggle" | "send" | "settle" | "celebrated"
+
+const initialAssistantState: AssistantState = { panel: "closed", request: "idle" }
+
+function assistantReducer(state: AssistantState, event: AssistantEvent): AssistantState {
+  switch (event) {
+    case "open":
+      return { ...state, panel: "open" }
+    case "close":
+      return { panel: "closed", request: state.request === "answered" ? "idle" : state.request }
+    case "toggle":
+      return assistantReducer(state, state.panel === "open" ? "close" : "open")
+    case "send":
+      return { ...state, request: "pending" }
+    case "settle":
+      return { ...state, request: state.panel === "open" ? "answered" : "idle" }
+    case "celebrated":
+      return state.request === "answered" ? { ...state, request: "idle" } : state
+  }
+}
+
 function StreamText({ text }: { text: string }) {
   const [count, setCount] = useState(0)
   const [done, setDone] = useState(false)
@@ -126,12 +153,13 @@ export function FloatingAssistant() {
   const { mode } = useVisualMode()
   const copy = UI_COPY[language === "en" ? "en" : "es"]
 
-  const [open, setOpen] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [assistant, dispatch] = useReducer(assistantReducer, initialAssistantState)
+  const open = assistant.panel === "open"
+  const loading = assistant.request === "pending"
+  const celebrate = assistant.request === "answered"
   const [input, setInput] = useState("")
   const [pulse, setPulse] = useState(false)
   const [thinkMs, setThinkMs] = useState(0)
-  const [celebrate, setCelebrate] = useState(false)
   const [messages, setMessages] = useState<AssistantMessage[]>([
     {
       id: "welcome",
@@ -143,7 +171,6 @@ export function FloatingAssistant() {
 
   const inputRef = useRef<HTMLInputElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
-  const prevLoadingRef = useRef(false)
 
   useEffect(() => {
     setMessages((current) => {
@@ -190,20 +217,8 @@ export function FloatingAssistant() {
     : undefined
   const lastMessage = messages.length > 0 ? messages[messages.length - 1] : undefined
   const thinkStep = Math.min(copy.steps.length - 1, Math.floor(thinkMs / 900))
-  const lastRole = lastMessage?.role
   const fxModeClass = mode === "light" ? styles.fxLight : styles.fxDark
   const headerCharClass = `${styles.headerBody} ${loading ? styles.thinking : celebrate ? styles.celebrate : ""}`
-
-  // Celebrate once when a request finishes (loading true -> false) with an assistant message, panel open.
-  useEffect(() => {
-    const wasLoading = prevLoadingRef.current
-    prevLoadingRef.current = loading
-    if (loading || !open) {
-      setCelebrate(false)
-      return
-    }
-    if (wasLoading && lastRole === "assistant") setCelebrate(true)
-  }, [loading, open, lastRole])
 
   useEffect(() => {
     if (!loading) return
@@ -230,7 +245,7 @@ export function FloatingAssistant() {
 
     setMessages((current) => [...current, userMessage])
     setInput("")
-    setLoading(true)
+    dispatch("send")
 
     try {
       const res = await fetch("/api/chat", {
@@ -268,15 +283,19 @@ export function FloatingAssistant() {
         },
       ])
     } finally {
-      setLoading(false)
+      dispatch("settle")
     }
   }
 
   return (
     <>
-      {open ? <button type="button" aria-label={copy.close} onClick={() => setOpen(false)} className="fixed inset-0 z-40 bg-black/30" /> : null}
+      {open ? <button type="button" aria-label={copy.close} onClick={() => dispatch("close")} className="fixed inset-0 z-40 bg-black/30" /> : null}
 
-      <div className={`pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 md:bottom-5 md:right-5 ${fxModeClass}`}>
+      <div
+        data-assistant-panel={assistant.panel}
+        data-assistant-request={assistant.request}
+        className={`pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 md:bottom-5 md:right-5 ${fxModeClass}`}
+      >
         {open ? (
           <div className={`pointer-events-auto flex h-[min(76vh,38rem)] w-[min(94vw,29rem)] flex-col overflow-hidden rounded-sm ${shellClass}`}>
             <div className={`flex items-center gap-3 px-4 py-3 ${headerClass}`}>
@@ -284,7 +303,7 @@ export function FloatingAssistant() {
                 <div
                   className={headerCharClass}
                   onAnimationEnd={(event) => {
-                    if (event.target === event.currentTarget) setCelebrate(false)
+                    if (event.target === event.currentTarget) dispatch("celebrated")
                   }}
                 >
                   <Image src="/clippy-character.png" alt="CLIPPY.EXE" fill sizes="44px" className="object-contain" style={clippyImageStyle} priority={false} />
@@ -306,7 +325,7 @@ export function FloatingAssistant() {
               </div>
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={() => dispatch("close")}
                 aria-label={copy.close}
                 className={`inline-flex h-9 w-9 items-center justify-center rounded-sm border ${
                   mode === "light"
@@ -456,7 +475,7 @@ export function FloatingAssistant() {
 
         <button
           type="button"
-          onClick={() => setOpen((current) => !current)}
+          onClick={() => dispatch("toggle")}
           aria-label={copy.open}
           className={`pointer-events-auto relative inline-flex h-[84px] w-[84px] items-center justify-center md:h-[106px] md:w-[106px] ${styles.launcher}`}
         >

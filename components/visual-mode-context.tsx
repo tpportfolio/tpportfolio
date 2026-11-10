@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react"
-import { VISUAL_MODE_STORAGE_KEY } from "@/lib/site-state"
+import { TOOL_THEME_KEYS, VISUAL_MODE_STORAGE_KEY } from "@/lib/site-state"
 
 export type VisualMode = "dark" | "light"
 
@@ -22,6 +22,13 @@ function applyVisualMode(mode: VisualMode) {
 
   document.documentElement.dataset.visualMode = mode
   document.documentElement.style.colorScheme = mode
+
+  // The webapps open in the mode the visitor is browsing in.
+  try {
+    TOOL_THEME_KEYS.forEach((key) => window.localStorage.setItem(key, mode))
+  } catch {
+    // noop
+  }
 }
 
 export function VisualModeProvider({ children }: { children: ReactNode }) {

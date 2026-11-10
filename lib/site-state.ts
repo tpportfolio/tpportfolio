@@ -3,6 +3,7 @@
 //
 //   language     ?lang=es|en  ->  <html lang>              remembered in LANGUAGE_STORAGE_KEY
 //   visual mode  (switch)     ->  <html data-visual-mode>  remembered in VISUAL_MODE_STORAGE_KEY
+//                the webapps under /public read TOOL_THEME_KEYS, which the site keeps in step
 //   AI filter    ?filter=imagen|video|audio on /work/ai-experiments (no storage)
 //   intro        INTRO_COOKIE, set by middleware.ts and by public/intro.html (a static file: it
 //                repeats the cookie name by hand)
@@ -20,6 +21,10 @@ export function isSiteLanguage(value: unknown): value is SiteLanguage {
 // Written only when the visitor uses the switch. Without it, the site follows the system setting.
 // (The older "tp.visual-mode" key was written on every visit, so it does not tell a choice apart.)
 export const VISUAL_MODE_STORAGE_KEY = "tp.visual-mode.choice"
+
+// Theme keys read by the the8bureau webapps served from /public (same origin). The site writes its
+// current mode to them, so a tool opens in the mode the visitor is browsing in. All take "light" | "dark".
+export const TOOL_THEME_KEYS = ["t8b.retro.visual-mode.choice", "t8b_theme_mode", "t8b-theme"] as const
 
 export const AI_FILTER_PARAM = "filter"
 
