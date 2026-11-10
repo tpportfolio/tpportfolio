@@ -535,7 +535,7 @@
             function completeIntro() {
                 if (done) return;
                 done = true;
-                try { localStorage.setItem('tp_intro_seen', '1'); } catch (e) {}
+                // Same name as INTRO_COOKIE in lib/site-state.ts.
                 try { document.cookie = 'tp_intro=1; path=/; max-age=' + (60 * 60 * 24 * 30) + '; SameSite=Lax'; } catch (e) {}
                 window.location.replace(resolveNext());
             }

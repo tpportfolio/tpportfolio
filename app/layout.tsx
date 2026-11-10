@@ -9,6 +9,7 @@ import { Providers } from "./providers";
 import { MobileMenuButton } from "@/components/mobile-menu-button";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteChrome } from "@/components/site-chrome";
+import { VISUAL_MODE_STORAGE_KEY } from "@/lib/site-state";
 import { Geist_Mono } from "next/font/google";
 
 // The site's typeface (r37). /acento keeps its own.
@@ -120,7 +121,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {/* Set the visual mode before the first paint: the visitor's choice, or else the system setting. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var m=localStorage.getItem("tp.visual-mode.choice");if(m!=="dark"&&m!=="light"){m=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.dataset.visualMode=m;document.documentElement.style.colorScheme=m}catch(e){}`,
+            __html: `try{var m=localStorage.getItem("${VISUAL_MODE_STORAGE_KEY}");if(m!=="dark"&&m!=="light"){m=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.dataset.visualMode=m;document.documentElement.style.colorScheme=m}catch(e){}`,
           }}
         />
         <script

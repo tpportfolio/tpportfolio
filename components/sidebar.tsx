@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { X } from "lucide-react"
 import { useLanguage } from "./language-context"
+import { MOBILE_MENU_STATE_EVENT, MOBILE_MENU_TOGGLE_EVENT } from "@/lib/site-state"
 import { LanguageSwitcher } from "./language-switcher"
 import { useVisualMode } from "./visual-mode-context"
 
@@ -20,16 +21,16 @@ export default function Sidebar() {
   useEffect(() => {
     const handleToggle = () => setIsMobileOpen((current) => !current)
 
-    window.addEventListener("tp-mobile-menu-toggle", handleToggle as EventListener)
+    window.addEventListener(MOBILE_MENU_TOGGLE_EVENT, handleToggle as EventListener)
 
     return () => {
-      window.removeEventListener("tp-mobile-menu-toggle", handleToggle as EventListener)
+      window.removeEventListener(MOBILE_MENU_TOGGLE_EVENT, handleToggle as EventListener)
     }
   }, [])
 
   useEffect(() => {
     document.body.classList.toggle("mobile-menu-open", isMobileOpen)
-    window.dispatchEvent(new CustomEvent("tp-mobile-menu-state", { detail: { open: isMobileOpen } }))
+    window.dispatchEvent(new CustomEvent(MOBILE_MENU_STATE_EVENT, { detail: { open: isMobileOpen } }))
 
     return () => {
       document.body.classList.remove("mobile-menu-open")

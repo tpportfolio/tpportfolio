@@ -31,6 +31,7 @@ import {
 import { VideoCarousel, type VideoItem } from "@/components/video-carousel"
 import { VideoScreen, VideoWindowFrame, videoCountLabel } from "@/components/video-window"
 import { useLanguage } from "@/components/language-context"
+import { AI_FILTER_PARAM } from "@/lib/site-state"
 import { useVisualMode } from "@/components/visual-mode-context"
 import { RetroPanel } from "@/components/retro-panel"
 import thumbMessiBK from "./thumb_2026_messi_bk.jpg"
@@ -2498,7 +2499,21 @@ export default function AIExperimentsPage() {
   const isLight = mode === "light"
   const currentLanguage: SupportedLanguage = language === "en" ? "en" : "es"
   const [isThe8BureauModalOpen, setIsThe8BureauModalOpen] = useState(false)
-  const [activeFilter, setActiveFilter] = useState<ContentFilter>("all")
+  const [activeFilter, setActiveFilterState] = useState<ContentFilter>("all")
+
+  // The filter is part of the address (?filter=audio), so a filtered view can be linked and reloaded.
+  useEffect(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get(AI_FILTER_PARAM)
+    if (fromUrl === "imagen" || fromUrl === "video" || fromUrl === "audio") setActiveFilterState(fromUrl)
+  }, [])
+
+  const setActiveFilter = (filter: ContentFilter) => {
+    setActiveFilterState(filter)
+    const url = new URL(window.location.href)
+    if (filter === "all") url.searchParams.delete(AI_FILTER_PARAM)
+    else url.searchParams.set(AI_FILTER_PARAM, filter)
+    window.history.replaceState(window.history.state, "", url)
+  }
 
   const B = ({ children }: { children: ReactNode }) => (
     <strong className={isLight ? "font-bold text-[#2e1305]" : "font-bold text-white"}>{children}</strong>

@@ -265,6 +265,7 @@ const faqLocalized: Record<Lang, { q: string; a: string }[]> = {
 const notesLocalized = {
   en: [
     "The canonical public home is `/`.",
+    "State in the address: add `?lang=en` (or `?lang=es`) to any page to open it in that language; `/work/ai-experiments?filter=imagen|video|audio` opens that filtered view. The HTML served is Spanish and English is applied on load; for both languages without running JavaScript, read `/agents.md`.",
     "`/highlights` is an alternative work-first version of the home (not indexed): eight cases, each opening with its result (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, AI experiments, $MAGAIBA and agencies), with the career story at the end as a thread. Its boot screen lasts about 1.5 seconds and any key or scroll skips it.",
     "`/home-variant` remains available as an alias that redirects to `/`.",
     "The most detailed project content lives under `/work/*`.",
@@ -274,6 +275,7 @@ const notesLocalized = {
   ],
   es: [
     "La home pública canónica es `/`.",
+    "Estado en la dirección: sumar `?lang=en` (o `?lang=es`) a cualquier página la abre en ese idioma; `/work/ai-experiments?filter=imagen|video|audio` abre esa vista filtrada. El HTML que se sirve está en español y el inglés se aplica al cargar; para leer ambos idiomas sin ejecutar JavaScript, usar `/agents.md`.",
     "`/highlights` es una versión alternativa de la home con el trabajo primero (no indexada): ocho casos que abren con su resultado (Air New Zealand, Paradise.la, The Walt Disney Company, Stone Movistar, Airtm, experimentos IA, $MAGAIBA y agencias), y la historia de la carrera al final como hilo. Su pantalla de arranque dura alrededor de 1,5 segundos y cualquier tecla o scroll la saltea.",
     "`/home-variant` sigue disponible como alias que redirige a `/`.",
     "El contenido más detallado de proyectos vive en `/work/*`.",

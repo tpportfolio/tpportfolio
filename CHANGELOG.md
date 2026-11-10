@@ -1,5 +1,16 @@
 # Changelog
 
+## r52 (2026-11-10) — State you can address: language and AI filter in the URL
+Branch `release/r52-site-state`. Builds on r51. No change to content, copy or looks.
+
+- Language is no longer memory-only: `?lang=en` (or `?lang=es`) on any page opens it in that language, the choice made with the ES/EN switch is remembered between visits, and `<html lang>` follows it. Without a parameter or a stored choice the site opens in Spanish, as before. The parameter survives the intro redirect.
+- `/work/ai-experiments?filter=imagen|video|audio` opens that filtered view; using the filter updates the address.
+- New `lib/site-state.ts`: the one place for the names of the site's state (URL parameters, storage keys, intro cookie, mobile menu events). The layout, the contexts, the sidebar and the middleware read them from there.
+- `public/intro.html` no longer writes `tp_intro_seen` (nothing read it).
+- QA (`qa/run.mjs`): test loads never add to the public visit counter.
+- `agents.md` / `llms.txt`: a note on the address parameters (ES/EN).
+- Known limit: the HTML served is still Spanish; English is applied on load.
+
 ## r51 (2026-10-23) — "GEN_MARKETER.exe" only in the sidebar
 Branch `release/r51-no-role-home`. Builds on r50.
 

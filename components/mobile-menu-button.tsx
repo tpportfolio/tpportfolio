@@ -4,6 +4,7 @@ import { Menu } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useLanguage } from "./language-context"
 import { useVisualMode } from "./visual-mode-context"
+import { MOBILE_MENU_STATE_EVENT, MOBILE_MENU_TOGGLE_EVENT } from "@/lib/site-state"
 
 export function MobileMenuButton() {
   const [open, setOpen] = useState(false)
@@ -17,10 +18,10 @@ export function MobileMenuButton() {
       setOpen(Boolean(detail?.open))
     }
 
-    window.addEventListener("tp-mobile-menu-state", handleState as EventListener)
+    window.addEventListener(MOBILE_MENU_STATE_EVENT, handleState as EventListener)
 
     return () => {
-      window.removeEventListener("tp-mobile-menu-state", handleState as EventListener)
+      window.removeEventListener(MOBILE_MENU_STATE_EVENT, handleState as EventListener)
     }
   }, [])
 
@@ -53,7 +54,7 @@ export function MobileMenuButton() {
   }, [])
 
   const toggleSidebar = () => {
-    window.dispatchEvent(new CustomEvent("tp-mobile-menu-toggle"))
+    window.dispatchEvent(new CustomEvent(MOBILE_MENU_TOGGLE_EVENT))
   }
 
   const buttonToneClass =

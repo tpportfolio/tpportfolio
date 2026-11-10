@@ -241,6 +241,9 @@ async function makeContext(browser, base, { vp, theme, scheme, cookie = true, ua
     ...(ua ? { userAgent: ua } : {}),
     serviceWorkers: 'block',
   })
+  // Test loads must not add to the public visit counter.
+  await ctx.route('**/api/visits', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/json', body: '{"available":false}' }))
   if (cookie) await ctx.addCookies([{ name: 'tp_intro', value: '1', url: base }])
   if (storeTheme && theme) {
     await ctx.addInitScript((t) => { try { localStorage.setItem('tp.visual-mode.choice', t) } catch {} }, theme)

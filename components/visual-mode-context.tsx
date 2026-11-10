@@ -1,12 +1,11 @@
 "use client"
 
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react"
+import { VISUAL_MODE_STORAGE_KEY } from "@/lib/site-state"
 
 export type VisualMode = "dark" | "light"
 
-// Written only when the visitor uses the switch. Without it, the site follows the system setting.
-// (The older "tp.visual-mode" key was written on every visit, so it does not tell a choice apart.)
-const STORAGE_KEY = "tp.visual-mode.choice"
+const STORAGE_KEY = VISUAL_MODE_STORAGE_KEY
 
 type VisualModeContextValue = {
   mode: VisualMode

@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
+import { INTRO_COOKIE } from "./lib/site-state"
 
 // The intro is a human-only interstitial. Search engines, AI crawlers, link previews and audit tools
 // get the real page. Two checks, so no tool is left out because its name is not on a list:
@@ -54,7 +55,7 @@ export function middleware(req: NextRequest) {
   if (BOT_UA.test(req.headers.get("user-agent") ?? "")) return NextResponse.next()
   if (req.headers.get("sec-fetch-dest") !== "document") return NextResponse.next()
 
-  const cookie = req.cookies.get("tp_intro")?.value
+  const cookie = req.cookies.get(INTRO_COOKIE)?.value
   if (cookie === "1") return NextResponse.next()
 
   const target = `${pathname}${search || ""}`
@@ -63,7 +64,7 @@ export function middleware(req: NextRequest) {
   url.hash = encodeURIComponent(target)
 
   const res = NextResponse.redirect(url)
-  res.cookies.set("tp_intro", "1", { path: "/", maxAge: 60 * 60 * 24 * 30 })
+  res.cookies.set(INTRO_COOKIE, "1", { path: "/", maxAge: 60 * 60 * 24 * 30 })
   return res
 }
 

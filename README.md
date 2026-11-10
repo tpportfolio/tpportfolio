@@ -2,13 +2,15 @@
 
 Deploy: `tomaspero.vercel.app` (Vercel, from the `main` branch of this repository).
 
-## Current version: r51 (2026-10-23) — "GEN_MARKETER.exe" only in the sidebar
+## Current version: r52 (2026-11-10) — State you can address: language and AI filter in the URL
 
-What changed in this version:
+What changed in this version (nothing visible):
 
-- **Home.** No "GEN_MARKETER.exe" under the name; it stays in the sidebar.
+- **Language.** `?lang=en` opens any page in English; the ES/EN choice is remembered; `<html lang>` follows it.
+- **AI experiments.** `?filter=imagen|video|audio` opens that view.
+- **Code.** State names live in `lib/site-state.ts`; QA loads no longer add to the visit counter.
 
-Previous version: r50 (2026-10-23) — A more compact project list on the home.
+Previous version: r51 (2026-10-23) — "GEN_MARKETER.exe" only in the sidebar.
 
 Full detail in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -19,7 +21,8 @@ Each version is published as its own branch and tag; earlier versions are never 
 | Branch / tag | What it is |
 |---|---|
 | `main` | What Vercel deploys to production |
-| `release/r51-no-role-home`, tag `r51` | This version |
+| `release/r52-site-state`, tag `r52` | This version |
+| `release/r51-no-role-home`, tag `r51` | "GEN_MARKETER.exe" only in the sidebar (in production) |
 | `release/r50-compact-home`, tag `r50` | A more compact project list |
 | `release/r49-spacing-cards`, tag `r49` | Tighter gap, shorter project windows |
 | `release/r48-cards-weekly`, tag `r48` | No "[ACCESS DATA]", weekly regeneration |
